@@ -132,26 +132,31 @@ func plant_seed_animate(planted_seed) -> Array[Effect]:
 func plant_seed(planted_seed) -> Array[Effect]:
 	var effects: Array[Effect] = []
 	if card_can_target(planted_seed):
-		seed = planted_seed
-		seed.register_seed_events(event_manager, self)
+		set_seed(planted_seed)
 		effects.append_array(get_effects("plant"))
-		seed_grow_time = float(seed.time)
-		seed_base_yield = float(seed.yld)
-		current_grow_progress = 0.0
-		current_yield = 0.0
-		state = Enums.TileState.Growing
-		if seed_grow_time == 0:
-			state = Enums.TileState.Mature
-			current_yield = seed_base_yield
-		$PlantSprite.visible = true
-		if seed.texture != null:
-			$PlantSprite.texture = seed.texture
-		else:
-			$PlantSprite.texture = load(objects_image)
-		$PlantSprite.region_enabled = true
-		update_plant_sprite()
 		event_manager.notify_specific_args(EventManager.EventType.OnPlantPlanted, EventArgs.SpecificArgs.new(self))
 	return effects
+
+# Doesn't trigger on-plant stuff
+func set_seed(planted_seed):
+	seed = planted_seed
+	seed.register_seed_events(event_manager, self)
+	seed_grow_time = float(seed.time)
+	seed_base_yield = float(seed.yld)
+	current_grow_progress = 0.0
+	current_yield = 0.0
+	state = Enums.TileState.Growing
+	if seed_grow_time == 0:
+		state = Enums.TileState.Mature
+		current_yield = seed_base_yield
+	$PlantSprite.visible = true
+	if seed.texture != null:
+		$PlantSprite.texture = seed.texture
+	else:
+		$PlantSprite.texture = load(objects_image)
+	$PlantSprite.region_enabled = true
+	update_plant_sprite()
+	
 	
 func grow_one_week() -> Array[Effect]:
 	var effects: Array[Effect] = []
