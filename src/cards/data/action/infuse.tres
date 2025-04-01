@@ -1,14 +1,15 @@
-[gd_resource type="Resource" script_class="CardData" load_steps=6 format=3 uid="uid://cnluumjoyfv84"]
+[gd_resource type="Resource" script_class="CardData" load_steps=7 format=3 uid="uid://cnluumjoyfv84"]
 
 [ext_resource type="SpriteFrames" uid="uid://ssmupew5jqbp" path="res://src/animation/frames/infuse_sf.tres" id="1_ha1cw"]
 [ext_resource type="Script" path="res://src/effect/effect.gd" id="1_p1uf2"]
 [ext_resource type="Script" path="res://src/cards/card_data.gd" id="1_phgt4"]
 [ext_resource type="Texture2D" uid="uid://b1aauxnonbfja" path="res://assets/card/infuse.png" id="3_dvgqy"]
+[ext_resource type="Resource" uid="uid://7ub3vx6mrqk5" path="res://src/effect/data/echo.tres" id="3_flbi2"]
 
 [sub_resource type="Resource" id="Resource_ir8wh"]
 script = ExtResource("1_p1uf2")
 name = "add_yield"
-strength = -4.0
+strength = 4.0
 on = ""
 range = "self"
 
@@ -17,18 +18,18 @@ script = ExtResource("1_phgt4")
 type = "ACTION"
 name = "Infuse"
 rarity = "common"
-cost = -1
+cost = 1
 yld = 0
 time = 0
 size = 4
-text = "Spend all your Energy"
+text = ""
 strength_increment = 2.0
 size_increment = 2
 texture = ExtResource("3_dvgqy")
 seed_texture = 0
 texture_icon_offset = 16
 targets = Array[String](["Growing", "Mature"])
-effects = Array[ExtResource("1_p1uf2")]([SubResource("Resource_ir8wh")])
+effects = Array[ExtResource("1_p1uf2")]([SubResource("Resource_ir8wh"), ExtResource("3_flbi2")])
 enhances = Array[String]([])
 strength = 0.0
 animation = ExtResource("1_ha1cw")

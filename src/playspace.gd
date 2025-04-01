@@ -364,3 +364,4 @@ func _on_cards_on_card_burned(card: CardData):
 func _on_cards_on_card_drawn(card: CardData):
 	var args: EventArgs = event_manager.get_event_args(null)
 	card.on_card_drawn(args)
+	event_manager.notify(EventManager.EventType.OnCardDrawn)
