@@ -9,7 +9,7 @@
 [sub_resource type="Resource" id="Resource_ir8wh"]
 script = ExtResource("1_p1uf2")
 name = "add_yield"
-strength = 4.0
+strength = 3.0
 on = ""
 range = "self"
 

@@ -89,7 +89,7 @@ func get_description():
 				text += ". Increase card's Cost by 1"
 			return text
 		"Regrow":
-			return "Add Regrow 3 to a card" + (" and 1 week [img]res://assets/custom/Time.png[/img] of grow time to a card " if strength == 1 else "")
+			return "Add Regrow" + (" and 1 week [img]res://assets/custom/Time.png[/img] of grow time to a card " if strength == 1 else " to a card")
 		"Echo":
 			return "Add Echo to a card (When played, add a non-zero-cost Fleeting copy of the card to your hand)"
 		_:

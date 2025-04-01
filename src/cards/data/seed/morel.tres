@@ -1,15 +1,7 @@
-[gd_resource type="Resource" script_class="CardData" load_steps=5 format=3 uid="uid://cw1447a8d2e6q"]
+[gd_resource type="Resource" script_class="CardData" load_steps=3 format=3 uid="uid://cw1447a8d2e6q"]
 
-[ext_resource type="Script" path="res://src/effect/effect.gd" id="1_0ho4v"]
 [ext_resource type="Script" path="res://src/cards/card_data.gd" id="1_n0m0l"]
 [ext_resource type="Texture2D" uid="uid://bt1axp3var8a5" path="res://assets/seed/morel.png" id="3_6imr8"]
-
-[sub_resource type="Resource" id="Resource_125gx"]
-script = ExtResource("1_0ho4v")
-name = "spread"
-strength = 0.5
-on = "grow"
-range = "self"
 
 [resource]
 script = ExtResource("1_n0m0l")
@@ -17,7 +9,7 @@ type = "SEED"
 name = "Morel"
 rarity = "rare"
 cost = 1
-yld = 8
+yld = 16
 time = 2
 size = 4
 text = "Can only be planted on Destroyed tiles"
@@ -27,7 +19,7 @@ texture = ExtResource("3_6imr8")
 seed_texture = 6
 texture_icon_offset = 15
 targets = Array[String](["Blighted", "Destroyed"])
-effects = Array[ExtResource("1_0ho4v")]([SubResource("Resource_125gx")])
+effects = Array[Resource("res://src/effect/effect.gd")]([])
 enhances = Array[String]([])
 strength = 0.0
 delay = 0.0

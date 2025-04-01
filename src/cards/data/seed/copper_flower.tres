@@ -6,7 +6,7 @@
 script = ExtResource("1_aqemg")
 type = "SEED"
 name = "Copper Flower"
-rarity = "rare"
+rarity = "unique"
 cost = 1
 yld = 8
 time = 2

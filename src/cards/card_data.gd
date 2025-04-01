@@ -123,7 +123,7 @@ func apply_enhance(enhance: Enhance):
 					effect.strength += enhance.strength
 					n_card.enhances.append(enhance.name)
 					return n_card
-			n_card.effects.append(load("res://src/effect/data/regrow_3.tres"))
+			n_card.effects.append(load("res://src/effect/data/regrow_0.tres"))
 			if enhance.strength == 1:
 				n_card.time += 1
 	if !n_card.enhances.has(enhance.name):

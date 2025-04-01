@@ -8,7 +8,7 @@
 [sub_resource type="Resource" id="Resource_tp0nd"]
 script = ExtResource("1_48b7n")
 name = "plant"
-strength = 3.0
+strength = 5.0
 on = "harvest"
 range = "self"
 
@@ -18,7 +18,7 @@ type = "SEED"
 name = "Cranberry"
 rarity = "common"
 cost = 1
-yld = 5
+yld = 3
 time = 3
 size = 6
 text = ""
