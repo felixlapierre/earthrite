@@ -351,6 +351,8 @@ func perform_effect(effect, tile: Tile):
 			on_card_draw.emit(effect.strength, new_seed.copy())
 		"add_blight_yield":
 			tile.seed_base_yield += effect.strength * event_manager.turn_manager.blight_damage
+		"protect":
+			tile.protected = true
 
 func gain_yield(tile: Tile, args: EventArgs.HarvestArgs):
 	var destination = Global.MANA_TARGET_LOCATION_PURPLE if args.purple else Global.MANA_TARGET_LOCATION_YELLOW

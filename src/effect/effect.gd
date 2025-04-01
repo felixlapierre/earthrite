@@ -122,6 +122,8 @@ func get_short_description(card: CardData):
 			return "Add " + get_strength_text() + " Fleeting cop" + ("y" if strength == 1 else "ies") + " of the plant's seed to your hand"
 		"add_blight_yield":
 			return "Add " + get_strength_text() + " base " + Helper.mana_icon() + " per " + Helper.blight_icon() + " when planted"
+		"protect":
+			return "Protect " + get_size(card) + " tiles from the Blight"
 		_:
 			return ""
 
@@ -154,6 +156,8 @@ func get_long_description():
 			return "Destroy Plant: Removes a plant from your farm, without gaining its Mana (" + Helper.mana_icon() + ")"
 		"echo":
 			return "Echo: When played, add a Fleeting copy of this card to your hand. The copy costs at least 1 energy."
+		"protect":
+			return "Protect: Tile cannot be targeted by the Blight"
 		_:
 			return ""
 

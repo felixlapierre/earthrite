@@ -1,0 +1,24 @@
+[gd_resource type="Resource" script_class="Rockbud" load_steps=2 format=3 uid="uid://cuo6v5pbe75rx"]
+
+[ext_resource type="Script" path="res://src/cards/custom/rockbud.gd" id="1_b1vac"]
+
+[resource]
+script = ExtResource("1_b1vac")
+type = "SEED"
+name = "Rockbud"
+rarity = "common"
+cost = 1
+yld = 25
+time = 3
+size = 1
+text = "Cannot be targeted by the Blight"
+strength_increment = 1.0
+size_increment = 1
+seed_texture = 0
+texture_icon_offset = 16
+targets = Array[String]([])
+effects = Array[Resource("res://src/effect/effect.gd")]([])
+enhances = Array[String]([])
+strength = 0.0
+delay = 0.0
+anim_on = 0
