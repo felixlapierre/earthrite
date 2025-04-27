@@ -1,9 +1,10 @@
-[gd_scene load_steps=8 format=3 uid="uid://xva3qbqb4k5o"]
+[gd_scene load_steps=9 format=3 uid="uid://xva3qbqb4k5o"]
 
 [ext_resource type="Script" path="res://src/playspace.gd" id="1_hjvjc"]
 [ext_resource type="PackedScene" uid="uid://c0hbi7fqujvbn" path="res://src/farm/background.tscn" id="2_2qbwg"]
 [ext_resource type="PackedScene" uid="uid://bbmiskr3ha0we" path="res://src/farm/farm.tscn" id="2_4q20t"]
 [ext_resource type="PackedScene" uid="uid://cswinrop881oo" path="res://src/user_interface.tscn" id="7_xiqpp"]
+[ext_resource type="Script" path="res://src/ui/display/shake_camera.gd" id="8_i0xww"]
 [ext_resource type="PackedScene" uid="uid://dn6mjla5pvtrh" path="res://src/cards/cards.tscn" id="16_bvmlh"]
 [ext_resource type="PackedScene" uid="uid://bc8n6jk05ybsj" path="res://src/turn_manager/turn_manager.tscn" id="19_dlhyr"]
 [ext_resource type="PackedScene" uid="uid://cjdwiax30iity" path="res://src/listener/event_manager.tscn" id="21_bbo6d"]
@@ -22,6 +23,10 @@ script = ExtResource("1_hjvjc")
 [node name="EventManager" parent="." instance=ExtResource("21_bbo6d")]
 
 [node name="UserInterface" parent="." instance=ExtResource("7_xiqpp")]
+
+[node name="ShakeCamera2D" type="Camera2D" parent="."]
+anchor_mode = 0
+script = ExtResource("8_i0xww")
 
 [connection signal="after_card_played" from="FarmTiles" to="." method="_on_farm_tiles_after_card_played"]
 [connection signal="card_played" from="FarmTiles" to="." method="_on_farm_tiles_card_played"]

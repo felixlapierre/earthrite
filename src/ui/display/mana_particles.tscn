@@ -1,0 +1,45 @@
+[gd_scene load_steps=7 format=3 uid="uid://it4cyxojadlc"]
+
+[ext_resource type="Script" path="res://src/ui/display/mana_particles.gd" id="1_uvsk2"]
+[ext_resource type="Texture2D" uid="uid://dq2haj0yfxtqu" path="res://assets/animation/ManaAnimation.png" id="2_kqhdw"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_de8ky"]
+particles_animation = true
+particles_anim_h_frames = 7
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[sub_resource type="Curve" id="Curve_1m6kf"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.737113, 0.755435), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_576m0"]
+curve = SubResource("Curve_1m6kf")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_kaoik"]
+particle_flag_disable_z = true
+emission_shape = 1
+emission_sphere_radius = 100.0
+direction = Vector3(0, -1, 0)
+spread = 90.0
+initial_velocity_max = 100.0
+gravity = Vector3(0, -98, 0)
+scale_max = 3.0
+scale_curve = SubResource("CurveTexture_576m0")
+hue_variation_max = 0.05
+anim_speed_min = 1.0
+anim_speed_max = 1.0
+
+[node name="ManaParticles" type="Node2D"]
+script = ExtResource("1_uvsk2")
+
+[node name="ManaParticles" type="GPUParticles2D" parent="."]
+modulate = Color(1, 0.988235, 0.25098, 1)
+texture_filter = 1
+material = SubResource("CanvasItemMaterial_de8ky")
+amount = 3
+process_material = SubResource("ParticleProcessMaterial_kaoik")
+texture = ExtResource("2_kqhdw")
+lifetime = 1.4
+explosiveness = 0.8
+randomness = 0.8

@@ -24,6 +24,8 @@ var enhances = 0
 var structures = 0
 var removals = 0
 
+var fixed_explores = []
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass # Replace with function body.
@@ -39,9 +41,18 @@ func setup(deck, p_tooltip):
 	explores = 0
 
 func create_explore(p_explores, turn_manager: TurnManager):
+	explores += p_explores
+	fixed_explores += ["Gain Card"]
+	if turn_manager.year == 3 or turn_manager.year == 6 or turn_manager.year == 8:
+		fixed_explores += ["Rare Card", "Rare Structure"]
+		explores -= 1
+	explores += fixed_explores.size()
+	create_binary_explore()
+	return
+	
 	for point in $Points.get_children():
 		$Points.remove_child(point)
-	explores += p_explores
+
 	$CenterContainer/PanelContainer/VBox/HBox/Label.text = "Explorations Remaining: " + str(explores)
 	var DIST = 250
 	var positions = []
@@ -95,7 +106,91 @@ func create_explore(p_explores, turn_manager: TurnManager):
 			use_explore(pt)
 			on_event.emit())
 
+func create_point_from_name(name, location):
+	match name:
+		"Gain Card":
+			create_point("Gain Card", location, func(pt):
+				use_explore(pt)
+				add_card("common", 5 - Mastery.less_options()))
+		"Event":
+			create_point("Event", location, func(pt):
+				use_explore(pt)
+				on_event.emit())
+		"Enhance Card":
+			create_point("Enhance Card", location, func(pt):
+				use_explore(pt)
+				enhances += 1
+				select_enhance("common"))
+		"Structure":
+			create_point("Structure", location, func(pt):
+				use_explore(pt)
+				structures += 1
+				add_structure("common"))
+		"Expand Farm":
+			create_point("Expand Farm", location, func(pt):
+				use_explore(pt)
+				expands += 1
+				expand_farm())
+		"Remove Card":
+			create_point("Remove Card", location, func(pt):
+				select_card_to_remove(pt))
+		"Rare Card":
+			create_point("Rare Card", location, func(pt):
+				use_explore(pt)
+				add_card("rare", 3))
+		"Rare Structure":
+			create_point("Rare Structure", location, func(pt):
+				use_explore(pt)
+				add_structure("rare"))
+
+func create_binary_explore():
+	$CenterContainer/PanelContainer/VBox/HBox/Label.text = "Explorations Remaining: " + str(explores)
+	for point in $Points.get_children():
+		$Points.remove_child(point)
+	if explores == 0:
+		return
+	var DIST = 250
+	if fixed_explores.size() > 0:
+		var option = fixed_explores.pop_front()
+		create_point_from_name(option, Vector2(0, 0))
+		return
+		
+	var option1 = pick_binary_explore()
+	var option2 = pick_binary_explore()
+	while option1 == option2:
+		option2 = pick_binary_explore()
+	
+	create_point_from_name(option1, Vector2(-DIST, 0))
+	create_point_from_name(option2, Vector2(DIST, 0))
+	
+func pick_binary_explore():
+	var i = randi_range(0, 100)
+	if i <= 50:
+		return "Gain Card"
+	if i <= 60:
+		return "Event"
+	if i <= 70 and Helper.can_expand_farm():
+		return "Enhance Card"
+	if i <= 75:
+		return "Structure"
+	if i <= 80:
+		return "Remove Card"
+	if i <= 90:
+		return "Expand Farm"
+	if i <= 95:
+		return "Rare Card"
+	#if i <= 99:
+	#	return "Rare Enhance"
+	if i <= 100:
+		return "Rare Structure"
+	return "Gain Card"
+
 func use_explore(node):
+	if node != null:
+		explores -= 1
+		create_binary_explore()
+		return
+	
 	if node != null:
 		node.disable()
 		explores -= 1

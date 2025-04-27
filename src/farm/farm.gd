@@ -3,6 +3,7 @@ class_name Farm
 
 var FarmTile = preload("res://src/farm/tile.tscn")
 var Glow = preload("res://src/animation/glow.tscn")
+var ManaParticles = preload("res://src/ui/display/mana_particles.tscn")
 
 var event_manager: EventManager
 
@@ -15,6 +16,7 @@ var next_turn_effects = []
 var hovered_tile = null
 var current_shape
 var selection = []
+var mana_added: float = 0.0
 
 signal card_played
 signal after_card_played
@@ -48,6 +50,7 @@ func setup(p_event_manager: EventManager):
 			tile.tile_hovered.connect(on_tile_hover)
 			tile.on_event.connect(on_farm_tile_on_event)
 			tile.on_yield_gained.connect(gain_yield)
+			tile.on_yield_added.connect(on_farm_tile_yield_added)
 			if i >= Constants.PURPLE_GTE_INDEX:
 				tile.purple = true
 			$Tiles.add_child(tile)
@@ -119,11 +122,14 @@ func use_card(grid_position):
 		for target in targets:
 			if tiles[target.x][target.y].card_can_target(card):
 				tiles[target.x][target.y].nudge()
+	mana_added = 0.0
 	use_card_on_targets(card, targets, false)
 	clear_overlay()
 	process_effect_queue()
 	event_manager.notify_specific_args(EventManager.EventType.AfterCardPlayed, args)
 	card.unregister_events(event_manager)
+	Playspace.shake_mana(mana_added)
+	mana_added = 0.0
 	after_card_played.emit()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -494,6 +500,26 @@ func remove_blight_from_all_tiles():
 			tile.remove_blight()
 
 func blight_bubble_animation(tile: Tile, args: EventArgs.HarvestArgs, destination: Vector2):
+	var mana_amount = args.yld
+	var color = Color8(166, 252, 219) if args.purple else Color8(255, 252, 64)
+	if args.green > 0:
+		mana_amount = args.green
+		color = Color8(15, 252, 3)
+	if mana_amount == 0:
+		return
+	var mana_particles: ManaParticles = ManaParticles.instantiate()
+	mana_particles.color = color
+	mana_particles.amount = min(int(mana_amount / 5), 10)
+	mana_particles.max_scale = min(1.3 + mana_amount / 15, 4.0)
+	mana_particles.size = 100
+	mana_particles.position = tile.position + TILE_SIZE / 2
+	mana_particles.hue_variation_max = min(0.0 + 0.01 * (mana_amount / 10), 0.10)
+	mana_particles.on_finish = func():
+		$Animations.remove_child(mana_particles)
+	print(mana_amount)
+
+	$Animations.add_child(mana_particles)
+	return
 	var bubbles = args.yld
 	var purple = args.purple
 	for i in range(min(10, bubbles)):
@@ -559,3 +585,7 @@ func do_plant_shearing_animation(origin: Vector2, size: int):
 		var push_direction = tile.position.direction_to(origin)
 		var push_intensity = max(0, 12 * (1 - (origin.distance_to(tile.position) / TILE_SIZE.x / decay)))
 		tile.push_animate(push_direction * push_intensity)
+
+func on_farm_tile_yield_added(tile: Tile, amount: float):
+	mana_added += amount
+	blight_bubble_animation(tile, EventArgs.HarvestArgs.new(0, false, false, amount), tile.position)

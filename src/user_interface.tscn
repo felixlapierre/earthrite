@@ -470,6 +470,7 @@ text = "Explore"
 metadata/_edit_use_anchors_ = true
 
 [node name="CardButton" type="Button" parent="Winter"]
+visible = false
 layout_mode = 0
 offset_left = 1321.0
 offset_top = 218.0

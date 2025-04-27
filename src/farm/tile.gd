@@ -28,6 +28,7 @@ var rock = false
 signal tile_hovered
 signal on_event
 signal on_yield_gained
+signal on_yield_added
 
 var event_manager: EventManager
 
@@ -282,11 +283,12 @@ func do_winter_clear():
 
 func multiply_yield(strength):
 	$AddYieldParticles.emitting = true
+	on_yield_added.emit(self, current_yield * (strength - 1))
 	current_yield *= strength
 
 func add_yield(strength):
-	$AddYieldParticles.emitting = true
 	current_yield += strength
+	on_yield_added.emit(self, strength)
 
 func get_turn_start_effects() -> Array[Effect]: 
 	return get_effects("turn_start")

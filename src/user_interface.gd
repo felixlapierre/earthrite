@@ -57,6 +57,10 @@ var debug_menu = preload("res://src/ui/menus/debug_menu.tscn")
 var end_year_alert_text = "Ritual Complete! Time to rest and prepare for the next year"
 var structure_place_text = "Click on the farm tile where you'd like to place the structure"
 var no_energy_text = "[color=red]Not Enough Energy![/color]"
+
+var ritual_current_amount: int = 0
+var t = 0.0
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	for i in Global.MAX_BLIGHT:
@@ -74,6 +78,16 @@ func _process(delta: float) -> void:
 	$UI/HelpButton.visible = Global.selected_card != null
 	$UI/EndTurnButton.visible = Global.selected_card == null or !Settings.CLICK_MODE
 	$Winter/NextYearButton.disabled = !next_year_allowed()
+	
+	# Lerping obelisk
+	if ritual_current_amount != turn_manager.get_current_ritual():
+		t += delta
+		ritual_current_amount = ceil(lerp(ritual_current_amount, turn_manager.get_current_ritual(), 2 * t))
+	elif t >= 0.5:
+		t = 0.0
+		ritual_current_amount = turn_manager.get_current_ritual()
+	$UI/RitualPanel/RitualCounter/Label.text = "[right]" + str(ritual_current_amount) + " /" + str(turn_manager.total_ritual)
+	$Obelisk.value = turn_manager.total_ritual - ritual_current_amount
 
 func setup(p_event_manager: EventManager, p_turn_manager: TurnManager, p_deck: Array[CardData], p_cards: Cards):
 	$FortuneTeller.setup(p_event_manager)
@@ -127,6 +141,7 @@ func start_year():
 	AlertDisplay.clear(end_year_alert_text)
 	$Tutorial.position.x = 1368
 	$Winter/Explore.explores = 0
+	ritual_current_amount = 0
 	do_squirrel_seed()
 	create_fortune_display()
 	update_damage()
@@ -184,7 +199,6 @@ func update():
 		#$UI/NextBlightPanel/NextTurnLabel.text = "Attack\nNext Turn: [color=9f78e3]" + str(max(turn_manager.next_turn_blight - next_turn_amount, 0)) + "[/color]"
 	$UI/AttackPreview.update()
 	
-	$UI/RitualPanel/RitualCounter/Label.text = "[right]" + str(turn_manager.get_current_ritual()) + " /" + str(turn_manager.total_ritual)
 	$Shop.update_labels()
 	$Winter/FarmUpgradeButton.disabled = $UpgradeShop.lock or ![4, 7, 10].has(turn_manager.year)
 
@@ -195,7 +209,6 @@ func update():
 	$UI/Deck/DeckCount.text = "Deck: " + str(cards.get_deck_info().size())
 	$UI/Deck/DiscardCount.text = "Discard: " + str(cards.get_discard_info().size())
 	$Obelisk.max_value = turn_manager.total_ritual
-	$Obelisk.value = turn_manager.ritual_counter	
 	$UpgradeShop.update()
 	weather_display.update()
 
@@ -462,7 +475,7 @@ func select_card_to_enhance(enhance: Enhance):
 	select_card.do_enhance_pick(deck, enhance, "Select a card to enhance")
 
 func next_year_allowed():
-	return ($Winter/Explore.explores == 0 and $Winter/CardButton.disabled)\
+	return ($Winter/Explore.explores == 0)\
 		|| Settings.DEBUG
 
 func _on_shop_on_blight_removed() -> void:

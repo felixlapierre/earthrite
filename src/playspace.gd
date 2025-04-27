@@ -14,6 +14,7 @@ signal on_main_menu
 @onready var farm: Farm = $FarmTiles
 @onready var cards: Cards = $Cards
 @onready var event_manager: EventManager = $EventManager
+static var camera: ShakeCamera2D
 
 var helper = preload("res://src/farm/startup_helper.gd")
 
@@ -23,7 +24,7 @@ var fall_tileset = preload("res://assets/1616tinygarden/tileset-fall.png")
 var winter_tileset = preload("res://assets/1616tinygarden/tileset-winter.png")
 var winter_night_tileset = preload("res://assets/1616tinygarden/tileset-winter-night.png")
 
-
+var mana_gained_this_action: float = 0.0
 
 func _ready() -> void:
 	randomize()
@@ -33,6 +34,7 @@ func _ready() -> void:
 	$UserInterface.update()
 	$FarmTiles.setup($EventManager)
 	$TurnManager.setup($EventManager)
+	camera = $ShakeCamera2D
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
@@ -54,6 +56,7 @@ func _on_farm_tiles_card_played(card) -> void:
 			end_year(false)
 
 func _on_farm_tiles_on_yield_gained(args: EventArgs.HarvestArgs) -> void:
+	mana_gained_this_action += args.yld
 	if args.purple:
 		$TurnManager.gain_purple_mana(args.yld, args.delay)
 	else:
@@ -90,6 +93,7 @@ func end_year(endless: bool):
 		$Background.animate_blightroots("safe_to_none")
 	
 	await get_tree().create_timer(Constants.MANA_MOVE_TIME).timeout
+	shake_camera(30.0)
 	$Background.ritual_complete()
 	await get_tree().create_timer(0.5 if Settings.DEBUG else 2).timeout
 	$Background.set_background_winter($TurnManager.week)
@@ -350,6 +354,8 @@ func _on_user_interface_on_skip() -> void:
 
 
 func _on_farm_tiles_after_card_played():
+	shake_mana(mana_gained_this_action)
+	mana_gained_this_action = 0.0
 	if victory == true:
 		end_year(false)
 
@@ -365,3 +371,14 @@ func _on_cards_on_card_drawn(card: CardData):
 	var args: EventArgs = event_manager.get_event_args(null)
 	card.on_card_drawn(args)
 	event_manager.notify(EventManager.EventType.OnCardDrawn)
+
+static func shake_mana(mana: float):
+	if mana >= 150.0:
+		shake_camera(100.0)
+	elif mana >= 100.0:
+		shake_camera(30.0)
+	elif mana >= 50.0:
+		shake_camera(10.0)
+
+static func shake_camera(amount: float = 30.0):
+	camera.apply_shake(amount)
