@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://ccnobfjaguoie"]
+[gd_scene load_steps=22 format=3 uid="uid://ccnobfjaguoie"]
 
 [ext_resource type="Script" path="res://src/farm/tile.gd" id="1_8vnt4"]
 [ext_resource type="Texture2D" uid="uid://cmitvrjj6os0f" path="res://assets/1616tinygarden/Farm.png" id="2_n75y4"]
@@ -9,11 +9,12 @@
 [ext_resource type="Texture2D" uid="uid://bjygvp3da0050" path="res://assets/custom/destroy_target.png" id="7_023dm"]
 [ext_resource type="Texture2D" uid="uid://cba7uh0mnuoum" path="res://assets/custom/LeafParticle.png" id="7_otjuw"]
 [ext_resource type="Texture2D" uid="uid://jbl8fupoclkv" path="res://assets/custom/GainYieldParticle.png" id="8_hyote"]
+[ext_resource type="Theme" uid="uid://bdodinwpnjkw8" path="res://assets/theme_huge.tres" id="8_ikq5e"]
 [ext_resource type="Texture2D" uid="uid://clf1ovfisrdg0" path="res://assets/animation/destroy.png" id="9_cvalt"]
 [ext_resource type="Texture2D" uid="uid://dgmqywyoi5u0p" path="res://assets/custom/EffectParticle.png" id="9_iiv5d"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1iam7"]
-bg_color = Color(0.784314, 0.784314, 0.784314, 0.537255)
+bg_color = Color(0.807843, 0.815686, 0.835294, 0.537255)
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_0du70"]
 particles_animation = true
@@ -23,19 +24,19 @@ particles_anim_loop = false
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_hyydv"]
 particle_flag_disable_z = true
-emission_shape_offset = Vector3(8, 8, 0)
+emission_shape_offset = Vector3(45, 45, 0)
 emission_shape = 3
-emission_box_extents = Vector3(8, 8, 1)
+emission_box_extents = Vector3(45, 45, 1)
 angle_min = -720.0
 angle_max = 720.0
 spread = 180.0
-initial_velocity_min = 17.24
-initial_velocity_max = 17.24
+initial_velocity_min = 50.0
+initial_velocity_max = 50.0
 angular_velocity_min = -82.76
 angular_velocity_max = 140.69
 gravity = Vector3(0, 98, 0)
-scale_min = 0.35
-scale_max = 0.35
+scale_min = 3.2
+scale_max = 3.2
 hue_variation_max = 0.09
 anim_speed_min = 0.73
 anim_speed_max = 1.66
@@ -48,14 +49,14 @@ particles_anim_loop = true
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_gn4kv"]
 particle_flag_disable_z = true
-emission_shape_offset = Vector3(8, 8, 0)
+emission_shape_offset = Vector3(45, 45, 0)
 emission_shape = 3
-emission_box_extents = Vector3(8, 8, 1)
+emission_box_extents = Vector3(45, 45, 1)
 direction = Vector3(0, -1, 0)
 initial_velocity_max = 40.23
 gravity = Vector3(0, 42, 0)
-scale_min = 0.75
-scale_max = 0.75
+scale_min = 2.0
+scale_max = 2.0
 hue_variation_min = 0.44
 hue_variation_max = 0.58
 anim_speed_min = 3.03
@@ -69,13 +70,15 @@ particles_anim_loop = false
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_swo03"]
 particle_flag_disable_z = true
-emission_shape_offset = Vector3(8, 8, 0)
+emission_shape_offset = Vector3(45, 45, 0)
 emission_shape = 3
-emission_box_extents = Vector3(8, 8, 1)
+emission_box_extents = Vector3(45, 45, 1)
 direction = Vector3(0, 1, 0)
 spread = 90.0
 initial_velocity_max = 5.0
 gravity = Vector3(0, -98, 0)
+scale_min = 1.5
+scale_max = 1.5
 anim_speed_min = 0.5
 anim_speed_max = 1.0
 
@@ -87,11 +90,13 @@ particles_anim_loop = false
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_7d61u"]
 particle_flag_disable_z = true
-emission_shape_offset = Vector3(8, 8, 0)
+emission_shape_offset = Vector3(45, 45, 0)
 emission_shape = 3
-emission_box_extents = Vector3(8, 8, 1)
+emission_box_extents = Vector3(45, 45, 1)
 initial_velocity_max = 28.74
 gravity = Vector3(0, -98, 0)
+scale_min = 5.0
+scale_max = 5.0
 anim_speed_min = 1.0
 anim_speed_max = 1.0
 
@@ -100,6 +105,7 @@ script = ExtResource("1_8vnt4")
 
 [node name="Farmland" type="Sprite2D" parent="."]
 texture_filter = 1
+scale = Vector2(5.7, 5.7)
 texture = ExtResource("2_n75y4")
 offset = Vector2(8, 8)
 region_enabled = true
@@ -107,25 +113,29 @@ region_rect = Rect2(0, 0, 16, 16)
 
 [node name="PurpleOverlay" type="Sprite2D" parent="."]
 visible = false
+scale = Vector2(5.7, 5.7)
 texture = ExtResource("3_jwute")
 offset = Vector2(8, 8)
 
 [node name="TileButton" type="TextureButton" parent="."]
 texture_filter = 1
+custom_minimum_size = Vector2(91, 91)
 layout_mode = 2
 texture_normal = ExtResource("4_bvg7e")
+stretch_mode = 0
 
 [node name="Rock" type="Sprite2D" parent="."]
 visible = false
 texture_filter = 1
-position = Vector2(8, 9)
+position = Vector2(47, 46)
+scale = Vector2(5.7, 5.7)
 texture = ExtResource("5_ksptn")
 
 [node name="PlantSprite" type="Sprite2D" parent="."]
 visible = false
 texture_filter = 1
-position = Vector2(8, 16)
-scale = Vector2(0.5, 0.5)
+position = Vector2(45, 91)
+scale = Vector2(5.7, 5.7)
 offset = Vector2(0, -16)
 region_enabled = true
 region_rect = Rect2(0, 32, 32, 32)
@@ -133,12 +143,14 @@ region_rect = Rect2(0, 32, 32, 32)
 [node name="BlightTargetOverlay" type="Sprite2D" parent="."]
 visible = false
 texture_filter = 1
+scale = Vector2(5.7, 5.7)
 texture = ExtResource("6_6m84b")
 offset = Vector2(8, 8)
 
 [node name="DestroyTargetOverlay" type="Sprite2D" parent="."]
 visible = false
 texture_filter = 1
+scale = Vector2(5.7, 5.7)
 texture = ExtResource("7_023dm")
 offset = Vector2(8, 8)
 
@@ -155,7 +167,7 @@ layout_mode = 2
 texture_filter = 1
 custom_minimum_size = Vector2(16, 0)
 layout_mode = 2
-theme_override_font_sizes/font_size = 9
+theme = ExtResource("8_ikq5e")
 text = "123"
 horizontal_alignment = 1
 

@@ -13,6 +13,8 @@ var turn_manager: TurnManager
 var mage_fortune: Fortune
 var attack: AttackPattern
 
+signal on_peek_week
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	Global.register_click_callback(self)
@@ -70,6 +72,8 @@ func set_attack(p_attack: AttackPattern):
 	for i in range(1, Global.FINAL_WEEK):
 		var preview = FutureTurnPreview.instantiate()
 		preview.setup(i, pattern[i], fortunes[i])
+		preview.selected.connect(func(week):
+			on_peek_week.emit(week))
 		$NextTurns/List.add_child(preview)
 		var last_visible = 3 if !Mastery.hide_preview() else 1
 		if i > last_visible:
@@ -97,20 +101,24 @@ func update_fortunes(fortunes: Array[Fortune]):
 		Fortunes.add_child(hover)
 		hover.setup(fortune)
 
+# Disconnected
 func _on_next_turns_mouse_entered():
 	if false:#!Settings.CLICK_MODE:
 		show_full_preview()
 
+# Disconnected
 func _on_next_turns_mouse_exited():
 	if false:#!Settings.CLICK_MODE:
 		hide_full_preview()
 
+# Disconnected
 func _on_list_gui_input(event: InputEvent) -> void:
 	if event.is_action_pressed("leftclick") and true:#Settings.CLICK_MODE:
 		show_full_preview()
 
 func on_other_clicked():
 	hide_full_preview()
+	on_peek_week.emit(-1)
 
 func show_full_preview():
 	if Mastery.hide_preview(): return

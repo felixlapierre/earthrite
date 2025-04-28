@@ -62,3 +62,7 @@ layout_mode = 2
 
 [node name="FortuneHover2" parent="VBox/Attack/Fortunes" instance=ExtResource("5_o3504")]
 layout_mode = 2
+
+[connection signal="gui_input" from="VBox/Attack" to="." method="_on_gui_input"]
+[connection signal="mouse_entered" from="VBox/Attack" to="." method="_on_attack_mouse_entered"]
+[connection signal="mouse_exited" from="VBox/Attack" to="." method="_on_attack_mouse_exited"]

@@ -317,6 +317,15 @@ layout_mode = 2
 theme_override_colors/font_color = Color(0.498039, 1, 0, 1)
 text = "+12"
 
+[node name="ProjectedManaLabel" type="RichTextLabel" parent="UI/Preview/Panel"]
+visible = false
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+bbcode_enabled = true
+text = "[center]Projected Mana
+[color=yellow]512 / [color=blue]128"
+fit_content = true
+
 [node name="SkipButton" type="Button" parent="UI"]
 layout_mode = 0
 offset_left = 1750.0
@@ -370,12 +379,12 @@ offset_bottom = 501.0
 layout_mode = 2
 
 [node name="PeekButton" type="TextureButton" parent="UI"]
-visible = false
+custom_minimum_size = Vector2(80, 80)
 layout_mode = 0
-offset_left = 1076.0
-offset_top = 46.0
-offset_right = 1116.0
-offset_bottom = 86.0
+offset_left = 1275.0
+offset_top = 5.0
+offset_right = 1355.0
+offset_bottom = 85.0
 texture_normal = ExtResource("21_tlcd4")
 texture_pressed = ExtResource("22_oyub8")
 texture_hover = ExtResource("22_oyub8")
@@ -571,6 +580,8 @@ script = ExtResource("34_bvh0t")
 [connection signal="pressed" from="UI/SkipButton" to="." method="_on_skip_button_pressed"]
 [connection signal="mouse_entered" from="UI/PeekButton" to="." method="_on_peek_button_mouse_entered"]
 [connection signal="mouse_exited" from="UI/PeekButton" to="." method="_on_peek_button_mouse_exited"]
+[connection signal="pressed" from="UI/PeekButton" to="." method="_on_peek_button_pressed"]
+[connection signal="on_peek_week" from="UI/AttackPreview" to="." method="_on_attack_preview_on_peek_week"]
 [connection signal="pressed" from="UI/HelpButton" to="." method="_on_help_button_pressed"]
 [connection signal="pressed" from="UI/EndTurnButton" to="." method="_on_end_turn_button_pressed"]
 [connection signal="pressed" from="Winter/ShopButton" to="." method="_on_shop_button_pressed"]

@@ -44,7 +44,6 @@ func setup(p_event_manager: EventManager):
 		for j in Constants.FARM_DIMENSIONS.y:
 			var tile = FarmTile.instantiate()
 			tile.position = TOP_LEFT + TILE_SIZE * Vector2(i, j)
-			tile.set_tile_size(TILE_SIZE)
 			tile.grid_location = Vector2(i, j)
 			tiles[i].append(tile)
 			tile.tile_hovered.connect(on_tile_hover)
@@ -551,9 +550,19 @@ func _on_user_interface_farm_preview_hide() -> void:
 	for tile: Tile in get_all_tiles():
 		tile.hide_peek()
 
-func _on_user_interface_farm_preview_show() -> void:
+func _on_user_interface_farm_preview_show(weeks: int, callback: Callable) -> void:
+	var yellow = 0.0
+	var purple = 0.0
 	for tile: Tile in get_all_tiles():
-		tile.show_peek()
+		var mana = tile.show_peek(weeks)
+		if tile.purple:
+			purple += mana
+		else:
+			yellow += mana
+	callback.call(weeks, {
+		"purple": purple,
+		"yellow": yellow
+	})
 
 func _on_confirm_button_pressed() -> void:
 	if hovered_tile != null:

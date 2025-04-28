@@ -82,8 +82,8 @@ func _process(delta: float) -> void:
 	# Lerping obelisk
 	if ritual_current_amount != turn_manager.get_current_ritual():
 		t += delta
-		ritual_current_amount = ceil(lerp(ritual_current_amount, turn_manager.get_current_ritual(), 2 * t))
-	elif t >= 0.5:
+		ritual_current_amount = ceil(lerp(ritual_current_amount, turn_manager.get_current_ritual(), t))
+	elif t >= 1.0:
 		t = 0.0
 		ritual_current_amount = turn_manager.get_current_ritual()
 	$UI/RitualPanel/RitualCounter/Label.text = "[right]" + str(ritual_current_amount) + " /" + str(turn_manager.total_ritual)
@@ -681,12 +681,14 @@ func _on_farm_tiles_no_energy() -> void:
 func _on_end_screen_on_main_menu() -> void:
 	on_main_menu.emit()
 
-
 func _on_peek_button_mouse_entered() -> void:
-	farm_preview_show.emit()
+	if !Settings.CLICK_MODE:
+		farm_preview_show.emit(0, display_projected_mana)
 
 func _on_peek_button_mouse_exited() -> void:
-	farm_preview_hide.emit()
+	if !Settings.CLICK_MODE:
+		farm_preview_hide.emit()
+		$UI/Preview/Panel/ProjectedManaLabel.visible = false
 
 func _on_menu_button_pressed() -> void:
 	$PauseMenu.visible = true
@@ -797,3 +799,22 @@ func do_squirrel_seed():
 	if seed != null and randi_range(0, 100) <= 33:
 		deck.erase(seed)
 		deck.append(load("res://src/event/unique/sunflower.tres"))
+
+func _on_attack_preview_on_peek_week(week: int):
+	if week == -1:
+		farm_preview_hide.emit()
+		$UI/Preview/Panel/ProjectedManaLabel.visible = false
+	else:
+		farm_preview_show.emit(week, display_projected_mana)
+
+func _on_peek_button_pressed():
+	if Settings.CLICK_MODE:
+		farm_preview_show.emit(0, display_projected_mana)
+ 
+func display_projected_mana(weeks, mana):
+	var text = "[center]Est. Mana"
+	if weeks > 0:
+		text += " (" + str(weeks) + Helper.time_icon() + ")"
+	text += "\n[color=yellow]" + str(mana.yellow) + "[/color] / [color=aqua]" + str(mana.purple)
+	$UI/Preview/Panel/ProjectedManaLabel.text = text
+	$UI/Preview/Panel/ProjectedManaLabel.visible = true

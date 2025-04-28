@@ -103,7 +103,3 @@ offset_bottom = 40.0
 
 [node name="List" type="VBoxContainer" parent="NextTurns"]
 layout_mode = 2
-
-[connection signal="gui_input" from="NextTurns/List" to="." method="_on_list_gui_input"]
-[connection signal="mouse_entered" from="NextTurns/List" to="." method="_on_next_turns_mouse_entered"]
-[connection signal="mouse_exited" from="NextTurns/List" to="." method="_on_next_turns_mouse_exited"]

@@ -204,7 +204,7 @@ func update_plant_sprite():
 			
 		$PlantSprite.set_region_rect(Rect2(seed.seed_texture * 16, y, 16, h))
 		$PlantSprite.offset = Vector2(0, -8 if h == 16 else -14)
-		$PlantSprite.scale = Vector2(1, 1)
+		$PlantSprite.scale = Vector2(5.7, 5.7)
 	else:
 		var resolution = seed.texture.get_height() / 2
 		var max_stage: int = seed.texture.get_width() / resolution - 1
@@ -212,7 +212,7 @@ func update_plant_sprite():
 		var x = resolution * current_stage
 		$PlantSprite.set_region_rect(Rect2(x, 0, resolution, resolution*2))
 		$PlantSprite.offset = Vector2(0, -resolution)
-		$PlantSprite.scale = Vector2(16.0 / resolution, 16.0 / resolution)
+		$PlantSprite.scale = Vector2(91.0 / resolution, 91.0 / resolution)
 
 func harvest(delay) -> Array[Effect]:
 	var effects: Array[Effect] = []
@@ -261,7 +261,7 @@ func build_structure(n_structure: Structure, rotate):
 	var rest_position = $PlantSprite.position
 	$PlantSprite.position += Vector2(0, -200)
 	$PlantSprite.offset = Vector2(0, -8)
-	$PlantSprite.scale = Vector2(1, 1)
+	$PlantSprite.scale = Vector2(5.7, 5.7)
 	var tween = get_tree().create_tween()
 	tween.tween_property($PlantSprite, "position", rest_position, 0.6).set_trans(Tween.TRANS_BOUNCE)\
 		.set_ease(Tween.EASE_OUT)
@@ -416,16 +416,48 @@ func is_protected():
 func is_watered():
 	return irrigated or Global.ALL_WATERED
 
-func show_peek():
+func show_peek(weeks: int = 0):
+	if !(state == Enums.TileState.Mature or state == Enums.TileState.Growing):
+		return 0.0
 	$PeekCont.visible = true
-	$PeekCont/CenterCont/PeekLabel.text = str(round(current_yield))
-	match state:
+	var panel = $PeekCont
+	
+	var projected_mana = current_yield
+	var multiplier = 1.0
+	if is_watered():
+		multiplier += Global.WATERED_MULTIPLIER
+		var absorb = seed.get_effect("absorb")
+		if absorb != null:
+			multiplier += Global.WATERED_MULTIPLIER * absorb.strength
+	projected_mana += seed_base_yield / seed_grow_time * multiplier * min(weeks, seed_grow_time - current_grow_progress)
+
+	var projected_state = Enums.TileState.Growing if current_grow_progress + weeks < seed_grow_time else Enums.TileState.Mature
+
+	$PeekCont/CenterCont/PeekLabel.text = str(round(projected_mana))
+	var corrupted = false
+	if seed != null and seed.get_effect("corrupted") != null:
+		corrupted = true
+		var stylebox: StyleBoxFlat = panel.get_theme_stylebox("panel").duplicate()
+		stylebox.set("bg_color", Color(Color.RED, 0.5))
+		panel.add_theme_stylebox_override("panel", stylebox)
+		return
+	match projected_state:
 		Enums.TileState.Growing:
-			$PeekCont/CenterCont/PeekLabel.set("theme_override_colors/font_color", Color8(168, 137, 34))
+			var stylebox: StyleBoxFlat = panel.get_theme_stylebox("panel").duplicate()
+			stylebox.set("bg_color", Color(Color.YELLOW, 0.5))
+			panel.add_theme_stylebox_override("panel", stylebox)
+			$PeekCont/CenterCont/PeekLabel.set("theme_override_colors/font_color", Color.BLACK)
+			return 0
 		Enums.TileState.Mature:
-			$PeekCont/CenterCont/PeekLabel.set("theme_override_colors/font_color", Color8(15, 133, 20))
+			var stylebox: StyleBoxFlat = panel.get_theme_stylebox("panel").duplicate()
+			stylebox.set("bg_color", Color(Color.GREEN, 0.5))
+			panel.add_theme_stylebox_override("panel", stylebox)
+			$PeekCont/CenterCont/PeekLabel.set("theme_override_colors/font_color", Color.BLACK)
+			return projected_mana if !corrupted else -projected_mana
 		_:
 			$PeekCont.visible = false
+	return 0
+
 
 func hide_peek():
 	$PeekCont.visible = false

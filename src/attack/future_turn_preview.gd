@@ -2,6 +2,9 @@ extends PanelContainer
 
 var FortuneHover = preload("res://src/fortune/fortune_hover.tscn")
 
+var m_week = 0
+signal selected
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass
@@ -11,6 +14,7 @@ func _process(delta):
 	pass
 
 func setup(week: int, attack: int, fortunes: Array[Fortune]):
+	m_week = week
 	for fortune in $VBox/Attack/Fortunes.get_children():
 		$VBox/Attack/Fortunes.remove_child(fortune)
 	$VBox/Attack/Turns.text = str(week)
@@ -25,5 +29,21 @@ func setup(week: int, attack: int, fortunes: Array[Fortune]):
 		hover.setup(fortune)
 
 func decrement_week():
+	m_week -= 1
 	var turn = int($VBox/Attack/Turns.text) - 1
 	$VBox/Attack/Turns.text = str(turn)
+
+
+func _on_gui_input(event):
+	if event.is_action_pressed("leftclick") and Settings.CLICK_MODE:
+		selected.emit(m_week)
+
+
+func _on_attack_mouse_entered():
+	if !Settings.CLICK_MODE:
+		selected.emit(m_week)
+
+
+func _on_attack_mouse_exited():
+	if !Settings.CLICK_MODE:
+		selected.emit(-1)
