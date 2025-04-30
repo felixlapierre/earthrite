@@ -173,7 +173,7 @@ func create_binary_explore():
 		var option3 = pick_binary_explore()
 		while option3 == option1 or option3 == option2:
 			option3 = pick_binary_explore()
-		create_point_from_name(option3, Vector2(-DIST, 0))
+		create_point_from_name(option3, Vector2(0, DIST))
 	
 func pick_binary_explore():
 	var i = randf_range(0, 100)

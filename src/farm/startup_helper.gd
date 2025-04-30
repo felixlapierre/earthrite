@@ -201,7 +201,7 @@ static var mountains_deck = [
 		"count": 2,
 	},
 	{
-		"name": "Leek",
+		"name": "Potato",
 		"type": "seed",
 		"count": 1
 	},
