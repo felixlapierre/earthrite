@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="Fortune" load_steps=5 format=3 uid="uid://dyrugk1cwllc"]
+
+[ext_resource type="Script" path="res://src/effect2/data/harvest_replant.gd" id="1_4mjom"]
+[ext_resource type="Script" path="res://src/fortune/fortune.gd" id="1_qch6p"]
+[ext_resource type="Texture2D" uid="uid://bphgt36lwt0oy" path="res://assets/card/slash.png" id="3_p0g7l"]
+
+[sub_resource type="Resource" id="Resource_4ffm7"]
+script = ExtResource("1_4mjom")
+timing = 2
+is_seed = false
+strength = 1.0
+strength_increment = 1.0
+
+[resource]
+script = ExtResource("1_qch6p")
+name = "Hurricane"
+type = 0
+text = ""
+rank = 0
+texture = ExtResource("3_p0g7l")
+strength = 0.0
+effects = Array[Resource("res://src/effect2/effect2.gd")]([SubResource("Resource_4ffm7")])

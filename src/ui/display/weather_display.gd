@@ -15,7 +15,7 @@ var event_manager: EventManager
 
 static var options = [
 	preload("res://src/fortune/weather/heatwave.gd").new(),
-	preload("res://src/fortune/weather/hurricane.gd").new(),
+	preload("res://src/fortune/weather/hurricane.tres"),
 	preload("res://src/fortune/weather/monsoon.gd").new(),
 	preload("res://src/fortune/weather/snowstorm.gd").new(),
 	preload("res://src/fortune/weather/thunderstorm.gd").new()

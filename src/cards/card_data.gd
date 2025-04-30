@@ -25,10 +25,11 @@ const CLASS_NAME = "CardData"
 @export var animation: SpriteFrames
 @export var delay: float
 @export var anim_on: Enums.AnimOn
+@export var effects2: Array[Effect2]
 
 func _init(p_type = "CARD", p_name = "PlaceholderCardName", p_rarity = "common", p_cost = 1, p_yld = 1,\
 	p_time = 1, p_size = 1, p_text = "", p_texture = null, p_seed_texture = 1, p_targets = [], p_effects = [],\
-	p_strength_increment = 1.0, p_size_increment = 1, p_text_icon_offset = 16, p_enhances = [], p_strength = 0, p_animation = null, p_delay = 0.0, p_anim_on = Enums.AnimOn.Mouse):
+	p_strength_increment = 1.0, p_size_increment = 1, p_text_icon_offset = 16, p_enhances = [], p_strength = 0, p_animation = null, p_delay = 0.0, p_anim_on = Enums.AnimOn.Mouse, p_effects_2 = []):
 		type = p_type
 		name = p_name
 		rarity = p_rarity
@@ -49,6 +50,7 @@ func _init(p_type = "CARD", p_name = "PlaceholderCardName", p_rarity = "common",
 		animation = p_animation
 		delay = p_delay
 		anim_on = p_anim_on
+		effects2.assign(p_effects_2)
 
 func get_effect(effect_name):
 	for effect in effects:
@@ -85,6 +87,8 @@ func assign(other: CardData) -> void:
 	animation = other.animation
 	delay = other.delay
 	anim_on = other.anim_on
+	for effect2 in other.effects2:
+		effects2.append(effect2.copy())
 
 func apply_enhance(enhance: Enhance):
 	var n_card = copy()
@@ -165,16 +169,20 @@ func get_description() -> String:
 
 # To be overridden by specific code seeds
 func register_events(event_manager: EventManager, tile: Tile):
-	pass
+	for eff in effects2:
+		eff.register_events(event_manager, tile)
 
 func unregister_events(event_manager: EventManager):
-	pass
+	for eff in effects2:
+		eff.unregister_events(event_manager)
 
 func register_seed_events(event_manager: EventManager, tile: Tile):
-	pass
+	for eff in effects2:
+		eff.register_seed_events(event_manager, tile)
 
 func unregister_seed_events(event_manager: EventManager):
-	pass
+	for eff in effects2:
+		eff.unregister_seed_events(event_manager)
 
 func get_yield(tile: Tile) -> EventArgs.HarvestArgs:
 	var yld = tile.current_yield if get_effect("corrupted") == null else -tile.current_yield
@@ -196,6 +204,8 @@ func save_data() -> Dictionary:
 		"seed_texture": seed_texture,
 		"targets": targets,
 		"effects": effects.map(func(effect):
+			return effect.save_data()),
+		"effects2": effects2.map(func(effect):
 			return effect.save_data()),
 		"strength_increment": strength_increment,
 		"size_increment": size_increment,
@@ -221,6 +231,10 @@ func load_data(data) -> CardData:
 	seed_texture = data.seed_texture
 	targets.assign(data.targets)
 	effects.assign(data.effects.map(func(effect):
+		var eff = load(effect.path).new()
+		eff.load_data(effect)
+		return eff))
+	effects2.assign(data.effects2.map(func(effect):
 		var eff = load(effect.path).new()
 		eff.load_data(effect)
 		return eff))

@@ -31,3 +31,15 @@ enum AnimOn {
 	Tiles,
 	Center
 }
+
+enum EffectType {
+	Draw,
+	Harvest,
+	Grow,
+	Spread,
+	AddMana,
+	GainMana,
+	DestroyPlant,
+	DestroyTile,
+	Other
+}
