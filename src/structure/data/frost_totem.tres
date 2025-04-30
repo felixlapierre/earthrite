@@ -6,7 +6,7 @@
 [resource]
 script = ExtResource("1_tfsf0")
 name = "Frost Totem"
-rarity = "common"
+rarity = "uncommon"
 cost = 0
 size = 0
 text = "Leftmost unfrozen hand card is not discarded at the end of the turn"

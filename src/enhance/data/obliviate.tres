@@ -6,7 +6,7 @@
 [resource]
 script = ExtResource("1_3kqge")
 name = "Burn"
-rarity = "hidden"
+rarity = "unique"
 strength = 0.0
 targets = Array[String]([])
 texture = ExtResource("2_bwpcb")

@@ -6,7 +6,7 @@
 script = ExtResource("1_72x0k")
 type = "SEED"
 name = "Tiger Lily"
-rarity = "common"
+rarity = "uncommon"
 cost = 1
 yld = 4
 time = 2

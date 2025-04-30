@@ -8,7 +8,7 @@
 script = ExtResource("1_50hb3")
 type = "ACTION"
 name = "Downpour"
-rarity = "common"
+rarity = "uncommon"
 cost = 1
 yld = 0
 time = 0

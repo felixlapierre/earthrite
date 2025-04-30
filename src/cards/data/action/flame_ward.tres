@@ -8,7 +8,7 @@
 script = ExtResource("1_0up1s")
 type = "ACTION"
 name = "Flame Ward"
-rarity = "common"
+rarity = "uncommon"
 cost = 1
 yld = 0
 time = 0

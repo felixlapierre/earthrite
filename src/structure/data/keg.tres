@@ -6,7 +6,7 @@
 [resource]
 script = ExtResource("1_1v5a0")
 name = "Keg"
-rarity = "common"
+rarity = "uncommon"
 cost = 1
 size = 8
 text = "Stores mana from adjacent plants when they are harvested, and doubles it in 2 turns."

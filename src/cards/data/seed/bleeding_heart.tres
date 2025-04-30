@@ -7,7 +7,7 @@
 script = ExtResource("1_j6260")
 type = "SEED"
 name = "Bleeding Heart"
-rarity = "common"
+rarity = "rare"
 cost = 3
 yld = 10
 time = 4

@@ -1,6 +1,32 @@
 class_name DataFetcher
 
 static var all_cards: Array[CardData] = []
+static var all_enhances: Array[Enhance] = []
+static var all_structures: Array[Structure] = []
+
+static var cards_rarity = {
+	"common": [],
+	"uncommon": [],
+	"rare": [],
+	"legendary": [],
+	"unique": [],
+	"blight": [],
+	"basic": []
+}
+
+static var enhances_rarity = {
+	"common": [],
+	"uncommon": [],
+	"rare": [],
+	"unique": []
+}
+
+static var structures_rarity = {
+	"common": [],
+	"uncommon": [],
+	"rare": [],
+	"unique": []
+}
 
 static func load_cards():
 	if all_cards.size() > 0:
@@ -11,8 +37,34 @@ static func load_cards():
 		if card == null:
 			print(path)
 		all_cards.append(card)
+		cards_rarity[card.rarity].append(card)
+		
 	if Global.MAGE == "Blight Druid":
-		all_cards.append(get_element_cards("Blight"))
+		var blight_cards = get_element_cards("Blight")
+		all_cards.append(blight_cards)
+		cards_rarity["common"].append(blight_cards)
+
+static func load_enhances():
+	if all_enhances.size() > 0:
+		return
+	var paths = get_all_file_paths("res://src/enhance/data");
+	for path in paths:
+		var enhance: Enhance = load(path)
+		if enhance == null:
+			print(path)
+		all_enhances.append(enhance)
+		enhances_rarity[enhance.rarity].append(enhance)
+
+static func load_structures():
+	if all_structures.size() > 0:
+		return
+	var paths = get_all_file_paths("res://src/structure/data");
+	for path in paths:
+		var structure: Structure = load(path)
+		if structure == null:
+			print(path)
+		all_structures.append(structure)
+		structures_rarity[structure.rarity].append(structure)
 	
 static func get_all_cards() -> Array[CardData]:
 	return get_all_cards_rarity(null)
@@ -51,25 +103,17 @@ static func get_all_file_paths(path: String) -> Array[String]:
 	return file_paths
 
 static func get_all_enhance() -> Array[Enhance]:
-	var enhances: Array[Enhance] = []
-	var paths = get_all_file_paths("res://src/enhance/data");
-	for path in paths:
-		var enhance: Enhance = load(path)
-		if enhance == null:
-			print(path)
-		enhances.append(enhance)
-	return enhances
+	load_enhances()
+	return all_enhances
 
 static func get_all_structure(rarity: Variant) -> Array[Structure]:
-	var structures: Array[Structure] = []
-	var paths = get_all_file_paths("res://src/structure/data");
-	for path in paths:
-		var structure: Structure = load(path)
-		if structure == null:
-			print(path)
-		if rarity == null or structure.rarity == rarity:
-			structures.append(structure)
-	return structures
+	load_structures()
+	var result: Array[Structure] = []
+	if rarity == null:
+		result.append_array(all_structures)
+	else:
+		result.append_array(structures_rarity[rarity])
+	return result
 
 static func get_all_event() -> Array[GameEvent]:
 	var events: Array[GameEvent] = []
@@ -130,6 +174,54 @@ static func get_random_cards(rarity, count: int):
 		if n_card.type != "STRUCTURE":
 			result.append(n_card)
 	return result
+
+static func get_random_cards_weighted_rarity(count: int):
+	load_cards()
+	var probabilities = {
+		"common": 70.0,
+		"uncommon": 97.0,
+		"rare": 100.0
+	}
+	return _get_random_weighted_rarity(probabilities, cards_rarity, count)
+
+static func get_random_enhances_weighted_rarity(count: int):
+	load_enhances()
+	var probabilities = {
+		"common": 70.0,
+		"uncommon": 99.0,
+		"rare": 100.0
+	}
+	return _get_random_weighted_rarity(probabilities, enhances_rarity, count)
+
+static func get_random_structures_weighted_rarity(count: int):
+	load_structures()
+	var probabilities = {
+		"common": 70,
+		"uncommon": 99.0,
+		"rare": 100.0
+	}
+	return _get_random_weighted_rarity(probabilities, structures_rarity, count)
+
+static func _get_random_weighted_rarity(probabilities, options, count):
+	var result = []
+	while result.size() < count:
+		var random = randf_range(0, 100)
+		for key in probabilities:
+			if probabilities[key] > random:
+				var choice = Helper.pick_random(options[key])
+				if !result.has(choice) and _filter_seed_cards(choice):
+					result.append(choice)
+				break
+	return result
+
+static func _filter_seed_cards(choice):
+	if Global.FARM_TYPE != "WILDERNESS":
+		return true
+	if choice is CardData:
+		return choice.type != "SEED"
+	if choice is Enhance:
+		return ["Discount", "Echo", "Burn", "Frozen", "Size", "Springbound", "Strength"]\
+					.has(choice.name)
 
 static func get_random_action_cards(rarity, count: int):
 	var result = []

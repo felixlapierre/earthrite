@@ -5,8 +5,8 @@
 
 [resource]
 script = ExtResource("1_3fhe8")
-name = "Spellcatcher"
-rarity = "common"
+name = "Crucible"
+rarity = "uncommon"
 cost = 0
 size = 0
 text = "After a Burn or Fleeting card is played, draw a card"

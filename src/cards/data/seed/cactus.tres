@@ -7,7 +7,7 @@
 script = ExtResource("1_m778i")
 type = "SEED"
 name = "Cactus"
-rarity = "common"
+rarity = "uncommon"
 cost = 1
 yld = 100
 time = 4

@@ -7,7 +7,7 @@
 script = ExtResource("1_jtyyi")
 type = "ACTION"
 name = "Flow"
-rarity = "common"
+rarity = "uncommon"
 cost = 1
 yld = 0
 time = 0

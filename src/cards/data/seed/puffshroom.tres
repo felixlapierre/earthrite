@@ -6,7 +6,7 @@
 script = ExtResource("1_fj05f")
 type = "SEED"
 name = "Dandelion"
-rarity = "common"
+rarity = "uncommon"
 cost = 1
 yld = 4
 time = 2

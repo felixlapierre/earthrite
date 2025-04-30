@@ -42,8 +42,11 @@ func compute_blight_pattern(year: int):
 	blight_pattern = [0]
 	var charge: float = 0.0
 	var chance = 0.0
+	var base_charge_inc = 5.0
+	base_charge_inc += 2 if year >= 2 else 0
+	base_charge_inc += 3 if year >= 3 else 0
 	for i in range(1, Global.FINAL_WEEK):
-		charge += 10.0
+		charge += base_charge_inc
 		if Global.DIFFICULTY >= Constants.DIFFICULTY_INCREASE_TARGETS:
 			charge += 0.6 * year
 		if Global.DIFFICULTY >= Constants.DIFFICULTY_HARD:

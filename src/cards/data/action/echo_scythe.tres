@@ -10,7 +10,7 @@
 script = ExtResource("1_hpx44")
 type = "ACTION"
 name = "Echo Slash"
-rarity = "common"
+rarity = "uncommon"
 cost = 1
 yld = 0
 time = 0

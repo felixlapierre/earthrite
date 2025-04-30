@@ -6,7 +6,7 @@
 [resource]
 script = ExtResource("1_dblwm")
 name = "Geode"
-rarity = "common"
+rarity = "uncommon"
 cost = 0
 size = 0
 text = "Energy is not lost at the end of the turn"

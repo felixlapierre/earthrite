@@ -7,7 +7,7 @@
 script = ExtResource("1_7wyoj")
 type = "ACTION"
 name = "Transmute"
-rarity = "common"
+rarity = "uncommon"
 cost = 1
 yld = 0
 time = 0

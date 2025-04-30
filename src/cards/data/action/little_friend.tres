@@ -8,7 +8,7 @@
 script = ExtResource("1_8nevo")
 type = "ACTION"
 name = "Little Friend"
-rarity = "common"
+rarity = "uncommon"
 cost = 1
 yld = 0
 time = 0

@@ -143,7 +143,7 @@ func get_ritual_requirements(year):
 		amount += year * 6
 	if year >= 8 and difficulty_up:
 		amount += 100
-	if Global.DIFFICULTY >= Constants.DIFFICULTY_HARD:
+	if Global.DIFFICULTY >= Constants.DIFFICULTY_HARD and year >= 2:
 		amount *= 1.3
 	if Mastery.MasteryLevel > 0 and year >= 3:
 		amount += year * 3 * Mastery.MasteryLevel

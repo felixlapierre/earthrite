@@ -6,7 +6,7 @@
 [resource]
 script = ExtResource("1_mw4rh")
 name = "Lantern"
-rarity = "common"
+rarity = "uncommon"
 cost = 1
 size = 24
 text = "Whenever you play a card, add 2 yield to a nearby plant"

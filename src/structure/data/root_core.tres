@@ -6,7 +6,7 @@
 [resource]
 script = ExtResource("1_286pe")
 name = "Root-Bound Core"
-rarity = "common"
+rarity = "uncommon"
 cost = 0
 size = 0
 text = "The first time your farm is full each turn, gain 1 energy"

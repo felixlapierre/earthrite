@@ -42,11 +42,14 @@ func setup(deck, p_tooltip):
 
 func create_explore(p_explores, turn_manager: TurnManager):
 	explores += p_explores
-	fixed_explores += ["Gain Card"]
-	if turn_manager.year == 3 or turn_manager.year == 6 or turn_manager.year == 8:
-		fixed_explores += ["Rare Card", "Rare Structure"]
-		explores -= 1
-	explores += fixed_explores.size()
+	if turn_manager.year == 3:
+		fixed_explores.append("Rare Card")
+	elif turn_manager.year == 6:
+		fixed_explores.append("Rare Structure")
+	elif turn_manager.year == 8:
+		fixed_explores.append("Rare Enhance")
+	else:
+		fixed_explores.append("Gain Card")
 	create_binary_explore()
 	return
 	
@@ -142,6 +145,10 @@ func create_point_from_name(name, location):
 			create_point("Rare Structure", location, func(pt):
 				use_explore(pt)
 				add_structure("rare"))
+		"Rare Enhance":
+			create_point("Rare Enhance", location, func(pt):
+				use_explore(pt)
+				select_enhance("rare"))
 
 func create_binary_explore():
 	$CenterContainer/PanelContainer/VBox/HBox/Label.text = "Explorations Remaining: " + str(explores)
@@ -162,27 +169,33 @@ func create_binary_explore():
 	
 	create_point_from_name(option1, Vector2(-DIST, 0))
 	create_point_from_name(option2, Vector2(DIST, 0))
+	if randi_range(0, 100) <= 15:
+		var option3 = pick_binary_explore()
+		while option3 == option1 or option3 == option2:
+			option3 = pick_binary_explore()
+		create_point_from_name(option3, Vector2(-DIST, 0))
 	
 func pick_binary_explore():
-	var i = randi_range(0, 100)
-	if i <= 50:
-		return "Gain Card"
-	if i <= 60:
+	var i = randf_range(0, 100)
+	if i <= 15:
 		return "Event"
-	if i <= 70 and Helper.can_expand_farm():
+	if i <= 30:
 		return "Enhance Card"
-	if i <= 75:
+	if i <= 45:
 		return "Structure"
-	if i <= 80:
+	if i <= 55:
 		return "Remove Card"
-	if i <= 90:
-		return "Expand Farm"
-	if i <= 95:
+	if i <= 65 and Helper.can_expand_farm():
+		if Helper.can_expand_farm():
+			return "Expand Farm"
+		else:
+			return "Gain Card"
+	if i <= 66:
 		return "Rare Card"
-	#if i <= 99:
-	#	return "Rare Enhance"
-	if i <= 100:
+	if i <= 66.5:
 		return "Rare Structure"
+	if i <= 66.6:
+		return "Rare Enhance"
 	return "Gain Card"
 
 func use_explore(node):
@@ -209,11 +222,11 @@ func create_point(name: String, pos: Vector2, callback: Callable):
 	$Points.add_child(point)
 
 func add_card(rarity: String, count: int):
-	var cards;
-	if Global.FARM_TYPE == "WILDERNESS":
-		cards = cards_database.get_random_action_cards(rarity, count)
-	else:
+	var cards = []
+	if rarity == "rare":
 		cards = cards_database.get_random_cards(rarity, count)
+	else:
+		cards = cards_database.get_random_cards_weighted_rarity(count)
 	pick_card_from(cards)
 
 func pick_card_from(cards):
@@ -247,11 +260,15 @@ func select_card_to_remove(pt):
 	select_card.do_card_pick(player_deck, "Select a card to remove")
 
 func select_enhance(rarity: String):
-	var enhances
-	if Global.FARM_TYPE == "WILDERNESS":
-		enhances = cards_database.get_random_enhance_noseed(rarity, 3)
+	var enhances = []
+	if rarity == "rare":
+		if Global.FARM_TYPE == "WILDERNESS":
+			enhances = cards_database.get_random_enhance_noseed(rarity, 3)
+		else:
+			enhances = cards_database.get_random_enhance(rarity, 3, false)
 	else:
-		enhances = cards_database.get_random_enhance(rarity, 3, false)
+		enhances = cards_database.get_random_enhances_weighted_rarity(3)
+
 	var pick_option_ui = PickOption.instantiate()
 	add_sibling(pick_option_ui)
 	var prompt = "Pick an enhance to apply"
@@ -279,7 +296,11 @@ func select_card_to_enhance(enhance: Enhance):
 	select_card.do_enhance_pick(player_deck, enhance, "Select a card to enhance")
 	
 func add_structure(rarity: String):
-	var structures = cards_database.get_random_structures(3, rarity)
+	var structures = []
+	if rarity == "rare":
+		structures = cards_database.get_random_structures(3, rarity)
+	else:
+		structures = cards_database.get_random_structures_weighted_rarity(3)
 	var pick_option_ui = PickOption.instantiate()
 	add_sibling(pick_option_ui)
 	var prompt = "Pick a structure to add to your farm"

@@ -6,7 +6,7 @@
 [resource]
 script = ExtResource("1_kmluc")
 name = "Frozen"
-rarity = "common"
+rarity = "uncommon"
 strength = 0.0
 targets = Array[String]([])
 texture = ExtResource("2_1rw0i")
