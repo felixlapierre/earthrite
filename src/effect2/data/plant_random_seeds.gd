@@ -10,10 +10,10 @@ func register(event_manager: EventManager, tile: Tile):
 			var card = DataFetcher.get_random_card()
 			while card.type != "SEED" or banned.has(card.name):
 				card = DataFetcher.get_random_card()
-			print(card.name)
 			var effects = target.plant_seed_animate(card)
 			args.farm.effect_queue.append_array(effects)
 			args.farm.process_effect_queue()
+			await args.farm.get_tree().create_timer(0.025).timeout
 	event_manager.register_listener(timing, callback)
 
 # To be overridden

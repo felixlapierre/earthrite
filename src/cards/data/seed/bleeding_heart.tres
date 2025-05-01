@@ -6,6 +6,7 @@
 
 [sub_resource type="Resource" id="Resource_o1t7x"]
 script = ExtResource("1_j6260")
+strength = 1.0
 base_strength = 1.0
 strength_increment = 1.0
 timing = 2
@@ -20,7 +21,7 @@ cost = 3
 yld = 10
 time = 4
 size = 1
-text = "At the start of each turn, add {STRENGTH} {MANA} to all plants on your farm"
+text = ""
 strength_increment = 1.0
 size_increment = 1
 texture = ExtResource("2_r3knm")

@@ -8,7 +8,6 @@ var shake_strength: float = 0.0
 
 func apply_shake(strength: float):
 	shake_strength = strength
-	print(shake_strength)
 
 func _process(delta: float):
 	if Input.is_action_just_pressed("transform"):

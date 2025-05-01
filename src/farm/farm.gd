@@ -122,12 +122,12 @@ func use_card(grid_position):
 			if tiles[target.x][target.y].card_can_target(card):
 				tiles[target.x][target.y].nudge()
 	mana_added = 0.0
-	use_card_on_targets(card, targets, false)
+	await use_card_on_targets(card, targets, false)
 	clear_overlay()
 	process_effect_queue()
 	event_manager.notify_specific_args(EventManager.EventType.AfterCardPlayed, args)
 	card.unregister_events(event_manager)
-	Playspace.shake_mana(mana_added)
+	$"../".shake_mana(mana_added)
 	mana_added = 0.0
 	after_card_played.emit()
 
@@ -292,7 +292,7 @@ func process_one_week(week: int):
 func use_action_card(card, grid_location):
 	var args = EventArgs.SpecificArgs.new(tiles[grid_location.x][grid_location.y])
 	args.play_args = EventArgs.PlayArgs.new(card)
-	event_manager.notify_specific_args(EventManager.EventType.OnActionCardUsed, args)
+	await event_manager.notify_specific_args(EventManager.EventType.OnActionCardUsed, args)
 	for effect in card.effects:
 		var n_effect = effect.copy().set_location(grid_location)
 		if n_effect.name == "spread":
@@ -389,7 +389,7 @@ func do_winter_clear():
 func spread(card, grid_position, size, shape):
 	var targets = get_targeted_tiles(grid_position, card, size, shape, 0)
 	targets.shuffle()
-	var targeted_tile = use_card_on_targets(card, targets, true)
+	var targeted_tile = await use_card_on_targets(card, targets, true)
 	if targeted_tile != null:
 		do_animation(load("res://src/animation/spread.tres"), targeted_tile.grid_location)
 
@@ -406,7 +406,7 @@ func use_card_on_targets(card, targets, only_first):
 			args.play_args = EventArgs.PlayArgs.new(card)
 			event_manager.notify_specific_args(EventManager.EventType.OnActionCardUsed, args)
 		elif card.type == "ACTION":
-			use_action_card(card, Vector2(target.x, target.y))
+			await use_action_card(card, Vector2(target.x, target.y))
 		if only_first:
 			return target_tile
 
@@ -515,7 +515,6 @@ func blight_bubble_animation(tile: Tile, args: EventArgs.HarvestArgs, destinatio
 	mana_particles.hue_variation_max = min(0.0 + 0.01 * (mana_amount / 10), 0.10)
 	mana_particles.on_finish = func():
 		$Animations.remove_child(mana_particles)
-	print(mana_amount)
 
 	$Animations.add_child(mana_particles)
 	return

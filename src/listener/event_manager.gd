@@ -63,14 +63,14 @@ func notify(event_type: EventType):
 	listeners_copy.assign(listeners[event_type])
 	for listener in listeners_copy:
 		if !listener.is_null():
-			listener.call(get_event_args(null))
+			await listener.call(get_event_args(null))
 
 func notify_specific_args(event_type: EventType, specific_args: EventArgs.SpecificArgs):
 	var listeners_copy = []
 	listeners_copy.assign(listeners[event_type])
 	for listener in listeners_copy:
 		if !listener.is_null():
-			listener.call(get_event_args(specific_args))
+			await listener.call(get_event_args(specific_args))
 
 func get_event_args(spec):
 	return EventArgs.new(farm, turn_manager, cards, spec, user_interface)

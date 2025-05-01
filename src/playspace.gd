@@ -14,7 +14,7 @@ signal on_main_menu
 @onready var farm: Farm = $FarmTiles
 @onready var cards: Cards = $Cards
 @onready var event_manager: EventManager = $EventManager
-static var camera: ShakeCamera2D
+@onready var camera: ShakeCamera2D = $ShakeCamera2D
 
 var helper = preload("res://src/farm/startup_helper.gd")
 
@@ -372,13 +372,12 @@ func _on_cards_on_card_drawn(card: CardData):
 	card.on_card_drawn(args)
 	event_manager.notify(EventManager.EventType.OnCardDrawn)
 
-static func shake_mana(mana: float):
-	if mana >= 150.0:
+func shake_mana(mana: float):
+	var target = turn_manager.total_ritual
+	if mana >= target * 1.5:
 		shake_camera(100.0)
-	elif mana >= 100.0:
+	elif mana >= target:
 		shake_camera(30.0)
-	elif mana >= 50.0:
-		shake_camera(10.0)
 
-static func shake_camera(amount: float = 30.0):
+func shake_camera(amount: float = 30.0):
 	camera.apply_shake(amount)
