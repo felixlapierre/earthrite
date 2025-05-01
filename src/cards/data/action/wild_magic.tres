@@ -11,10 +11,11 @@ count = 3
 pick_from = 3
 and_then = 0
 skippable = true
+strength = 0.0
 base_strength = 0.0
 strength_increment = 1.0
 timing = 11
-is_seed = false
+is_seed = null
 
 [resource]
 script = ExtResource("2_ymwxb")

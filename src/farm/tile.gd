@@ -429,7 +429,8 @@ func show_peek(weeks: int = 0):
 		var absorb = seed.get_effect("absorb")
 		if absorb != null:
 			multiplier += Global.WATERED_MULTIPLIER * absorb.strength
-	projected_mana += seed_base_yield / seed_grow_time * multiplier * min(weeks, seed_grow_time - current_grow_progress)
+	if seed_grow_time > 0:
+		projected_mana += seed_base_yield / seed_grow_time * multiplier * min(weeks, seed_grow_time - current_grow_progress)
 
 	var projected_state = Enums.TileState.Growing if current_grow_progress + weeks < seed_grow_time else Enums.TileState.Mature
 

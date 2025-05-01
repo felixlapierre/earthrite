@@ -43,10 +43,10 @@ var callback2: Callable
 # Should pretty much either be OnPlantHarvest (for seed effect like iris)
 # or AfterCardPlayed for immediate effect (burn, add card to hand)
 
-func _init(p_timing = EventManager.EventType.AfterCardPlayed, p_seed = false,
+func _init(p_timing = EventManager.EventType.AfterCardPlayed, p_seed = false, p_strength = 1.0,
 	p_base_strength = 1.0, p_strength_increment = 1.0, p_timing_2 = EventManager.EventType.AfterCardPlayed, p_count = -1, p_pick_from = PickFrom.Hand,
 	p_and_then = AndThen.Draw, p_skippable = false):
-	super(p_timing, p_seed, p_base_strength, p_strength_increment)
+	super(p_timing, p_seed, p_strength, p_base_strength, p_strength_increment)
 	timing2 = p_timing_2
 	count = p_count
 	pick_from = p_pick_from
@@ -102,7 +102,8 @@ func pick_from_random_seed():
 
 func display_options(args: EventArgs, options: Array, set_card: Callable):
 	if options.size() == 0:
-		set_card.call(null)
+		set_card.call(load("res://src/cards/data/unique/void.tres"))
+		return
 	if count > 0:
 		options = options.slice(0, count + strength)
 	if options.size() == 1 and !skippable and pick_from == PickFrom.Hand:

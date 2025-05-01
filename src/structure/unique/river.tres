@@ -21,3 +21,4 @@ text = "Waters 8 adjacent tiles"
 texture = ExtResource("3_v51by")
 effects = Array[ExtResource("1_yjkub")]([SubResource("Resource_og8gm")])
 tooltip = ""
+effects2 = Array[Resource("res://src/effect2/effect2.gd")]([])

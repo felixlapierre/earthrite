@@ -146,7 +146,7 @@ func apply_strength(enhance: Enhance):
 			break
 	for effect in effects2:
 		if effect.can_strengthen():
-			if effect.strength > 0.0:
+			if effect.strength >= 0.0:
 				effect.strength += enhance.strength * strength_increment
 			elif effect.strength < 0.0:
 				effect.strength -= enhance.strength * strength_increment

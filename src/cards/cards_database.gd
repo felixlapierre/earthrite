@@ -214,6 +214,10 @@ static func _get_random_weighted_rarity(probabilities, options, count):
 				break
 	return result
 
+static func get_random_card() -> CardData:
+	load_cards()
+	return all_cards.pick_random()
+
 static func _filter_seed_cards(choice):
 	if Global.FARM_TYPE != "WILDERNESS":
 		return true
