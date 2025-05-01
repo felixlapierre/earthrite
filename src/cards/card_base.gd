@@ -191,7 +191,7 @@ func reset_starting_position():
 func Reset_Card(card_number_in_hand):
 	var neighbor_card = $'../'.get_child(card_number_in_hand)
 	# Allows mousing directly from one card to another
-	if neighbor_card.state != Enums.CardState.FocusInHand\
+	if neighbor_card != null and neighbor_card.state != Enums.CardState.FocusInHand\
 		and neighbor_card.state != Enums.CardState.InMouse:
 		neighbor_card.state = Enums.CardState.ReOrganiseHand
 		neighbor_card.target_position = neighbor_card.resting_position

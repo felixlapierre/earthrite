@@ -144,6 +144,13 @@ func apply_strength(enhance: Enhance):
 		elif effect.strength < 0.0:
 			effect.strength -= enhance.strength * strength_increment
 			break
+	for effect in effects2:
+		if effect.can_strengthen():
+			if effect.strength > 0.0:
+				effect.strength += enhance.strength * strength_increment
+			elif effect.strength < 0.0:
+				effect.strength -= enhance.strength * strength_increment
+			break
 	if enhance.strength > 1.0 and enhance.rarity == "common":
 		cost += 1
 
@@ -153,6 +160,12 @@ func get_description() -> String:
 		var effect_text = effect.get_short_description(self)
 		if highlight_effect(effect):
 			effect_text = "[color=aqua]" + effect_text + "[/color]"
+		if effect_text.length() > 0:
+			if descr.length() > 0:
+				descr += ". "
+			descr += effect_text
+	for effect in effects2:
+		var effect_text = effect.get_description()
 		if effect_text.length() > 0:
 			if descr.length() > 0:
 				descr += ". "
@@ -250,6 +263,9 @@ func load_data(data) -> CardData:
 
 # Override with true in subclasses that use the strength member variable
 func can_strengthen_custom_effect():
+	for effect in effects2:
+		if effect.can_strengthen():
+			return true
 	return false
 
 func preview_yield(tile: Tile):

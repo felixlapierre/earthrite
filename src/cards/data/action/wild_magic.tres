@@ -1,24 +1,40 @@
-[gd_resource type="Resource" script_class="RandomSeed" load_steps=3 format=3 uid="uid://diuk4ieng1j5r"]
+[gd_resource type="Resource" script_class="CardData" load_steps=5 format=3 uid="uid://diuk4ieng1j5r"]
 
-[ext_resource type="Script" path="res://src/cards/custom/random_seed.gd" id="1_dgeu2"]
+[ext_resource type="Script" path="res://src/effect2/data/pick_card_effect.gd" id="1_gfmyt"]
 [ext_resource type="Texture2D" uid="uid://bel8ywot0yl3c" path="res://assets/card/wild-magic.png" id="2_4y46l"]
+[ext_resource type="Script" path="res://src/cards/card_data.gd" id="2_ymwxb"]
+
+[sub_resource type="Resource" id="Resource_1mrdn"]
+script = ExtResource("1_gfmyt")
+timing2 = 11
+count = 3
+pick_from = 3
+and_then = 0
+skippable = true
+base_strength = 0.0
+strength_increment = 1.0
+timing = 11
+is_seed = false
 
 [resource]
-script = ExtResource("1_dgeu2")
+script = ExtResource("2_ymwxb")
 type = "ACTION"
 name = "Wild Magic"
 rarity = "common"
 cost = 0
-yld = null
-time = null
+yld = 0
+time = 0
 size = 0
-text = "Pick 1 of 3 random Seed cards to add to your hand"
-strength_increment = null
-size_increment = null
+text = ""
+strength_increment = 1.0
+size_increment = 1
 texture = ExtResource("2_4y46l")
-seed_texture = null
-texture_icon_offset = null
-targets = null
-effects = null
-enhances = null
-strength = 1
+seed_texture = 0
+texture_icon_offset = 16
+targets = Array[String]([])
+effects = Array[Resource("res://src/effect/effect.gd")]([])
+enhances = Array[String]([])
+strength = 0.0
+delay = 0.0
+anim_on = 0
+effects2 = Array[Resource("res://src/effect2/effect2.gd")]([SubResource("Resource_1mrdn")])

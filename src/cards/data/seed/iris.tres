@@ -1,10 +1,23 @@
-[gd_resource type="Resource" script_class="Dualcast" load_steps=3 format=3 uid="uid://c7orak5n2fbjc"]
+[gd_resource type="Resource" script_class="CardData" load_steps=5 format=3 uid="uid://c7orak5n2fbjc"]
 
-[ext_resource type="Script" path="res://src/cards/custom/dualcast.gd" id="1_6vuq8"]
+[ext_resource type="Script" path="res://src/effect2/data/pick_card_effect.gd" id="1_aypy1"]
+[ext_resource type="Script" path="res://src/cards/card_data.gd" id="2_0ie4y"]
 [ext_resource type="Texture2D" uid="uid://db68f0w1uqtoo" path="res://assets/seed/iris.png" id="2_gba5h"]
 
+[sub_resource type="Resource" id="Resource_dk7qq"]
+script = ExtResource("1_aypy1")
+timing2 = 8
+count = -1
+pick_from = 0
+and_then = 0
+skippable = false
+base_strength = 1.0
+strength_increment = 1.0
+timing = 11
+is_seed = true
+
 [resource]
-script = ExtResource("1_6vuq8")
+script = ExtResource("2_0ie4y")
 type = "SEED"
 name = "Iris"
 rarity = "uncommon"
@@ -12,7 +25,7 @@ cost = 0
 yld = 5
 time = 1
 size = 1
-text = "Copy the next card played. On harvest, add {STRENGTH} copies of that card to your hand. "
+text = ""
 strength_increment = 1.0
 size_increment = 1
 texture = ExtResource("2_gba5h")
@@ -24,3 +37,4 @@ enhances = Array[String]([])
 strength = 1.0
 delay = 0.0
 anim_on = 0
+effects2 = Array[Resource("res://src/effect2/effect2.gd")]([SubResource("Resource_dk7qq")])

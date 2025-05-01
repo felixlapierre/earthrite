@@ -12,7 +12,7 @@ const CLASS_NAME = "Structure"
 @export var texture: Texture2D
 @export var effects: Array[Effect]
 @export var tooltip: String
-var enhances = []
+@export var effects2: Array[Effect2]
 
 var grid_location: Vector2
 var type = "STRUCTURE"
@@ -20,7 +20,7 @@ var rotate: int = 0
 
 func _init(p_name = "PlaceholderCardName", p_rarity = "common", p_cost = 1,\
 	p_size = 1, p_text = "", p_texture = null, p_effects = [],\
-	p_tooltip = "", p_grid_location = Vector2.ZERO,):
+	p_tooltip = "", p_grid_location = Vector2.ZERO, p_effects_2 = []):
 		name = p_name
 		rarity = p_rarity
 		cost = p_cost
@@ -30,6 +30,7 @@ func _init(p_name = "PlaceholderCardName", p_rarity = "common", p_cost = 1,\
 		effects.assign(p_effects)
 		grid_location = p_grid_location
 		tooltip = p_tooltip
+		effects2.assign(p_effects_2)
 
 func get_effect(effect_name):
 	for effect in effects:
@@ -40,9 +41,12 @@ func get_effect(effect_name):
 func copy():
 	var n_targets = []
 	var n_effects = []
+	var n_effects_2 = []
 	for effect in effects:
 		n_effects.append(effect.copy())
-	return Structure.new(name, rarity, cost, size, text, texture, n_effects, tooltip)
+	for effect in effects2:
+		n_effects_2.append(effect.copy())
+	return Structure.new(name, rarity, cost, size, text, texture, n_effects, tooltip, Vector2.ZERO, n_effects_2)
 
 func assign(s: Structure):
 	name = s.name
@@ -55,6 +59,7 @@ func assign(s: Structure):
 	grid_location = s.grid_location
 	rotate = s.rotate
 	tooltip = s.tooltip
+	effects2.assign(s.effects2)
 
 func get_description():
 	return text.replace("{MANA}", Helper.mana_icon())\
@@ -62,10 +67,12 @@ func get_description():
 
 # To be overridden by specific script structures
 func register_events(event_manager: EventManager, tile: Tile):
-	pass
+	for effect in effects2:
+		effect.register_events(event_manager, tile)
 
 func unregister_events(event_manager: EventManager):
-	pass
+	for effect in effects2:
+		effect.unregister_events(event_manager)
 
 func do_winter_clear():
 	pass
@@ -81,6 +88,8 @@ func save_data():
 		"texture": texture.resource_path if texture != null else null,
 		"effects": effects.map(func(effect):
 			return effect.save_data()),
+		"effects2": effects2.map(func(effect):
+			return effect.save_data()),
 		"x": grid_location.x,
 		"y": grid_location.y,
 		"rotate": rotate,
@@ -95,6 +104,10 @@ func load_data(data) -> Structure:
 	text = data.text
 	texture = load(data.texture)
 	effects.assign(data.effects.map(func(effect):
+		var eff = load(effect.path).new()
+		eff.load_data(effect)
+		return eff))
+	effects2.assign(data.effects2.map(func(effect):
 		var eff = load(effect.path).new()
 		eff.load_data(effect)
 		return eff))

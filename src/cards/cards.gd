@@ -89,6 +89,8 @@ func draw_specific_card(card_data: CardData):
 	draw_specific_card_from(card_data, $"../UserInterface/UI/Deck".position)
 
 func draw_specific_card_from(card_data: CardData, from: Vector2):
+	if $Hand.get_child_count() >= Global.MAX_HAND_SIZE:
+		return
 	# Create the new card and initialize its starting values
 	var new_card = CardBase.instantiate()
 

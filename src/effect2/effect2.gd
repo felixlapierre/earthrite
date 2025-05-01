@@ -5,8 +5,10 @@ var callback: Callable
 
 @export var timing: EventManager.EventType
 @export var is_seed: bool = false
-@export var strength: float = 1.0
-@export var strength_increment: float = 1.0
+
+func _init(p_timing = EventManager.EventType.AfterCardPlayed, p_seed = false):
+	timing = p_timing
+	is_seed = p_seed
 
 func register_events(event_manager: EventManager, tile: Tile):
 	if !is_seed:
@@ -34,27 +36,29 @@ func unregister(event_manager: EventManager):
 
 # To be overridden
 func get_description() -> String:
-	# Timing
-	match timing:
+	return get_timing_text()
+
+func get_timing_text(p_timing: EventManager.EventType = timing) -> String:
+	match p_timing:
 		EventManager.EventType.BeforeTurnStart:
 			return "Turn start: "
-		EventManager.EventType.BeforeCardPlayed, _:
+		EventManager.EventType.OnPlantHarvest:
+			return "On Harvest: "
+		EventManager.EventType.BeforeCardPlayed, EventManager.EventType.AfterCardPlayed, EventManager.EventType.OnActionCardUsed:
 			return ""
+		_:
+			return "On ???: "
 
 func save_data() -> Dictionary:
 	var save_dict = {
 		"path": get_script().get_path(),
 		"timing": timing,
-		"is_seed": is_seed,
-		"strength": strength,
-		"strength_increment": strength_increment
+		"is_seed": is_seed
 	}
 	return save_dict
 
 func load_data(data) -> Effect2:
 	timing = data.timing
-	strength = data.strength
-	strength_increment = data.strength_increment
 	is_seed = data.is_seed
 	return self
 
@@ -64,5 +68,3 @@ func can_strengthen():
 func assign(other: Effect2):
 	timing = other.timing
 	is_seed = other.is_seed
-	strength = other.strength
-	strength_increment = other.strength_increment

@@ -1,9 +1,22 @@
-[gd_resource type="Resource" script_class="FireFlower" load_steps=2 format=3 uid="uid://ctoc75rrwxoy6"]
+[gd_resource type="Resource" script_class="CardData" load_steps=4 format=3 uid="uid://ctoc75rrwxoy6"]
 
-[ext_resource type="Script" path="res://src/cards/custom/fire_flower.gd" id="1_tyhed"]
+[ext_resource type="Script" path="res://src/effect2/data/pick_card_effect.gd" id="1_1d53c"]
+[ext_resource type="Script" path="res://src/cards/card_data.gd" id="2_cvwwy"]
+
+[sub_resource type="Resource" id="Resource_rwd36"]
+script = ExtResource("1_1d53c")
+timing2 = 11
+count = -1
+pick_from = 0
+and_then = 1
+skippable = false
+base_strength = 1.0
+strength_increment = 1.0
+timing = 13
+is_seed = true
 
 [resource]
-script = ExtResource("1_tyhed")
+script = ExtResource("2_cvwwy")
 type = "SEED"
 name = "Fire Flower"
 rarity = "common"
@@ -11,7 +24,7 @@ cost = 1
 yld = 20
 time = 3
 size = 1
-text = "On play, pick a card in your hand to Burn"
+text = ""
 strength_increment = 1.0
 size_increment = 1
 seed_texture = 1
@@ -22,3 +35,4 @@ enhances = Array[String]([])
 strength = 0.0
 delay = 0.0
 anim_on = 0
+effects2 = Array[Resource("res://src/effect2/effect2.gd")]([SubResource("Resource_rwd36")])
