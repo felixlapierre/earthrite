@@ -37,7 +37,7 @@ func get_description():
 	var descr = text.replace("{STRENGTH}", str(strength))\
 		.replace("{STR_PER}", str(strength * 100) + "%")
 	for effect in effects:
-		descr += effect.get_description()
+		descr += effect.get_description(-1)
 	return descr
 
 func save_data() -> Dictionary:

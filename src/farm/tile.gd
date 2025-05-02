@@ -132,6 +132,8 @@ func plant_seed_animate(planted_seed) -> Array[Effect]:
 
 func plant_seed(planted_seed) -> Array[Effect]:
 	var effects: Array[Effect] = []
+	if seed != null:
+		remove_seed()
 	if card_can_target(planted_seed):
 		set_seed(planted_seed)
 		effects.append_array(get_effects("plant"))
@@ -227,6 +229,8 @@ func harvest(delay) -> Array[Effect]:
 func remove_seed():
 	if seed != null:
 		seed.unregister_seed_events(event_manager)
+	else:
+		print("WHOA null seed removed")
 	seed_base_yield = 0
 	seed_grow_time = 0
 	current_grow_progress = 0.0

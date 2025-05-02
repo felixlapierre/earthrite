@@ -35,7 +35,7 @@ func unregister(event_manager: EventManager):
 	pass
 
 # To be overridden
-func get_description() -> String:
+func get_description(size: int) -> String:
 	return get_timing_text()
 
 func get_timing_text(p_timing: EventManager.EventType = timing) -> String:

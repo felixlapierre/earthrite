@@ -9,7 +9,8 @@ enum PickFrom {
 	Discard,
 	Burned,
 	RandomSeed,
-	Blight
+	Blight,
+	HandCost1
 }
 
 enum AndThen {
@@ -26,6 +27,7 @@ enum AndThen {
 
 var card: CardData = null
 var callback2: Callable
+var tile: Tile = null
 
 # An effect involving picking cards
 # Pick 
@@ -52,7 +54,8 @@ func _init(p_timing = EventManager.EventType.AfterCardPlayed, p_seed = false, p_
 	pick_from = p_pick_from
 	and_then = p_and_then
 
-func register(event_manager: EventManager, tile: Tile):
+func register(event_manager: EventManager, p_tile: Tile):
+	tile = p_tile
 	callback = func(args: EventArgs):
 		pick_card_event(args)
 
@@ -75,6 +78,9 @@ func pick_card_event(args: EventArgs):
 	match pick_from:
 		PickFrom.Hand:
 			options.assign(args.cards.get_hand_info())
+		PickFrom.HandCost1:
+			options.assign(args.cards.get_hand_info().filter(func(card_data):
+				return card_data.cost <= 1))
 		PickFrom.Discard:
 			options.assign(args.cards.discard_pile_cards)
 		PickFrom.Burned:
@@ -146,14 +152,15 @@ func do_followup_action(args: EventArgs):
 			args.cards.draw_specific_card_from(card, args.user_interface.get_global_mouse_position())
 	elif and_then == AndThen.Use:
 		Global.selected_card = card
-		args.farm.use_card(null)
+		args.farm.use_card(tile.grid_location, true)
+		Global.selected_card = null
 
 func unregister(event_manager: EventManager):
 	event_manager.unregister_listener(timing, callback)
 	if timing2 != EventManager.EventType.AfterCardPlayed:
 		event_manager.unregister_listener(timing2, callback2)
 
-func get_description():
+func get_description(size: int):
 	var descr = ""
 	if card == null:
 		descr += get_timing_text(timing) + get_pick_from_description() + get_and_then_description()
@@ -173,6 +180,8 @@ func get_pick_from_description():
 	match pick_from:
 		PickFrom.Hand:
 			return "Pick" + count_text + "from your hand"
+		PickFrom.HandCost1:
+			return "Pick" + count_text.replace("card", "1-cost card") + "from your hand"
 		PickFrom.Discard:
 			return "Pick" + count_text + "from your discard pile"
 		PickFrom.Burned:
@@ -203,7 +212,7 @@ func get_and_then_description():
 		AndThen.Burn:
 			return " and Burn it"
 		AndThen.Use:
-			return " and Play it"
+			return (". " if card == null else "") + get_timing_text(timing2) + "Cast " + ("it" if card == null else card.name) + " on this plant"
 
 func copy():
 	var copy = PickCardEffect.new()

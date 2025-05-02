@@ -58,7 +58,7 @@ func setup(p_event_manager: EventManager):
 		tile.event_manager = event_manager
 	
 
-func use_card(grid_position):
+func use_card(grid_position, external_source: bool = false):
 	hover_time = 0.0
 	var energy = $"../TurnManager".energy
 	if Global.selected_card == null and Global.selected_structure == null:
@@ -86,6 +86,7 @@ func use_card(grid_position):
 		targets.assign(selection)
 	else:
 		targets = get_targeted_tiles(grid_position, Global.selected_card, Global.selected_card.size, Global.shape, Global.rotate)
+	targets.shuffle()
 	card.register_events(event_manager, null)
 	var args = EventArgs.SpecificArgs.new(tiles[grid_position.x][grid_position.y])
 	args.play_args = EventArgs.PlayArgs.new(card)
@@ -114,7 +115,8 @@ func use_card(grid_position):
 					do_animation(spriteframes, target)
 		elif on == Enums.AnimOn.Center:
 			animation_position = do_animation(spriteframes, null)
-	card_played.emit(Global.selected_card)
+	if !external_source:
+		card_played.emit(Global.selected_card)
 	await get_tree().create_timer(delay).timeout
 	do_plant_shearing_animation(animation_position, card.size)
 	if on == Enums.AnimOn.Tiles:

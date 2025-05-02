@@ -1,0 +1,39 @@
+[gd_resource type="Resource" script_class="CardData" load_steps=4 format=3 uid="uid://l11ou6cub8qm"]
+
+[ext_resource type="Script" path="res://src/cards/card_data.gd" id="1_1st1n"]
+[ext_resource type="Script" path="res://src/effect2/data/pick_card_effect.gd" id="1_lptli"]
+
+[sub_resource type="Resource" id="Resource_tiaiq"]
+script = ExtResource("1_lptli")
+timing2 = 2
+count = -1
+pick_from = 5
+and_then = 2
+skippable = false
+strength = 0.0
+base_strength = 1.0
+strength_increment = 1.0
+timing = 13
+is_seed = true
+
+[resource]
+script = ExtResource("1_1st1n")
+type = "SEED"
+name = "Witch-Hazel"
+rarity = "legendary"
+cost = 3
+yld = 30
+time = 4
+size = 1
+text = ""
+strength_increment = 1.0
+size_increment = 1
+seed_texture = 7
+texture_icon_offset = 16
+targets = Array[String]([])
+effects = Array[Resource("res://src/effect/effect.gd")]([])
+enhances = Array[String]([])
+strength = 0.0
+delay = 0.0
+anim_on = 0
+effects2 = Array[Resource("res://src/effect2/effect2.gd")]([SubResource("Resource_tiaiq")])

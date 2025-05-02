@@ -165,7 +165,7 @@ func get_description() -> String:
 				descr += ". "
 			descr += effect_text
 	for effect in effects2:
-		var effect_text = effect.get_description()
+		var effect_text = effect.get_description(size)
 		if effect_text.length() > 0:
 			if descr.length() > 0:
 				descr += ". "

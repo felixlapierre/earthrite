@@ -8,7 +8,7 @@ func register(event_manager: EventManager, tile: Tile):
 		var target = args.specific.tile
 		if target.state == Enums.TileState.Empty and !target.is_destroyed():
 			var card = DataFetcher.get_random_card()
-			while card.type != "SEED" or banned.has(card.name):
+			while card.type != "SEED" or banned.has(card.name) or card.rarity == "legendary":
 				card = DataFetcher.get_random_card()
 			var effects = target.plant_seed_animate(card)
 			args.farm.effect_queue.append_array(effects)
@@ -21,8 +21,9 @@ func unregister(event_manager: EventManager):
 	event_manager.unregister_listener(timing, callback)
 
 # To be overridden
-func get_description() -> String:
-	return get_timing_text() + "Fill target area with random seeds"
+func get_description(size: int) -> String:
+	var size_descr = "entire farm" if size == -1 else str(size) + " tiles"
+	return get_timing_text() + "Fill " + size_descr + " with random seeds"
 
 func copy():
 	var copy = PlantRandomSeeds.new()

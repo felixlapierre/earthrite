@@ -55,6 +55,7 @@ var BorderUncommon = preload("res://assets/ui/border_common.png")
 var BorderRare = preload("res://assets/ui/border_uncommon.png")
 var BorderUnique = preload("res://assets/ui/border_unique.png")
 var BorderBlight = preload("res://assets/ui/border_blight.png")
+var BorderLegendary = preload("res://assets/ui/border_legend.png")
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:	
@@ -73,6 +74,8 @@ func set_card_info(card_data):
 		$CardBorder.texture = BorderUnique
 	elif card_data.rarity == 'blight':
 		$CardBorder.texture = BorderBlight
+	elif card_data.rarity == 'legendary':
+		$CardBorder.texture = BorderLegendary
 	CARD_ICON = $HBoxContainer/VBoxContainer/ImageMargin/ImageCont/CardIconCont/CardIcon
 	SIZE_LABEL = $HBoxContainer/VBoxContainer/ImageMargin/ImageCont/SizeCont/SizeLabel
 	match card_info.type:

@@ -15,8 +15,9 @@ func register(event_manager: EventManager, p_tile: Tile):
 func unregister(event_manager: EventManager):
 	event_manager.unregister_listener(timing, callback)
 
-func get_description():
-	return super.get_description() + "Harvest and replant all plants"
+func get_description(size: int):
+	var size_descr = "all" if size == -1 else str(size)
+	return get_timing_text() + "Harvest and replant " + size_descr + " plants"
 
 func copy():
 	var copy = HarvestReplant.new()

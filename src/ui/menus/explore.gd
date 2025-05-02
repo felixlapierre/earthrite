@@ -149,6 +149,10 @@ func create_point_from_name(name, location):
 			create_point("Rare Enhance", location, func(pt):
 				use_explore(pt)
 				select_enhance("rare"))
+		"Legendary Card":
+			create_point("Legendary Card", location, func(pt):
+				use_explore(pt)
+				add_card("legendary", 1))
 
 func create_binary_explore():
 	$CenterContainer/PanelContainer/VBox/HBox/Label.text = "Explorations Remaining: " + str(explores)
@@ -196,6 +200,8 @@ func pick_binary_explore():
 		return "Rare Structure"
 	if i <= 66.6:
 		return "Rare Enhance"
+	if i <= 66.7:
+		return "Legendary Card"
 	return "Gain Card"
 
 func use_explore(node):

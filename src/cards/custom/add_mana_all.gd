@@ -17,5 +17,5 @@ func copy():
 	new.assign(self)
 	return new
 
-func get_description() -> String:
+func get_description(size: int) -> String:
 	return get_timing_text() + get_description_interp("Add {STRENGTH} " + Helper.mana_icon() + " to all plants")
