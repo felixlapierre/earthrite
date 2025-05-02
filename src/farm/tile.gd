@@ -324,7 +324,7 @@ func get_effects(time) -> Array[Effect]:
 					var shape = Helper.get_tile_shape_rotated(9, Enums.CursorShape.Square, 0)
 					effects_generated.append_array(get_effects_in_shape(effect, shape))
 				else:
-					effects_generated.append(effect.copy().set_location(grid_location).set_card(seed))
+					effects_generated.append(effect.copy().set_location(grid_location).set_card(seed if effect.name != "draw" else null))
 
 	return effects_generated
 
