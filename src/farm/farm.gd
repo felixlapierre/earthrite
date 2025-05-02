@@ -357,7 +357,7 @@ func perform_effect(effect, tile: Tile):
 			new_seed.effects.append(load("res://src/effect/data/fleeting.tres"))
 			on_card_draw.emit(effect.strength, new_seed.copy())
 		"add_blight_yield":
-			tile.seed_base_yield += effect.strength * event_manager.turn_manager.blight_damage
+			tile.seed_base_yield += effect.strength * (event_manager.turn_manager.get_blight_strength())
 		"protect":
 			tile.protected = true
 

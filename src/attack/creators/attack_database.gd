@@ -20,9 +20,9 @@ var destroy_two_tiles = DestroyTiles.new(2)
 var destroy_row = DestroyRow.new()
 var destroy_col = DestroyCol.new()
 
-var end_turn_swap = EndTurnSwapColors.new()
-var end_turn_rotate = EndTurnRotateColors.new()
-var end_turn_randomize = EndTurnRandomizeColors.new()
+#var end_turn_swap = EndTurnSwapColors.new()
+#var end_turn_rotate = EndTurnRotateColors.new()
+#var end_turn_randomize = EndTurnRandomizeColors.new()
 
 var increase_ritual_10 = IncreaseRitualTarget.new(10.0)
 var block_ritual = BlockRitual.new(1.0)
@@ -82,8 +82,8 @@ func populate_database():
 		.easy(3).normal(2).hard(2).mastery(2).build())
 	add(SimpleAttackBuilder.new().fortune_every_turn(add_blightroot)\
 		.easy(3).normal(2).hard(2).mastery(2).build())
-	add(simple_every(end_turn_swap)
-		.easy(3).normal(2).hard(2).mastery(2).build())
+	#add(simple_every(end_turn_swap)
+	#	.easy(3).normal(2).hard(2).mastery(2).build())
 	add(simple_every(DestroyTiles.new(1))
 		.easy(3).normal(2).hard(2).mastery(2).build())
 	add(simple_every(IncreaseRitualTarget.new(10.0))\
@@ -96,15 +96,13 @@ func populate_database():
 		.easy(4).normal(3).build())
 	add(simple_every(add_blightroot).fortune_once(add_10_weeds)\
 		.easy(4).normal(3).build())
-	add(simple_every(end_turn_swap).fortune_once(DestroyTiles.new(5))\
+	add(SimpleAttackBuilder.new().fortune_once(DestroyTiles.new(7))\
 		.easy(4).normal(3).build())
 	add(simple_every(DestroyPlants.new(1)).fortune_once(EndTurnRandomizeColors.new())\
 		.easy(5).build())
 	add(SimpleAttackBuilder.new().fortune_once(weeds_entire_farm)\
 		.easy(5).build())
 	add(simple_every(add_blightroot).fortune_once(add_10_weeds)\
-		.easy(5).build())
-	add(simple_every(end_turn_swap).fortune_once(DestroyTiles.new(5))\
 		.easy(5).build())
 	#TODO One more at least
 	
@@ -113,10 +111,11 @@ func populate_database():
 		.easy(6).normal(5).hard(5).mastery(4).build())
 	add(SimpleAttackBuilder.new().fortune_every_turn(add_deathcap)\
 		.easy(6).normal(5).hard(5).mastery(4).build())
-	add(simple_every(end_turn_rotate)\
-		.easy(6).normal(5).hard(5).mastery(4).build())
+	#add(simple_every(end_turn_rotate)\
+	#	.easy(6).normal(5).hard(5).mastery(4).build())
 	add(simple_every(destroy_two_plants)\
 		.easy(6).normal(5).hard(5).mastery(4).build())
+	#TODO More
 	
 	# Easy year 7
 	add(SimpleAttackBuilder.new().fortune_even(Helper.pick_random([destroy_row, destroy_col]))\
@@ -147,11 +146,7 @@ func populate_database():
 	# Two easy 1st bosses: Normal 4, Hard 3, Mastery 3
 	add(simple_every_list([destroy_one_plant, add_blightroot])\
 		.normal(4).hard(3).mastery(3).build())
-	add(simple_every_list([destroy_one_plant, end_turn_swap])\
-		.normal(4).hard(3).mastery(3).build())
 	add(simple_every_list([destroy_one_tile, increase_ritual_10])\
-		.normal(4).hard(3).mastery(3).build())
-	add(simple_every_list([add_blightroot, end_turn_swap])\
 		.normal(4).hard(3).mastery(3).build())
 	add(simple_every_list([add_blightroot, increase_ritual_10])\
 		.normal(4).hard(3).mastery(3).build())
@@ -164,19 +159,15 @@ func populate_database():
 		.normal(6).hard(5).mastery(4).build())
 	add(simple_every(Helper.pick_random([one_blood_thorn, one_dark_thorn]))\
 		.normal(6).hard(5).mastery(4).build())
-	add(simple_every(WeedsEveryCard.new(1)).fortune_every_turn(end_turn_rotate)\
+	add(simple_every(WeedsEveryCard.new(1)).fortune_every_turn(destroy_one_plant)\
 		.normal(6).hard(5).mastery(4).build())
-	add(simple_every_list([add_deathcap, end_turn_swap])\
+	add(simple_every_list([add_deathcap, AddWeeds.new(2)])\
 		.normal(6).hard(5).mastery(4).build())
 	add(simple_every_list([destroy_two_plants, increase_ritual_10])\
 		.normal(6).hard(5).mastery(4).build())
 	
 	# Normal week 7
-	add(simple_every_list([Helper.pick_random([destroy_row, destroy_col]), end_turn_swap])\
-		.normal(7).build())
 	add(simple_every_list([Helper.pick_random([one_dark_thorn, one_blood_thorn]), add_10_weeds])\
-		.normal(7).build())
-	add(simple_every_list([burn_rightmost, end_turn_rotate])\
 		.normal(7).build())
 	# We also have burn + deathcap from easy final boss
 	
@@ -188,8 +179,6 @@ func populate_database():
 	add(simple_every_list([IncreaseBlightStrength.new(1.0), increase_ritual_10]).damage_multiplier(2.0)\
 		.normal(8).hard(8).mastery(7).build())
 	add(simple_every_list([destroy_two_tiles, add_10_weeds])\
-		.normal(8).mastery(6).build())
-	add(simple_every(burn_rightmost).fortune_random(add_deathcap).fortune_random(end_turn_swap).fortune_at(weeds_entire_farm, 4)\
 		.normal(8).mastery(6).build())
 	
 	# Hard: Year 4

@@ -22,7 +22,8 @@ func register_events(event_manager: EventManager, p_tile: Tile):
 				else:
 					mirror.state = temp
 			if mirror.card_can_target(target_tile.seed):
-				mirror.set_seed(target_tile.seed.copy())
+				var seed = target_tile.seed.copy()
+				mirror.plant_seed_animate(seed)
 				mirror.current_grow_progress = target_tile.current_grow_progress
 				mirror.current_yield = target_tile.current_yield
 				mirror.state = target_tile.state

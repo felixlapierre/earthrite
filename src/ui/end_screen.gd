@@ -19,7 +19,7 @@ func _process(delta):
 	
 func setup(turn_manager: TurnManager, deck: Array[CardData], farm: Farm):
 	# Title
-	if turn_manager.blight_damage < 5:
+	if turn_manager.blight_damage < Global.MAX_HEALTH:
 		Title.text = "You Win! :)"
 		Description.text = "The Blight has been cleansed"
 		if Global.DIFFICULTY >= 0:

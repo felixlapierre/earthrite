@@ -42,14 +42,16 @@ func setup(deck, p_tooltip):
 
 func create_explore(p_explores, turn_manager: TurnManager):
 	explores += p_explores
+	if turn_manager.year >= 3:
+		explores += 1
 	if turn_manager.year == 3:
 		fixed_explores.append("Rare Card")
 	elif turn_manager.year == 6:
 		fixed_explores.append("Rare Structure")
 	elif turn_manager.year == 8:
 		fixed_explores.append("Rare Enhance")
-	else:
-		fixed_explores.append("Gain Card")
+	#else:
+	#	fixed_explores.append("Gain Card")
 	create_binary_explore()
 	return
 	
@@ -194,13 +196,13 @@ func pick_binary_explore():
 			return "Expand Farm"
 		else:
 			return "Gain Card"
-	if i <= 66:
+	if i <= 67:
 		return "Rare Card"
-	if i <= 66.5:
+	if i <= 68.5:
 		return "Rare Structure"
-	if i <= 66.6:
+	if i <= 69.5:
 		return "Rare Enhance"
-	if i <= 66.7:
+	if i <= 70:
 		return "Legendary Card"
 	return "Gain Card"
 
@@ -228,17 +230,19 @@ func create_point(name: String, pos: Vector2, callback: Callable):
 	$Points.add_child(point)
 
 func add_card(rarity: String, count: int):
-	var cards = []
-	if rarity == "rare":
-		cards = cards_database.get_random_cards(rarity, count)
-	else:
-		cards = cards_database.get_random_cards_weighted_rarity(count)
-	pick_card_from(cards)
+	var get_cards = func():
+		if rarity == "rare":
+			return cards_database.get_random_cards(rarity, count)
+		else:
+			return cards_database.get_random_cards_weighted_rarity(count)
+	pick_card_from(get_cards.call(), get_cards)
 
-func pick_card_from(cards):
+func pick_card_from(cards, callback: Callable):
 	var pick_option_ui = PickOption.instantiate()
 	add_sibling(pick_option_ui)
 	var prompt = "Pick a card to add to your deck"
+	pick_option_ui.reroll_callable = callback
+	pick_option_ui.reroll_enabled = true
 
 	pick_option_ui.setup(prompt, cards, func(selected):
 		player_deck.append(selected)
@@ -266,19 +270,21 @@ func select_card_to_remove(pt):
 	select_card.do_card_pick(player_deck, "Select a card to remove")
 
 func select_enhance(rarity: String):
-	var enhances = []
-	if rarity == "rare":
-		if Global.FARM_TYPE == "WILDERNESS":
-			enhances = cards_database.get_random_enhance_noseed(rarity, 3)
+	var get_enhances_fn = func():
+		if rarity == "rare":
+			if Global.FARM_TYPE == "WILDERNESS":
+				return cards_database.get_random_enhance_noseed(rarity, 3)
+			else:
+				return cards_database.get_random_enhance(rarity, 3, false)
 		else:
-			enhances = cards_database.get_random_enhance(rarity, 3, false)
-	else:
-		enhances = cards_database.get_random_enhances_weighted_rarity(3)
+			return cards_database.get_random_enhances_weighted_rarity(3)
 
 	var pick_option_ui = PickOption.instantiate()
+	pick_option_ui.reroll_callable = get_enhances_fn
+	pick_option_ui.reroll_enabled = true
 	add_sibling(pick_option_ui)
 	var prompt = "Pick an enhance to apply"
-	pick_option_ui.setup(prompt, enhances, func(selected):
+	pick_option_ui.setup(prompt, get_enhances_fn.call(), func(selected):
 		select_card_to_enhance(selected)
 		remove_sibling(pick_option_ui),
 		func():
@@ -302,12 +308,15 @@ func select_card_to_enhance(enhance: Enhance):
 	select_card.do_enhance_pick(player_deck, enhance, "Select a card to enhance")
 	
 func add_structure(rarity: String):
-	var structures = []
-	if rarity == "rare":
-		structures = cards_database.get_random_structures(3, rarity)
-	else:
-		structures = cards_database.get_random_structures_weighted_rarity(3)
+	var get_structures_fn = func():
+		if rarity == "rare":
+			return cards_database.get_random_structures(3, rarity)
+		else:
+			return cards_database.get_random_structures_weighted_rarity(3)
+
 	var pick_option_ui = PickOption.instantiate()
+	pick_option_ui.reroll_callable = get_structures_fn
+	pick_option_ui.reroll_enabled = true
 	add_sibling(pick_option_ui)
 	var prompt = "Pick a structure to add to your farm"
 	var on_pick = func(selected):
@@ -317,7 +326,7 @@ func add_structure(rarity: String):
 	var on_cancel = func(): 
 		remove_sibling(pick_option_ui)
 		visible = true
-	pick_option_ui.setup(prompt, structures, on_pick, on_cancel)
+	pick_option_ui.setup(prompt, get_structures_fn.call(), on_pick, on_cancel)
 
 func pick_fortune(prompt: String, options: Array[Fortune]):
 	if options.size() == 0:

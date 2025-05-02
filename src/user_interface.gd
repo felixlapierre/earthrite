@@ -63,11 +63,11 @@ var t = 0.0
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	for i in Global.MAX_BLIGHT:
+	for i in Global.MAX_HEALTH / 20:
 		var sprite = TextureRect.new()
 		sprite.texture = load("res://assets/custom/BlightEmpty.png")
 		sprite.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
-		$UI/DamagePanel/BlightDamage.add_child(sprite)
+		$UI/DamagePanel/VBox/BlightDamage.add_child(sprite)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
@@ -83,10 +83,10 @@ func _process(delta: float) -> void:
 	if ritual_current_amount != turn_manager.get_current_ritual():
 		t += delta
 		ritual_current_amount = ceil(lerp(ritual_current_amount, turn_manager.get_current_ritual(), t))
-	elif t >= 1.0:
-		t = 0.0
-		ritual_current_amount = turn_manager.get_current_ritual()
-	$UI/RitualPanel/RitualCounter/Label.text = "[right]" + str(ritual_current_amount) + " /" + str(turn_manager.total_ritual)
+		if t >= 1.0:
+			t = 0.0
+			ritual_current_amount = turn_manager.get_current_ritual()
+		$UI/RitualPanel/RitualCounter/Label.text = "[right]" + str(ritual_current_amount) + " /" + str(turn_manager.total_ritual)
 	$Obelisk.value = turn_manager.total_ritual - ritual_current_amount
 
 func setup(p_event_manager: EventManager, p_turn_manager: TurnManager, p_deck: Array[CardData], p_cards: Cards):
@@ -405,18 +405,21 @@ func _on_end_turn_button_pressed() -> void:
 	end_turn_button_pressed.emit()
 
 func update_damage():
+	var damage_text = $UI/DamagePanel/VBox/DamageText
+	var damage_display = $UI/DamagePanel/VBox/BlightDamage
 	$UI/DamagePanel.visible = turn_manager.blight_damage != 0
-	if $UI/DamagePanel/BlightDamage.get_child_count() != Global.MAX_BLIGHT:
-		for child in $UI/DamagePanel/BlightDamage.get_children():
-			$UI/DamagePanel/BlightDamage.remove_child(child)
-		for i in Global.MAX_BLIGHT:
+	damage_text.text = "[center]" + str(turn_manager.blight_damage) + " /" + str(Global.MAX_HEALTH)
+	if damage_display.get_child_count() != Global.MAX_HEALTH / 20:
+		for child in damage_display.get_children():
+			damage_display.remove_child(child)
+		for i in Global.MAX_HEALTH / 20:
 			var sprite = TextureRect.new()
 			sprite.texture = load("res://assets/custom/BlightEmpty.png")
 			sprite.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
-			$UI/DamagePanel/BlightDamage.add_child(sprite)
-	for i in $UI/DamagePanel/BlightDamage.get_child_count():
-		var img = $UI/DamagePanel/BlightDamage.get_child(i)
-		if turn_manager.blight_damage > i:
+			damage_display.add_child(sprite)
+	for i in damage_display.get_child_count():
+		var img = damage_display.get_child(i)
+		if turn_manager.blight_damage > i * 20:
 			img.texture = load("res://assets/custom/Blight.png")
 		else:
 			img.texture = load("res://assets/custom/BlightEmpty.png")
@@ -748,7 +751,7 @@ func _on_any_card_button_pressed():
 	self.add_child(debug)
 
 func pick_cards_event(cards):
-	$Winter/Explore.pick_card_from(cards)
+	$Winter/Explore.pick_card_from(cards, func(): return cards)
 
 func pick_enhance_event(rarity: String):
 	$Winter/Explore.select_enhance(rarity)

@@ -375,8 +375,18 @@ offset_top = 461.0
 offset_right = 641.0
 offset_bottom = 501.0
 
-[node name="BlightDamage" type="HBoxContainer" parent="UI/DamagePanel"]
+[node name="VBox" type="VBoxContainer" parent="UI/DamagePanel"]
 layout_mode = 2
+
+[node name="BlightDamage" type="HBoxContainer" parent="UI/DamagePanel/VBox"]
+layout_mode = 2
+
+[node name="DamageText" type="RichTextLabel" parent="UI/DamagePanel/VBox"]
+custom_minimum_size = Vector2(150, 40)
+layout_mode = 2
+theme = ExtResource("2_s7754")
+bbcode_enabled = true
+text = "[center] 0 /100"
 
 [node name="PeekButton" type="TextureButton" parent="UI"]
 custom_minimum_size = Vector2(80, 80)

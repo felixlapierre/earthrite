@@ -179,8 +179,8 @@ static func get_random_cards_weighted_rarity(count: int):
 	load_cards()
 	var probabilities = {
 		"common": 70.0,
-		"uncommon": 97.0,
-		"rare": 99.9,
+		"uncommon": 95.0,
+		"rare": 99.3,
 		"legendary": 100.0
 	}
 	return _get_random_weighted_rarity(probabilities, cards_rarity, count)
@@ -189,7 +189,7 @@ static func get_random_enhances_weighted_rarity(count: int):
 	load_enhances()
 	var probabilities = {
 		"common": 70.0,
-		"uncommon": 99.0,
+		"uncommon": 98.0,
 		"rare": 100.0
 	}
 	return _get_random_weighted_rarity(probabilities, enhances_rarity, count)

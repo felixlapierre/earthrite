@@ -8,6 +8,11 @@ var FortuneDisplay = preload("res://src/fortune/fortune.tscn")
 
 var on_skip: Callable
 
+var reroll_callable: Callable
+var reroll_enabled: bool = false
+
+var pick_callback: Callable
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass # Replace with function body.
@@ -16,35 +21,71 @@ func _ready():
 func _process(delta):
 	pass
 
-func setup(prompt: String, items, pick_callback: Callable, skip_callback):
+func setup(prompt: String, items, p_pick_callback: Callable, skip_callback):
 	prompt_label.text = prompt
 	if skip_callback != null:
 		on_skip = skip_callback
+	pick_callback = p_pick_callback
 	$Center/Panel/VBox/SkipButton.visible = skip_callback != null
-	for item in items:
-		if item is Fortune:
-			var new_node = FortuneDisplay.instantiate()
-			new_node.setup(item)
-			new_node.clicked.connect(func(data): 
-				pick_callback.call(data))
-			options_container.add_child(new_node)
-		elif item.CLASS_NAME == "CardData":
-			var new_node = ShopCard.instantiate()
-			new_node.card_data = item
-			new_node.on_clicked.connect(func(option): pick_callback.call(option))
-			options_container.add_child(new_node)
-		elif item.CLASS_NAME == "Structure":
-			var new_node = ShopDisplay.instantiate()
-			new_node.set_data(item)
-			new_node.callback = func(option): pick_callback.call(option)
-			options_container.add_child(new_node)
-		elif item.CLASS_NAME == "Enhance":
-			var new_node = ShopDisplay.instantiate()
-			new_node.set_data(item)
-			new_node.callback = func(option): pick_callback.call(option)
-			options_container.add_child(new_node)
+	$Center/Panel/VBox/RerollButton.visible = reroll_enabled and Global.ACORNS > 0
+	update_reroll_button()
+	setup_items(items)
 
+func setup_items(items):
+	for child in options_container.get_children():
+		options_container.remove_child(child)
+	for item in items:
+		var acorn = false
+		var callback = func(option):
+			pick_callback.call(option)
+		if reroll_enabled and randi_range(0, 100) < 20:
+			callback = func(option):
+				pick_callback.call(option)
+				Global.ACORNS += 1
+			acorn = true
+		var new_node = null
+		if item is Fortune:
+			new_node = FortuneDisplay.instantiate()
+			new_node.setup(item)
+			new_node.clicked.connect(callback)
+
+		elif item.CLASS_NAME == "CardData":
+			new_node = ShopCard.instantiate()
+			new_node.card_data = item
+			new_node.on_clicked.connect(callback)
+
+		elif item.CLASS_NAME == "Structure":
+			new_node = ShopDisplay.instantiate()
+			new_node.set_data(item)
+			new_node.callback = callback
+
+		elif item.CLASS_NAME == "Enhance":
+			new_node = ShopDisplay.instantiate()
+			new_node.set_data(item)
+			new_node.callback = callback
+		
+		if acorn:
+			var vbox = VBoxContainer.new()
+			vbox.add_child(new_node)
+			var acorn_label = RichTextLabel.new()
+			acorn_label.text = "[center]+1 [img]res://assets/custom/acorn.png[/img]"
+			acorn_label.bbcode_enabled = true
+			acorn_label.fit_content = true
+			vbox.add_child(acorn_label)
+			new_node = vbox
+
+		options_container.add_child(new_node)
 
 func _on_skip_button_pressed():
 	if on_skip != null:
 		on_skip.call()
+
+func _on_reroll_button_pressed():
+	Global.ACORNS -= 1
+	setup_items(reroll_callable.call())
+	update_reroll_button()
+
+func update_reroll_button():
+	$Center/Panel/VBox/RerollButton.text = "Reroll (" + str(Global.ACORNS) + " left)"
+	$Center/Panel/VBox/RerollButton.disabled = Global.ACORNS <= 0
+

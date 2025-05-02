@@ -151,7 +151,7 @@ func apply_strength(enhance: Enhance):
 			elif effect.strength < 0.0:
 				effect.strength -= enhance.strength * strength_increment
 			break
-	if enhance.strength > 1.0 and enhance.rarity == "common":
+	if enhance.strength > 1.0 and enhance.rarity == "uncommon":
 		cost += 1
 
 func get_description() -> String:

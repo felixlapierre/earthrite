@@ -445,7 +445,7 @@ func show_peek(weeks: int = 0):
 		var stylebox: StyleBoxFlat = panel.get_theme_stylebox("panel").duplicate()
 		stylebox.set("bg_color", Color(Color.RED, 0.5))
 		panel.add_theme_stylebox_override("panel", stylebox)
-		return
+		return -projected_mana
 	match projected_state:
 		Enums.TileState.Growing:
 			var stylebox: StyleBoxFlat = panel.get_theme_stylebox("panel").duplicate()

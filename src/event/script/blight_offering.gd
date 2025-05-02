@@ -25,13 +25,13 @@ func get_options():
 	
 	var option1 = CustomEvent.Option.new("Accept the offering",\
 	OptionPreview.instantiate().nodes_preview("Pick one of these three 'Blight' cards to add to your deck", cards), func():
-		user_interface._on_upgrade_shop_on_upgrade(Upgrade.new(Upgrade.UpgradeType.GainBlight))
+		user_interface._on_upgrade_shop_on_upgrade(Upgrade.new(Upgrade.UpgradeType.GainBlight, "", 20))
 		user_interface.pick_cards_event(cards_database.get_element_cards("Blight"))
 	)
 	var option2 = CustomEvent.Option.new("Reject the offering",\
-	OptionPreview.instantiate().text_preview("Remove 1 Blight damage"), func():
-		user_interface._on_upgrade_shop_on_upgrade(Upgrade.new(Upgrade.UpgradeType.RemoveBlight)))
+	OptionPreview.instantiate().text_preview("Remove 20 Blight damage"), func():
+		user_interface._on_upgrade_shop_on_upgrade(Upgrade.new(Upgrade.UpgradeType.RemoveBlight, "", 20)))
 	return [option1, option2]
 
 func check_prerequisites():
-	return turn_manager.blight_damage > 0 and turn_manager.blight_damage < Global.MAX_BLIGHT - 1
+	return turn_manager.blight_damage >= 20 and turn_manager.blight_damage < Global.MAX_HEALTH - 20

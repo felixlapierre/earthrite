@@ -62,26 +62,26 @@ func gain_purple_mana(amount, delay):
 # Return boolean if the player took damage
 func end_turn():
 	var damage = false
+	var blight_remaining = target_blight - purple_mana
 
-	if purple_mana < target_blight:
+	if blight_remaining > 0:
 		damage = true
 		if week < Global.FINAL_WEEK:
-			blight_damage += 1
+			blight_damage += blight_remaining
 		else:
-			blight_damage = 5
+			blight_damage = 100
 	elif next_turn_blight > 0:
 		animate_blightroot.emit("attack")
 	elif get_blight_requirements(week + 2, year) > 0:
 		animate_blightroot.emit("threat")
-	
-	var blight_remaining = target_blight - purple_mana
+
 	blight_remaining = 0 if blight_remaining < 0 else blight_remaining
 	week += 1
 	if !flag_defer_excess or purple_mana < target_blight:
 		purple_mana = 0
 	else:
 		purple_mana -= target_blight
-	target_blight = next_turn_blight + blight_remaining
+	target_blight = next_turn_blight
 	next_turn_blight = get_blight_requirements(week + 1, year)
 	energy = get_max_energy()
 	flag_defer_excess = false
@@ -198,3 +198,6 @@ func destroy_blighted_tiles(farm: Farm):
 
 func get_current_ritual():
 	return total_ritual - ritual_counter
+
+func get_blight_strength():
+	return ceil(float(blight_damage + 1) / 20)

@@ -209,10 +209,8 @@ func on_turn_end():
 	var damage = $TurnManager.end_turn()
 	if damage:
 		$UserInterface.update_damage()
-		$TurnManager.set_blight_targeted_tiles($FarmTiles)
-		$TurnManager.destroy_blighted_tiles($FarmTiles)
 	
-	if $TurnManager.blight_damage >= Global.MAX_BLIGHT:
+	if $TurnManager.blight_damage >= Global.MAX_HEALTH:
 		on_lose()
 	#$UserInterface.update()
 	get_tree().create_timer(1.5).timeout.connect(func():
@@ -261,7 +259,8 @@ func save_game():
 		"farm_botright": {
 			"x": Global.FARM_BOTRIGHT.x,
 			"y": Global.FARM_BOTRIGHT.y
-		}
+		},
+		"acorns": Global.ACORNS
 	}
 	user_interface.save_data(save_json)
 	save_json.mastery = Mastery.save_data()
@@ -304,7 +303,8 @@ func load_game():
 	Global.FARM_TYPE = save_json.state.farm_type
 	Global.FARM_TOPLEFT = Vector2(save_json.state.farm_topleft.x, save_json.state.farm_topleft.y)
 	Global.FARM_BOTRIGHT = Vector2(save_json.state.farm_botright.x, save_json.state.farm_botright.y)
-
+	Global.ACORNS = save_json.state.acorns if save_json.state.has("acorns") else 0
+	
 	Mastery.load_data(save_json.mastery)
 	if save_json.misc.wilderness_plant != null:
 		Global.WILDERNESS_PLANT = load(save_json.misc.wilderness_plant.path).new()
@@ -378,6 +378,8 @@ func shake_mana(mana: float):
 		shake_camera(100.0)
 	elif mana >= target:
 		shake_camera(30.0)
+	elif mana >= target / 2:
+		shake_camera(15.0)
 
 func shake_camera(amount: float = 30.0):
 	camera.apply_shake(amount)

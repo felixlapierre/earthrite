@@ -30,3 +30,6 @@ targets = Array[String]([])
 effects = Array[ExtResource("1_gatsx")]([SubResource("Resource_hhf7t")])
 enhances = Array[String]([])
 strength = 0.0
+delay = 0.0
+anim_on = 0
+effects2 = Array[Resource("res://src/effect2/effect2.gd")]([])

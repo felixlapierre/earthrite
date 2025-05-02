@@ -11,7 +11,7 @@ var blighroot_seed = load("res://src/fortune/unique/blightroot.tres")
 # To be overridden by specific code seeds
 func register_events(event_manager: EventManager, p_tile: Tile):
 	callback = func(args: EventArgs):
-		args.specific.tile.add_yield(self.strength * args.turn_manager.blight_damage)
+		args.specific.tile.add_yield(self.strength * args.turn_manager.get_blight_strength())
 
 	callback2 = func(args: EventArgs):
 		var eligible_blightroot: Array[Tile] = []
