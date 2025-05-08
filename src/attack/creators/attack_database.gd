@@ -51,6 +51,8 @@ func get_attacks(difficulty: String, week: int) -> Array[AttackPattern]:
 	var result: Array[AttackPattern] = []
 	var diff = database.get(difficulty)
 	var options = diff.get(week + 1)
+	if !diff.has(week + 1):
+		options = diff.get(8)
 	result.assign(options)
 	return result
 

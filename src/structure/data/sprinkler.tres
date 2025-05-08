@@ -14,10 +14,11 @@ range = "adjacent"
 [resource]
 script = ExtResource("1_36kls")
 name = "Sprinkler"
-rarity = "rare"
+rarity = "unique"
 cost = 1
 size = 8
 text = "Waters 8 adjacent tiles"
 texture = ExtResource("2_aog70")
 effects = Array[ExtResource("1_8bhnu")]([SubResource("Resource_8cu86")])
 tooltip = "Watered tiles yield 40% more"
+effects2 = Array[Resource("res://src/effect2/effect2.gd")]([])

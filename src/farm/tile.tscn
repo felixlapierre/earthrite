@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://ccnobfjaguoie"]
+[gd_scene load_steps=23 format=3 uid="uid://ccnobfjaguoie"]
 
 [ext_resource type="Script" path="res://src/farm/tile.gd" id="1_8vnt4"]
 [ext_resource type="Texture2D" uid="uid://cmitvrjj6os0f" path="res://assets/1616tinygarden/Farm.png" id="2_n75y4"]
@@ -12,6 +12,7 @@
 [ext_resource type="Theme" uid="uid://bdodinwpnjkw8" path="res://assets/theme_huge.tres" id="8_ikq5e"]
 [ext_resource type="Texture2D" uid="uid://clf1ovfisrdg0" path="res://assets/animation/destroy.png" id="9_cvalt"]
 [ext_resource type="Texture2D" uid="uid://dgmqywyoi5u0p" path="res://assets/custom/EffectParticle.png" id="9_iiv5d"]
+[ext_resource type="Texture2D" uid="uid://duxmurjovuqmh" path="res://assets/custom/ProtectOverlay.png" id="13_atcg2"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1iam7"]
 bg_color = Color(0.807843, 0.815686, 0.835294, 0.537255)
@@ -213,6 +214,13 @@ texture = ExtResource("9_cvalt")
 lifetime = 0.3
 one_shot = true
 explosiveness = 0.8
+
+[node name="ProtectOverlay" type="Sprite2D" parent="."]
+visible = false
+texture_filter = 1
+scale = Vector2(5.7, 5.7)
+texture = ExtResource("13_atcg2")
+centered = false
 
 [connection signal="gui_input" from="TileButton" to="." method="_on_tile_button_gui_input"]
 [connection signal="mouse_entered" from="TileButton" to="." method="_on_tile_button_mouse_entered"]

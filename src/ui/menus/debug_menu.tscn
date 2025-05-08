@@ -66,6 +66,11 @@ custom_minimum_size = Vector2(0, 80)
 layout_mode = 2
 text = "+1 Year"
 
+[node name="Acorn" type="Button" parent="Center/Panel/VBox/Menu"]
+custom_minimum_size = Vector2(0, 80)
+layout_mode = 2
+text = "+5 Acorns"
+
 [node name="SelectOptions" type="GridContainer" parent="Center/Panel/VBox"]
 layout_mode = 2
 columns = 4
@@ -81,3 +86,4 @@ layout_mode = 2
 [connection signal="pressed" from="Center/Panel/VBox/Menu/Event" to="." method="_on_event_pressed"]
 [connection signal="pressed" from="Center/Panel/VBox/Menu/Attack" to="." method="_on_attack_pressed"]
 [connection signal="pressed" from="Center/Panel/VBox/Menu/Year" to="." method="_on_year_pressed"]
+[connection signal="pressed" from="Center/Panel/VBox/Menu/Acorn" to="." method="_on_acorn_pressed"]

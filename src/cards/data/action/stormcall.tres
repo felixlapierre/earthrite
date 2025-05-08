@@ -1,0 +1,27 @@
+[gd_resource type="Resource" script_class="Stormcall" load_steps=3 format=3 uid="uid://dwoq85vjmh0dt"]
+
+[ext_resource type="Script" path="res://src/cards/custom/unique/stormcall.gd" id="1_nvjxu"]
+[ext_resource type="Texture2D" uid="uid://dtxlmtgvy34yk" path="res://assets/card/control-weather.png" id="2_ym7f5"]
+
+[resource]
+script = ExtResource("1_nvjxu")
+type = "ACTION"
+name = "Stormcall"
+rarity = "rare"
+cost = 1
+yld = 0
+time = 0
+size = 0
+text = "Pick 1 of 3 Weather effects to take place in 2 turns"
+strength_increment = 1.0
+size_increment = 1
+texture = ExtResource("2_ym7f5")
+seed_texture = 0
+texture_icon_offset = 16
+targets = Array[String]([])
+effects = Array[Resource("res://src/effect/effect.gd")]([])
+enhances = Array[String]([])
+strength = 0.0
+delay = 0.0
+anim_on = 0
+effects2 = Array[Resource("res://src/effect2/effect2.gd")]([])

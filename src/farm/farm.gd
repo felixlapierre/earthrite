@@ -360,6 +360,7 @@ func perform_effect(effect, tile: Tile):
 			tile.seed_base_yield += effect.strength * (event_manager.turn_manager.get_blight_strength())
 		"protect":
 			tile.protected = true
+			tile.update_display()
 
 func gain_yield(tile: Tile, args: EventArgs.HarvestArgs):
 	var destination = Global.MANA_TARGET_LOCATION_PURPLE if args.purple else Global.MANA_TARGET_LOCATION_YELLOW

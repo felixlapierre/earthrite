@@ -127,3 +127,7 @@ func _on_year_pressed() -> void:
 	Explore.explores = 0
 	$Center/Panel/VBox/Menu/Year.text = "Add Year (Current: " + str(turn_manager.year) + ")"
 	user_interface.end_year()
+
+
+func _on_acorn_pressed():
+	Global.ACORNS += 5

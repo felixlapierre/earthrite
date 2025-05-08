@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://src/effect2/data/harvest_replant.gd" id="1_4mjom"]
 [ext_resource type="Script" path="res://src/fortune/fortune.gd" id="1_qch6p"]
-[ext_resource type="Texture2D" uid="uid://bphgt36lwt0oy" path="res://assets/card/slash.png" id="3_p0g7l"]
+[ext_resource type="Texture2D" uid="uid://dx1l74fu4r20i" path="res://assets/card/hurricane.png" id="3_wpe8n"]
 
 [sub_resource type="Resource" id="Resource_4ffm7"]
 script = ExtResource("1_4mjom")
@@ -15,6 +15,6 @@ name = "Hurricane"
 type = 0
 text = ""
 rank = 0
-texture = ExtResource("3_p0g7l")
+texture = ExtResource("3_wpe8n")
 strength = 0.0
 effects = Array[Resource("res://src/effect2/effect2.gd")]([SubResource("Resource_4ffm7")])

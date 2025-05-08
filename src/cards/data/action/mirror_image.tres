@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="MirrorImage" load_steps=3 format=3 uid="uid://3pda1adp7f1v"]
 
 [ext_resource type="Script" path="res://src/cards/custom/mirror_image.gd" id="1_vd3b8"]
-[ext_resource type="Texture2D" uid="uid://c46q76532nqk" path="res://assets/custom/Temp.png" id="2_optoc"]
+[ext_resource type="Texture2D" uid="uid://nciv8ya8iyn4" path="res://assets/card/mirror-image.png" id="2_efu3v"]
 
 [resource]
 script = ExtResource("1_vd3b8")
@@ -15,7 +15,7 @@ size = 4
 text = "Create a copy of target plants on the horizontally opposite side of the farm"
 strength_increment = 1.0
 size_increment = 2
-texture = ExtResource("2_optoc")
+texture = ExtResource("2_efu3v")
 seed_texture = 0
 texture_icon_offset = 16
 targets = Array[String](["Growing", "Mature"])
@@ -24,3 +24,4 @@ enhances = Array[String]([])
 strength = 0.0
 delay = 0.0
 anim_on = 0
+effects2 = Array[Resource("res://src/effect2/effect2.gd")]([])

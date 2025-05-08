@@ -27,12 +27,15 @@ func get_options():
 		if Global.WILDERNESS_PLANT != null:
 			cards = cards.filter(func(card):
 				return card.name != Global.WILDERNESS_PLANT.name)
-		cards.shuffle()
 		var pick_option_ui = PickOption.instantiate()
 		user_interface.add_child(pick_option_ui)
 		var prompt = "Pick the Native Seed"
-
-		pick_option_ui.setup(prompt, cards.slice(0, 3), func(selected):
+		var get_cards = func(rerolls: int = 0):
+			cards.shuffle()
+			return cards.slice(0, 3)
+		pick_option_ui.reroll_callable = get_cards
+		pick_option_ui.reroll_enabled = true
+		pick_option_ui.setup(prompt, get_cards.call(), func(selected):
 			var fortune = empty_native_seed_fortune.new()
 			fortune.seed = selected
 			user_interface._on_explore_on_fortune(fortune)

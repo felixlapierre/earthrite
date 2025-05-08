@@ -71,6 +71,7 @@ func update_display():
 		$TileButton.visible = false
 		return
 	$PurpleOverlay.visible = purple
+	$ProtectOverlay.visible = is_protected()
 	$Farmland.visible = true
 	$TileButton.visible = true
 	if grid_location.x == Global.FARM_TOPLEFT.x:

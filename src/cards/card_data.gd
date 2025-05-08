@@ -94,7 +94,7 @@ func apply_enhance(enhance: Enhance):
 	var n_card = copy()
 	match enhance.name:
 		"Discount":
-			n_card.cost = cost - int(enhance.strength)
+			n_card.cost = max(cost - int(enhance.strength), 0)
 		"GrowSpeed":
 			n_card.time -= int(enhance.strength) if time > int(enhance.strength) else 0
 			if n_card.time < 1:

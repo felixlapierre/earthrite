@@ -36,13 +36,19 @@ static func load_cards():
 		var card: CardData = load(path)
 		if card == null:
 			print(path)
-		all_cards.append(card)
-		cards_rarity[card.rarity].append(card)
+		if filter_card(card):
+			all_cards.append(card)
+			cards_rarity[card.rarity].append(card)
 		
 	if Global.MAGE == "Blight Druid":
 		var blight_cards = get_element_cards("Blight")
 		all_cards.append(blight_cards)
 		cards_rarity["common"].append(blight_cards)
+
+static func filter_card(card_data: CardData):
+	if Global.FARM_TYPE == "STORMVALE" and card_data.name == "Stormcall":
+		return false
+	return true
 
 static func load_enhances():
 	if all_enhances.size() > 0:
@@ -175,30 +181,30 @@ static func get_random_cards(rarity, count: int):
 			result.append(n_card)
 	return result
 
-static func get_random_cards_weighted_rarity(count: int):
+static func get_random_cards_weighted_rarity(count: int, boost: float = 0.0):
 	load_cards()
 	var probabilities = {
-		"common": 70.0,
-		"uncommon": 95.0,
-		"rare": 99.3,
+		"common": 70.0 - boost * 5,
+		"uncommon": 95.0 - boost,
+		"rare": 99.3 - boost * 0.1,
 		"legendary": 100.0
 	}
 	return _get_random_weighted_rarity(probabilities, cards_rarity, count)
 
-static func get_random_enhances_weighted_rarity(count: int):
+static func get_random_enhances_weighted_rarity(count: int, boost: float = 0.0):
 	load_enhances()
 	var probabilities = {
-		"common": 70.0,
-		"uncommon": 98.0,
+		"common": 70.0 - boost * 3,
+		"uncommon": 98.0 - boost * 0.5,
 		"rare": 100.0
 	}
 	return _get_random_weighted_rarity(probabilities, enhances_rarity, count)
 
-static func get_random_structures_weighted_rarity(count: int):
+static func get_random_structures_weighted_rarity(count: int, boost: float = 0.0):
 	load_structures()
 	var probabilities = {
-		"common": 70,
-		"uncommon": 99.0,
+		"common": 70 - boost * 3,
+		"uncommon": 99.0 - boost * 0.5,
 		"rare": 100.0
 	}
 	return _get_random_weighted_rarity(probabilities, structures_rarity, count)
@@ -347,3 +353,9 @@ static func get_element_cards(text: String):
 			load("res://src/cards/data/action/infuse.tres"),
 			load("res://src/cards/data/seed/monstera.tres")
 		]
+
+static func apply_random_enhance(card: CardData):
+	var enhance: Enhance = get_random_enhances_weighted_rarity(1)[0]
+	while !enhance.is_card_eligible(card):
+		enhance = get_random_enhances_weighted_rarity(1)[0]
+	return card.apply_enhance(enhance)

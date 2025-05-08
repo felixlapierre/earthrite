@@ -25,33 +25,35 @@ static var clear = preload("res://src/fortune/weather/clear.gd").new()
 
 func setup(p_event_manager: EventManager):
 	event_manager = p_event_manager
-	enabled = Global.FARM_TYPE == "STORMVALE"
 	event_manager.register_listener(EventManager.EventType.OnTurnEnd, func(args: EventArgs):
 		end_week(args.turn_manager.week))
 
 func start_year():
-	if !enabled:
-		return
 	if now != null:
 		now.unregister_fortune(event_manager)
 	now = clear
-	in_one_week = Helper.pick_random(options)
+	if Global.FARM_TYPE == "STORMVALE":
+		in_one_week = Helper.pick_random(options)
+	else:
+		in_one_week = clear
 	in_two_weeks = clear
 	update()
 
 func update():
 	if now == null:
 		return
+	visible = clear != now or in_one_week != clear or  in_two_weeks != clear
 	now_hover.setup(now)
 	in_one_week_hover.setup(in_one_week)
 	in_two_weeks_hover.setup(in_two_weeks)
 
 func end_week(week: int):
-	if !enabled:
-		return
 	now.unregister_fortune(event_manager)
 	now = in_one_week
 	now.register_fortune(event_manager)
 	in_one_week = in_two_weeks
-	in_two_weeks = clear if week % 2 == 0 else Helper.pick_random(options)
+	if Global.FARM_TYPE == "STORMVALE":
+		in_two_weeks = clear if week % 2 == 0 else Helper.pick_random(options)
+	else:
+		in_two_weeks = clear
 	update()

@@ -3,6 +3,7 @@ class_name Explore
 
 var player_deck
 var tooltip
+var year = 0
 
 var ExplorePoint = load("res://src/ui/menus/explore_point.tscn")
 var PickOption = preload("res://src/ui/pick_option.tscn")
@@ -41,6 +42,7 @@ func setup(deck, p_tooltip):
 	explores = 0
 
 func create_explore(p_explores, turn_manager: TurnManager):
+	year = turn_manager.year
 	explores += p_explores
 	if turn_manager.year >= 3:
 		explores += 1
@@ -230,11 +232,20 @@ func create_point(name: String, pos: Vector2, callback: Callable):
 	$Points.add_child(point)
 
 func add_card(rarity: String, count: int):
-	var get_cards = func():
-		if rarity == "rare":
-			return cards_database.get_random_cards(rarity, count)
+	var get_cards = func(rerolls: int = 0):
+		var cards = []
+		var cards2 = []
+		if rarity == "rare" or rarity == "legendary":
+			cards = cards_database.get_random_cards(rarity, count)
 		else:
-			return cards_database.get_random_cards_weighted_rarity(count)
+			cards = cards_database.get_random_cards_weighted_rarity(count, float(rerolls))
+		for card in cards:
+			if randi_range(0, 100) < year:
+				var enhanced = DataFetcher.apply_random_enhance(card)
+				cards2.append(enhanced)
+			else:
+				cards2.append(card)
+		return cards2
 	pick_card_from(get_cards.call(), get_cards)
 
 func pick_card_from(cards, callback: Callable):
@@ -270,14 +281,14 @@ func select_card_to_remove(pt):
 	select_card.do_card_pick(player_deck, "Select a card to remove")
 
 func select_enhance(rarity: String):
-	var get_enhances_fn = func():
+	var get_enhances_fn = func(rerolls: int = 0):
 		if rarity == "rare":
 			if Global.FARM_TYPE == "WILDERNESS":
 				return cards_database.get_random_enhance_noseed(rarity, 3)
 			else:
 				return cards_database.get_random_enhance(rarity, 3, false)
 		else:
-			return cards_database.get_random_enhances_weighted_rarity(3)
+			return cards_database.get_random_enhances_weighted_rarity(3, float(rerolls))
 
 	var pick_option_ui = PickOption.instantiate()
 	pick_option_ui.reroll_callable = get_enhances_fn
@@ -308,11 +319,11 @@ func select_card_to_enhance(enhance: Enhance):
 	select_card.do_enhance_pick(player_deck, enhance, "Select a card to enhance")
 	
 func add_structure(rarity: String):
-	var get_structures_fn = func():
+	var get_structures_fn = func(rerolls: int = 0):
 		if rarity == "rare":
 			return cards_database.get_random_structures(3, rarity)
 		else:
-			return cards_database.get_random_structures_weighted_rarity(3)
+			return cards_database.get_random_structures_weighted_rarity(3, float(rerolls))
 
 	var pick_option_ui = PickOption.instantiate()
 	pick_option_ui.reroll_callable = get_structures_fn

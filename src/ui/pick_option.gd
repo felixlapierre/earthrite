@@ -13,6 +13,8 @@ var reroll_enabled: bool = false
 
 var pick_callback: Callable
 
+var rerolls = 0
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass # Replace with function body.
@@ -82,7 +84,8 @@ func _on_skip_button_pressed():
 
 func _on_reroll_button_pressed():
 	Global.ACORNS -= 1
-	setup_items(reroll_callable.call())
+	rerolls += 1
+	setup_items(reroll_callable.call(rerolls))
 	update_reroll_button()
 
 func update_reroll_button():
