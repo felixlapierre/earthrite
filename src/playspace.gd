@@ -113,15 +113,16 @@ func start_year():
 	$UserInterface.start_year()
 	save_game()
 	turn_manager.start_new_year();
-	$EventManager.notify(EventManager.EventType.BeforeYearStart)
-	$Cards.set_deck_for_year(deck)
-	$Cards.draw_hand($TurnManager.get_cards_drawn(), $TurnManager.week)
-	$Cards.set_cards_visible(true)
-	$EventManager.notify(EventManager.EventType.AfterYearStart)
-	$EventManager.notify(EventManager.EventType.BeforeTurnStart)
 	$UserInterface.update()
-	$Background.set_background($TurnManager.week)
 	$Background.animate_blightroots("safe")
+	await $EventManager.notify(EventManager.EventType.BeforeYearStart)
+	$Cards.set_deck_for_year(deck)
+	$Cards.set_cards_visible(true)
+	await $Cards.draw_hand($TurnManager.get_cards_drawn(), $TurnManager.week)
+	$Background.set_background($TurnManager.week)
+	await $EventManager.notify(EventManager.EventType.AfterYearStart)
+	await $EventManager.notify(EventManager.EventType.BeforeTurnStart)
+	$UserInterface.update()
 
 func _on_farm_tiles_on_energy_gained(amount) -> void:
 	$TurnManager.energy += amount
@@ -191,7 +192,7 @@ func on_upgrade(upgrade: Upgrade):
 			print(upgrade.text)
 
 func on_turn_end():
-	$EventManager.notify(EventManager.EventType.BeforeGrow)
+	await $EventManager.notify(EventManager.EventType.BeforeGrow)
 	if Global.END_TURN_DISCARD:
 		$Cards.discard_hand()
 	else:
@@ -200,12 +201,12 @@ func on_turn_end():
 	await get_tree().create_timer(0.3).timeout
 	await $FarmTiles.process_one_week(turn_manager.week)
 	await get_tree().create_timer(0.1).timeout
-	$EventManager.notify(EventManager.EventType.AfterGrow)
+	await $EventManager.notify(EventManager.EventType.AfterGrow)
 	if victory == true:
 		end_year(false)
 		$UserInterface.turn_ending = false
 		return
-	$EventManager.notify(EventManager.EventType.OnTurnEnd)
+	await $EventManager.notify(EventManager.EventType.OnTurnEnd)
 	var damage = $TurnManager.end_turn()
 	if damage:
 		$UserInterface.update_damage()
@@ -215,12 +216,12 @@ func on_turn_end():
 	#$UserInterface.update()
 	get_tree().create_timer(1.5).timeout.connect(func():
 		$UserInterface.turn_ending = false)
-
-	$Cards.draw_hand($TurnManager.get_cards_drawn(), $TurnManager.week)
-	$EventManager.notify(EventManager.EventType.BeforeTurnStart)
+	$UserInterface.update()
+	await $Cards.draw_hand($TurnManager.get_cards_drawn(), $TurnManager.week)
+	$Background.set_background($TurnManager.week)
+	await $EventManager.notify(EventManager.EventType.BeforeTurnStart)
 	if victory == true:
 		end_year(false)
-	$Background.set_background($TurnManager.week)
 	$UserInterface.update()
 
 func _on_user_interface_on_blight_removed() -> void:

@@ -228,10 +228,7 @@ func harvest(delay) -> Array[Effect]:
 	return effects
 
 func remove_seed():
-	if seed != null:
-		seed.unregister_seed_events(event_manager)
-	else:
-		print("WHOA null seed removed")
+	seed.unregister_seed_events(event_manager)
 	seed_base_yield = 0
 	seed_grow_time = 0
 	current_grow_progress = 0.0
@@ -280,7 +277,8 @@ func do_winter_clear():
 	if state == Enums.TileState.Growing or state == Enums.TileState.Mature or destroyed:
 		state = Enums.TileState.Empty
 		destroyed = false
-		remove_seed()
+		if seed != null:
+			remove_seed()
 		lose_irrigate()
 		update_purple_overlay()
 	elif structure != null:
@@ -359,7 +357,8 @@ func destroy():
 	$Farmland.modulate = COLOR_DESTROYED
 	notify_destroyed()
 	notify_tile_destroyed()
-	remove_seed()
+	if seed != null:
+		remove_seed()
 	update_purple_overlay()
 	$DestroyParticles.emitting = true
 	state = Enums.TileState.Empty

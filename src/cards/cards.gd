@@ -122,6 +122,7 @@ func draw_springbound_cards(count: int):
 		var card = springbound_cards.pop_front()
 		draw_specific_card(card)
 		deck_cards.erase(card)
+	reorganize_hand()
 
 func play_card():
 	# Find the card in our hand

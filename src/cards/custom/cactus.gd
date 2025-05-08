@@ -9,6 +9,8 @@ var event_type = EventManager.EventType.AfterCardPlayed
 # To be overridden by specific code seeds
 func register_seed_events(event_manager: EventManager, p_tile: Tile):
 	tile = p_tile
+	if callback != null:
+		print("UH OH?")
 	callback = func(args: EventArgs):
 		var shape = Helper.get_tile_shape(8, Enums.CursorShape.Elbow)
 		for entry in shape:

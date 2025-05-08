@@ -1,9 +1,10 @@
-extends Node
+extends Node2D
 class_name Farm
 
 var FarmTile = preload("res://src/farm/tile.tscn")
 var Glow = preload("res://src/animation/glow.tscn")
 var ManaParticles = preload("res://src/ui/display/mana_particles.tscn")
+var blight_spark_sf = preload("res://src/animation/blight/blight_spark.tres")
 
 var event_manager: EventManager
 
@@ -396,7 +397,7 @@ func spread(card, grid_position, size, shape):
 	if targeted_tile != null:
 		do_animation(load("res://src/animation/spread.tres"), targeted_tile.grid_location)
 
-func use_card_on_targets(card, targets, only_first):
+func use_card_on_targets(card, targets, only_first, delay: float = 0.0):
 	for target in targets:
 		if not Helper.in_bounds(target):
 			continue
@@ -410,6 +411,8 @@ func use_card_on_targets(card, targets, only_first):
 			event_manager.notify_specific_args(EventManager.EventType.OnActionCardUsed, args)
 		elif card.type == "ACTION":
 			await use_action_card(card, Vector2(target.x, target.y))
+		if delay > 0.0:
+			await get_tree().create_timer(delay).timeout
 		if only_first:
 			return target_tile
 
@@ -453,6 +456,8 @@ func destroy_blighted_tiles():
 		if tile.destroy_targeted == true:
 			if !tile.is_protected():
 				tile.destroy_plant()
+				do_animation(blight_spark_sf, tile.grid_location)
+				await get_tree().create_timer(0.1).timeout
 			tile.set_destroy_targeted(false)
 		if tile.blight_targeted == true:
 			if !tile.is_protected():
@@ -473,7 +478,15 @@ func use_card_random_tile(card: CardData, times: int):
 			locations.append(tiles[i].grid_location)
 	use_card_on_targets(card, locations, false)
 
-func use_card_unprotected_tile(card: CardData, times: int):
+func get_unprotected_tile():
+	var tiles = get_all_tiles()
+	tiles.shuffle()
+	for tile: Tile in tiles:
+		if tile.state == Enums.TileState.Empty && !tile.is_protected() && tile.not_destroyed() && !tile.rock:
+			return tile
+	return null
+
+func use_card_unprotected_tile(card: CardData, times: int, delay: float = 0.0):
 	var tiles = []
 	for tile: Tile in $Tiles.get_children():
 		if tile.state == Enums.TileState.Empty && !tile.is_protected() && tile.not_destroyed() && !tile.rock:
@@ -486,7 +499,7 @@ func use_card_unprotected_tile(card: CardData, times: int):
 	while i < times and i < tiles.size():
 		locations.append(tiles[i].grid_location)
 		i += 1
-	use_card_on_targets(card, locations, false)
+	await use_card_on_targets(card, locations, false, delay)
 	
 func get_all_tiles() -> Array[Tile]:
 	var result: Array[Tile] = []
@@ -582,6 +595,8 @@ func do_animation(spriteframes, grid_location):
 	var path: String = spriteframes.resource_path
 	if path.contains("catalyze") or path.contains("downpour"):
 		anim.position -= Vector2(0, Constants.TILE_SIZE.y / 2)
+	if path.contains("spark"):
+		anim.position -= Vector2(0, Constants.TILE_SIZE.y)
 	add_child(anim)
 	anim.play("default")
 	anim.animation_finished.connect(func():

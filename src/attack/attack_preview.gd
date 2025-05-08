@@ -34,8 +34,6 @@ func update():
 	AttackImg.modulate = Color8(94, 102, 115)
 	if turn_manager.target_blight > 0:
 		AmountLabel.text = str(turn_manager.purple_mana) + " / " + str(turn_manager.target_blight)
-	else:
-		AmountLabel.text = str(turn_manager.purple_mana)
 	if turn_manager.purple_mana < turn_manager.target_blight:
 		PromptLabel.text = "Blight Attack!"
 		AttackParticles.emitting = true

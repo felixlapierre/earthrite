@@ -23,3 +23,6 @@ func copy():
 	var copy = HarvestReplant.new()
 	copy.assign(self)
 	return copy
+
+func get_type():
+	return "harvest"

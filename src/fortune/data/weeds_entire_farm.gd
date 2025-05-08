@@ -1,6 +1,8 @@
 extends Fortune
 class_name WeedsEntireFarm
 
+var spriteframes = preload("res://src/animation/blight/blight_spark.tres")
+
 var callback: Callable
 var event_type = EventManager.EventType.BeforeTurnStart
 var weeds = preload("res://src/fortune/unique/weed.tres")
@@ -16,6 +18,12 @@ func unregister_fortune(event_manager: EventManager):
 	event_manager.unregister_listener(event_type, callback)
 
 func plant_weeds(args: EventArgs):
-	for tile in args.farm.get_all_tiles():
+	await popup_callback.call(true)
+	var tiles = args.farm.get_all_tiles()
+	tiles.shuffle()
+	for tile in tiles:
 		if tile.not_destroyed() and !tile.is_protected():
 			tile.plant_seed(weeds.copy())
+			args.farm.do_animation(spriteframes, tile.grid_location)
+			await args.farm.get_tree().create_timer(0.01).timeout
+	popup_callback.call(false)

@@ -68,3 +68,6 @@ func can_strengthen():
 func assign(other: Effect2):
 	timing = other.timing
 	is_seed = other.is_seed
+
+func get_type() -> String:
+	return "other"

@@ -5,6 +5,9 @@ var callback: Callable
 var event_type = EventManager.EventType.BeforeTurnStart
 var deathcap = preload("res://src/fortune/unique/deathcap.tres")
 var deathcap_texture = preload("res://assets/fortune/deathcap_fortune.png")
+
+var spark_sf = preload("res://src/animation/blight/blight_spark.tres")
+
 func _init(strength: float = 1.0) -> void:
 	super("Death", FortuneType.BadFortune, "On turn start: Plant {STRENGTH} Deathcap on your farm", 2, deathcap_texture, strength)
 
@@ -16,4 +19,11 @@ func unregister_fortune(event_manager: EventManager):
 	event_manager.unregister_listener(event_type, callback)
 
 func plant_weeds(args: EventArgs):
-	args.farm.use_card_unprotected_tile(deathcap, strength)
+	await popup_callback.call(true)
+	for i in range(strength):
+		var tile = args.farm.get_unprotected_tile()
+		if tile == null:
+			break
+		args.farm.do_animation(spark_sf, tile.grid_location)
+		await args.farm.use_card_on_targets(deathcap, [tile.grid_location], true, 0.1)
+	popup_callback.call(false)

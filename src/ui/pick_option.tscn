@@ -34,6 +34,7 @@ icon_alignment = 2
 
 [node name="HBox" type="HBoxContainer" parent="Center/Panel/VBox"]
 layout_mode = 2
+alignment = 1
 
 [node name="SkipButton" type="Button" parent="Center/Panel/VBox"]
 layout_mode = 2

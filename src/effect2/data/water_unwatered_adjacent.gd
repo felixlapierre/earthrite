@@ -11,7 +11,8 @@ func register(event_manager: EventManager, tile: Tile):
 			if Helper.is_adjacent(t.grid_location, my_tile.grid_location) and !t.is_watered():
 				candidates.append(t)
 		var selected: Tile = candidates.pick_random()
-		selected.irrigate()
+		if selected != null:
+			selected.irrigate()
 		if !my_tile.is_watered():
 			my_tile.irrigate()
 	event_manager.register_listener(timing, callback)

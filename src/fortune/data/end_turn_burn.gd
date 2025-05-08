@@ -8,7 +8,9 @@ func _init() -> void:
 
 func register_fortune(event_manager: EventManager):
 	callable = func(args: EventArgs):
+		await popup_callback.call(true)
 		args.cards.obliviate_rightmost()
+		popup_callback.call(false)
 	event_manager.register_listener(EventManager.EventType.BeforeGrow, callable)
 
 func unregister_fortune(event_manager: EventManager):

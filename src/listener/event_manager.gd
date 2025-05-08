@@ -53,6 +53,8 @@ func register_listener(event_type: EventType, callback: Callable):
 	listeners[event_type].append(callback)
 
 func unregister_listener(event_type: EventType, callback: Callable):
+	if event_type == EventManager.EventType.AfterCardPlayed:
+		pass
 	listeners[event_type].erase(callback)
 
 func notify(event_type: EventType):
@@ -74,3 +76,6 @@ func notify_specific_args(event_type: EventType, specific_args: EventArgs.Specif
 
 func get_event_args(spec):
 	return EventArgs.new(farm, turn_manager, cards, spec, user_interface)
+
+func shake_screen(amount: float):
+	$"../".shake_camera(amount)

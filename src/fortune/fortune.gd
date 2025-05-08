@@ -16,6 +16,8 @@ var temp: Texture2D = preload("res://assets/custom/Temp.png")
 @export var strength: float = 0.0
 @export var effects: Array[Effect2]
 
+var popup_callback: Callable
+
 func _init(p_name = "", p_type = FortuneType.GoodFortune, p_text = "", p_rank = 0, p_texture = temp, p_strength = 1.0, p_effects = []):
 	name = p_name
 	type = p_type

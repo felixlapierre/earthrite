@@ -9,6 +9,7 @@
 custom_minimum_size = Vector2(200, 280)
 offset_right = 108.0
 offset_bottom = 23.0
+pivot_offset = Vector2(100, 140)
 size_flags_horizontal = 6
 theme = ExtResource("1_tex2l")
 theme_override_constants/margin_left = 10

@@ -332,6 +332,8 @@ func _on_farm_tiles_on_preview_yield(args) -> void:
 	var warning_waste_purple_text = "[color=ff0000]Warning![/color] [img]res://assets/custom/PurpleMana.png[/img] is lost at the end of the turn."
 	AlertDisplay.clear(warning_waste_purple_text)
 	var yellow = args.yellow
+	if yellow < 0:
+		yellow = 0
 	var purple = args.purple
 	var green = args.green
 	if green < 0:

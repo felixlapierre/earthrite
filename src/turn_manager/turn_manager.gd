@@ -37,6 +37,8 @@ func setup(p_event_manager: EventManager):
 func gain_yellow_mana(amount, delay):
 	flag_defer_excess = flag_defer_excess or delay
 	ritual_counter -= amount
+	if ritual_counter > total_ritual:
+		ritual_counter = total_ritual
 	if ritual_counter <= 0:
 		ritual_counter = 0
 		return true

@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://bbmiskr3ha0we"]
+[gd_scene load_steps=4 format=3 uid="uid://bbmiskr3ha0we"]
 
 [ext_resource type="Script" path="res://src/farm/farm.gd" id="1_1ma26"]
 [ext_resource type="Theme" uid="uid://c21dhy264y6ty" path="res://assets/theme_large.tres" id="2_itouy"]
+[ext_resource type="SpriteFrames" uid="uid://ccfwjatl21ssk" path="res://src/animation/frames/waterrite.tres" id="3_2yswt"]
 
 [node name="Farm" type="Node2D"]
 script = ExtResource("1_1ma26")
@@ -21,5 +22,11 @@ offset_bottom = 683.0
 theme = ExtResource("2_itouy")
 theme_override_font_sizes/font_size = 70
 text = "Confirm"
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+visible = false
+position = Vector2(965, 450)
+scale = Vector2(5.7, 5.7)
+sprite_frames = ExtResource("3_2yswt")
 
 [connection signal="button_down" from="ConfirmButton" to="." method="_on_confirm_button_pressed"]
