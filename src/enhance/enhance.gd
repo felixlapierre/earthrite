@@ -85,7 +85,7 @@ func get_description():
 			return "Remove Burn from a card"
 		"Strength":
 			var text = "Increase the strength of a card's special effects" + (" twice" if strength == 2 else "")
-			if rarity == "common" and strength == 2:
+			if rarity == "uncommon" and strength == 2:
 				text += ". Increase card's Cost by 1"
 			return text
 		"Regrow":

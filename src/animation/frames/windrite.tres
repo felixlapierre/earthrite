@@ -1,0 +1,39 @@
+[gd_resource type="SpriteFrames" load_steps=6 format=3 uid="uid://diefwvyetexud"]
+
+[ext_resource type="Texture2D" uid="uid://bu5h6mlqw160q" path="res://assets/animations/windrite.png" id="1_piw01"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jdlp5"]
+atlas = ExtResource("1_piw01")
+region = Rect2(0, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f0srt"]
+atlas = ExtResource("1_piw01")
+region = Rect2(128, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cabrc"]
+atlas = ExtResource("1_piw01")
+region = Rect2(256, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pr6sb"]
+atlas = ExtResource("1_piw01")
+region = Rect2(384, 0, 128, 128)
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jdlp5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f0srt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cabrc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pr6sb")
+}],
+"loop": false,
+"name": &"default",
+"speed": 10.0
+}]

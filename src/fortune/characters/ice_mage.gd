@@ -9,7 +9,7 @@ func _init() -> void:
 func register_fortune(event_manager: EventManager):
 	super.register_fortune(event_manager)
 	Global.END_TURN_DISCARD = false
-	Global.MAX_HAND_SIZE = 8 if strength <= 1.0 else 10
+	Global.MAX_HAND_SIZE = 11 if strength > 1.0 else 10
 
 func unregister_fortune(event_manager: EventManager):
 	Global.END_TURN_DISCARD = true
@@ -17,7 +17,7 @@ func unregister_fortune(event_manager: EventManager):
 
 func upgrade_power():
 	strength = 2.0
-	Global.MAX_HAND_SIZE = 8 if strength <= 1.0 else 10
+	Global.MAX_HAND_SIZE = 11 if strength > 1.0 else 10
 	text = "Your hand is not discarded at the end of the turn"
 	
 func update_text():

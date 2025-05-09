@@ -3,6 +3,7 @@ class_name HarvestReplant
 
 func register(event_manager: EventManager, p_tile: Tile):
 	callback = func(args: EventArgs):
+		await args.farm.get_tree().create_timer(0.2).timeout
 		for tile in args.farm.get_all_tiles():
 			if tile.state == Enums.TileState.Mature:
 				var seed = tile.seed
