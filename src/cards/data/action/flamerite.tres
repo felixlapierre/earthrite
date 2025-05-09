@@ -1,5 +1,6 @@
-[gd_resource type="Resource" script_class="Flamerite" load_steps=4 format=3 uid="uid://ujowcqpdyutl"]
+[gd_resource type="Resource" script_class="Flamerite" load_steps=5 format=3 uid="uid://ujowcqpdyutl"]
 
+[ext_resource type="SpriteFrames" uid="uid://dfm0u4ub3seyl" path="res://src/animation/frames/flamerite_sf.tres" id="1_bvjko"]
 [ext_resource type="Script" path="res://src/cards/custom/flamerite.gd" id="1_ccr50"]
 [ext_resource type="Resource" uid="uid://cijtg3ddxitn3" path="res://src/effect/data/obliviate.tres" id="1_gmvym"]
 [ext_resource type="Texture2D" uid="uid://c3etvybbpn1e3" path="res://assets/card/flamerite.png" id="2_1rlqn"]
@@ -23,5 +24,7 @@ targets = Array[String](["Growing", "Mature"])
 effects = Array[Resource("res://src/effect/effect.gd")]([ExtResource("1_gmvym")])
 enhances = Array[String]([])
 strength = 1.0
+animation = ExtResource("1_bvjko")
 delay = 0.0
 anim_on = 0
+effects2 = Array[Resource("res://src/effect2/effect2.gd")]([])

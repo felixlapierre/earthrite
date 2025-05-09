@@ -117,8 +117,10 @@ func _on_tile_button_gui_input(event: InputEvent) -> void:
 			$"../../".use_card(grid_location)
 		else:
 			tile_hovered.emit(self)
-	elif event.is_action_pressed("leftclick") and !Global.MOBILE:
-		$"../../".use_card(grid_location)
+	if event.is_action_released("leftclick"):
+		$"../../".tile_mouse_up(grid_location)
+	elif event.is_action_pressed("leftclick"):
+		$"../../".tile_mouse_down(grid_location)
 
 func on_other_clicked():
 	if Settings.CLICK_MODE:

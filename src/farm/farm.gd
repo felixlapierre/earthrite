@@ -18,6 +18,7 @@ var hovered_tile = null
 var current_shape
 var selection = []
 var mana_added: float = 0.0
+var precision_mode = false
 
 signal card_played
 signal after_card_played
@@ -31,6 +32,7 @@ signal try_move_structure
 signal no_energy
 
 var hover_time = 0.0
+var click_time = 0.0
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -57,7 +59,7 @@ func setup(p_event_manager: EventManager):
 	event_manager = p_event_manager
 	for tile in $Tiles.get_children():
 		tile.event_manager = event_manager
-	
+
 
 func use_card(grid_position, external_source: bool = false):
 	hover_time = 0.0
@@ -136,20 +138,51 @@ func use_card(grid_position, external_source: bool = false):
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
+	var selected_card_null = Global.selected_card == null
+	var selected_structure_null = Global.selected_structure == null
 	if !Settings.CLICK_MODE:
 		hover_time += delta
-		if current_shape != Global.shape and hovered_tile != null:
+		
+		# Show select overlay if hovering
+		if !Input.is_action_pressed("leftclick") and !precision_mode and current_shape != Global.shape and hovered_tile != null:
 			show_select_overlay()
-	if hovered_tile == null or (Global.selected_card == null and Global.selected_structure == null) and $SelectOverlay.get_children().size() > 0:
+	
+	# Change to Precision Mode if clicking the tile for long enough
+	if Input.is_action_pressed("leftclick"):
+		click_time += delta
+	else:
+		click_time = 0
+
+	# No precision mode for structures and size-1 cards
+	# For now, also disable for size-9 Scythes
+	if !precision_mode and click_time > 1.0 and !selected_card_null and Global.selected_card.size != -1\
+			and !(Global.selected_card.size == 9 and Global.selected_card.get_effect("harvest") != null):
 		clear_overlay()
+		precision_mode = true
+		selection.clear()
+		selection.append(hovered_tile.grid_location)
+		show_select_overlay()
+	
+	# Clear overlay if you mouse off the farm
+	if hovered_tile == null or (Global.selected_card == null and Global.selected_structure == null) and $SelectOverlay.get_children().size() > 0:
+		if !precision_mode:
+			clear_overlay()
+	# Remove precision mode if you deselect a card
+	if Global.selected_card == null:
+		precision_mode = false
+	# Disable confirm button if selection is empty
+	$ConfirmButton.disabled = selection.size() == 0
 	
 func show_select_overlay():
 	var size = 0
 	var targets = []
+	# If a card is selected
 	if Global.selected_card != null:
 		var crd = Global.selected_card
 		size = crd.size
 		targets = crd.targets if crd.type == "ACTION" else ["Empty"]
+	
+	# If a structure is selected
 	elif Global.selected_structure != null:
 		size = Global.selected_structure.size
 		targets = ["Empty", "Growing", "Mature"]
@@ -165,7 +198,7 @@ func show_select_overlay():
 		return
 	var grid_position = hovered_tile.grid_location
 	var shape = Global.shape
-	$ConfirmButton.visible = Settings.CLICK_MODE
+	$ConfirmButton.visible = Settings.CLICK_MODE or precision_mode
 	if Global.selected_structure != null:
 		shape = Enums.CursorShape.Elbow
 		var sprite = Sprite2D.new()
@@ -177,7 +210,11 @@ func show_select_overlay():
 		$SelectOverlay.add_child(sprite)
 	
 	var selected = Global.selected_card if Global.selected_card != null else Global.selected_structure
-	var targeted_grid_locations = get_targeted_tiles(grid_position, selected, selected.size, shape, Global.rotate)
+	var targeted_grid_locations = []
+	if !precision_mode:
+		targeted_grid_locations = get_targeted_tiles(grid_position, selected, selected.size, shape, Global.rotate)
+	else:
+		targeted_grid_locations.assign(selection)
 	var yld_preview_yellow = 0
 	var yld_preview_purple = 0
 	var yld_preview_green = 0
@@ -213,7 +250,8 @@ func show_select_overlay():
 			sprite.modulate = Color8(0, 255, 0)
 		sprite.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 		$SelectOverlay.add_child(sprite)
-		selection.append(item)
+		if !precision_mode:
+			selection.append(item)
 	if yld_preview_purple != 0 or yld_preview_yellow != 0 or yld_preview_green != 0:
 		on_preview_yield.emit({
 			"yellow": yld_preview_yellow, 
@@ -250,14 +288,21 @@ func on_tile_hover(tile):
 	else:
 		hover_time = 0.0
 		hovered_tile = tile
-		if tile != null:
-			show_select_overlay()
+		if Input.is_action_pressed("leftclick"):
+			if precision_mode and tile != null:
+				toggle_tile_selection(tile.grid_location)
+			else:
+				clear_overlay()
+		else:
+			if tile != null:
+				show_select_overlay()
 
 func clear_overlay():
 	for node in $SelectOverlay.get_children():
 		$SelectOverlay.remove_child(node)
 		node.queue_free()
-	selection.clear()
+	if !precision_mode:
+		selection.clear()
 	on_preview_yield.emit({
 		"purple": 0,
 		"yellow": 0,
@@ -582,6 +627,12 @@ func _on_user_interface_farm_preview_show(weeks: int, callback: Callable) -> voi
 func _on_confirm_button_pressed() -> void:
 	if hovered_tile != null:
 		use_card(hovered_tile.grid_location)
+	if selection.size() > 0:
+		use_card(selection[0])
+		if precision_mode:
+			precision_mode = false
+			selection.clear()
+			clear_overlay()
 
 func do_animation(spriteframes, grid_location):
 	var anim = AnimatedSprite2D.new()
@@ -615,3 +666,40 @@ func do_plant_shearing_animation(origin: Vector2, size: int):
 func on_farm_tile_yield_added(tile: Tile, amount: float):
 	mana_added += amount
 	blight_bubble_animation(tile, EventArgs.HarvestArgs.new(0, false, false, amount), tile.position)
+
+func tile_mouse_up(grid_location: Vector2):
+	if Settings.CLICK_MODE:
+		return
+	if !precision_mode and hovered_tile != null and hovered_tile.grid_location == grid_location:
+		use_card(grid_location)
+
+func tile_mouse_down(grid_location: Vector2):
+	if Settings.CLICK_MODE and !precision_mode:
+		# Double click = use card
+		if hovered_tile != null and hovered_tile.grid_location == grid_location:
+			use_card(grid_location)
+		# First click = set as hovered
+		else:
+			hovered_tile = tiles[grid_location.x][grid_location.y]
+	if precision_mode:
+		toggle_tile_selection(grid_location)
+
+func toggle_tile_selection(grid_location: Vector2):
+	if selection.has(grid_location):
+		selection.erase(grid_location)
+	else:
+		var copy = []
+		copy.assign(selection)
+		for loc in copy:
+			var deltax = abs(loc.x - grid_location.x)
+			var deltay = abs(loc.y - grid_location.y)
+			if deltax > 2 or deltay > 2:
+				selection.erase(loc)
+			elif selection.size() + 1 > Global.selected_card.size:
+				var error = !tiles[loc.x][loc.y].card_can_target(Global.selected_card)
+				if error:
+					selection.erase(loc)
+		selection.append(grid_location)
+		while selection.size() > Global.selected_card.size:
+			selection.pop_front()
+	show_select_overlay()

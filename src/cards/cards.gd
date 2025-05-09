@@ -29,9 +29,9 @@ signal on_card_drawn
 func _ready() -> void:
 	CardBase = preload("res://src/cards/card_base.tscn")
 
-	CenterCardOval = Vector2(Constants.VIEWPORT_SIZE) * Vector2(0.5, 1.2)
-	HorizontalRadius = Constants.VIEWPORT_SIZE.x * 0.45
-	VerticalRadius = Constants.VIEWPORT_SIZE.y * 0.40
+	CenterCardOval = Vector2(Constants.VIEWPORT_SIZE) * Vector2(0.5, 1.0)
+	HorizontalRadius = Constants.VIEWPORT_SIZE.x * 0.40
+	VerticalRadius = Constants.VIEWPORT_SIZE.y * 0.20
 
 func do_winter_clear():
 	for display_card in $Hand.get_children():

@@ -244,5 +244,7 @@ static func get_wilderness_seed_options():
 		load("res://src/cards/data/seed/corn.tres"),
 		load("res://src/cards/data/seed/watermelon.tres"),
 		load("res://src/cards/data/seed/mint.tres"),
-		load("res://src/cards/data/seed/puffshroom.tres")
+		load("res://src/cards/data/seed/puffshroom.tres"),
+		load("res://src/cards/data/seed/coffee.tres"),
+		load("res://src/cards/data/seed/cranberry.tres")
 	]
