@@ -1,6 +1,9 @@
 extends MarginContainer
 class_name Tile
 
+@onready var TILE_BUTTON: TextureButton = $TileButton
+@onready var SELECT_PROMPT: AnimatedSprite2D = $SelectPrompt
+
 var state = Enums.TileState.Empty # Store the state of the farm tile
 var grid_location: Vector2
 var TILE_SIZE = Vector2(56, 56);
@@ -112,14 +115,15 @@ func _on_tile_button_gui_input(event: InputEvent) -> void:
 			tile_hovered.emit(null)
 			if Global.pressed_time <= 0.5:
 				$"../../".use_card(grid_location)
-	elif event.is_action_pressed("leftclick") and Settings.CLICK_MODE:
+	# TILE_BUTTON.disabled used only in tutorial
+	elif event.is_action_pressed("leftclick") and Settings.CLICK_MODE and !TILE_BUTTON.disabled:
 		if $"../../".hovered_tile == self:
 			$"../../".use_card(grid_location)
 		else:
 			tile_hovered.emit(self)
-	if event.is_action_released("leftclick"):
+	if event.is_action_released("leftclick") and !TILE_BUTTON.disabled:
 		$"../../".tile_mouse_up(grid_location)
-	elif event.is_action_pressed("leftclick"):
+	elif event.is_action_pressed("leftclick") and !TILE_BUTTON.disabled:
 		$"../../".tile_mouse_down(grid_location)
 
 func on_other_clicked():

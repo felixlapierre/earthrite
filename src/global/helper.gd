@@ -88,6 +88,12 @@ static func blight_icon():
 static func time_icon():
 	return "[img]res://assets/custom/Time32.png[/img]"
 
+static func energy_icon():
+	return "[img]res://assets/custom/Energy.png[/img]"
+
+static func blight_attack_icon():
+	return "[img]res://assets/custom/BlightAttack.png[/img]"
+
 static func get_smart_select_shape(grid_position: Vector2, tiles, card: CardData, mouse_pos: Vector2):
 	var returned = []
 	# First, try the default shape
@@ -148,3 +154,14 @@ static func can_expand_farm():
 static func pick_random(array):
 	var index = randi_range(0, array.size() - 1)
 	return array[index]
+
+static func get_adjacent_active_tiles(loc: Vector2, farm: Farm):
+	var tiles = []
+	var shape = get_tile_shape(8, Enums.CursorShape.Elbow)
+	for s in shape:
+		var adj = s + loc
+		if in_bounds(adj):
+			var tile = farm.tiles[adj.x][adj.y]
+			if tile.state != Enums.TileState.Inactive:
+				tiles.append(tile)
+	return tiles

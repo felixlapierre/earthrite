@@ -53,6 +53,8 @@ var debug_menu = preload("res://src/ui/menus/debug_menu.tscn")
 @onready var weather_display = $UI/WeatherDisplay
 @onready var explore = $Winter/Explore
 @onready var explore_button = $Winter/ExploreButton
+@onready var tutorial2 = $Tutorial2
+@onready var EndTurnButton = $UI/EndTurnButton
 
 var end_year_alert_text = "Ritual Complete! Time to rest and prepare for the next year"
 var structure_place_text = "Click on the farm tile where you'd like to place the structure"
@@ -114,6 +116,7 @@ func setup(p_event_manager: EventManager, p_turn_manager: TurnManager, p_deck: A
 	weather_display.setup(p_event_manager)
 	if Global.FARM_TYPE != "STORMVALE":
 		weather_display.visible = false
+	tutorial2.setup(self, cards, event_manager, turn_manager)
 
 # Start and end year
 func end_year():

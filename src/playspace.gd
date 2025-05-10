@@ -115,11 +115,11 @@ func start_year():
 	turn_manager.start_new_year();
 	$UserInterface.update()
 	$Background.animate_blightroots("safe")
+	$Background.set_background($TurnManager.week)
 	await $EventManager.notify(EventManager.EventType.BeforeYearStart)
 	$Cards.set_deck_for_year(deck)
 	$Cards.set_cards_visible(true)
 	await $Cards.draw_hand($TurnManager.get_cards_drawn(), $TurnManager.week)
-	$Background.set_background($TurnManager.week)
 	await $EventManager.notify(EventManager.EventType.AfterYearStart)
 	await $EventManager.notify(EventManager.EventType.BeforeTurnStart)
 	$UserInterface.update()

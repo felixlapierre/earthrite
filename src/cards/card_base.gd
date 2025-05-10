@@ -49,6 +49,7 @@ var frozen = false
 @onready var TIME_LABEL = $HBoxContainer/VBoxContainer/BottomBar/TimeLabel
 @onready var TIME_TEXTURE = $HBoxContainer/VBoxContainer/BottomBar/TimeTexture
 @onready var HIGHLIGHT = $Highlight
+@onready var FOCUS = $Focus
 
 var ChevronTexture = preload("res://assets/custom/EnhanceChevron.png")
 var BorderUncommon = preload("res://assets/ui/border_common.png")
@@ -290,7 +291,7 @@ func process_move_linear(delta, totaltime):
 
 
 func _on_focus_gui_input(event: InputEvent) -> void:
-	if event.is_action_pressed("leftclick"):
+	if !FOCUS.disabled and event.is_action_pressed("leftclick"):
 		on_card_clicked()
 
 func on_card_clicked():
@@ -358,3 +359,8 @@ func register_tooltips():
 		if state != Enums.CardState.InMouse:
 			tooltip.register_tooltip($Focus, description_tooltip)
 
+func set_highlight(value: bool):
+	HIGHLIGHT.visible = value
+
+func set_disabled(value: bool):
+	FOCUS.disabled = value

@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://ccnobfjaguoie"]
+[gd_scene load_steps=27 format=3 uid="uid://ccnobfjaguoie"]
 
 [ext_resource type="Script" path="res://src/farm/tile.gd" id="1_8vnt4"]
 [ext_resource type="Texture2D" uid="uid://cmitvrjj6os0f" path="res://assets/1616tinygarden/Farm.png" id="2_n75y4"]
@@ -13,6 +13,7 @@
 [ext_resource type="Texture2D" uid="uid://clf1ovfisrdg0" path="res://assets/animation/destroy.png" id="9_cvalt"]
 [ext_resource type="Texture2D" uid="uid://dgmqywyoi5u0p" path="res://assets/custom/EffectParticle.png" id="9_iiv5d"]
 [ext_resource type="Texture2D" uid="uid://duxmurjovuqmh" path="res://assets/custom/ProtectOverlay.png" id="13_atcg2"]
+[ext_resource type="Texture2D" uid="uid://cr06n22pox1gd" path="res://assets/ui/select_prompt.png" id="14_ob73a"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1iam7"]
 bg_color = Color(0.807843, 0.815686, 0.835294, 0.537255)
@@ -100,6 +101,28 @@ scale_min = 5.0
 scale_max = 5.0
 anim_speed_min = 1.0
 anim_speed_max = 1.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fc3br"]
+atlas = ExtResource("14_ob73a")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2vj45"]
+atlas = ExtResource("14_ob73a")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_xs74g"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fc3br")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2vj45")
+}],
+"loop": true,
+"name": &"default",
+"speed": 2.0
+}]
 
 [node name="Tile" type="MarginContainer"]
 script = ExtResource("1_8vnt4")
@@ -220,6 +243,15 @@ visible = false
 texture_filter = 1
 scale = Vector2(5.7, 5.7)
 texture = ExtResource("13_atcg2")
+centered = false
+
+[node name="SelectPrompt" type="AnimatedSprite2D" parent="."]
+visible = false
+z_index = 2
+texture_filter = 1
+scale = Vector2(5.7, 5.7)
+sprite_frames = SubResource("SpriteFrames_xs74g")
+frame_progress = 0.751283
 centered = false
 
 [connection signal="gui_input" from="TileButton" to="." method="_on_tile_button_gui_input"]
