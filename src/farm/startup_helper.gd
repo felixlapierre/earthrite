@@ -23,7 +23,7 @@ func _process(delta):
 static func get_starter_deck():
 	var data;
 	match Global.FARM_TYPE:
-		"FOREST", "LUNARTEMPLE":
+		"FOREST", "LUNARTEMPLE", "SCRAPYARD":
 			data = forest_deck
 		"STORMVALE":
 			data = []

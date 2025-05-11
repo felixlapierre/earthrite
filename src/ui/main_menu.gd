@@ -54,14 +54,15 @@ func _ready():
 
 	for fortune: MageAbility in [
 		load("res://src/fortune/characters/novice.gd").new(),
+		load("res://src/fortune/characters/acorn_mage.gd").new(),
+		load("res://src/fortune/characters/void_mage.gd").new(),
+		load("res://src/fortune/characters/time_mage.gd").new(),
 		load("res://src/fortune/characters/ice_mage.gd").new(),
 		load("res://src/fortune/characters/water_mage.gd").new(),
-		#load("res://src/fortune/characters/lunar_mage.gd").new(),
+		load("res://src/fortune/characters/fire_mage.gd").new(),
 		load("res://src/fortune/characters/blight_mage.gd").new(),
 		load("res://src/fortune/characters/chaos_mage.gd").new(),
-		load("res://src/fortune/characters/fire_mage.gd").new(),
-		load("res://src/fortune/characters/void_mage.gd").new(),
-		load("res://src/fortune/characters/time_mage.gd").new()]:
+		load("res://src/fortune/characters/archmage.gd").new()]:
 		mages_map[fortune.rank] = fortune
 		$Root/HBox/Panel/Margin/VBox/HBox/Margin/VBox/CharacterBox/CharOptions.add_icon_item(fortune.icon, fortune.name, fortune.rank)
 	populate_continue_preview()
@@ -143,13 +144,13 @@ func _on_type_options_item_selected(index):
 		0:
 			Global.FARM_TYPE = "FOREST"
 			update_prompt("Farm: Forest", load("res://assets/mage/forest.png"), "Basic farm, with no special effects.")
-		1:
+		3:
 			Global.FARM_TYPE = "RIVERLANDS"
 			update_prompt("Farm: Riverlands", load("res://assets/mage/riverlands.png"), "Only watered plants will grow on this farm.\nStart with 8 watered tiles on your farm and 3 'Water Lilies' in your deck.")
 		2:
 			Global.FARM_TYPE = "WILDERNESS"
 			update_prompt("Farm: Wilderness", load("res://assets/mage/wilderness.png"), "Start with the 'Native Seed' already planted on the farm.\nStarting deck has no Seed cards, and you cannot add Seed cards to your deck.")
-		3:
+		1:
 			Global.FARM_TYPE = "MOUNTAINS"
 			update_prompt("Farm: Mountains", load("res://assets/fortune/mountains.png"), "This region is full of rocks that make farming difficult.")
 		4:
@@ -158,6 +159,9 @@ func _on_type_options_item_selected(index):
 		5:
 			Global.FARM_TYPE = "STORMVALE"
 			update_prompt("Farm: Storm Vale", load("res://assets/mage/Storm.png"), "Trigger a random weather effect every 2 weeks.")
+		6:
+			Global.FARM_TYPE = "SCRAPYARD"
+			update_prompt("Farm: Scrap Yard", load("res://assets/custom/Temp.png"), "Find only Bag of Tricks when Exploring")
 	var best = Statistics.get_best_win_farm(Global.FARM_TYPE)
 	if best != null:
 		$Root/HBox/Panel/Margin/VBox/HBox/Details/VBox/DetailsDescr.append_text("\nBest Win: " + best + " [img][img]res://assets/ui/" + best + ".png[/img]")
@@ -168,15 +172,17 @@ func get_index_of_farm_type(type):
 		"FOREST":
 			return 0
 		"RIVERLANDS":
-			return 1
+			return 3
 		"WILDERNESS":
 			return 2
 		"MOUNTAINS":
-			return 3
+			return 1
 		"LUNARTEMPLE":
 			return 4
 		"STORMVALE":
 			return 5
+		"SCRAPYARD":
+			return 6
 
 func populate_continue_preview():
 	if not FileAccess.file_exists("user://savegame.save"):

@@ -11,6 +11,9 @@ var tooltip: Tooltip
 @onready var Cost = $VBox/HBoxContainer/VBoxContainer/TopBar/CostLabel
 @onready var Type = $VBox/TypeLabel
 
+var rare_border = preload("res://assets/ui/border_uncommon.png")
+var common_border = preload("res://assets/ui/border_common.png")
+
 # Just display the data of the passed structure and enhance
 # and accept a callback to be invoked when this is clicked
 
@@ -29,9 +32,13 @@ func update_display():
 		set_labels(structure.name, str(structure.cost), structure.get_description(), "Structure",\
 			structure.texture)
 		$VBox/HBoxContainer.tooltip_text = structure.tooltip
+		if structure.rarity == "rare":
+			$Border.texture = rare_border
 	elif enhance != null:
 		set_labels(enhance.name, "", enhance.get_description(), "Enhance", enhance.texture)
 		$Border.modulate = Color8(181, 233, 255)
+		if enhance.rarity == "rare":
+			$Border.texture = rare_border
 	$Icon.position = Constants.CARD_SIZE / 2
 	$Icon.position.y /= 2
 	$Icon.position.y += 25

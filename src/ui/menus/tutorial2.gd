@@ -44,9 +44,11 @@ func setup(p_ui, p_cards, p_events, p_turns):
 	
 	event_manager.register_listener(EventManager.EventType.BeforeTurnStart, start_turn)
 	event_manager.register_listener(EventManager.EventType.BeforeYearStart, start_year)
-
+	visible = Settings.TUTORIALS_V2
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
+	if !Settings.TUTORIALS_V2:
+		return
 	var year = turn_manager.year
 	var week = turn_manager.week
 
@@ -84,6 +86,8 @@ func _on_click_out_button_pressed():
 	pass # Replace with function body.
 
 func start_year(args: EventArgs):
+	if !Settings.TUTORIALS_V2:
+		return
 	if turn_manager.year == 1:
 		panel.position = anchor_center
 		set_text(text1_welcome)
@@ -99,6 +103,8 @@ func start_year(args: EventArgs):
 		panel.visible = false
 
 func start_turn(args: EventArgs):
+	if !Settings.TUTORIALS_V2:
+		return
 	var year = turn_manager.year
 	var week = turn_manager.week
 	

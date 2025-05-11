@@ -26,6 +26,7 @@ var structures = 0
 var removals = 0
 
 var fixed_explores = []
+static var bonus_explores = 0
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -43,15 +44,17 @@ func setup(deck, p_tooltip):
 
 func create_explore(p_explores, turn_manager: TurnManager):
 	year = turn_manager.year
-	explores += p_explores
+	explores = p_explores
+	explores += bonus_explores
+	bonus_explores = 0
 	if turn_manager.year >= 3:
 		explores += 1
 	if turn_manager.year == 3:
-		fixed_explores.append("Rare Card")
+		fixed_explores.append("Rare Card" if !scrapyard() else "Rare Bag of Tricks")
 	elif turn_manager.year == 6:
-		fixed_explores.append("Rare Structure")
+		fixed_explores.append("Rare Structure" if !scrapyard() else "Rare Bag of Tricks")
 	elif turn_manager.year == 8:
-		fixed_explores.append("Rare Enhance")
+		fixed_explores.append("Rare Enhance" if !scrapyard() else "Rare Bag of Tricks")
 	#else:
 	#	fixed_explores.append("Gain Card")
 	create_binary_explore()
@@ -157,6 +160,14 @@ func create_point_from_name(name, location):
 			create_point("Legendary Card", location, func(pt):
 				use_explore(pt)
 				add_card("legendary", 1))
+		"Bag of Tricks":
+			create_point("Bag of Tricks", location, func(pt):
+				use_explore(pt)
+				pick_bag_of_tricks(4, false))
+		"Rare Bag of Tricks":
+			create_point("Rare Bag of Tricks", location, func(pt):
+				use_explore(pt)
+				pick_bag_of_tricks(3, true))
 
 func create_binary_explore():
 	$CenterContainer/PanelContainer/VBox/HBox/Label.text = "Explorations Remaining: " + str(explores)
@@ -188,25 +199,25 @@ func pick_binary_explore():
 	if i <= 15:
 		return "Event"
 	if i <= 30:
-		return "Enhance Card"
+		return "Enhance Card" if !scrapyard() else "Bag of Tricks"
 	if i <= 45:
-		return "Structure"
+		return "Structure" if !scrapyard() else "Bag of Tricks"
 	if i <= 55:
 		return "Remove Card"
 	if i <= 65 and Helper.can_expand_farm():
 		if Helper.can_expand_farm():
 			return "Expand Farm"
 		else:
-			return "Gain Card"
+			return "Gain Card" if !scrapyard() else "Bag of Tricks"
 	if i <= 67:
-		return "Rare Card"
+		return "Rare Card" if !scrapyard() else "Rare Bag of Tricks"
 	if i <= 68.5:
-		return "Rare Structure"
+		return "Rare Structure" if !scrapyard() else "Rare Bag of Tricks"
 	if i <= 69.5:
-		return "Rare Enhance"
+		return "Rare Enhance" if !scrapyard() else "Rare Bag of Tricks"
 	if i <= 70:
 		return "Legendary Card"
-	return "Gain Card"
+	return "Gain Card" if !scrapyard() else "Bag of Tricks"
 
 func use_explore(node):
 	if node != null:
@@ -351,6 +362,48 @@ func pick_fortune(prompt: String, options: Array[Fortune]):
 		on_fortune.emit(selected)
 	pick_option_ui.setup(prompt, options, on_pick, null)
 
+func pick_bag_of_tricks(count: int, rare: bool = false):
+	var get_options_fn = func(rerolls: int = 0):
+		var results = []
+		for i in range(count):
+			results.append(get_bag_of_tricks_option(rerolls) if !rare else get_bag_of_tricks_option_rare())
+		return results
+	var pick_option_ui = PickOption.instantiate()
+	add_sibling(pick_option_ui)
+	pick_option_ui.reroll_callable = get_options_fn
+	pick_option_ui.reroll_enabled = true
+	var on_pick = func(selected):
+		remove_sibling(pick_option_ui)
+		if selected is CardData:
+			player_deck.append(selected)
+			visible = true
+		elif selected is Enhance:
+			select_card_to_enhance(selected)
+		elif selected is Structure:
+			on_structure_select.emit(selected, func():
+				visible = true)
+	pick_option_ui.setup("Pick something!", get_options_fn.call(), on_pick, null)
+
+func get_bag_of_tricks_option(rerolls: int):
+	# Card, Enhance, Structure
+	var selected = randf_range(0, 100)
+	if selected <= 50:
+		return cards_database.get_random_cards_weighted_rarity(1, float(rerolls))[0]
+	elif selected <= 75:
+		return cards_database.get_random_enhances_weighted_rarity(1, float(rerolls))[0]
+	else:
+		return cards_database.get_random_structures_weighted_rarity(1, float(rerolls))[0]
+
+func get_bag_of_tricks_option_rare():
+	# Card, Enhance, Structure
+	var selected = randf_range(0, 100)
+	if selected <= 60:
+		return cards_database.get_random_cards("rare", 1)[0]
+	elif selected <= 80:
+		return cards_database.get_random_enhance("rare", 1, false)[0]
+	else:
+		return cards_database.get_random_structures(1, "rare")[0]
+
 func remove_sibling(node):
 	$'../'.remove_child(node)
 
@@ -359,6 +412,9 @@ func _on_close_pressed():
 
 func expand_farm():
 	$"../../".on_expand_farm()
+
+func scrapyard():
+	return Global.FARM_TYPE == "SCRAPYARD"
 
 func save_data():
 	return {

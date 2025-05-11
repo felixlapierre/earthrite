@@ -80,7 +80,7 @@ func pick_card_event(args: EventArgs):
 			options.assign(args.cards.get_hand_info())
 		PickFrom.HandCost1:
 			options.assign(args.cards.get_hand_info().filter(func(card_data):
-				return card_data.cost <= 1))
+				return card_data.cost <= strength))
 		PickFrom.Discard:
 			options.assign(args.cards.discard_pile_cards)
 		PickFrom.Burned:
@@ -181,7 +181,9 @@ func get_pick_from_description():
 		PickFrom.Hand:
 			return "Pick" + count_text + "from your hand"
 		PickFrom.HandCost1:
-			return "Pick" + count_text.replace("card", "1-cost card") + "from your hand"
+			return "Pick" + count_text.replace("card", ("[color=aqua]" if strength > 1 else "")\
+			+ str(strength) + "-cost" + ("[/color]" if strength > 1 else "") + " card")\
+			 + "from your hand"
 		PickFrom.Discard:
 			return "Pick" + count_text + "from your discard pile"
 		PickFrom.Burned:
@@ -248,4 +250,4 @@ func assign(other):
 	return self
 
 func can_strengthen():
-	return and_then == AndThen.Draw
+	return and_then == AndThen.Draw or pick_from == PickFrom.HandCost1
