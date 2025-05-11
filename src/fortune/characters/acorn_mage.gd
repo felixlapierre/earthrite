@@ -5,7 +5,7 @@ var icon = preload("res://assets/custom/acorn.png")
 static var MAGE_NAME = "Druid"
 
 func _init() -> void:
-	super(MAGE_NAME, Fortune.FortuneType.GoodFortune, "Start with 1 Lucky Acorn. Find Lucky Acorns twice as often.", 8, icon, 1.0)
+	super(MAGE_NAME, Fortune.FortuneType.GoodFortune, "Start with 1 Lucky Acorn. Find Lucky Acorns twice as often.", 1, icon, 1.0)
 
 func register_fortune(event_manager: EventManager):
 	super.register_fortune(event_manager)

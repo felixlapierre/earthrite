@@ -9,7 +9,7 @@ var event_type = EventManager.EventType.BeforeTurnStart
 var event_callable: Callable
 
 func _init() -> void:
-	super(MAGE_NAME, Fortune.FortuneType.GoodFortune, "Randomize starting deck", 4, icon, 1.0)
+	super(MAGE_NAME, Fortune.FortuneType.GoodFortune, "Randomize starting deck", 8, icon, 1.0)
 	modify_deck_callback = func(deck: Array[CardData]):
 		ChaosMageFortune.randomize_deck(deck)
 

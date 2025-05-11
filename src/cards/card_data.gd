@@ -156,6 +156,7 @@ func apply_strength(enhance: Enhance):
 			break
 	if enhance.strength > 1.0 and enhance.rarity == "uncommon":
 		cost += 1
+	return self
 
 func get_description() -> String:
 	var descr: String = text

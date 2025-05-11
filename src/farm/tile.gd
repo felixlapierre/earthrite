@@ -250,6 +250,8 @@ func irrigate():
 			$Farmland.modulate = COLOR_IRRIGATE
 	elif Global.IRRIGATE_PROTECTED:
 		protected = true
+	var args: EventArgs.SpecificArgs = EventArgs.SpecificArgs.new(self)
+	event_manager.notify_specific_args(EventManager.EventType.OnTileWatered, args)
 
 func lose_irrigate():
 	irrigated = false
@@ -287,6 +289,7 @@ func do_winter_clear():
 			remove_seed()
 		lose_irrigate()
 		update_purple_overlay()
+		update_display()
 	elif structure != null:
 		structure.do_winter_clear()
 

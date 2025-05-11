@@ -7,7 +7,7 @@ var event_type = EventManager.EventType.BeforeCardPlayed
 var event_callable: Callable
 
 func _init() -> void:
-	super(MAGE_NAME, Fortune.FortuneType.GoodFortune, "Start with 20 blight damage and 1 copy of 'Blightrose' in your deck. Blight cards appear in card rewards.", 3, icon, 1.0)
+	super(MAGE_NAME, Fortune.FortuneType.GoodFortune, "Start with 20 blight damage and 1 copy of 'Blightrose' in your deck. Blight cards appear in card rewards.", 7, icon, 1.0)
 	modify_deck_callback = func(deck):
 		deck.append(load("res://src/event/unique/blight_rose.tres"))
 

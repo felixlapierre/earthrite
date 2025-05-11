@@ -38,4 +38,4 @@ func get_options():
 	return [option1]
 
 func check_prerequisites():
-	return turn_manager.year > 4 and user_interface.mage_fortune.name != "Pyromancer" and user_interface.mage_fortune.name != "Water Mage" and user_interface.mage_fortune.name != "Archmage"
+	return turn_manager.year > 4 and user_interface.mage_fortune.name != "Pyromancer" and user_interface.mage_fortune.name != "Archmage"

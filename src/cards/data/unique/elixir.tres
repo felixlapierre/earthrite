@@ -1,0 +1,42 @@
+[gd_resource type="Resource" script_class="CardData" load_steps=7 format=3 uid="uid://8nhacap1gojg"]
+
+[ext_resource type="Resource" uid="uid://b71hdqvt7x0ao" path="res://src/effect/data/remembrance.tres" id="1_7a1l1"]
+[ext_resource type="Resource" uid="uid://cijtg3ddxitn3" path="res://src/effect/data/obliviate.tres" id="2_okorl"]
+[ext_resource type="Script" path="res://src/effect/effect.gd" id="3_02hne"]
+[ext_resource type="Script" path="res://src/cards/card_data.gd" id="4_n1v0j"]
+
+[sub_resource type="Resource" id="Resource_xxab3"]
+script = ExtResource("3_02hne")
+name = "protect"
+strength = 0.0
+on = ""
+range = "self"
+
+[sub_resource type="Resource" id="Resource_ab7g5"]
+script = ExtResource("3_02hne")
+name = "add_yield"
+strength = 5.0
+on = ""
+range = "self"
+
+[resource]
+script = ExtResource("4_n1v0j")
+type = "ACTION"
+name = "Potion"
+rarity = "unique"
+cost = 1
+yld = 0
+time = 0
+size = 1
+text = ""
+strength_increment = 5.0
+size_increment = 1
+seed_texture = 0
+texture_icon_offset = 16
+targets = Array[String](["Growing", "Mature"])
+effects = Array[ExtResource("3_02hne")]([ExtResource("1_7a1l1"), ExtResource("2_okorl"), SubResource("Resource_xxab3"), SubResource("Resource_ab7g5")])
+enhances = Array[String]([])
+strength = 5.0
+delay = 0.0
+anim_on = 0
+effects2 = Array[Resource("res://src/effect2/effect2.gd")]([])

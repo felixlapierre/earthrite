@@ -51,8 +51,8 @@ var mages_map: Dictionary = {}
 func _ready():
 	var mages: OptionButton = $Root/HBox/Panel/Margin/VBox/HBox/Margin/VBox/CharacterBox/CharOptions
 	mages.clear()
-
-	for fortune: MageAbility in [
+	
+	var mage_fortune_list = [
 		load("res://src/fortune/characters/novice.gd").new(),
 		load("res://src/fortune/characters/acorn_mage.gd").new(),
 		load("res://src/fortune/characters/void_mage.gd").new(),
@@ -62,8 +62,13 @@ func _ready():
 		load("res://src/fortune/characters/fire_mage.gd").new(),
 		load("res://src/fortune/characters/blight_mage.gd").new(),
 		load("res://src/fortune/characters/chaos_mage.gd").new(),
-		load("res://src/fortune/characters/archmage.gd").new()]:
+		load("res://src/fortune/characters/archmage.gd").new()]
+
+	for fortune: MageAbility in mage_fortune_list:
 		mages_map[fortune.rank] = fortune
+
+	for i in range(mage_fortune_list.size()):
+		var fortune = mage_fortune_list[i]
 		$Root/HBox/Panel/Margin/VBox/HBox/Margin/VBox/CharacterBox/CharOptions.add_icon_item(fortune.icon, fortune.name, fortune.rank)
 	populate_continue_preview()
 	Settings.load_settings()
@@ -161,7 +166,7 @@ func _on_type_options_item_selected(index):
 			update_prompt("Farm: Storm Vale", load("res://assets/mage/Storm.png"), "Trigger a random weather effect every 2 weeks.")
 		6:
 			Global.FARM_TYPE = "SCRAPYARD"
-			update_prompt("Farm: Scrap Yard", load("res://assets/custom/Temp.png"), "Find only Bag of Tricks when Exploring")
+			update_prompt("Farm: Scrap Yard", load("res://assets/custom/Temp.png"), "When Exploring, find Bag of Tricks instead of Card, Enhance or Structure.")
 	var best = Statistics.get_best_win_farm(Global.FARM_TYPE)
 	if best != null:
 		$Root/HBox/Panel/Margin/VBox/HBox/Details/VBox/DetailsDescr.append_text("\nBest Win: " + best + " [img][img]res://assets/ui/" + best + ".png[/img]")
