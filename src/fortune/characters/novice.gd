@@ -1,10 +1,11 @@
 extends MageAbility
 class_name NoviceFortune
 
+static var MAGE_ID = 0
 var icon = preload("res://assets/custom/YellowMana.png")
 
 func _init() -> void:
-	super("Novice", Fortune.FortuneType.GoodFortune, "Draw 1 extra card each turn", 0, icon, 1.0)
+	super("Novice", Fortune.FortuneType.GoodFortune, "Draw 1 extra card each turn", MAGE_ID, icon, 1.0)
 	update_text()
 
 func register_fortune(event_manager: EventManager):

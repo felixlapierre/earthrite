@@ -3,8 +3,10 @@ class_name IceMageFortune
 
 var icon = preload("res://assets/card/frostcut.png")
 static var MAGE_NAME = "Frost Witch"
+static var MAGE_ID = 4
+
 func _init() -> void:
-	super(MAGE_NAME, Fortune.FortuneType.GoodFortune, "Your hand is not discarded at the end of the turn.", 4, icon, 1.0)
+	super(MAGE_NAME, Fortune.FortuneType.GoodFortune, "Your hand is not discarded at the end of the turn.\n\n[color=gold]Unlock:[/color] Win on any difficulty", MAGE_ID, icon, 1.0)
 
 func register_fortune(event_manager: EventManager):
 	super.register_fortune(event_manager)

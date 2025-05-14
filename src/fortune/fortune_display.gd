@@ -12,6 +12,8 @@ func _process(delta: float) -> void:
 
 func setup(p_fortune: Fortune):
 	fortune = p_fortune
+	if fortune is MageAbility:
+		fortune.update_text()
 	$VBox/Name.text = fortune.name
 	$VBox/Description.text = fortune.get_description()
 	$VBox/Texture.texture = fortune.texture

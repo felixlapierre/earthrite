@@ -1,10 +1,10 @@
 [gd_resource type="Resource" script_class="GrowWatered" load_steps=3 format=3 uid="uid://d3ci7at83up4k"]
 
-[ext_resource type="Script" path="res://src/cards/custom/grow_watered.gd" id="1_jtyyi"]
+[ext_resource type="Script" path="res://src/cards/custom/flow.gd" id="1_wty04"]
 [ext_resource type="Texture2D" uid="uid://buk7m0cvdpduu" path="res://assets/card/timeflow.png" id="2_dn060"]
 
 [resource]
-script = ExtResource("1_jtyyi")
+script = ExtResource("1_wty04")
 type = "ACTION"
 name = "Flow"
 rarity = "uncommon"
@@ -12,7 +12,7 @@ cost = 1
 yld = 0
 time = 0
 size = -1
-text = "Grow all watered tiles by {$STRENGTH_WEEKS}."
+text = "Grow all [color=gold]Watered[/color] tiles by {STRENGTH} weeks."
 strength_increment = 1.0
 size_increment = 1
 texture = ExtResource("2_dn060")
@@ -24,3 +24,4 @@ enhances = Array[String]([])
 strength = 1.0
 delay = 0.4
 anim_on = 1
+effects2 = Array[Resource("res://src/effect2/effect2.gd")]([])

@@ -32,3 +32,6 @@ func copy():
 
 func can_strengthen_custom_effect():
 	return false
+
+func get_long_description():
+	return Helper.get_long_description("burn") + "\n" + Helper.get_long_description("popcorn") + "\n" + super.get_long_description()

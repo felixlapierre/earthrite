@@ -7,6 +7,8 @@ var turn_manager: TurnManager
 
 var on_close: Callable
 
+var tooltip: Tooltip
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	pass # Replace with function body.
@@ -31,6 +33,7 @@ func create_select_card(options: Array[Variant], prompt: String, callback: Calla
 
 func create_select_card_enhance(options: Array[Variant], prompt: String, enhance: Variant, callback: Callable):
 	var select_card = SELECT_CARD.instantiate()
+	select_card.tooltip = tooltip
 	select_card.size = Constants.VIEWPORT_SIZE
 	select_card.z_index = 2
 	select_card.theme = load("res://assets/theme_large.tres")
@@ -108,7 +111,7 @@ func _on_attack_pressed() -> void:
 		var button: Button = Button.new()
 		var name = ""
 		for fortune in attack.get_all_fortunes_display():
-			name += fortune.name
+			name += fortune.name + " "
 		button.text = name
 		button.custom_minimum_size.y = 100
 		button.pressed.connect(func():
@@ -131,3 +134,4 @@ func _on_year_pressed() -> void:
 
 func _on_acorn_pressed():
 	Global.ACORNS += 5
+	Global.TOTAL_ACORNS += 5

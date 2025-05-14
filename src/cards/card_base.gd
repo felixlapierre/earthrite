@@ -349,11 +349,7 @@ func register_tooltips():
 	tooltip.register_tooltip(TIME_TEXTURE, tr("CARD_DURATION_TOOLTIP").format({
 		"duration": card_info.time
 	}))
-	var description_tooltip = ""
-	for effect in card_info.effects:
-		if description_tooltip.length() > 0:
-			description_tooltip += "\n"
-		description_tooltip += effect.get_long_description()
+	var description_tooltip = card_info.get_long_description()
 	if description_tooltip.length() > 0:
 		tooltip.register_tooltip(DESCRIPTION_LABEL, description_tooltip)
 		if state != Enums.CardState.InMouse:

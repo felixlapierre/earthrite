@@ -2,6 +2,7 @@ extends Node2D
 
 var PLAYSPACE = preload("res://src/playspace.tscn")
 var SelectCardScene = preload("res://src/cards/select_card.tscn")
+var PickOptionsScene = preload("res://src/ui/pick_option.tscn")
 
 var playspace
 @onready var menu_root = $Root
@@ -66,13 +67,20 @@ func _ready():
 
 	for fortune: MageAbility in mage_fortune_list:
 		mages_map[fortune.rank] = fortune
-
+	
+	Unlocks.load_unlocks()
+	
 	for i in range(mage_fortune_list.size()):
 		var fortune = mage_fortune_list[i]
-		$Root/HBox/Panel/Margin/VBox/HBox/Margin/VBox/CharacterBox/CharOptions.add_icon_item(fortune.icon, fortune.name, fortune.rank)
+		var icon = fortune.icon
+		var name = fortune.name
+		if !Unlocks.MAGES_UNLOCKED[str(fortune.rank)]:
+			name = "(Locked)"
+			icon = load("res://assets/ui/lock.png")
+		$Root/HBox/Panel/Margin/VBox/HBox/Margin/VBox/CharacterBox/CharOptions.add_icon_item(icon, name, fortune.rank)
 	populate_continue_preview()
 	Settings.load_settings()
-	Unlocks.load_unlocks()
+
 	Statistics.load_stats()
 	TutorialsCheck.button_pressed = Settings.TUTORIALS_ENABLED
 	DebugCheck.button_pressed = Settings.DEBUG
@@ -83,6 +91,11 @@ func _ready():
 		$TutorialPrompt.visible = true
 	update_prompt("", null, "")
 	update_best_win()
+	for i in range(7):
+		if !Unlocks.FARMS_UNLOCKED[str(i)]:
+			var lock = load("res://assets/ui/lock.png")
+			$Root/HBox/Panel/Margin/VBox/HBox/Margin/VBox/FarmTypeBox/TypeOptions.set_item_icon(i, lock)
+
 	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -109,6 +122,8 @@ func _on_diff_options_item_selected(index):
 func _on_start_button_pressed():
 	menu_root.visible = false
 	Global.reset()
+	
+	# Wilderness farm: Pick wilderness plant
 	if Global.FARM_TYPE == "WILDERNESS" and Global.WILDERNESS_PLANT == null:
 		var select_card = SelectCardScene.instantiate()
 		select_card.size = Constants.VIEWPORT_SIZE
@@ -127,9 +142,23 @@ func _on_start_button_pressed():
 			Global.WILDERNESS_PLANT = card
 			_on_start_button_pressed()
 		return
+	
+	# Mountains farm: Start with structure
+	if Global.FARM_TYPE == "MOUNTAINS" and StartupHelper.MOUNTAIN_START_STRUCTURE == null:
+		var pick_options = PickOptionsScene.instantiate()
+		var structures = DataFetcher.get_structures_names(["Harvester", "Beehive", "Flower Totem", "Sigil of Water", "Rooted Core", "Geode", "Dreamcatcher", "Frost Totem", "Toolshed"])
+		add_child(pick_options)
+		pick_options.setup("Pick a starting Structure", structures, func(selected):
+			remove_child(pick_options)
+			StartupHelper.MOUNTAIN_START_STRUCTURE = selected
+			_on_start_button_pressed())
+		return
+
+	# Create the game scene and add it to the tree
 	playspace = PLAYSPACE.instantiate()
 	connect_main_menu_signal(playspace)
 	add_child(playspace)
+	
 	playspace.user_interface.set_mage_fortune(mage_fortune)
 	if Global.DIFFICULTY < 3:
 		Mastery.reset()
@@ -151,25 +180,28 @@ func _on_type_options_item_selected(index):
 			update_prompt("Farm: Forest", load("res://assets/mage/forest.png"), "Basic farm, with no special effects.")
 		3:
 			Global.FARM_TYPE = "RIVERLANDS"
-			update_prompt("Farm: Riverlands", load("res://assets/mage/riverlands.png"), "Only watered plants will grow on this farm.\nStart with 8 watered tiles on your farm and 3 'Water Lilies' in your deck.")
+			update_prompt("Farm: Riverlands", load("res://assets/mage/riverlands.png"), "Start each year with 8 tiles already [color=gold] Watered [/color] on your farm.\n\nOnly plants on [color=gold]Watered[/color] tiles will grow naturally at the end of the turn.")
 		2:
 			Global.FARM_TYPE = "WILDERNESS"
-			update_prompt("Farm: Wilderness", load("res://assets/mage/wilderness.png"), "Start with the 'Native Seed' already planted on the farm.\nStarting deck has no Seed cards, and you cannot add Seed cards to your deck.")
+			update_prompt("Farm: Wilderness", load("res://assets/mage/wilderness.png"), "Choose a [color=gold]Native Seed[/color] at the start of the game.\n\nStart each year with the [color=gold]Native Seed[/color] already planted on the farm.\n\nStarting deck has no Seed cards, and you cannot add Seed cards to your deck.")
 		1:
 			Global.FARM_TYPE = "MOUNTAINS"
-			update_prompt("Farm: Mountains", load("res://assets/fortune/mountains.png"), "This region is full of rocks that make farming difficult.")
+			update_prompt("Farm: Mountains", load("res://assets/fortune/mountains.png"), "Start with a Structure on your farm.\n\nSome farm tiles contain rocks that can hold structures, but not plants.")
 		4:
 			Global.FARM_TYPE = "LUNARTEMPLE"
-			update_prompt("Farm: Lunar Temple", load("res://assets/card/temporal_rift.png"), "Entire farm is blue. At the end of the turn, 70% of " + Helper.blue_mana() + "is converted to" + Helper.mana_icon())
+			update_prompt("Farm: Lunar Temple", load("res://assets/card/temporal_rift.png"), "All tiles on the farm generated [color=aqua]Blue Mana[/color]" + Helper.blue_mana() + ".\n\nAt the end of the turn, 70% of [color=aqua]Blue Mana[/color] " + Helper.blue_mana() + " is converted to [color=gold]Yellow Mana[/color] " + Helper.mana_icon())
 		5:
 			Global.FARM_TYPE = "STORMVALE"
 			update_prompt("Farm: Storm Vale", load("res://assets/mage/Storm.png"), "Trigger a random weather effect every 2 weeks.")
 		6:
 			Global.FARM_TYPE = "SCRAPYARD"
 			update_prompt("Farm: Scrap Yard", load("res://assets/custom/Temp.png"), "When Exploring, find Bag of Tricks instead of Card, Enhance or Structure.")
+
+	check_lock_start_button()
+	
 	var best = Statistics.get_best_win_farm(Global.FARM_TYPE)
 	if best != null:
-		$Root/HBox/Panel/Margin/VBox/HBox/Details/VBox/DetailsDescr.append_text("\nBest Win: " + best + " [img][img]res://assets/ui/" + best + ".png[/img]")
+		$Root/HBox/Panel/Margin/VBox/HBox/Details/VBox/DetailsDescr.append_text("\n\nBest Win: " + best + " [img][img]res://assets/ui/" + best + ".png[/img]")
 	update_best_win()
 
 func get_index_of_farm_type(type):
@@ -332,6 +364,7 @@ func connect_main_menu_signal(playspace):
 
 func _on_char_options_item_selected(index: int) -> void:
 	mage_fortune = mages_map[index]
+	check_lock_start_button()
 	update_prompt(mage_fortune.name, mage_fortune.texture, mage_fortune.text)
 	var best = Statistics.get_best_win_mage(mage_fortune.name)
 	if best != null:
@@ -340,14 +373,13 @@ func _on_char_options_item_selected(index: int) -> void:
 	update_best_win()
 
 func set_locked_options():
-	return
 	var farms = Unlocks.FARMS_UNLOCKED
-	for i in range(6):
-		$Root/HBox/Panel/Margin/VBox/HBox/Margin/VBox/FarmTypeBox/TypeOptions.set_item_disabled(i, !Settings.DEBUG && !Unlocks.FARMS_UNLOCKED[str(i)])
+	#for i in range(7):
+	#	$Root/HBox/Panel/Margin/VBox/HBox/Margin/VBox/FarmTypeBox/TypeOptions.set_item_disabled(i, !Settings.DEBUG && !Unlocks.FARMS_UNLOCKED[str(i)])
 	for i in range(4):
 		$Root/HBox/Panel/Margin/VBox/HBox/Margin/VBox/DifficultyBox/DiffOptions.set_item_disabled(i, !Settings.DEBUG && !Unlocks.DIFFICULTIES_UNLOCKED[str(i)])
-	for i in range(9):
-		$Root/HBox/Panel/Margin/VBox/HBox/Margin/VBox/CharacterBox/CharOptions.set_item_disabled(i, !Settings.DEBUG && !Unlocks.MAGES_UNLOCKED[str(i)])
+	#for i in range(10):
+	#	$Root/HBox/Panel/Margin/VBox/HBox/Margin/VBox/CharacterBox/CharOptions.set_item_disabled(i, !Settings.DEBUG && !Unlocks.MAGES_UNLOCKED[str(i)])
 
 
 func _on_no_button_pressed() -> void:
@@ -469,3 +501,6 @@ func update_best_win():
 		record_label.append_text("[center] Best Win (" + mage + ", " + farm.to_lower() + "): None [img]res://assets/ui/NoWin.png[/img]")
 	else:
 		record_label.append_text("[center] Best Win (" + mage + ", " + farm.to_lower() + "): " + best + " [img][img]res://assets/ui/" + best + ".png[/img]")
+
+func check_lock_start_button():
+	$Root/HBox/Panel/Margin/VBox/StartButton.disabled = !Settings.DEBUG and (!Unlocks.MAGES_UNLOCKED[str(mage_fortune.rank)] or !Unlocks.FARMS_UNLOCKED[str(StartupHelper.get_farm_type_index(Global.FARM_TYPE))])

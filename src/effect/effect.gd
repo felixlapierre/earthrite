@@ -60,68 +60,70 @@ func sort(a: Effect, b: Effect):
 	#	return a_prio > b_prio
 	return a_prio > b_prio
 
-func get_short_description(card: CardData):
+func get_short_description(card: CardData, highlight: bool = false):
+	var color_open = "[color=aqua]" if highlight else ""
+	var color_close = "[/color]" if highlight else ""
 	match name:
 		"plant":
 			if on == "harvest":
-				return "Regrow " + (str(strength) if strength > 0 else "")
+				return color_open + "Regrow " + (str(strength) if strength > 0 else "" + color_close)
 		"springbound", "fleeting", "corrupted", "frozen", "burn", "echo":
-			return name.capitalize()
+			return "[color=gold]" + color_open + name.capitalize() + color_close + "[/color]"
 		"energy":
-			return "Gain " + str(strength) + " [img]res://assets/custom/Energy.png[/img]" + get_on_text()
+			return get_on_text() + "Gain " + color_open + str(strength) + color_close + "[img]res://assets/custom/Energy.png[/img]"
 		"draw":
 			if self.card != null:
-				return "Add " + str(strength) + " copy of '" + self.card.name + "' to your hand" + get_on_text() 
+				return get_on_text() + "Add " + color_open + str(strength) + color_close + " copy of '" + self.card.name + "' to your hand"
 			else:
-				return "Draw " + str(strength) + " card" + ("s" if strength > 1 else "") + get_on_text()
+				return get_on_text() + "Draw " + color_open + str(strength) + color_close + " card" + ("s" if strength > 1 else "")
 		"spread":
 			if on == "grow" or on == "harvest":
 				if strength >= 1:
-					return "Spread " + str(strength) + " time(s)" + get_on_text()
+					return get_on_text() + "[color=gold]Spread[/color] " + color_open + str(strength) + color_close + " time(s)"
 				else:
-					return str(strength*100) + "% chance to spread" + get_on_text()
+					return get_on_text() + color_open + str(strength*100) + "%" + color_close + " chance to spread"
 			else:
 				if strength >= 1:
-					return "Spread " + get_size_target_plants(card) + " " + str(strength) + " time(s)"
+					return "[color=gold]Spread[/color] " + get_size_target_plants(card) + " " + color_open + str(strength) + color_close + " time(s)"
 				else:
-					return str(strength*100) + "% chance to spread " + get_size_target_plants(card)
+					return color_open + str(strength*100) + "%" + color_close + " chance to spread " + get_size_target_plants(card)
 		"increase_yield":
-			return "Increase the " + Helper.mana_icon() + " of " + get_size_target_plants(card) + " by " + str(strength * 100) + "%"
+			return "Increase the " + Helper.mana_icon() + " of " + get_size_target_plants(card) + " by " + color_open + str(strength * 100) + "%" + color_close
 		"harvest":
 			return "Harvest " + get_size_target_plants(card)
 		"harvest_delay":
 			return "Harvest " + get_size_target_plants(card) + ". " + Helper.blue_mana() + " will not be lost at the end of this turn."
 		"grow":
-			return "Grow " + get_size_target_plants(card) + " by " + str(strength) + " week" + ("s" if strength != 1 else "")
+			return "Grow " + get_size_target_plants(card) + " by " + color_open + str(strength) + color_close + " week" + ("s" if strength != 1 else "")
 		"add_yield":
 			if card.type == "SEED":
-				return "Add " + get_strength_text() + " " + Helper.mana_icon() + " " + get_on_text()
+				return get_on_text() + "Add " + color_open + get_strength_text() + color_close + " " + Helper.mana_icon()
 			else:
-				return "Add " + get_strength_text() + " " + Helper.mana_icon() + " to " + get_size_target_plants(card)
+				return "Add " + color_open + get_strength_text() + color_close + " " + Helper.mana_icon() + " to " + get_size_target_plants(card)
 		"irrigate":
 			if card.type == "ACTION":
-				return "Water " + get_size(card) + " tiles"
+				return "[color=gold]Water[/color] " + get_size(card) + " tiles"
 			elif range == "adjacent":
-				return "Water 9 adjacent tiles" + get_on_text()
+				return get_on_text() + "[color=gold]Water[/color] 9 adjacent tiles"
 			else:
-				return "Water tile" + get_on_text()
+				return get_on_text() + "[color=gold]Water[/color] tile"
 		"absorb":
 			return "Benefits " + str(strength*100) + "% more from being watered"
 		"destroy_tile":
 			if card.type == "SEED":
-				return "Destroy tile" + get_on_text()
+				return get_on_text() + "[color=gold]Destroy[/color] tile"
 			else:
-				return "Destroy " + get_size(card) + " tiles"
+				return "[color=gold]Destroy[/color] " + get_size(card) + " tiles"
 		"destroy_plant":
-			return "Destroy " + get_size_target_plants(card) + " " + get_on_text()
+			return get_on_text() + "[color=gold]Destroy[/color] " + get_size_target_plants(card)
 		"replant":
 			return "Replant " + get_size_target_plants(card)
 		"add_recurring":
-			return "Add 'Regrow' to " + get_size_target_plants(card)
+			return "Add '[color=gold]Regrow[/color]' to " + get_size_target_plants(card)
 		"draw_target":
-			return "Add " + get_strength_text() + " Fleeting cop" + ("y" if strength == 1 else "ies") + " of the plant's seed to your hand"
+			return "Add " + color_open + get_strength_text() +  color_close + " [color=gold]Fleeting[/color] cop" + ("y" if strength == 1 else "ies") + " of the plant's seed to your hand"
 		"add_blight_yield":
-			return "Add " + get_strength_text() + " base " + Helper.mana_icon() + " per " + Helper.blight_icon() + " when planted"
+			return "Add " + color_open + get_strength_text() + color_close + " base " + Helper.mana_icon() + " per " + Helper.blight_icon() + " when planted"
 		"protect":
 			return "Protect " + get_size(card) + " tiles from the Blight"
 		_:
@@ -131,35 +133,22 @@ func get_long_description():
 	match name:
 		"plant":
 			if on == "harvest":
-				return "Regrow: On harvest, re-plant seed" + ((" with +%s " + Helper.mana_icon()) % strength if strength > 0 else "")
+				if strength == 0:
+					return Helper.get_long_description("regrow")
+				else:
+					return Helper.get_long_description("regrow-strength", strength)
 		"add_recurring":
-			return "Regrow: On harvest, re-plant seed"
-		"burn":
-			return "Burn: Destroy card when played. (Your deck will be restored at the end of the year)"
-		"frozen":
-			return "Frozen: Card is not discarded at the end of the turn"
-		"springbound":
-			return "Springbound: Card is always drawn on the first week of the year"
-		"spread":
-			return "Spread: Plant a copy of this plant on an adjacent tile"
-		"harvest", "harvest_delay":
-			return "Harvest: Turn mature plants into Mana [img]res://assets/custom/YellowMana16.png[/img]"
-		"irrigate", "absorb":
-			return "Watered: Watered tiles give 40% more " + Helper.mana_icon()
-		"fleeting", "draw_target":
-			return "Fleeting: Destroy card when played or discarded"
-		"corrupted":
-			return "On harvest, " + Helper.mana_icon() + " is lost, not gained."
-		"destroy_tile":
-			return "Destroy Tile: Destroyed tiles are unusable until the end of the year."
-		"destroy_plant":
-			return "Destroy Plant: Removes a plant from your farm, without gaining its Mana (" + Helper.mana_icon() + ")"
-		"echo":
-			return "Echo: When played, add a Fleeting copy of this card to your hand. The copy costs at least 1 energy."
-		"protect":
-			return "Protect: Tile cannot be targeted by the Blight"
+			return Helper.get_long_description("regrow")
+		"harvest_delay":
+			return Helper.get_long_description("harvest")
+		"draw_target":
+			return Helper.get_long_description("fleeting")
+		"irrigate":
+			return Helper.get_long_description("water")
+		"absorb":
+			return Helper.get_long_description("watered")
 		_:
-			return ""
+			return Helper.get_long_description(name)
 
 func get_size(card: CardData):
 	if card.size == -1:
@@ -178,11 +167,11 @@ func get_size_target_plants(card: CardData):
 func get_on_text():
 	match on:
 		"plant":
-			return " when planted"
+			return "[color=gold]When Planted[/color]: "
 		"":
 			return ""
 		_:
-			return " on " + on
+			return "[color=gold]On " + on.capitalize() + "[/color]: "
 
 func get_strength_text():
 	if strength >= 0:

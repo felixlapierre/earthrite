@@ -12,7 +12,7 @@ cost = 1
 yld = 14
 time = 2
 size = 1
-text = "On harvest, plant a Popcorn on a random tile for each card burned this year"
+text = "On Harvest: Plant a Popcorn on a random tile for each card [color=gold]Burned[/color] this year"
 strength_increment = 1.0
 size_increment = 1
 texture = ExtResource("2_n2nks")
@@ -24,3 +24,4 @@ enhances = Array[String]([])
 strength = 0.0
 delay = 0.0
 anim_on = 0
+effects2 = Array[Resource("res://src/effect2/effect2.gd")]([])

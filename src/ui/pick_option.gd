@@ -5,6 +5,7 @@ var ShopDisplay = preload("res://src/shop/shop_display.tscn")
 var FortuneDisplay = preload("res://src/fortune/fortune.tscn")
 @onready var options_container = $Center/Panel/VBox/HBox
 @onready var prompt_label = $Center/Panel/VBox/PromptLabel
+@onready var tooltip: Tooltip = $Tooltip
 
 var on_skip: Callable
 
@@ -23,7 +24,7 @@ func _ready():
 func _process(delta):
 	pass
 
-func setup(prompt: String, items, p_pick_callback: Callable, skip_callback):
+func setup(prompt: String, items, p_pick_callback: Callable, skip_callback = null):
 	prompt_label.text = prompt
 	if skip_callback != null:
 		on_skip = skip_callback
@@ -45,6 +46,7 @@ func setup_items(items):
 			callback = func(option):
 				pick_callback.call(option)
 				Global.ACORNS += 1
+				Global.TOTAL_ACORNS += 1
 			acorn = true
 		var new_node = null
 		if item is Fortune:
@@ -54,6 +56,7 @@ func setup_items(items):
 
 		elif item.CLASS_NAME == "CardData":
 			new_node = ShopCard.instantiate()
+			new_node.tooltip = tooltip
 			new_node.card_data = item
 			new_node.on_clicked.connect(callback)
 

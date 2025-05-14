@@ -29,3 +29,6 @@ func copy():
 
 func get_description(size: int):
 	return "Protect " + str(size) + " tile(s)"
+
+func get_long_description():
+	return Helper.get_long_description("protect")

@@ -265,6 +265,7 @@ func pick_card_from(cards, callback: Callable):
 	var prompt = "Pick a card to add to your deck"
 	pick_option_ui.reroll_callable = callback
 	pick_option_ui.reroll_enabled = true
+	pick_option_ui.tooltip = tooltip
 
 	pick_option_ui.setup(prompt, cards, func(selected):
 		player_deck.append(selected)
@@ -302,6 +303,7 @@ func select_enhance(rarity: String):
 			return cards_database.get_random_enhances_weighted_rarity(3, float(rerolls))
 
 	var pick_option_ui = PickOption.instantiate()
+	pick_option_ui.tooltip = tooltip
 	pick_option_ui.reroll_callable = get_enhances_fn
 	pick_option_ui.reroll_enabled = true
 	add_sibling(pick_option_ui)
@@ -337,6 +339,7 @@ func add_structure(rarity: String):
 			return cards_database.get_random_structures_weighted_rarity(3, float(rerolls))
 
 	var pick_option_ui = PickOption.instantiate()
+	pick_option_ui.tooltip = tooltip
 	pick_option_ui.reroll_callable = get_structures_fn
 	pick_option_ui.reroll_enabled = true
 	add_sibling(pick_option_ui)
@@ -356,6 +359,7 @@ func pick_fortune(prompt: String, options: Array[Fortune]):
 		options.shuffle()
 		options = options.slice(0, 3)
 	var pick_option_ui = PickOption.instantiate()
+	pick_option_ui.tooltip = tooltip
 	add_sibling(pick_option_ui)
 	var on_pick = func(selected):
 		remove_sibling(pick_option_ui)
@@ -369,6 +373,7 @@ func pick_bag_of_tricks(count: int, rare: bool = false):
 			results.append(get_bag_of_tricks_option(rerolls) if !rare else get_bag_of_tricks_option_rare())
 		return results
 	var pick_option_ui = PickOption.instantiate()
+	pick_option_ui.tooltip = tooltip
 	add_sibling(pick_option_ui)
 	pick_option_ui.reroll_callable = get_options_fn
 	pick_option_ui.reroll_enabled = true

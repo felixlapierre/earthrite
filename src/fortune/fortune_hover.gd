@@ -30,6 +30,8 @@ func reposition():
 
 func setup(p_fortune: Fortune):
 	fortune = p_fortune
+	if fortune is MageAbility:
+		fortune.update_text()
 	fortune.popup_callback = popup_fortune
 	$Fortune/VBox/Name.text = fortune.name
 	$Fortune/VBox/Description.text = fortune.get_description()

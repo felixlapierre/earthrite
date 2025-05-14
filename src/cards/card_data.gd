@@ -11,7 +11,7 @@ const CLASS_NAME = "CardData"
 @export var yld: int
 @export var time: int
 @export var size: int
-@export var text: String
+@export_multiline var text: String
 @export var strength_increment: float = 1.0
 @export var size_increment: int = 1
 @export var texture: Texture2D
@@ -161,10 +161,13 @@ func apply_strength(enhance: Enhance):
 func get_description() -> String:
 	var descr: String = text
 	for effect in effects:
-		var effect_text = effect.get_short_description(self)
-		if highlight_effect(effect):
-			effect_text = "[color=aqua]" + effect_text + "[/color]"
+		var highlight = highlight_effect(effect)
+		var effect_text = effect.get_short_description(self, highlight)
 		if effect_text.length() > 0:
+			if effect.name == "destroy_plant":
+				var t = descr
+				descr = effect_text
+				effect_text = t
 			if descr.length() > 0:
 				descr += ". "
 			descr += effect_text
@@ -182,7 +185,8 @@ func get_description() -> String:
 		descr = descr.replace("{STRENGTH}", str(strength))
 		descr = descr.replace("{STR_PER}", str(self.strength * 100))
 	return descr.replace("{MANA}", Helper.mana_icon())\
-		.replace("{BLUE_MANA}", Helper.blue_mana())
+		.replace("{BLUE_MANA}", Helper.blue_mana())\
+		.replace("{ENERGY}", Helper.energy_icon())
 
 # To be overridden by specific code seeds
 func register_events(event_manager: EventManager, tile: Tile):
@@ -300,6 +304,10 @@ func preview_yield(tile: Tile):
 func get_long_description():
 	var description_tooltip = ""
 	for effect in effects:
+		if description_tooltip.length() > 0:
+			description_tooltip += "\n"
+		description_tooltip += effect.get_long_description()
+	for effect: Effect2 in effects2:
 		if description_tooltip.length() > 0:
 			description_tooltip += "\n"
 		description_tooltip += effect.get_long_description()

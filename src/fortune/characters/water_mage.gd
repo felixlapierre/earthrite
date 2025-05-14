@@ -7,12 +7,13 @@ var elixir = preload("res://src/cards/data/unique/elixir.tres")
 var strength_enhance = preload("res://src/enhance/data/strength.tres")
 
 static var MAGE_NAME = "Alchemist"
+static var MAGE_ID = 5
 
 var event_type = EventManager.EventType.OnTileWatered
 var callback: Callable
 
 func _init() -> void:
-	super(MAGE_NAME, Fortune.FortuneType.GoodFortune, "Add a 'Dewdrop' to your deck.\n\nWhenever a tile is Watered, add a Potion to your hand.\n\nIf you already have a Potion in hand, Strengthen it instead.", 5, icon, 1.0)
+	super(MAGE_NAME, Fortune.FortuneType.GoodFortune, "Add a 'Dewdrop' to your deck.\n\nWhenever a tile is Watered, add a Potion to your hand.\n\nIf you already have a Potion in hand, Strengthen it instead.\n\n[color=gold]Unlock:[/color] Win on Normal difficulty or higher", MAGE_ID, icon, 1.0)
 	modify_deck_callback = func(deck: Array[CardData]):
 		deck.append(load("res://src/cards/data/action/dewdrop.tres"))
 

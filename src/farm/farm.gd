@@ -155,9 +155,7 @@ func _process(delta: float) -> void:
 
 	# No precision mode for structures and size-1 cards
 	# For now, also disable for size-9 Scythes
-	if !precision_mode and click_time > 1.0 and !selected_card_null and Global.selected_card.size != -1\
-			and !(Global.selected_card.size == 9 and Global.selected_card.get_effect("harvest") != null\
-				and Global.selected_card.name != "Earthrite"):
+	if !precision_mode and click_time > 1.0 and !selected_card_null and Global.selected_card.size != -1:
 		clear_overlay()
 		precision_mode = true
 		selection.clear()
@@ -422,6 +420,7 @@ func do_winter_clear():
 		tile.set_blight_targeted(false)
 		tile.set_destroy_targeted(false)
 		tile.lose_irrigate()
+		tile.update_display()
 		if tile.blighted:
 			blighted_tiles.append(tile)
 		if reset_colors:

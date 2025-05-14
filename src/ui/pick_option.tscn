@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://cfa7lcbrgv3to"]
+[gd_scene load_steps=5 format=3 uid="uid://cfa7lcbrgv3to"]
 
 [ext_resource type="Script" path="res://src/ui/pick_option.gd" id="1_0tf8x"]
 [ext_resource type="Theme" uid="uid://c21dhy264y6ty" path="res://assets/theme_large.tres" id="2_2jxhf"]
 [ext_resource type="Texture2D" uid="uid://b72v1pkg1p6mw" path="res://assets/custom/acorn.png" id="3_25rhx"]
+[ext_resource type="PackedScene" uid="uid://cs4xf7kyndygr" path="res://src/ui/tooltip.tscn" id="4_6ar5m"]
 
 [node name="PickOption" type="Node2D"]
 script = ExtResource("1_0tf8x")
@@ -39,6 +40,9 @@ alignment = 1
 [node name="SkipButton" type="Button" parent="Center/Panel/VBox"]
 layout_mode = 2
 text = "Skip"
+
+[node name="Tooltip" parent="." instance=ExtResource("4_6ar5m")]
+visible = false
 
 [connection signal="pressed" from="Center/Panel/VBox/RerollButton" to="." method="_on_reroll_button_pressed"]
 [connection signal="pressed" from="Center/Panel/VBox/SkipButton" to="." method="_on_skip_button_pressed"]

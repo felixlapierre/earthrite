@@ -12,7 +12,7 @@ cost = 1
 yld = 16
 time = 2
 size = 4
-text = "Can only be planted on Destroyed tiles"
+text = "Can only be planted on [color=gold]Destroyed[/color] tiles"
 strength_increment = 1.0
 size_increment = 1
 texture = ExtResource("3_6imr8")
@@ -24,3 +24,4 @@ enhances = Array[String]([])
 strength = 0.0
 delay = 0.0
 anim_on = 0
+effects2 = Array[Resource("res://src/effect2/effect2.gd")]([])

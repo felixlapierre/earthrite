@@ -28,3 +28,6 @@ func copy():
 
 func can_strengthen_custom_effect():
 	return true
+
+func get_long_description():
+	return Helper.get_long_description("destroy_plant") + "\n" + super.get_long_description()

@@ -165,3 +165,54 @@ static func get_adjacent_active_tiles(loc: Vector2, farm: Farm):
 			if tile.state != Enums.TileState.Inactive:
 				tiles.append(tile)
 	return tiles
+
+static func get_long_description_list(effects: Array[String]):
+	var text = ""
+	for e in effects:
+		var d = get_long_description(e)
+		if d.length() > 0:
+			if text.length() > 0:
+				text += "\n\n"
+			text += d
+	return text
+
+static func get_long_description(effect_name: String, strength: float = 0.0):
+	match effect_name:
+		"regrow":
+			return "[color=gold]Regrow[/color]: When harvested, seed is re-planted on the same tile"
+		"regrow_strength":
+			return "[color=gold]Regrow " + str(strength) + "[/color]: When harvested, seed is re-planted witb +" + str(strength) + Helper.mana_icon() + " on the same tile"
+		"add_recurring":
+			return "Regrow: On harvest, re-plant seed"
+		"burn":
+			return "[color=gold]Burn[/color]: Card is removed from your deck when played, instead of being discarded. (Your deck will be restored at the end of the year)"
+		"frozen":
+			return "[color=gold]Frozen[/color]: Card is not discarded at the end of the turn"
+		"springbound":
+			return "[color=gold]Springbound[/color]: Card is always drawn on the first turn of the year"
+		"spread":
+			return "[color=gold]Spread[/color]: Plant a copy of this plant on an adjacent tile"
+		"harvest", "harvest_delay":
+			return "[color=gold]Harvest[/color]: If a plant is Mature, remove it from the farm and gain [img]res://assets/custom/YellowMana16.png[/img]"
+		"water":
+			return "[color=gold]Watered[/color]: Plants growing on Watered tiles gain 40% more " + Helper.mana_icon()
+		"watered":
+			return "[color=gold]Watered[/color]: Some card effects can Water tiles. Plants growing on Watered tiles gain 40% more " + Helper.mana_icon()
+		"fleeting", "draw_target":
+			return "[color=gold]Fleeting[/color]: Card is removed from your deck when played or discarded. (Your deck will be resored at the end of the year)"
+		"corrupted":
+			return "[color=gold]Corrupted[/color]: On Harvest, " + Helper.mana_icon() + " is lost, not gained."
+		"destroy_tile":
+			return "[color=gold]Destroy Tile[/color]: Destroyed tiles are unusable until the end of the year."
+		"destroy_plant":
+			return "[color=gold]Destroy Plant[/color]: Remove a plant from your farm, without gaining its Mana " + Helper.mana_icon()
+		"destroyed":
+			return "[color=gold]Destroyed[/color]: Some cards and Blight effects Destroy plants, removing them from your farm."
+		"echo":
+			return "[color=gold]Echo[/color]: When played, add a [color=gold]Fleeting[/color] copy of this card to your hand. The copy costs at least 1 energy."
+		"protect":
+			return "[color=gold]Protect[/color]: Tile cannot be targeted by the Blight until the end of the year."
+		"popcorn":
+			return "[color=gold]Popcorn[/color]: Seed, 10" + Helper.mana_icon() + ", 1" + Helper.time_icon()
+		_:
+			return ""

@@ -3,11 +3,13 @@ class_name TimeMageFortune
 
 var icon = preload("res://assets/custom/Time32.png")
 static var MAGE_NAME = "Lost in Time"
+static var MAGE_ID = 3
+
 var event_type = EventManager.EventType.AfterYearStart
 var event_callable: Callable
 
 func _init() -> void:
-	super(MAGE_NAME, Fortune.FortuneType.GoodFortune, "Add Regrow 3 and +1 [img]res://assets/custom/Time32.png[/img] week of grow time to all seeds.\nAdd a 'Time Bubble' to your deck.", 3, icon, 3.0)
+	super(MAGE_NAME, Fortune.FortuneType.GoodFortune, "Add Regrow 3 and +1 [img]res://assets/custom/Time32.png[/img] week of grow time to all seeds.\nAdd a 'Time Bubble' to your deck.", MAGE_ID, icon, 3.0)
 	modify_deck_callback = func(deck: Array[CardData]):
 		deck.append(load("res://src/cards/data/action/time_bubble.tres"))
 	str_inc = 2.0

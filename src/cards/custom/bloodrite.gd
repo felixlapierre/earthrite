@@ -25,11 +25,11 @@ func register_events(event_manager: EventManager, p_tile: Tile):
 			i += 1
 		
 	event_manager.register_listener(event_type, callback)
-	event_manager.register_listener(event_type2, callback2)
+	#event_manager.register_listener(event_type2, callback2)
 
 func unregister_events(event_manager: EventManager):
 	event_manager.unregister_listener(event_type, callback)
-	event_manager.unregister_listener(event_type2, callback2)
+	#event_manager.unregister_listener(event_type2, callback2)
 
 func copy():
 	var new = Bloodrite.new()

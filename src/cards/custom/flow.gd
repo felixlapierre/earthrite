@@ -31,7 +31,10 @@ func copy():
 
 func get_description() -> String:
 	var desc = super.get_description()
-	return desc.replace("{$STRENGTH_WEEKS}", str(strength) + (" weeks" if strength > 1 else " week"))
+	return desc.replace("weeks", "week" if strength == 1 else "weeks")
+
+func get_long_description():
+	return Helper.get_long_description("watered") + super.get_long_description()
 
 func can_strengthen_custom_effect():
 	return true

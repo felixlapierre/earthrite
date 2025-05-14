@@ -261,7 +261,8 @@ func save_game():
 			"x": Global.FARM_BOTRIGHT.x,
 			"y": Global.FARM_BOTRIGHT.y
 		},
-		"acorns": Global.ACORNS
+		"acorns": Global.ACORNS,
+		"total_acorns": Global.TOTAL_ACORNS
 	}
 	user_interface.save_data(save_json)
 	save_json.mastery = Mastery.save_data()
@@ -305,7 +306,7 @@ func load_game():
 	Global.FARM_TOPLEFT = Vector2(save_json.state.farm_topleft.x, save_json.state.farm_topleft.y)
 	Global.FARM_BOTRIGHT = Vector2(save_json.state.farm_botright.x, save_json.state.farm_botright.y)
 	Global.ACORNS = save_json.state.acorns if save_json.state.has("acorns") else 0
-	
+	Global.TOTAL_ACORNS = save_json.state.total_acorns if save_json.state.has("total_acorns") else 0
 	Mastery.load_data(save_json.mastery)
 	if save_json.misc.wilderness_plant != null:
 		Global.WILDERNESS_PLANT = load(save_json.misc.wilderness_plant.path).new()

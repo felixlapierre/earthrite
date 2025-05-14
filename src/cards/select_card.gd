@@ -125,6 +125,7 @@ func create_selection_display(item: Variant, callback: Callable):
 		return new_node
 	elif item.CLASS_NAME == "CardData":
 		var new_node = ShopCard.instantiate()
+		new_node.tooltip = tooltip
 		new_node.card_data = item
 		if !display_only:
 			new_node.on_clicked.connect(callback)

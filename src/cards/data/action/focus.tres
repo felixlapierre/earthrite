@@ -41,3 +41,4 @@ strength = 0.0
 animation = ExtResource("1_pa8o7")
 delay = 0.7
 anim_on = 1
+effects2 = Array[Resource("res://src/effect2/effect2.gd")]([])

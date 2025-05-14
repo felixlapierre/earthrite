@@ -12,7 +12,7 @@ cost = 1
 yld = 3
 time = 2
 size = 1
-text = "On harvest, gain +1 {MANA} per Gilded Rose harvested this year"
+text = "[color=gold]On Harvest:[/color] Gain +1{MANA} per Gilded Rose harvested this year"
 strength_increment = 1.0
 size_increment = 1
 texture = ExtResource("2_yjh75")
@@ -24,3 +24,4 @@ enhances = Array[String]([])
 strength = 1.0
 delay = 0.0
 anim_on = 0
+effects2 = Array[Resource("res://src/effect2/effect2.gd")]([])

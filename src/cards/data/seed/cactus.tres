@@ -12,7 +12,7 @@ cost = 1
 yld = 100
 time = 4
 size = 1
-text = "Destroy all adjacent plants"
+text = "[color=gold]Destroy[/color] all Adjacent plants"
 strength_increment = 5.0
 size_increment = 1
 texture = ExtResource("2_glntj")
@@ -24,3 +24,4 @@ enhances = Array[String]([])
 strength = 5.0
 delay = 0.0
 anim_on = 0
+effects2 = Array[Resource("res://src/effect2/effect2.gd")]([])

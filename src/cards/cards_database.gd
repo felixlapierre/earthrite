@@ -278,6 +278,14 @@ static func get_random_structures(count: int, rarity: String):
 		result.append(str)
 	return result
 
+static func get_structures_names(names: Array[String]):
+	load_structures()
+	var result = []
+	for structure in all_structures:
+		if structure.name in names:
+			result.append(structure)
+	return result
+
 static func get_element_cards(text: String):
 	if text.contains("Blight"):
 		return [

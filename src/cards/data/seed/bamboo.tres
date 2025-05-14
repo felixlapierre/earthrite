@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://src/effect/effect.gd" id="1_3bvmo"]
 [ext_resource type="Script" path="res://src/cards/card_data.gd" id="2_8j5j0"]
 [ext_resource type="Resource" uid="uid://cijtg3ddxitn3" path="res://src/effect/data/obliviate.tres" id="2_x5j14"]
-[ext_resource type="Texture2D" uid="uid://dq0onof32j455" path="res://assets/seed/bamboo.png" id="4_lrr61"]
+[ext_resource type="Texture2D" uid="uid://btmlwdknoe6uf" path="res://assets/seed/bamboo2.png" id="4_fxcle"]
 
 [sub_resource type="Resource" id="Resource_3irjb"]
 script = ExtResource("1_3bvmo")
@@ -24,7 +24,7 @@ size = 2
 text = ""
 strength_increment = 1.0
 size_increment = 1
-texture = ExtResource("4_lrr61")
+texture = ExtResource("4_fxcle")
 seed_texture = 2
 texture_icon_offset = 7
 targets = Array[String]([])
@@ -33,3 +33,4 @@ enhances = Array[String]([])
 strength = 0.0
 delay = 0.0
 anim_on = 0
+effects2 = Array[Resource("res://src/effect2/effect2.gd")]([])

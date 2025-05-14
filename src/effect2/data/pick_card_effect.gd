@@ -212,7 +212,7 @@ func get_and_then_description():
 			else:
 				return (". " if card == null else "") + get_timing_text(timing2) + "Add" + count_text + "to your hand"
 		AndThen.Burn:
-			return " and Burn it"
+			return " and [color=gold]Burn[/color] it"
 		AndThen.Use:
 			return (". " if card == null else "") + get_timing_text(timing2) + "Cast " + ("it" if card == null else card.name) + " on this plant"
 
@@ -251,3 +251,8 @@ func assign(other):
 
 func can_strengthen():
 	return and_then == AndThen.Draw or pick_from == PickFrom.HandCost1
+
+func get_long_description():
+	if and_then == AndThen.Burn:
+		return Helper.get_long_description("burn")
+	return ""

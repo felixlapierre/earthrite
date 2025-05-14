@@ -59,23 +59,29 @@ static func default_unlocks():
 	TUTORIAL_COMPLETE = false
 	FARMS_UNLOCKED = {
 		"0": true,
-		"1": false,
-		"2": false,
-		"3": false,
+		"1": true,
+		"2": true,
+		"3": true,
 		"4": false,
-		"5": false
+		"5": false,
+		"6": false
 	}
 	DIFFICULTIES_UNLOCKED = {
 		"0": true,
-		"1": false,
+		"1": true,
 		"2": false,
-		"3": false
+		"3": false,
+		"4": false,
+		"5": false,
+		"6": false,
+		"7": false,
+		"8": false
 	}
 	MAGES_UNLOCKED = {
 		"0": true,
-		"1": false,
-		"2": false,
-		"3": false,
+		"1": true,
+		"2": true,
+		"3": true,
 		"4": false,
 		"5": false,
 		"6": false,

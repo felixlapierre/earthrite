@@ -7,14 +7,14 @@
 script = ExtResource("1_1d53c")
 timing2 = 11
 count = -1
-pick_from = 0
+pick_from = null
 and_then = 1
-skippable = false
-strength = 0.0
-base_strength = 1.0
-strength_increment = 1.0
+skippable = null
+strength = null
+base_strength = null
+strength_increment = null
 timing = 13
-is_seed = false
+is_seed = null
 
 [resource]
 script = ExtResource("2_cvwwy")

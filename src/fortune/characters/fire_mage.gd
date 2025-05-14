@@ -3,6 +3,7 @@ class_name FireMageFortune
 
 var icon = preload("res://assets/mage/fire_mage.png")
 static var MAGE_NAME = "Pyromancer"
+static var MAGE_ID = 6
 var event_type = EventManager.EventType.BeforeCardPlayed
 var event_callable: Callable
 
@@ -10,7 +11,7 @@ var event_type_2 = EventManager.EventType.BeforeTurnStart
 var event_callable_2: Callable
 
 func _init() -> void:
-	super(MAGE_NAME, Fortune.FortuneType.GoodFortune, "+1 Energy each turn\nAll cards except 'Scythe' are Burned when played\nBurned cards are removed from your deck until the end of the year", 6, icon)
+	super(MAGE_NAME, Fortune.FortuneType.GoodFortune, "+1 Energy each turn\nAll cards except 'Scythe' are Burned when played\nBurned cards are removed from your deck until the end of the year.\n\n[color=gold]Unlock:[/color] Win on Hard difficulty or higher", MAGE_ID, icon)
 
 func register_fortune(event_manager: EventManager):
 	super.register_fortune(event_manager)

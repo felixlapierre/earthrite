@@ -23,6 +23,7 @@ static var MAX_BLIGHT: int = 5
 static var MAX_HEALTH: int = 100
 static var ACORNS: int = 0
 static var ACORN_BONUS: float = 0.0
+static var TOTAL_ACORNS: int = 0
 
 static var MANA_TARGET_LOCATION_YELLOW: Vector2 = Vector2(628, 442)
 static var MANA_TARGET_LOCATION_PURPLE: Vector2 = Vector2(1461, 456)
@@ -89,6 +90,7 @@ static func reset():
 	WATERED_MULTIPLIER = 0.4
 	MAX_HEALTH = 100
 	ACORNS = 0
+	TOTAL_ACORNS = 0
 	ACORN_BONUS = 0.0
 
 static func register_click_callback(obj):

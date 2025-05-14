@@ -34,3 +34,6 @@ func preview_yield(tile: Tile):
 			inc += strength
 	args.green = inc
 	return args
+
+func get_long_description():
+	return Helper.get_long_description("watered") + super.get_long_description()

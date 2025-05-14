@@ -11,7 +11,7 @@ cost = 1
 yld = 5
 time = 1
 size = 1
-text = "On harvest: {BLUE_MANA} will not be lost at the end of the turn."
+text = "[color=gold]On Harvest[/color]: {BLUE_MANA} will not be lost at the end of this turn."
 strength_increment = 1.0
 size_increment = 1
 seed_texture = 5
@@ -22,3 +22,4 @@ enhances = Array[String]([])
 strength = 0.0
 delay = 0.0
 anim_on = 0
+effects2 = Array[Resource("res://src/effect2/effect2.gd")]([])

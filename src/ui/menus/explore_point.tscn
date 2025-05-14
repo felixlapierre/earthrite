@@ -1,24 +1,37 @@
-[gd_scene load_steps=3 format=3 uid="uid://cleiat32c6e4b"]
+[gd_scene load_steps=4 format=3 uid="uid://cleiat32c6e4b"]
 
 [ext_resource type="Script" path="res://src/ui/menus/explore_point.gd" id="1_1y8ai"]
+[ext_resource type="Texture2D" uid="uid://6ru44ui631m" path="res://assets/enhance/strength.png" id="2_8lq5w"]
 [ext_resource type="Theme" uid="uid://bdodinwpnjkw8" path="res://assets/theme_huge.tres" id="2_hsy2g"]
 
 [node name="ExplorePoint" type="Node2D"]
 script = ExtResource("1_1y8ai")
 
-[node name="Button" type="Button" parent="."]
+[node name="VBox" type="VBoxContainer" parent="."]
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -77.0
-offset_top = -24.5
-offset_right = 77.0
-offset_bottom = 24.5
+offset_left = -96.0
+offset_top = -67.5
+offset_right = 96.0
+offset_bottom = 67.5
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="DisplayButton" type="TextureButton" parent="VBox"]
+texture_filter = 1
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+texture_normal = ExtResource("2_8lq5w")
+stretch_mode = 5
+
+[node name="Button" type="Button" parent="VBox"]
+layout_mode = 2
 theme = ExtResource("2_hsy2g")
+theme_override_font_sizes/font_size = 75
 text = "Add Card"
 
-[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="VBox/DisplayButton" to="." method="_on_display_button_pressed"]
+[connection signal="pressed" from="VBox/Button" to="." method="_on_button_pressed"]

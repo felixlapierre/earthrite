@@ -71,3 +71,6 @@ func assign(other: Effect2):
 
 func get_type() -> String:
 	return "other"
+
+func get_long_description() -> String:
+	return Helper.get_long_description(get_type())

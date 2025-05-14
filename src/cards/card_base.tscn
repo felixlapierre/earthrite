@@ -142,7 +142,6 @@ size_flags_horizontal = 4
 bbcode_enabled = true
 text = "description"
 scroll_active = false
-autowrap_mode = 2
 
 [node name="BottomBar" type="HBoxContainer" parent="HBoxContainer/VBoxContainer"]
 layout_mode = 2

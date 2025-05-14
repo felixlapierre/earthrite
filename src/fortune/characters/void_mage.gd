@@ -3,11 +3,13 @@ class_name VoidMageFortune
 
 var icon = preload("res://assets/structure/temporal_rift.png")
 static var MAGE_NAME = "Voidcaster"
+static var MAGE_ID = 2
+
 var event_type = EventManager.EventType.BeforeTurnStart
 var event_callable: Callable
 
 func _init() -> void:
-	super(MAGE_NAME, Fortune.FortuneType.GoodFortune, "At the start of the turn, gain 1" + Helper.blue_mana() + " per empty tile and 3" + Helper.blue_mana() + " per destroyed tile", 2, icon, 3.0)
+	super(MAGE_NAME, Fortune.FortuneType.GoodFortune, "At the start of the turn, gain 1" + Helper.blue_mana() + " per empty tile and 3" + Helper.blue_mana() + " per destroyed tile", MAGE_ID, icon, 3.0)
 
 func register_fortune(event_manager: EventManager):
 	super.register_fortune(event_manager)

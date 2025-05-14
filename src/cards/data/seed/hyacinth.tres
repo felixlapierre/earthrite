@@ -11,7 +11,7 @@ cost = 1
 yld = 4
 time = 2
 size = 2
-text = "On harvest, set the cost of one card in your hand to 0"
+text = "[color=gold]On Harvest:[/color] Set the [color=gold]Cost[/color] {ENERGY} of a random card in your hand to 0"
 strength_increment = 1.0
 size_increment = 1
 seed_texture = 1
@@ -22,3 +22,4 @@ enhances = Array[String]([])
 strength = 1.0
 delay = 0.0
 anim_on = 0
+effects2 = Array[Resource("res://src/effect2/effect2.gd")]([])

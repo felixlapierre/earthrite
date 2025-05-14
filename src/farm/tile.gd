@@ -74,7 +74,10 @@ func update_display():
 		$TileButton.visible = false
 		return
 	$PurpleOverlay.visible = purple
-	$ProtectOverlay.visible = is_protected()
+	if is_protected():
+		$ProtectOverlay.visible = true
+	else:
+		$ProtectOverlay.visible = false
 	$Farmland.visible = true
 	$TileButton.visible = true
 	if grid_location.x == Global.FARM_TOPLEFT.x:
@@ -234,7 +237,8 @@ func harvest(delay) -> Array[Effect]:
 	return effects
 
 func remove_seed():
-	seed.unregister_seed_events(event_manager)
+	if seed != null:
+		seed.unregister_seed_events(event_manager)
 	seed_base_yield = 0
 	seed_grow_time = 0
 	current_grow_progress = 0.0

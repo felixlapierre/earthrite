@@ -34,7 +34,7 @@ func setup(p_event_manager: EventManager):
 	event_manager = p_event_manager
 
 # Return bool indicating if the ritual is complete
-func gain_yellow_mana(amount, delay):
+func gain_yellow_mana(amount, delay = false):
 	flag_defer_excess = flag_defer_excess or delay
 	ritual_counter -= amount
 	if ritual_counter > total_ritual:

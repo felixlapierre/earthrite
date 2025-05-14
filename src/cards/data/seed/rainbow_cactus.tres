@@ -11,7 +11,7 @@ cost = 2
 yld = 20
 time = 3
 size = 1
-text = "When a plant is planted on an adjacent tile, destroy it and gain {STRENGTH} {MANA}"
+text = "When a plant is planted on an Adjacent tile, [color=gold]Destroy[/color] it and gain {STRENGTH} {MANA}"
 strength_increment = 5.0
 size_increment = 1
 seed_texture = 0
@@ -22,3 +22,4 @@ enhances = Array[String]([])
 strength = 5.0
 delay = 0.0
 anim_on = 0
+effects2 = Array[Resource("res://src/effect2/effect2.gd")]([])

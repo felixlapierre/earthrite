@@ -21,3 +21,6 @@ func copy():
 	var new = Rockbud.new();
 	new.assign(self)
 	return new
+
+func get_long_description():
+	return Helper.get_long_description("protect") + "\n" + super.get_long_description()

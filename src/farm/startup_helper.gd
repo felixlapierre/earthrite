@@ -11,6 +11,8 @@ static var Water = preload("res://src/structure/unique/river.tres")
 
 static var manipulate_deck_callback: Callable = func(_deck): pass
 
+static var MOUNTAIN_START_STRUCTURE: Structure = null
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass # Replace with function body.
@@ -63,6 +65,17 @@ static func setup_farm(farm: Farm, event_manager: EventManager):
 			setup_mountain_farm(farm)
 			#Global.FARM_TOPLEFT = Vector2(2, 2)
 			#Global.FARM_BOTRIGHT = Vector2(5, 5)
+			var candidates: Array[Tile] = []
+			for tile: Tile in farm.get_all_tiles():
+				if tile.grid_location.x in [2.0, 3.0, 4.0, 5.0] and tile.grid_location.y in [2.0, 3.0, 4.0, 5.0] and tile.rock:
+					candidates.append(tile)
+			if candidates.size() > 0:
+				candidates.pick_random().build_structure(MOUNTAIN_START_STRUCTURE, 0)
+			else:
+				var rocks = farm.get_all_tiles().filter(func(tile):
+					return tile.rock)
+				rocks.shuffle()
+				rocks[0].build_structure(MOUNTAIN_START_STRUCTURE, 0)
 			for tile in farm.get_all_tiles():
 				tile.do_active_check()
 		"LUNARTEMPLE":
@@ -145,7 +158,7 @@ static var forest_deck = [
 
 static var riverlands_deck = [
 	{
-		"name": "Potato",
+		"name": "Cabbage",
 		"type": "seed",
 		"count": 2
 	},
@@ -196,12 +209,12 @@ static var mountains_deck = [
 		"count": 3
 	},
 	{
-		"name": "Radish",
+		"name": "Cabbage",
 		"type": "seed",
 		"count": 2,
 	},
 	{
-		"name": "Potato",
+		"name": "Radish",
 		"type": "seed",
 		"count": 1
 	},
@@ -248,3 +261,20 @@ static func get_wilderness_seed_options():
 		load("res://src/cards/data/seed/coffee.tres"),
 		load("res://src/cards/data/seed/cranberry.tres")
 	]
+
+static func get_farm_type_index(type: String):
+	match type:
+		"FOREST":
+			return 0
+		"MOUNTAINS":
+			return 1
+		"WILDERNESS":
+			return 2
+		"RIVERLANDS":
+			return 3
+		"LUNARTEMPLE":
+			return 4
+		"STORMVALE":
+			return 5
+		"SCRAPYARD":
+			return 6

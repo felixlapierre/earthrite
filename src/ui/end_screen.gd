@@ -101,50 +101,51 @@ func do_unlocks(turn_manager: TurnManager, deck: Array[CardData]):
 		Unlocks.DIFFICULTIES_UNLOCKED["3"] = true
 		difficulties.append("Mastery")
 	
-	# Riverland Farm
-	if !Unlocks.FARMS_UNLOCKED["1"]:
-		Unlocks.FARMS_UNLOCKED["1"] = true
-		farms.append("Riverlands")
-	# Wilderness Farm
-	if !Unlocks.FARMS_UNLOCKED["2"] and win and Global.FARM_TYPE == "RIVERLANDS":
-		Unlocks.FARMS_UNLOCKED["2"] = true
-		farms.append("Wilderness")
-	# Mountain Farm
-	if !Unlocks.FARMS_UNLOCKED["3"] and win and Global.FARM_TYPE == "WILDERNESS":
-		Unlocks.FARMS_UNLOCKED["3"] = true
-		farms.append("Mountains")
-	# Lunar Temple
-	if !Unlocks.FARMS_UNLOCKED["4"] and win and Global.FARM_TYPE == "MOUNTAINS":
+	# Forest, Mountain, Wilderness, Riverlands unlocked by default
+
+	# Lunar Temple: Win any farm
+	if !Unlocks.FARMS_UNLOCKED["4"]:
 		Unlocks.FARMS_UNLOCKED["4"] = true
 		farms.append("Lunar Temple")
-	# Storm Vale
-	if !Unlocks.FARMS_UNLOCKED["5"] and win and Global.FARM_TYPE == "LUNARTEMPLE":
+
+	# Storm Vale: Win Wilderness farm or Lunar temple
+	if !Unlocks.FARMS_UNLOCKED["5"] and win and (Global.FARM_TYPE == "LUNARTEMPLE" or Global.FARM_TYPE == "WILDERNESS"):
 		Unlocks.FARMS_UNLOCKED["5"] = true
 		farms.append("Storm Vale")
+
+	# Scrapyard: Win Mountain farm or Riverland
+	if !Unlocks.FARMS_UNLOCKED["6"] and win and (Global.FARM_TYPE == "MOUNTAINS" or Global.FARM_TYPE == "RIVERLANDS"):
+		Unlocks.FARMS_UNLOCKED["6"] = true
+		farms.append("Scrapyard")
 	
 	# Mages
-	if !Unlocks.MAGES_UNLOCKED["1"]:
-		Unlocks.MAGES_UNLOCKED["1"] = true
+	# Now: Novice [0], acorn[1], void[2] and time[3] unlocked by default
+	# Ice mage: Win on any difficulty
+	if !Unlocks.MAGES_UNLOCKED[str(IceMageFortune.MAGE_ID)] and win:
+		Unlocks.MAGES_UNLOCKED[str(IceMageFortune.MAGE_ID)] = true
 		mages.append(IceMageFortune.MAGE_NAME)
-	if !Unlocks.MAGES_UNLOCKED["2"] and Global.FARM_TYPE == "RIVERLANDS":
-		Unlocks.MAGES_UNLOCKED["2"] = true
+	# Alchemist: Win on normal
+	if !Unlocks.MAGES_UNLOCKED[str(WaterMage.MAGE_ID)] and Global.DIFFICULTY >= 2:
+		Unlocks.MAGES_UNLOCKED[str(WaterMage.MAGE_ID)] = true
 		mages.append(WaterMage.MAGE_NAME)
-	#if !Unlocks.MAGES_UNLOCKED["3"] and Global.MAGE == IceMageFortune.MAGE_NAME:
-	#	Unlocks.MAGES_UNLOCKED["3"] = true
-	#	mages.append(LunarMageFortune.MAGE_NAME)
-	if !Unlocks.MAGES_UNLOCKED["4"] and win and deck.any(func(card: CardData):
-			return card.name == "Blightrose" or card.name == "Bloodrite" or card.name == "Dark Visions"):
-		Unlocks.MAGES_UNLOCKED["4"] = true
+	# Blight mage: Win with a blight card in your deck
+	if !Unlocks.MAGES_UNLOCKED[str(BlightMageFortune.MAGE_ID)] and win and deck.any(func(card: CardData):
+			return card.name == "Blightrose" or card.name == "Bloodrite" or card.name == "Dark Visions" or card.name == "Corruption"):
+		Unlocks.MAGES_UNLOCKED[str(BlightMageFortune.MAGE_ID)] = true
 		mages.append(BlightMageFortune.MAGE_NAME)
-	if !Unlocks.MAGES_UNLOCKED["5"] and win and deck.size() >= 18:
-		Unlocks.MAGES_UNLOCKED["5"] = true
+	# Chaos mage: Embrace chaos / Have no basic cards in your final deck
+	if !Unlocks.MAGES_UNLOCKED[str(ChaosMageFortune.MAGE_ID)] and win and deck.all(func(card: CardData):
+			return card.rarity != "basic"):
+		Unlocks.MAGES_UNLOCKED[str(ChaosMageFortune.MAGE_ID)] = true
 		mages.append(ChaosMageFortune.MAGE_NAME)
-	if !Unlocks.MAGES_UNLOCKED["6"] and win and Global.DIFFICULTY == 1:
-		Unlocks.MAGES_UNLOCKED["6"] = true
+	# Fire mage: Win on Hard
+	if !Unlocks.MAGES_UNLOCKED[str(FireMageFortune.MAGE_ID)] and win and Global.DIFFICULTY >= 2:
+		Unlocks.MAGES_UNLOCKED[str(FireMageFortune.MAGE_ID)] = true
 		mages.append(FireMageFortune.MAGE_NAME)
-	if !Unlocks.MAGES_UNLOCKED["7"] and win and deck.any(func(card: CardData): return card.name == "Dark Rose"):
-		Unlocks.MAGES_UNLOCKED["7"] = true
-		mages.append("Voidcaster")
+	# Archmage: Win on Mastery
+	if !Unlocks.MAGES_UNLOCKED[str(ArchmageFortune.MAGE_ID)] and win and Global.DIFFICULTY >= 3:
+		Unlocks.MAGES_UNLOCKED[str(ArchmageFortune.MAGE_ID)] = true
+		mages.append(ArchmageFortune.MAGE_NAME)
 	
 	if difficulties.size() > 0:
 		for diff in difficulties:
