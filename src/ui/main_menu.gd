@@ -26,6 +26,7 @@ var playspace
 @onready var NewGamePanel = $Root/HBox/Panel
 @onready var ContinuePanel = $Root/HBox/ContPanel
 @onready var SettingsPanel = $Root/HBox/SettingsPanel
+@onready var StatisticsPanel = $Root/HBox/StatisticsPanel
 
 @onready var Prompt = $Root/HBox/Panel/Margin/VBox/HBox/Details/VBox/DetailsPrompt
 @onready var DetailsImg = $Root/HBox/Panel/Margin/VBox/HBox/Details/VBox/DetailsImg
@@ -56,6 +57,18 @@ var difficulty_text = [
 	"Increased misfortune\n",
 	"Add Final Ritual on year 11"]
 
+var mage_fortune_list: Array[MageAbility] = [
+	load("res://src/fortune/characters/novice.gd").new(),
+	load("res://src/fortune/characters/acorn_mage.gd").new(),
+	load("res://src/fortune/characters/void_mage.gd").new(),
+	load("res://src/fortune/characters/time_mage.gd").new(),
+	load("res://src/fortune/characters/ice_mage.gd").new(),
+	load("res://src/fortune/characters/water_mage.gd").new(),
+	load("res://src/fortune/characters/fire_mage.gd").new(),
+	load("res://src/fortune/characters/blight_mage.gd").new(),
+	load("res://src/fortune/characters/chaos_mage.gd").new(),
+	load("res://src/fortune/characters/archmage.gd").new()]
+
 var mage_fortune: MageAbility = load("res://src/fortune/characters/novice.gd").new();
 var mages_map: Dictionary = {}
 
@@ -63,18 +76,6 @@ var mages_map: Dictionary = {}
 func _ready():
 	var mages: OptionButton = $Root/HBox/Panel/Margin/VBox/HBox/Margin/VBox/CharacterBox/CharOptions
 	mages.clear()
-	
-	var mage_fortune_list = [
-		load("res://src/fortune/characters/novice.gd").new(),
-		load("res://src/fortune/characters/acorn_mage.gd").new(),
-		load("res://src/fortune/characters/void_mage.gd").new(),
-		load("res://src/fortune/characters/time_mage.gd").new(),
-		load("res://src/fortune/characters/ice_mage.gd").new(),
-		load("res://src/fortune/characters/water_mage.gd").new(),
-		load("res://src/fortune/characters/fire_mage.gd").new(),
-		load("res://src/fortune/characters/blight_mage.gd").new(),
-		load("res://src/fortune/characters/chaos_mage.gd").new(),
-		load("res://src/fortune/characters/archmage.gd").new()]
 
 	for fortune: MageAbility in mage_fortune_list:
 		mages_map[fortune.rank] = fortune
@@ -106,6 +107,7 @@ func _ready():
 		if !Unlocks.FARMS_UNLOCKED[str(i)]:
 			var lock = load("res://assets/ui/lock.png")
 			$Root/HBox/Panel/Margin/VBox/HBox/Margin/VBox/FarmTypeBox/TypeOptions.set_item_icon(i, lock)
+	$Root/HBox/StatisticsPanel/StatisticsDisplay.create_stats_display(mage_fortune_list)
 	if Settings.TUTORIALS_V2:
 		_on_start_button_pressed()
 
@@ -532,3 +534,9 @@ func _on_continue_back_button_pressed():
 	MainButtonsCont.visible = true
 	ContinuePanel.visible = false
 	SettingsPanel.visible = false
+	StatisticsPanel.visible = false
+
+
+func _on_stats_button_pressed():
+	StatisticsPanel.visible = true
+	MainButtonsCont.visible = false

@@ -1,51 +1,70 @@
 [gd_scene load_steps=3 format=3 uid="uid://c0h2vyrb4yxlk"]
 
 [ext_resource type="Script" path="res://src/ui/main_menus/statistics_display.gd" id="1_eqg3x"]
-[ext_resource type="Theme" uid="uid://c3hfmpsb3fvhr" path="res://assets/game_theme.tres" id="2_70fmy"]
+[ext_resource type="Theme" uid="uid://c21dhy264y6ty" path="res://assets/theme_large.tres" id="2_4qxni"]
 
-[node name="StatisticsDisplay" type="Control"]
-layout_mode = 3
-anchors_preset = 0
+[node name="StatisticsDisplay" type="VBoxContainer"]
+custom_minimum_size = Vector2(600, 700)
+offset_right = 400.0
+offset_bottom = 292.0
+theme = ExtResource("2_4qxni")
 script = ExtResource("1_eqg3x")
 
-[node name="Panel" type="PanelContainer" parent="."]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
-theme = ExtResource("2_70fmy")
-
-[node name="VBox" type="VBoxContainer" parent="Panel"]
-custom_minimum_size = Vector2(400, 0)
-layout_mode = 2
-
-[node name="Title" type="Label" parent="Panel/VBox"]
+[node name="Title" type="Label" parent="."]
 layout_mode = 2
 text = "Statistics"
 horizontal_alignment = 1
 
-[node name="FarmTitle" type="Label" parent="Panel/VBox"]
+[node name="Control" type="Control" parent="."]
+custom_minimum_size = Vector2(0, 20)
 layout_mode = 2
-text = "Best Wins by Farm"
-horizontal_alignment = 1
 
-[node name="FarmWinsCont" type="GridContainer" parent="Panel/VBox"]
+[node name="OptionButton" type="OptionButton" parent="."]
 layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+alignment = 1
+item_count = 3
+selected = 0
+popup/item_0/text = "Best Wins by Farm"
+popup/item_0/id = 0
+popup/item_1/text = "Best Wins by Mage"
+popup/item_1/id = 1
+popup/item_2/text = "Full Stats"
+popup/item_2/id = 2
+
+[node name="Control2" type="Control" parent="."]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+
+[node name="FarmWinsCont" type="GridContainer" parent="."]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 3
 columns = 5
 
-[node name="Best Wins by Mage" type="Label" parent="Panel/VBox"]
+[node name="MageWinsCont" type="GridContainer" parent="."]
+visible = false
 layout_mode = 2
-text = "Best Wins by Mage"
-horizontal_alignment = 1
-
-[node name="MageWinsCont" type="GridContainer" parent="Panel/VBox"]
-layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 3
 columns = 5
 
-[node name="Full Stats" type="Label" parent="Panel/VBox"]
+[node name="FullStatsCont" type="GridContainer" parent="."]
+visible = false
 layout_mode = 2
-text = "Full Stats"
-horizontal_alignment = 1
-
-[node name="FullStatsCont" type="GridContainer" parent="Panel/VBox"]
-layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 3
 columns = 8
+
+[node name="Control3" type="Control" parent="."]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+
+[node name="Button" type="Button" parent="."]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+text = "Back"
+
+[connection signal="item_selected" from="OptionButton" to="." method="_on_option_button_item_selected"]
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

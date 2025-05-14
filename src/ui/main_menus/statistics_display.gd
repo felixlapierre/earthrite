@@ -1,9 +1,11 @@
 extends Control
 class_name StatisticsDisplay
 
-@onready var full_stats_cont: GridContainer = $Panel/VBox/FullStatsCont
-@onready var farm_stats_cont: GridContainer = $Panel/VBox/FarmWinsCont
-@onready var mage_wins_cont: GridContainer = $Panel/VBox/MageWinsCont
+@onready var full_stats_cont: GridContainer = $FullStatsCont
+@onready var farm_stats_cont: GridContainer = $FarmWinsCont
+@onready var mage_wins_cont: GridContainer = $MageWinsCont
+
+signal back
 
 static var icons = {
 	"Easy": preload("res://assets/ui/Easy.png"),
@@ -18,17 +20,7 @@ static var icons = {
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	create_stats_display([
-		load("res://src/fortune/characters/novice.gd").new(),
-		load("res://src/fortune/characters/acorn_mage.gd").new(),
-		load("res://src/fortune/characters/void_mage.gd").new(),
-		load("res://src/fortune/characters/time_mage.gd").new(),
-		load("res://src/fortune/characters/ice_mage.gd").new(),
-		load("res://src/fortune/characters/water_mage.gd").new(),
-		load("res://src/fortune/characters/fire_mage.gd").new(),
-		load("res://src/fortune/characters/blight_mage.gd").new(),
-		load("res://src/fortune/characters/chaos_mage.gd").new(),
-		load("res://src/fortune/characters/archmage.gd").new()])
+	pass
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -89,7 +81,8 @@ static func get_difficulty_icon(diff):
 func add_rect(cont: GridContainer, texture: Texture2D):
 	var rect = TextureRect.new()
 	rect.custom_minimum_size = Vector2(32, 32)
-	rect.expand_mode = TextureRect.EXPAND_KEEP_SIZE
+	rect.expand_mode = TextureRect.EXPAND_FIT_WIDTH_PROPORTIONAL
+	rect.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 	rect.texture = texture
 	cont.add_child(rect)
 
@@ -109,3 +102,19 @@ static func get_farm_icon(farm):
 			return load("res://assets/mage/Storm.png")
 		"SCRAPYARD":
 			return load("res://assets/custom/Temp.png")
+
+
+func _on_button_pressed():
+	back.emit()
+
+func _on_option_button_item_selected(index):
+	farm_stats_cont.visible = false
+	mage_wins_cont.visible = false
+	full_stats_cont.visible = false
+	match index:
+		0:
+			farm_stats_cont.visible = true
+		1:
+			mage_wins_cont.visible = true
+		2:
+			full_stats_cont.visible = true
