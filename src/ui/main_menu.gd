@@ -10,6 +10,7 @@ var playspace
 @onready var tutorial_prompt = $TutorialPrompt
 @onready var difficulty_options = $Root/HBox/Panel/Margin/VBox/HBox/Margin/VBox/DifficultyBox/DiffOptions
 
+@onready var MainButtonsCont = $Root/HBox/VBox
 @onready var Stats = $Root/HBox/ContPanel/VBox/Margin/VBox/Grid/StatsLabel
 @onready var Deck = $Root/HBox/ContPanel/VBox/Margin/VBox/Grid/DeckLabel
 @onready var ContinueButton = $Root/HBox/ContPanel/VBox/Margin/VBox/ContinueButton
@@ -37,6 +38,16 @@ var playspace
 @onready var Blindness = $Root/HBox/Panel/Margin/VBox/HBox/Margin/VBox/MasteryCont/Blindness
 @onready var LostPages = $"Root/HBox/Panel/Margin/VBox/HBox/Margin/VBox/MasteryCont/Lost Pages"
 @onready var Memoria = $Root/HBox/Panel/Margin/VBox/HBox/Margin/VBox/MasteryCont/Memoria
+
+@onready var SavePreview = $Root/HBox/VBox/MarginContinue/vbox/SavePreview
+@onready var SaveYearLabel = $Root/HBox/VBox/MarginContinue/vbox/SavePreview/Grid/SaveYear
+@onready var SaveFarmTexture = $Root/HBox/VBox/MarginContinue/vbox/SavePreview/Grid/SaveFarmTexture
+@onready var SaveFarmLabel = $Root/HBox/VBox/MarginContinue/vbox/SavePreview/Grid/SaveFarmLabel
+@onready var SaveMageTexture = $Root/HBox/VBox/MarginContinue/vbox/SavePreview/Grid/SaveMageTexture
+@onready var SaveMageLabe = $Root/HBox/VBox/MarginContinue/vbox/SavePreview/Grid/SaveMageLabel
+@onready var SaveDiffTexture = $Root/HBox/VBox/MarginContinue/vbox/SavePreview/Grid/SaveDiffTexture
+@onready var SaveDiffLabel = $Root/HBox/VBox/MarginContinue/vbox/SavePreview/Grid/SaveDiffLabel
+@onready var NoSaveFoundLabel = $Root/HBox/VBox/MarginContinue/vbox/NoSaveFound
 
 var difficulty_text = [
 	"Base difficulty",
@@ -82,7 +93,7 @@ func _ready():
 	Settings.load_settings()
 
 	Statistics.load_stats()
-	TutorialsCheck.button_pressed = Settings.TUTORIALS_ENABLED
+	TutorialsCheck.button_pressed = Settings.TUTORIALS_V2
 	DebugCheck.button_pressed = Settings.DEBUG
 	ClickModeCheck.button_pressed = Settings.CLICK_MODE
 	set_locked_options()
@@ -95,29 +106,41 @@ func _ready():
 		if !Unlocks.FARMS_UNLOCKED[str(i)]:
 			var lock = load("res://assets/ui/lock.png")
 			$Root/HBox/Panel/Margin/VBox/HBox/Margin/VBox/FarmTypeBox/TypeOptions.set_item_icon(i, lock)
+	if Settings.TUTORIALS_V2:
+		_on_start_button_pressed()
 
-	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	pass
 
 func _on_diff_options_item_selected(index):
 	MasteryContainer.visible = false
+	var numbers = "- More Mana needed to complete the ritual. Increase Blight attack strength.\n"
+	var hexes = "- [color=yellow]Blight Hexes are stronger and trickier[/color]\n"
+	var explores = "- [color=mediumpurple]Fewer Explores per Winter[/color]\n"
+	var numbers2 = "- [color=mediumpurple]Even more Mana needed to complete the ritual. Further increase Blight attack strength.[/color]\n"
+	var hexes2 = "- [color=mediumpurple]Blight Hexes are even stronger and trickier[/color]\n"
+	var options = "- [color=mediumpurple]Fewer options are presented when exploring[/color]\n"
+	var numbers3 = "- [color=purple]Large amounts of Mana needed to complete the ritual. Maximize Blight attack strength[/color]\n"
+	
 	match index:
 		0:
-			update_prompt("Difficulty: Easy", load("res://assets/ui/Easy.png"), "Base difficulty. Blight is less dangerous.")
+			update_prompt("Difficulty: Easy", load("res://assets/ui/Easy.png"), "[color=burlywood]Base difficulty[/color]")
 		1:
-			update_prompt("Difficulty: Normal", load("res://assets/ui/Normal.png"), "Ritual requires more mana to complete. Blight is more dangerous, and blighted tiles heal slower.")
+			update_prompt("Difficulty: Normal", load("res://assets/ui/Normal.png"), numbers)
 		2:
-			update_prompt("Difficulty: Hard", load("res://assets/ui/Hard.png"), "Ritual requires even more mana to complete. Blight is even more dangerous. Blight will use new attacks, and will change attacks from week to week.")
+			update_prompt("Difficulty: Hard", load("res://assets/ui/Hard.png"), numbers + hexes)
 		3:
-			update_prompt("Difficulty: Mastery", load("res://assets/ui/Mastery.png"), "Increase the difficulty as much as you can in order to reach new levels of mastery.")
-			Mastery.MasteryLevel = 1
-			MasteryContainer.visible = true
-			update_mastery_2(Mastery.MasteryLevel)
+			update_prompt("Difficulty: Mastery", load("res://assets/ui/Mastery.png"), numbers + hexes + explores)
+		4:
+			update_prompt("Difficulty: Mastery 2", load("res://assets/ui/Mastery2.png"), numbers2 + hexes + explores)
+		5:
+			update_prompt("Difficulty: Mastery 3", load("res://assets/ui/Mastery3.png"), numbers2 + hexes2 + explores)
+		6:
+			update_prompt("Difficulty: Mastery 4", load("res://assets/ui/Mastery4.png"), numbers2 + hexes2 + explores + options)
+		7:
+			update_prompt("Difficulty: Mastery 5", load("res://assets/ui/Mastery5.png"), numbers3 + hexes2 + explores + options)
 	Global.DIFFICULTY = index
-	update_mastery()
-	
 
 func _on_start_button_pressed():
 	menu_root.visible = false
@@ -223,13 +246,12 @@ func get_index_of_farm_type(type):
 
 func populate_continue_preview():
 	if not FileAccess.file_exists("user://savegame.save"):
-		ContinueButton.disabled = true
-		ContinuePanel.visible = false
-		NewGamePanel.visible = true
-		ViewContinue.disabled = false
-		ViewNewGame.disabled = true
-		MasteryContainer.visible = false
+		ViewContinue.disabled = true
+		NoSaveFoundLabel.visible = true
+		SavePreview.visible = false
 		return
+	NoSaveFoundLabel.visible = false
+	SavePreview.visible = true
 	ContinueButton.text = "Load Saved Game"
 	var save_game = FileAccess.open("user://savegame.save", FileAccess.READ)
 	var save_data = save_game.get_line()
@@ -243,10 +265,19 @@ func populate_continue_preview():
 	Stats.clear()
 	Deck.clear()
 	
-	Stats.append_text("Year: " + str(save_json.state.year) + "\n")
+	var year = str(save_json.state.year)
+	if save_json.state.winter == false:
+		year = str(int(year) + 1)
+	Stats.append_text("Year: " + year + "\n")
 	Stats.append_text("Week: " + str(save_json.state.week) + "\n")
 	Stats.append_text("Damage: " + str(save_json.state.blight) + "\n")
 	Stats.append_text("Farm: " + str(save_json.state.farm_type) + "\n")
+	
+	var farm = save_json.state.farm_type
+	var farm_icon = StatisticsDisplay.get_farm_icon(farm)
+	SaveFarmTexture.texture = farm_icon
+	SaveFarmLabel.text = " " + farm.to_lower().capitalize() + "   "
+	SaveYearLabel.text = "Year: " + year + "   "
 	
 	#Also preselect options
 	$Root/HBox/Panel/Margin/VBox/HBox/Margin/VBox/DifficultyBox/DiffOptions.selected = save_json.state.difficulty
@@ -257,6 +288,8 @@ func populate_continue_preview():
 		$Root/HBox/Panel/Margin/VBox/HBox/Margin/VBox/CharacterBox/CharOptions.selected = save_json.state.mage.rank
 		_on_char_options_item_selected(save_json.state.mage.rank)
 		$Root/HBox/ContPanel/VBox/Margin/VBox/Grid/StatsLabel.append_text("Character: " + save_json.state.mage.name + "\n")
+		SaveMageTexture.texture = load(save_json.state.mage.texture)
+		SaveMageLabe.text = " " + save_json.state.mage.name + "   "
 	else:
 		$Root/HBox/Panel/Margin/VBox/HBox/Margin/VBox/CharacterBox/CharOptions.selected = 0
 		_on_char_options_item_selected(0)
@@ -274,8 +307,11 @@ func populate_continue_preview():
 		2:
 			difficulty = "Hard"
 		3:
-			difficulty = "Mastery " + str(Mastery.get_total_mastery())
+			difficulty = "Mastery" + str(int(save_json.state.difficulty) - 2)
 			$Root/HBox/Panel/Margin/VBox/HBox/Margin/VBox/MasteryCont.visible = true
+	var diff_icon = StatisticsDisplay.get_difficulty_icon(difficulty)
+	SaveDiffTexture.texture = diff_icon
+	SaveDiffLabel.text = difficulty
 	Stats.append_text("Difficulty: " + difficulty)
 	Deck.append_text("Deck: " + "\n")
 	var cards = {}
@@ -316,7 +352,7 @@ func populate_continue_preview():
 	update_mastery_2(Mastery.MasteryLevel)
 	
 func _on_tutorials_check_pressed() -> void:
-	Settings.TUTORIALS_ENABLED = TutorialsCheck.button_pressed
+	Settings.TUTORIALS_V2 = TutorialsCheck.button_pressed
 	Settings.save_settings()
 
 func _on_debug_check_pressed() -> void:
@@ -326,10 +362,8 @@ func _on_debug_check_pressed() -> void:
 
 
 func _on_tutorial_button_pressed():
-	menu_root.visible = false
-	tutorial_prompt.visible = false
-	introduction.visible = true
-	Global.FARM_TYPE = "FOREST"
+	MainButtonsCont.visible = true
+	NewGamePanel.visible = false
 
 func _on_story_start_button_pressed() -> void:
 	introduction.visible = false
@@ -355,8 +389,9 @@ func connect_main_menu_signal(playspace):
 		_on_type_options_item_selected(get_index_of_farm_type(Global.FARM_TYPE))
 		set_locked_options()
 		populate_continue_preview()
-		reset_tabs()
-		_on_view_continue_pressed()
+		MainButtonsCont.visible = true
+		ContinuePanel.visible = false
+		NewGamePanel.visible = false
 		update_mastery()
 		update_prompt("", null, "")
 		)
@@ -368,7 +403,7 @@ func _on_char_options_item_selected(index: int) -> void:
 	update_prompt(mage_fortune.name, mage_fortune.texture, mage_fortune.text)
 	var best = Statistics.get_best_win_mage(mage_fortune.name)
 	if best != null:
-		$Root/HBox/Panel/Margin/VBox/HBox/Details/VBox/DetailsDescr.append_text("\nBest Win: " + best + " [img][img]res://assets/ui/" + best + ".png[/img]")
+		$Root/HBox/Panel/Margin/VBox/HBox/Details/VBox/DetailsDescr.append_text("\n\n[color=gold]Best Win[/color]: " + best + " [img][img]res://assets/ui/" + best + ".png[/img]")
 
 	update_best_win()
 
@@ -376,7 +411,7 @@ func set_locked_options():
 	var farms = Unlocks.FARMS_UNLOCKED
 	#for i in range(7):
 	#	$Root/HBox/Panel/Margin/VBox/HBox/Margin/VBox/FarmTypeBox/TypeOptions.set_item_disabled(i, !Settings.DEBUG && !Unlocks.FARMS_UNLOCKED[str(i)])
-	for i in range(4):
+	for i in range(8):
 		$Root/HBox/Panel/Margin/VBox/HBox/Margin/VBox/DifficultyBox/DiffOptions.set_item_disabled(i, !Settings.DEBUG && !Unlocks.DIFFICULTIES_UNLOCKED[str(i)])
 	#for i in range(10):
 	#	$Root/HBox/Panel/Margin/VBox/HBox/Margin/VBox/CharacterBox/CharOptions.set_item_disabled(i, !Settings.DEBUG && !Unlocks.MAGES_UNLOCKED[str(i)])
@@ -388,29 +423,17 @@ func _on_no_button_pressed() -> void:
 	Unlocks.TUTORIAL_COMPLETE = true
 	Unlocks.save_unlocks()
 
-func reset_tabs():
-	for button: Button in [ViewContinue, ViewNewGame, ViewSettings, ExitGame]:
-		button.disabled = false
-	for panel: PanelContainer in [NewGamePanel, ContinuePanel, SettingsPanel]:
-		panel.visible = false
-
 func _on_view_continue_pressed():
-	reset_tabs()
-	ViewContinue.disabled = true
+	MainButtonsCont.visible = false
 	ContinuePanel.visible = true
 
-
 func _on_view_new_game_pressed():
-	reset_tabs()
-	ViewNewGame.disabled = true
+	MainButtonsCont.visible = false
 	NewGamePanel.visible = true
 
-
 func _on_view_settings_pressed():
-	reset_tabs()
-	ViewSettings.disabled = true
+	MainButtonsCont.visible = false
 	SettingsPanel.visible = true
-
 
 func _on_exit_game_pressed():
 	get_tree().quit()
@@ -504,3 +527,8 @@ func update_best_win():
 
 func check_lock_start_button():
 	$Root/HBox/Panel/Margin/VBox/StartButton.disabled = !Settings.DEBUG and (!Unlocks.MAGES_UNLOCKED[str(mage_fortune.rank)] or !Unlocks.FARMS_UNLOCKED[str(StartupHelper.get_farm_type_index(Global.FARM_TYPE))])
+
+func _on_continue_back_button_pressed():
+	MainButtonsCont.visible = true
+	ContinuePanel.visible = false
+	SettingsPanel.visible = false

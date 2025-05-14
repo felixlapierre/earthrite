@@ -357,6 +357,7 @@ func register_tooltips():
 
 func set_highlight(value: bool):
 	HIGHLIGHT.visible = value
+	HIGHLIGHT.play("default")
 
 func set_disabled(value: bool):
 	FOCUS.disabled = value

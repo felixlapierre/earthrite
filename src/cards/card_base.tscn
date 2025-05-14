@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://2yu7drphx7ur"]
+[gd_scene load_steps=20 format=3 uid="uid://2yu7drphx7ur"]
 
 [ext_resource type="Script" path="res://src/cards/card_base.gd" id="1_ohx6w"]
 [ext_resource type="Theme" uid="uid://c3hfmpsb3fvhr" path="res://assets/game_theme.tres" id="1_w62ds"]
@@ -27,6 +27,28 @@ region = Rect2(0, 0, 16, 16)
 [sub_resource type="AtlasTexture" id="AtlasTexture_02cf5"]
 atlas = ExtResource("9_odxue")
 region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qqqdx"]
+atlas = ExtResource("12_qqclk")
+region = Rect2(0, 0, 200, 280)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dmxd3"]
+atlas = ExtResource("12_qqclk")
+region = Rect2(200, 0, 200, 280)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_cldkc"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qqqdx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dmxd3")
+}],
+"loop": true,
+"name": &"default",
+"speed": 2.0
+}]
 
 [node name="CardBase" type="MarginContainer"]
 texture_filter = 1
@@ -180,9 +202,9 @@ expand_mode = 2
 layout_mode = 2
 mouse_filter = 1
 
-[node name="Highlight" type="Sprite2D" parent="."]
+[node name="Highlight" type="AnimatedSprite2D" parent="."]
 visible = false
-texture = ExtResource("12_qqclk")
+sprite_frames = SubResource("SpriteFrames_cldkc")
 centered = false
 
 [connection signal="gui_input" from="Focus" to="." method="_on_focus_gui_input"]

@@ -207,8 +207,8 @@ func get_chart(list):
 			chart = list[0]
 		1:
 			chart = list[1]
-		3:
+		4:
 			chart = list[2]
-	if Mastery.get_total_mastery() >= 2:
-		chart = list[3]
+		7:
+			chart = list[3]
 	return chart

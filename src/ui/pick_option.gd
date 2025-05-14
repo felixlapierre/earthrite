@@ -62,11 +62,13 @@ func setup_items(items):
 
 		elif item.CLASS_NAME == "Structure":
 			new_node = ShopDisplay.instantiate()
+			new_node.tooltip = tooltip
 			new_node.set_data(item)
 			new_node.callback = callback
 
 		elif item.CLASS_NAME == "Enhance":
 			new_node = ShopDisplay.instantiate()
+			new_node.tooltip = tooltip
 			new_node.set_data(item)
 			new_node.callback = callback
 		
@@ -77,6 +79,7 @@ func setup_items(items):
 			acorn_label.text = "[center]+1 [img]res://assets/custom/acorn.png[/img]"
 			acorn_label.bbcode_enabled = true
 			acorn_label.fit_content = true
+			tooltip.register_tooltip(acorn_label,  "[color=gold]Lucky Acorn[/color]: If you pick this option, gain a Lucky Acorn for free! Lucky Acorns can be used later to reroll a card choice - getting a different set of options instead.")
 			vbox.add_child(acorn_label)
 			new_node = vbox
 

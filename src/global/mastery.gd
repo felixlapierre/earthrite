@@ -46,7 +46,7 @@ static func hide_preview():
 	return MasteryLevel >= 2
 
 static func less_options():
-	return 1 if MasteryLevel >= 3 else 0
+	return 1 if Global.DIFFICULTY >= 6 else 0
 
 static func less_explore():
 	return 1 if MasteryLevel >= 4 else 0

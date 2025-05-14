@@ -1,9 +1,11 @@
-[gd_scene load_steps=17 format=3 uid="uid://c4gqastokl1qh"]
+[gd_scene load_steps=23 format=3 uid="uid://c4gqastokl1qh"]
 
 [ext_resource type="Script" path="res://src/ui/main_menu.gd" id="1_b0cyn"]
 [ext_resource type="Theme" uid="uid://c21dhy264y6ty" path="res://assets/theme_large.tres" id="1_l63em"]
 [ext_resource type="Texture2D" uid="uid://br43hj4sf1r1l" path="res://assets/mage/forest.png" id="3_2w0ds"]
+[ext_resource type="StyleBox" uid="uid://dlrsrdqrd6kj3" path="res://assets/panel_tutorial.tres" id="3_t7m8p"]
 [ext_resource type="Texture2D" uid="uid://blyww7sa17sgt" path="res://assets/mage/riverlands.png" id="4_u656s"]
+[ext_resource type="Texture2D" uid="uid://g31m48bel7pe" path="res://assets/card/frostcut.png" id="5_bqx62"]
 [ext_resource type="Texture2D" uid="uid://dd1tk8qegcw8t" path="res://assets/mage/wilderness.png" id="5_qrkqy"]
 [ext_resource type="Texture2D" uid="uid://8eb3ks2y5h1r" path="res://assets/fortune/mountains.png" id="6_g5ud0"]
 [ext_resource type="Texture2D" uid="uid://djfe248r85tuq" path="res://assets/ui/Easy.png" id="7_ovbwu"]
@@ -16,6 +18,10 @@
 [ext_resource type="Texture2D" uid="uid://bxn7jkap77xy2" path="res://assets/ui/Mastery.png" id="10_41bla"]
 [ext_resource type="PackedScene" uid="uid://duwe02c6s4kkq" path="res://src/ui/incrementer.tscn" id="11_ui556"]
 [ext_resource type="Theme" uid="uid://bdodinwpnjkw8" path="res://assets/theme_huge.tres" id="13_36j2h"]
+[ext_resource type="Texture2D" uid="uid://n3bmnhhvec40" path="res://assets/ui/Mastery2.png" id="14_52awb"]
+[ext_resource type="Texture2D" uid="uid://da0ootbhd8wa6" path="res://assets/ui/Mastery3.png" id="15_2uty3"]
+[ext_resource type="Texture2D" uid="uid://bbnwx5oxkh1ib" path="res://assets/ui/Mastery4.png" id="16_8m5wh"]
+[ext_resource type="Texture2D" uid="uid://1ieyrs8dbhl4" path="res://assets/ui/Mastery5.png" id="17_lnnqf"]
 
 [node name="MainMenu" type="Node2D"]
 script = ExtResource("1_b0cyn")
@@ -32,30 +38,110 @@ layout_mode = 2
 
 [node name="VBox" type="VBoxContainer" parent="Root/HBox"]
 layout_mode = 2
+theme = ExtResource("13_36j2h")
 
-[node name="ViewContinue" type="Button" parent="Root/HBox/VBox"]
-custom_minimum_size = Vector2(200, 200)
+[node name="Label" type="Label" parent="Root/HBox/VBox"]
+visible = false
+custom_minimum_size = Vector2(0, 200)
 layout_mode = 2
-disabled = true
+theme_override_font_sizes/font_size = 100
+text = "Earthrite"
+horizontal_alignment = 1
+
+[node name="MarginContinue" type="MarginContainer" parent="Root/HBox/VBox"]
+layout_mode = 2
+theme_override_constants/margin_bottom = 50
+
+[node name="vbox" type="VBoxContainer" parent="Root/HBox/VBox/MarginContinue"]
+layout_mode = 2
+
+[node name="ViewContinue" type="Button" parent="Root/HBox/VBox/MarginContinue/vbox"]
+custom_minimum_size = Vector2(1200, 100)
+layout_mode = 2
 text = "Continue"
 
-[node name="ViewNewGame" type="Button" parent="Root/HBox/VBox"]
-custom_minimum_size = Vector2(200, 200)
+[node name="NoSaveFound" type="Label" parent="Root/HBox/VBox/MarginContinue/vbox"]
+visible = false
+layout_mode = 2
+theme_override_colors/font_color = Color(0.670588, 0.670588, 0.670588, 1)
+text = "No save data found"
+horizontal_alignment = 1
+
+[node name="SavePreview" type="PanelContainer" parent="Root/HBox/VBox/MarginContinue/vbox"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_styles/panel = ExtResource("3_t7m8p")
+
+[node name="Grid" type="HBoxContainer" parent="Root/HBox/VBox/MarginContinue/vbox/SavePreview"]
+layout_mode = 2
+alignment = 1
+
+[node name="SaveYear" type="Label" parent="Root/HBox/VBox/MarginContinue/vbox/SavePreview/Grid"]
+layout_mode = 2
+text = "Year 7   "
+
+[node name="SaveFarmTexture" type="TextureRect" parent="Root/HBox/VBox/MarginContinue/vbox/SavePreview/Grid"]
+layout_mode = 2
+texture = ExtResource("3_2w0ds")
+expand_mode = 3
+
+[node name="SaveFarmLabel" type="Label" parent="Root/HBox/VBox/MarginContinue/vbox/SavePreview/Grid"]
+layout_mode = 2
+text = " Forest   "
+
+[node name="SaveMageTexture" type="TextureRect" parent="Root/HBox/VBox/MarginContinue/vbox/SavePreview/Grid"]
+layout_mode = 2
+texture = ExtResource("5_bqx62")
+expand_mode = 3
+
+[node name="SaveMageLabel" type="Label" parent="Root/HBox/VBox/MarginContinue/vbox/SavePreview/Grid"]
+layout_mode = 2
+text = " Frost Witch   "
+
+[node name="SaveDiffTexture" type="TextureRect" parent="Root/HBox/VBox/MarginContinue/vbox/SavePreview/Grid"]
+layout_mode = 2
+texture = ExtResource("9_8e5gb")
+expand_mode = 3
+
+[node name="SaveDiffLabel" type="Label" parent="Root/HBox/VBox/MarginContinue/vbox/SavePreview/Grid"]
+layout_mode = 2
+text = " Hard"
+
+[node name="MarginNew" type="MarginContainer" parent="Root/HBox/VBox"]
+layout_mode = 2
+theme_override_constants/margin_bottom = 50
+
+[node name="ViewNewGame" type="Button" parent="Root/HBox/VBox/MarginNew"]
+custom_minimum_size = Vector2(200, 100)
 layout_mode = 2
 text = "New Game"
 
-[node name="ViewSettings" type="Button" parent="Root/HBox/VBox"]
-custom_minimum_size = Vector2(200, 200)
+[node name="MarginSettings" type="MarginContainer" parent="Root/HBox/VBox"]
+layout_mode = 2
+theme_override_constants/margin_bottom = 50
+
+[node name="ViewSettings" type="Button" parent="Root/HBox/VBox/MarginSettings"]
+custom_minimum_size = Vector2(200, 100)
 layout_mode = 2
 text = "Settings"
 
+[node name="MarginStats" type="MarginContainer" parent="Root/HBox/VBox"]
+layout_mode = 2
+theme_override_constants/margin_bottom = 50
+
+[node name="StatsButton" type="Button" parent="Root/HBox/VBox/MarginStats"]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+text = "Statistics"
+
 [node name="ExitGame" type="Button" parent="Root/HBox/VBox"]
-custom_minimum_size = Vector2(200, 200)
+custom_minimum_size = Vector2(200, 100)
 layout_mode = 2
 text = "Exit"
 
 [node name="Panel" type="PanelContainer" parent="Root/HBox"]
 visible = false
+custom_minimum_size = Vector2(0, 1000)
 layout_mode = 2
 size_flags_horizontal = 3
 
@@ -144,7 +230,7 @@ text = "Difficulty"
 custom_minimum_size = Vector2(300, 80)
 layout_mode = 2
 alignment = 1
-item_count = 4
+item_count = 8
 selected = 0
 popup/item_0/text = "Easy"
 popup/item_0/icon = ExtResource("7_ovbwu")
@@ -158,6 +244,18 @@ popup/item_2/id = 2
 popup/item_3/text = "Mastery"
 popup/item_3/icon = ExtResource("10_41bla")
 popup/item_3/id = 3
+popup/item_4/text = "Mastery 2"
+popup/item_4/icon = ExtResource("14_52awb")
+popup/item_4/id = 4
+popup/item_5/text = "Mastery 3"
+popup/item_5/icon = ExtResource("15_2uty3")
+popup/item_5/id = 5
+popup/item_6/text = "Mastery 4"
+popup/item_6/icon = ExtResource("16_8m5wh")
+popup/item_6/id = 6
+popup/item_7/text = "Mastery 5"
+popup/item_7/icon = ExtResource("17_lnnqf")
+popup/item_7/id = 7
 
 [node name="CharacterBox" type="HBoxContainer" parent="Root/HBox/Panel/Margin/VBox/HBox/Margin/VBox"]
 layout_mode = 2
@@ -299,12 +397,17 @@ layout_mode = 2
 text = "Start New Game
 "
 
-[node name="TutorialButton" type="Button" parent="Root/HBox/Panel/Margin/VBox"]
+[node name="Spacer" type="Control" parent="Root/HBox/Panel/Margin/VBox"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+
+[node name="BackButton" type="Button" parent="Root/HBox/Panel/Margin/VBox"]
 custom_minimum_size = Vector2(0, 80)
 layout_mode = 2
-text = "Play Tutorial"
+text = "Back"
 
 [node name="ContPanel" type="PanelContainer" parent="Root/HBox"]
+visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 
@@ -345,10 +448,19 @@ size_flags_horizontal = 3
 bbcode_enabled = true
 
 [node name="ContinueButton" type="Button" parent="Root/HBox/ContPanel/VBox/Margin/VBox"]
-custom_minimum_size = Vector2(0, 80)
+custom_minimum_size = Vector2(0, 100)
 layout_mode = 2
 size_flags_vertical = 10
 text = "No save data found"
+
+[node name="Control" type="Control" parent="Root/HBox/ContPanel/VBox/Margin/VBox"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+
+[node name="BackButton" type="Button" parent="Root/HBox/ContPanel/VBox/Margin/VBox"]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+text = "Back"
 
 [node name="SettingsPanel" type="PanelContainer" parent="Root/HBox"]
 visible = false
@@ -371,7 +483,7 @@ horizontal_alignment = 1
 
 [node name="TutorialsCheck" type="CheckButton" parent="Root/HBox/SettingsPanel/Margin/VBox"]
 layout_mode = 2
-text = "Hints"
+text = "Tutorial"
 
 [node name="DebugCheck" type="CheckButton" parent="Root/HBox/SettingsPanel/Margin/VBox"]
 layout_mode = 2
@@ -383,6 +495,12 @@ text = "Dev Mode"
 [node name="ClickModeCheck" type="CheckButton" parent="Root/HBox/SettingsPanel/Margin/VBox"]
 layout_mode = 2
 text = "Click Mode"
+
+[node name="BackButton" type="Button" parent="Root/HBox/SettingsPanel/Margin/VBox"]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+size_flags_vertical = 10
+text = "Back"
 
 [node name="Introduction" type="CenterContainer" parent="."]
 visible = false
@@ -476,9 +594,9 @@ layout_mode = 2
 size_flags_horizontal = 3
 text = "Skip Tutorial"
 
-[connection signal="pressed" from="Root/HBox/VBox/ViewContinue" to="." method="_on_view_continue_pressed"]
-[connection signal="pressed" from="Root/HBox/VBox/ViewNewGame" to="." method="_on_view_new_game_pressed"]
-[connection signal="pressed" from="Root/HBox/VBox/ViewSettings" to="." method="_on_view_settings_pressed"]
+[connection signal="pressed" from="Root/HBox/VBox/MarginContinue/vbox/ViewContinue" to="." method="_on_view_continue_pressed"]
+[connection signal="pressed" from="Root/HBox/VBox/MarginNew/ViewNewGame" to="." method="_on_view_new_game_pressed"]
+[connection signal="pressed" from="Root/HBox/VBox/MarginSettings/ViewSettings" to="." method="_on_view_settings_pressed"]
 [connection signal="pressed" from="Root/HBox/VBox/ExitGame" to="." method="_on_exit_game_pressed"]
 [connection signal="item_selected" from="Root/HBox/Panel/Margin/VBox/HBox/Margin/VBox/FarmTypeBox/TypeOptions" to="." method="_on_type_options_item_selected"]
 [connection signal="item_selected" from="Root/HBox/Panel/Margin/VBox/HBox/Margin/VBox/DifficultyBox/DiffOptions" to="." method="_on_diff_options_item_selected"]
@@ -492,11 +610,13 @@ text = "Skip Tutorial"
 [connection signal="pressed" from="Root/HBox/Panel/Margin/VBox/HBox/Margin/VBox/MasteryCont/LevelSelector/Minus" to="." method="_on_mastery_minus_pressed"]
 [connection signal="pressed" from="Root/HBox/Panel/Margin/VBox/HBox/Margin/VBox/MasteryCont/LevelSelector/Plus" to="." method="_on_mastery_plus_pressed"]
 [connection signal="pressed" from="Root/HBox/Panel/Margin/VBox/StartButton" to="." method="_on_start_button_pressed"]
-[connection signal="pressed" from="Root/HBox/Panel/Margin/VBox/TutorialButton" to="." method="_on_tutorial_button_pressed"]
+[connection signal="pressed" from="Root/HBox/Panel/Margin/VBox/BackButton" to="." method="_on_tutorial_button_pressed"]
 [connection signal="pressed" from="Root/HBox/ContPanel/VBox/Margin/VBox/ContinueButton" to="." method="_on_continue_button_pressed"]
+[connection signal="pressed" from="Root/HBox/ContPanel/VBox/Margin/VBox/BackButton" to="." method="_on_continue_back_button_pressed"]
 [connection signal="pressed" from="Root/HBox/SettingsPanel/Margin/VBox/TutorialsCheck" to="." method="_on_tutorials_check_pressed"]
 [connection signal="pressed" from="Root/HBox/SettingsPanel/Margin/VBox/DebugCheck" to="." method="_on_debug_check_pressed"]
 [connection signal="pressed" from="Root/HBox/SettingsPanel/Margin/VBox/ClickModeCheck" to="." method="_on_click_mode_check_pressed"]
+[connection signal="pressed" from="Root/HBox/SettingsPanel/Margin/VBox/BackButton" to="." method="_on_continue_back_button_pressed"]
 [connection signal="pressed" from="Introduction/Panel/VBox/MarginContainer/StoryStartButton" to="." method="_on_story_start_button_pressed"]
 [connection signal="pressed" from="TutorialPrompt/Panel/Margin/VBox/HBox/YesButton" to="." method="_on_tutorial_button_pressed"]
 [connection signal="pressed" from="TutorialPrompt/Panel/Margin/VBox/HBox/NoButton" to="." method="_on_no_button_pressed"]

@@ -35,7 +35,7 @@ static func get_best_win_farm(farm: String):
 static func record_win(mage: String, farm: String, difficulty: int):
 	if difficulty == -1:
 		return
-	var difficulty_int = difficulty + (Mastery.MasteryLevel - 1 if difficulty == 3 else 0)
+	var difficulty_int = difficulty
 
 	if records_map.has(mage):
 		var mage_map = records_map[mage]

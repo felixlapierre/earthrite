@@ -95,6 +95,9 @@ func end_year(endless: bool):
 	await get_tree().create_timer(Constants.MANA_MOVE_TIME).timeout
 	shake_camera(30.0)
 	$Background.ritual_complete()
+	
+	await event_manager.notify(EventManager.EventType.EndYear)
+
 	await get_tree().create_timer(0.5 if Settings.DEBUG else 2).timeout
 	$Background.set_background_winter($TurnManager.week)
 	$Background.do_winter($TurnManager.week)

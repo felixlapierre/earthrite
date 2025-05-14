@@ -9,6 +9,7 @@ signal on_upgrades_selected
 var card_database: DataFetcher
 var deck: Array[CardData] = []
 var turn_manager: TurnManager = null
+var user_interface: UserInterface = null
 
 var custom_event: CustomEvent
 
@@ -16,9 +17,10 @@ var custom_event: CustomEvent
 func _ready() -> void:
 	card_database = preload("res://src/cards/cards_database.gd").new()
 
-func setup(p_deck: Array[CardData], p_turn_manager: TurnManager):
+func setup(p_deck: Array[CardData], p_turn_manager: TurnManager, p_ui: UserInterface):
 	deck = p_deck
 	turn_manager = p_turn_manager
+	user_interface = p_ui
 
 func generate_random_event():
 	if always_do_event != null and !completed_events.has(always_do_event.name):
@@ -67,3 +69,4 @@ func _on_event_dialog_on_confirm() -> void:
 	generate_random_event()
 	update_interface()
 	visible = false
+	user_interface._on_explore_button_pressed()

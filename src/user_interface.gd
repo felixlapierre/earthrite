@@ -55,6 +55,7 @@ var debug_menu = preload("res://src/ui/menus/debug_menu.tscn")
 @onready var explore_button = $Winter/ExploreButton
 @onready var tutorial2 = $Tutorial2
 @onready var EndTurnButton = $UI/EndTurnButton
+@onready var EnergyDisplay = $UI/EnergyDisplay
 
 var end_year_alert_text = "Ritual Complete! Time to rest and prepare for the next year"
 var structure_place_text = "Click on the farm tile where you'd like to place the structure"
@@ -96,13 +97,12 @@ func setup(p_event_manager: EventManager, p_turn_manager: TurnManager, p_deck: A
 	turn_manager = p_turn_manager
 	deck = p_deck
 	cards = p_cards
-	GameEventDialog.setup(deck, turn_manager)
+	GameEventDialog.setup(deck, turn_manager, self)
 	event_manager = p_event_manager
 	$Shop.setup(deck, turn_manager)
 	register_tooltips()
-	$Tutorial.setup(p_event_manager)
 	$UI/AttackPreview.setup(turn_manager, mage_fortune, p_event_manager)
-	$Winter/Explore.setup(deck, tooltip)
+	$Winter/Explore.setup(deck, tooltip, tutorial2.set_dialogue_ext)
 	event_manager.register_listener(EventManager.EventType.OnPickCard, func(args: EventArgs):
 		var options = args.specific.pick_args.options
 		var pick_option_ui = PickOption.instantiate()
@@ -117,6 +117,7 @@ func setup(p_event_manager: EventManager, p_turn_manager: TurnManager, p_deck: A
 	if Global.FARM_TYPE != "STORMVALE":
 		weather_display.visible = false
 	tutorial2.setup(self, cards, event_manager, turn_manager)
+	FortuneTellerButton.visible = false
 
 # Start and end year
 func end_year():
@@ -128,12 +129,10 @@ func end_year():
 	$Shop.fill_shop()
 	$FortuneTeller.create_fortunes()
 	create_fortune_display()
-	$Winter/Explore.create_explore(3 - Mastery.less_explore(), turn_manager)
+	$Winter/Explore.create_explore(3, turn_manager)
 	$Winter/CardButton.disabled = false
 	$Winter/AnyCardButton.visible = Settings.DEBUG
 	update()
-	$Tutorial.on_winter()
-	$Tutorial.position.x = 1234
 	
 func start_year():
 	$UI/SkipButton.visible = Settings.DEBUG
@@ -144,7 +143,6 @@ func start_year():
 	$UI.visible = true
 	$Winter.visible = false
 	AlertDisplay.clear(end_year_alert_text)
-	$Tutorial.position.x = 1368
 	$Winter/Explore.explores = 0
 	ritual_current_amount = 0
 	do_squirrel_seed()
@@ -210,7 +208,6 @@ func update():
 	if GameEventDialog.current_event != null:
 		$Winter/EventPanel/VB/EventNameLabel.text = GameEventDialog.current_event.name
 	register_tooltips()
-	$Tutorial.check_visible()
 	$UI/Deck/DeckCount.text = "Deck: " + str(cards.get_deck_info().size())
 	$UI/Deck/DiscardCount.text = "Discard: " + str(cards.get_discard_info().size())
 	$Obelisk.max_value = turn_manager.total_ritual
@@ -585,8 +582,7 @@ func load_data(save_json: Dictionary):
 			GameEventDialog.generate_random_event()
 		GameEventDialog.update_interface()
 		$Shop.load_data(save_json.winter.shop)
-		$Tutorial.on_winter()
-		$Tutorial.position.x = 1234
+		tutorial2.set_dialogue_ext("winter1", "center")
 	var attack: AttackPattern = load(save_json.attack.path).new()
 	attack.load_data(save_json.attack)
 	$UI/AttackPreview.mage_fortune = mage_fortune
@@ -596,7 +592,7 @@ func load_data(save_json: Dictionary):
 	create_fortune_display()
 	$Shop.player_money = save_json.state.rerolls
 	$Winter/Explore.load_data(save_json.state.explore)
-	$Winter/Explore.create_explore(3 - Mastery.less_explore(), turn_manager)
+	$Winter/Explore.create_explore(3, turn_manager)
 	$Winter/AnyCardButton.visible = Settings.DEBUG
 	update()
 
@@ -624,7 +620,7 @@ func register_tooltips():
 		#"path": "res://assets/custom/PurpleMana.png"
 	#}))
 	
-	tooltip.register_tooltip($Winter/NextYearButton, tr("TOOLTIP_NEXTYEAR"))
+	tooltip.register_tooltip($Winter/NextYearButton, "Make sure you finish Exploring before continuing to the next year!")
 	tooltip.register_tooltip($Winter/FarmUpgradeButton, tr("TOOLTIP_UPGRADE"))
 	tooltip.register_tooltip($UI/DamagePanel, "You have taken " + str(turn_manager.blight_damage) + " damage. Once you've taken 5 damage, you lose the game!")
 func get_fortunes() -> Array[Fortune]:
@@ -725,6 +721,7 @@ func _on_help_button_pressed() -> void:
 	anatomy.on_close.connect(func(): remove_child(anatomy))
 
 func _on_explore_button_pressed():
+	tutorial2.set_dialogue_ext("explore", "farleft")
 	$Winter/Explore.visible = true
 
 func _on_explore_on_structure_select(selected, callable):

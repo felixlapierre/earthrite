@@ -2,9 +2,7 @@
 
 [ext_resource type="Script" path="res://src/ui/tooltip.gd" id="1_7fp44"]
 [ext_resource type="Theme" uid="uid://c21dhy264y6ty" path="res://assets/theme_large.tres" id="2_lg8a7"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_npkf8"]
-bg_color = Color(0.160269, 0.160269, 0.160269, 1)
+[ext_resource type="StyleBox" uid="uid://dlrsrdqrd6kj3" path="res://assets/panel_tutorial.tres" id="3_v6cyy"]
 
 [node name="Tooltip" type="Node2D"]
 script = ExtResource("1_7fp44")
@@ -15,7 +13,7 @@ custom_minimum_size = Vector2(500, 0)
 offset_right = 40.0
 offset_bottom = 40.0
 theme = ExtResource("2_lg8a7")
-theme_override_styles/panel = SubResource("StyleBoxFlat_npkf8")
+theme_override_styles/panel = ExtResource("3_v6cyy")
 
 [node name="Margin" type="MarginContainer" parent="Panel"]
 layout_mode = 2

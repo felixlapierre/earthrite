@@ -1,0 +1,51 @@
+[gd_scene load_steps=3 format=3 uid="uid://c0h2vyrb4yxlk"]
+
+[ext_resource type="Script" path="res://src/ui/main_menus/statistics_display.gd" id="1_eqg3x"]
+[ext_resource type="Theme" uid="uid://c3hfmpsb3fvhr" path="res://assets/game_theme.tres" id="2_70fmy"]
+
+[node name="StatisticsDisplay" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_eqg3x")
+
+[node name="Panel" type="PanelContainer" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+theme = ExtResource("2_70fmy")
+
+[node name="VBox" type="VBoxContainer" parent="Panel"]
+custom_minimum_size = Vector2(400, 0)
+layout_mode = 2
+
+[node name="Title" type="Label" parent="Panel/VBox"]
+layout_mode = 2
+text = "Statistics"
+horizontal_alignment = 1
+
+[node name="FarmTitle" type="Label" parent="Panel/VBox"]
+layout_mode = 2
+text = "Best Wins by Farm"
+horizontal_alignment = 1
+
+[node name="FarmWinsCont" type="GridContainer" parent="Panel/VBox"]
+layout_mode = 2
+columns = 5
+
+[node name="Best Wins by Mage" type="Label" parent="Panel/VBox"]
+layout_mode = 2
+text = "Best Wins by Mage"
+horizontal_alignment = 1
+
+[node name="MageWinsCont" type="GridContainer" parent="Panel/VBox"]
+layout_mode = 2
+columns = 5
+
+[node name="Full Stats" type="Label" parent="Panel/VBox"]
+layout_mode = 2
+text = "Full Stats"
+horizontal_alignment = 1
+
+[node name="FullStatsCont" type="GridContainer" parent="Panel/VBox"]
+layout_mode = 2
+columns = 8

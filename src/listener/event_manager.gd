@@ -32,7 +32,8 @@ enum EventType {
 	OnPickCard,
 	OnCardBurned,
 	OnCardDrawn,
-	OnTileWatered
+	OnTileWatered,
+	EndYear
 }
 
 # Called when the node enters the scene tree for the first time.

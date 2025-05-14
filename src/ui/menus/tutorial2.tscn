@@ -1,9 +1,44 @@
-[gd_scene load_steps=5 format=3 uid="uid://k57mhgtv2uhb"]
+[gd_scene load_steps=10 format=3 uid="uid://k57mhgtv2uhb"]
 
 [ext_resource type="Script" path="res://src/ui/menus/tutorial2.gd" id="1_shm67"]
-[ext_resource type="StyleBox" uid="uid://bhfo1noi80203" path="res://assets/panel_opaque.tres" id="2_gut2p"]
+[ext_resource type="StyleBox" uid="uid://dlrsrdqrd6kj3" path="res://assets/panel_tutorial.tres" id="2_5b6u8"]
 [ext_resource type="Theme" uid="uid://c21dhy264y6ty" path="res://assets/theme_large.tres" id="2_jb3mw"]
 [ext_resource type="Theme" uid="uid://cji2vba6wkk5e" path="res://assets/theme_med.tres" id="3_c7y4m"]
+[ext_resource type="Texture2D" uid="uid://bh7x4gvt7bd3j" path="res://assets/random/bird2.png" id="5_c4jd3"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ce5h2"]
+atlas = ExtResource("5_c4jd3")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3vqvf"]
+atlas = ExtResource("5_c4jd3")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_x1rqa"]
+atlas = ExtResource("5_c4jd3")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_x27bc"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ce5h2")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3vqvf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_x1rqa")
+}],
+"loop": true,
+"name": &"speak",
+"speed": 10.0
+}]
 
 [node name="Tutorial2" type="Node2D"]
 script = ExtResource("1_shm67")
@@ -11,11 +46,13 @@ script = ExtResource("1_shm67")
 [node name="Panel" type="PanelContainer" parent="."]
 z_index = 2
 offset_right = 512.0
-offset_bottom = 261.0
-theme_override_styles/panel = ExtResource("2_gut2p")
+offset_bottom = 138.0
+theme_override_styles/panel = ExtResource("2_5b6u8")
 
 [node name="Margin" type="MarginContainer" parent="Panel"]
 layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
 theme_override_constants/margin_left = 5
 theme_override_constants/margin_top = 5
 theme_override_constants/margin_right = 5
@@ -23,13 +60,15 @@ theme_override_constants/margin_bottom = 5
 
 [node name="VBox" type="VBoxContainer" parent="Panel/Margin"]
 layout_mode = 2
+size_flags_vertical = 0
 
 [node name="Label" type="RichTextLabel" parent="Panel/Margin/VBox"]
 custom_minimum_size = Vector2(500, 0)
 layout_mode = 2
 theme = ExtResource("2_jb3mw")
 bbcode_enabled = true
-text = "This is the tutorial text and when you write enough it just expands downwards to fit all of the text and even the panel accomodates"
+text = "This is the tutorial text and when you write a 
+"
 fit_content = true
 
 [node name="Label2" type="Label" parent="Panel/Margin/VBox"]
@@ -39,6 +78,15 @@ theme = ExtResource("3_c7y4m")
 theme_override_colors/font_color = Color(0.776471, 0.776471, 0.776471, 1)
 text = "(Click anywhere to continue)"
 vertical_alignment = 2
+
+[node name="BirdSprite" type="AnimatedSprite2D" parent="Panel"]
+texture_filter = 1
+position = Vector2(499, -19)
+scale = Vector2(4, 4)
+sprite_frames = SubResource("SpriteFrames_x27bc")
+animation = &"speak"
+frame = 1
+frame_progress = 0.953171
 
 [node name="ClickOutButton" type="Button" parent="."]
 visible = false

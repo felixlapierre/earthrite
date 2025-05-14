@@ -8,7 +8,7 @@ var blightroot_texture = preload("res://assets/fortune/blightroot_fortune.png")
 var spark_sf = preload("res://src/animation/blight/blight_spark.tres")
 
 func _init(strength: float = 1.0) -> void:
-	super("Blightroot", Fortune.FortuneType.BadFortune, "Turn start: Add {STRENGTH} Blightroot to your farm", 0, blightroot_texture, strength)
+	super("Blightroot", Fortune.FortuneType.BadFortune, "Turn start: Add {STRENGTH} spreading Blightroot to your farm", 0, blightroot_texture, strength)
 
 func register_fortune(event_manager: EventManager):
 	callback = plant_weeds

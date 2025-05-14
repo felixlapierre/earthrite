@@ -1,4 +1,4 @@
-[gd_scene load_steps=43 format=3 uid="uid://cswinrop881oo"]
+[gd_scene load_steps=42 format=3 uid="uid://cswinrop881oo"]
 
 [ext_resource type="Script" path="res://src/user_interface.gd" id="1_j28fq"]
 [ext_resource type="Theme" uid="uid://c21dhy264y6ty" path="res://assets/theme_large.tres" id="2_s7754"]
@@ -26,7 +26,6 @@
 [ext_resource type="PackedScene" uid="uid://b7luloyqjcwjb" path="res://src/ui/energy_display.tscn" id="20_i330f"]
 [ext_resource type="Texture2D" uid="uid://cn32li0bwuw1e" path="res://assets/ui/obelisk_full.png" id="20_udohm"]
 [ext_resource type="Texture2D" uid="uid://r85h2ey4h5ks" path="res://assets/custom/PreviewButton.png" id="21_tlcd4"]
-[ext_resource type="PackedScene" uid="uid://bb1j26ivcxqw6" path="res://src/ui/tutorial.tscn" id="22_4s3pk"]
 [ext_resource type="Texture2D" uid="uid://b1x8as1ltlxj0" path="res://assets/custom/PreviewButtonHover.png" id="22_oyub8"]
 [ext_resource type="PackedScene" uid="uid://28om5nbxx6qk" path="res://src/ui/display/weather_display.tscn" id="22_xo87j"]
 [ext_resource type="PackedScene" uid="uid://bks8p1urlqgax" path="res://src/attack/attack_preview.tscn" id="24_5346t"]
@@ -76,9 +75,6 @@ events = [SubResource("InputEventKey_1m5ts")]
 
 [node name="UserInterface" type="Node2D"]
 script = ExtResource("1_j28fq")
-
-[node name="Tutorial" parent="." instance=ExtResource("22_4s3pk")]
-position = Vector2(1368, 0)
 
 [node name="Obelisk" type="TextureProgressBar" parent="."]
 texture_filter = 1

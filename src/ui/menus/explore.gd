@@ -25,6 +25,8 @@ var enhances = 0
 var structures = 0
 var removals = 0
 
+var show_tutorial: Callable
+
 var fixed_explores = []
 static var bonus_explores = 0
 
@@ -37,17 +39,18 @@ func _ready():
 func _process(delta):
 	pass
 	
-func setup(deck, p_tooltip):
+func setup(deck, p_tooltip, p_tutorial_callback):
 	player_deck = deck
 	tooltip = p_tooltip
 	explores = 0
+	show_tutorial = p_tutorial_callback
 
 func create_explore(p_explores, turn_manager: TurnManager):
 	year = turn_manager.year
 	explores = p_explores
 	explores += bonus_explores
 	bonus_explores = 0
-	if turn_manager.year >= 3:
+	if turn_manager.year >= 3 and Global.DIFFICULTY < 3:
 		explores += 1
 	if turn_manager.year == 3:
 		fixed_explores.append("Rare Card" if !scrapyard() else "Rare Bag of Tricks")
@@ -59,101 +62,54 @@ func create_explore(p_explores, turn_manager: TurnManager):
 	#	fixed_explores.append("Gain Card")
 	create_binary_explore()
 	return
-	
-	for point in $Points.get_children():
-		$Points.remove_child(point)
-
-	$CenterContainer/PanelContainer/VBox/HBox/Label.text = "Explorations Remaining: " + str(explores)
-	var DIST = 250
-	var positions = []
-	positions.shuffle()
-	# Add card
-	create_point("Gain Card", Vector2(-DIST - 70, 0), func(pt):
-		use_explore(pt)
-		add_card("common", 5 - Mastery.less_options()))
-	
-	if turn_manager.year == 3 or turn_manager.year == 6 or turn_manager.year == 8:
-		create_point("Rare Card", Vector2(0, -DIST - 70), func(pt):
-			use_explore(pt)
-			add_card("rare", 3))
-		create_point("Rare Structure", Vector2(0, DIST + 70), func(pt):
-			use_explore(pt)
-			add_structure("rare"))
-	
-	# Event
-	create_point("Event", Vector2(-DIST, -DIST), func(pt):
-		use_explore(pt)
-		on_event.emit())
-		
-	# Enhance
-	if enhances <= turn_manager.year / 2 and $Points.get_child_count() < 5:
-		create_point("Enhance Card", Vector2(DIST + 70, 0), func(pt):
-			use_explore(pt)
-			enhances += 1
-			select_enhance("common"))
-	
-	# Remove card
-	if removals <= turn_manager.year / 3 and $Points.get_child_count() < 5:
-		create_point("Remove Card", Vector2(DIST, -DIST), func(pt):
-			select_card_to_remove(pt))
-	
-	# Structure
-	if structures <= turn_manager.year / 3 and $Points.get_child_count() < 5:
-		create_point("Structure", Vector2(DIST, DIST), func(pt):
-			use_explore(pt)
-			structures += 1
-			add_structure("common"))
-		
-	# Expand
-	if expands <= turn_manager.year / 3 and $Points.get_child_count() < 5 and Helper.can_expand_farm():
-		create_point("Expand Farm", Vector2(-DIST, DIST), func(pt):
-			use_explore(pt)
-			expands += 1
-			expand_farm())
-	
-	if $Points.get_child_count() < explores:
-		create_point("Event", Vector2(0, 0), func(pt):
-			use_explore(pt)
-			on_event.emit())
 
 func create_point_from_name(name, location):
 	match name:
 		"Gain Card":
 			create_point("Gain Card", location, func(pt):
+				show_tutorial.call("card")
 				use_explore(pt)
 				add_card("common", 5 - Mastery.less_options()))
 		"Event":
 			create_point("Event", location, func(pt):
+				show_tutorial.call("event", "", true)
 				use_explore(pt)
 				on_event.emit())
 		"Enhance Card":
 			create_point("Enhance Card", location, func(pt):
+				show_tutorial.call("enhance")
 				use_explore(pt)
 				enhances += 1
 				select_enhance("common"))
 		"Structure":
 			create_point("Structure", location, func(pt):
+				show_tutorial.call("structure")
 				use_explore(pt)
 				structures += 1
 				add_structure("common"))
 		"Expand Farm":
 			create_point("Expand Farm", location, func(pt):
+				show_tutorial.call("expand")
 				use_explore(pt)
 				expands += 1
 				expand_farm())
 		"Remove Card":
 			create_point("Remove Card", location, func(pt):
+				show_tutorial.call("remove")
 				select_card_to_remove(pt))
 		"Rare Card":
 			create_point("Rare Card", location, func(pt):
+				show_tutorial.call("card")
 				use_explore(pt)
 				add_card("rare", 3))
 		"Rare Structure":
 			create_point("Rare Structure", location, func(pt):
+				show_tutorial.call("structure")
 				use_explore(pt)
 				add_structure("rare"))
 		"Rare Enhance":
 			create_point("Rare Enhance", location, func(pt):
+				show_tutorial.call("enhance")
 				use_explore(pt)
 				select_enhance("rare"))
 		"Legendary Card":
@@ -163,11 +119,11 @@ func create_point_from_name(name, location):
 		"Bag of Tricks":
 			create_point("Bag of Tricks", location, func(pt):
 				use_explore(pt)
-				pick_bag_of_tricks(4, false))
+				pick_bag_of_tricks(4 - Mastery.less_options(), false))
 		"Rare Bag of Tricks":
 			create_point("Rare Bag of Tricks", location, func(pt):
 				use_explore(pt)
-				pick_bag_of_tricks(3, true))
+				pick_bag_of_tricks(3 - Mastery.less_options(), true))
 
 func create_binary_explore():
 	$CenterContainer/PanelContainer/VBox/HBox/Label.text = "Explorations Remaining: " + str(explores)
@@ -270,8 +226,10 @@ func pick_card_from(cards, callback: Callable):
 	pick_option_ui.setup(prompt, cards, func(selected):
 		player_deck.append(selected)
 		remove_sibling(pick_option_ui)
+		show_tutorial.call("")
 		visible = true, func():
 			remove_sibling(pick_option_ui)
+			show_tutorial.call("")
 			visible = true)
 
 func select_card_to_remove(pt):
@@ -288,19 +246,21 @@ func select_card_to_remove(pt):
 		removals += 1
 	select_card.select_cancelled.connect(func():
 		remove_sibling(select_card)
+		show_tutorial.call("")
 		visible = true)
 	add_sibling(select_card)
 	select_card.do_card_pick(player_deck, "Select a card to remove")
 
 func select_enhance(rarity: String):
+	var count = 3 - Mastery.less_options()
 	var get_enhances_fn = func(rerolls: int = 0):
 		if rarity == "rare":
 			if Global.FARM_TYPE == "WILDERNESS":
-				return cards_database.get_random_enhance_noseed(rarity, 3)
+				return cards_database.get_random_enhance_noseed(rarity, count)
 			else:
-				return cards_database.get_random_enhance(rarity, 3, false)
+				return cards_database.get_random_enhance(rarity, count, false)
 		else:
-			return cards_database.get_random_enhances_weighted_rarity(3, float(rerolls))
+			return cards_database.get_random_enhances_weighted_rarity(count, float(rerolls))
 
 	var pick_option_ui = PickOption.instantiate()
 	pick_option_ui.tooltip = tooltip
@@ -309,6 +269,7 @@ func select_enhance(rarity: String):
 	add_sibling(pick_option_ui)
 	var prompt = "Pick an enhance to apply"
 	pick_option_ui.setup(prompt, get_enhances_fn.call(), func(selected):
+		show_tutorial.call("")
 		select_card_to_enhance(selected)
 		remove_sibling(pick_option_ui),
 		func():
@@ -332,11 +293,12 @@ func select_card_to_enhance(enhance: Enhance):
 	select_card.do_enhance_pick(player_deck, enhance, "Select a card to enhance")
 	
 func add_structure(rarity: String):
+	var count = 3 - Mastery.less_options()
 	var get_structures_fn = func(rerolls: int = 0):
 		if rarity == "rare":
-			return cards_database.get_random_structures(3, rarity)
+			return cards_database.get_random_structures(count, rarity)
 		else:
-			return cards_database.get_random_structures_weighted_rarity(3, float(rerolls))
+			return cards_database.get_random_structures_weighted_rarity(count, float(rerolls))
 
 	var pick_option_ui = PickOption.instantiate()
 	pick_option_ui.tooltip = tooltip
@@ -346,10 +308,12 @@ func add_structure(rarity: String):
 	var prompt = "Pick a structure to add to your farm"
 	var on_pick = func(selected):
 		remove_sibling(pick_option_ui)
+		show_tutorial.call("")
 		on_structure_select.emit(selected, func():
 			visible = true)
 	var on_cancel = func(): 
 		remove_sibling(pick_option_ui)
+		show_tutorial.call("")
 		visible = true
 	pick_option_ui.setup(prompt, get_structures_fn.call(), on_pick, on_cancel)
 
@@ -414,6 +378,8 @@ func remove_sibling(node):
 
 func _on_close_pressed():
 	visible = false
+	if explores == 0:
+		show_tutorial.call("winter_end", "center")
 
 func expand_farm():
 	$"../../".on_expand_farm()
