@@ -77,6 +77,8 @@ func setup(p_ui, p_cards, p_events, p_turns):
 func _process(delta):
 	if !Settings.TUTORIALS_V2 or click_out.visible:
 		return
+	if user_interface.is_winter():
+		return
 
 	var year = turn_manager.year
 	var week = turn_manager.week
@@ -94,6 +96,8 @@ func _process(delta):
 		highlight_scythes(false)
 
 	if year == 1 and week == 4:
+		if turn_manager.ritual_counter <= 0:
+			return
 		if turn_manager.purple_mana >= turn_manager.target_blight:
 			set_text(text_week4_safe)
 			panel.position = anchor_left
@@ -191,7 +195,7 @@ func end_year(args: EventArgs):
 		await wait_click_out()
 		set_text(end_year_2)
 		await wait_click_out()
-		get_tree().create_timer(2.0).timeout.connect(func():
+		get_tree().create_timer(4.0).timeout.connect(func():
 			set_text(dialogue_map["winter1"])
 			panel.position = anchor_center)
 
@@ -234,6 +238,7 @@ func highlight_scythes(purple: bool):
 	if Global.selected_card != null:
 		if Global.selected_card.type == "ACTION":
 			highlight_scythe_spots(purple)
+			reset_cards()
 		else:
 			reset_tiles()
 	else:
@@ -243,7 +248,7 @@ func highlight_scythes(purple: bool):
 		for tile in farm.get_all_tiles():
 			if tile.state == Enums.TileState.Mature and tile.purple == purple:
 				any_plant_mature = true
-		if any_plant_mature and !purple:
+		if any_plant_mature:
 			for card in cards.HAND_CARDS.get_children():
 				if card.card_info.type == "ACTION":
 					card.set_highlight(true)

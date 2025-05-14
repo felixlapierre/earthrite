@@ -578,6 +578,7 @@ position = Vector2(225, 0)
 
 [node name="PauseMenu" parent="." instance=ExtResource("31_35tyo")]
 visible = false
+z_index = 4
 
 [node name="Blessings" type="Node" parent="."]
 script = ExtResource("34_bvh0t")
