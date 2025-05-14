@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="Chart" load_steps=2 format=3 uid="uid://d3wfk8tn42khj"]
+
+[ext_resource type="Script" path="res://src/attack/charts/chart.gd" id="1_nefnb"]
+
+[resource]
+script = ExtResource("1_nefnb")
+name = "Ritual (Tier 4)"
+type = 0
+rank = 3
+values = Array[float]([35.0, 59.0, 158.0, 200.0, 242.0, 330.0, 380.0, 560.0])

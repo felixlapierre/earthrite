@@ -36,23 +36,15 @@ func unregister_fortunes(event_manager: EventManager):
 func get_blight_pattern():
 	return blight_pattern
 
-func compute_blight_pattern(year: int):
+func compute_blight_pattern(chart: Chart, year: int):
 	if blight_pattern.size() > 0:
 		return
 	blight_pattern = [0]
 	var charge: float = 0.0
 	var chance = 0.0
-	var base_charge_inc = 5.0
-	base_charge_inc += 2 if year >= 2 else 0
-	base_charge_inc += 3 if year >= 3 else 0
+	var base_charge_inc = chart.get_value(year)
 	for i in range(1, Global.FINAL_WEEK):
 		charge += base_charge_inc
-		if Global.DIFFICULTY >= Constants.DIFFICULTY_INCREASE_TARGETS:
-			charge += 0.6 * year
-		if Global.DIFFICULTY >= Constants.DIFFICULTY_HARD:
-			charge += 1.0 * year
-		if Mastery.MasteryLevel > 0:
-			charge += 0.5 * year * Mastery.MasteryLevel
 		chance += 0.3
 		if (year < 3 and i < 3) or (year < 8 and i < 2):
 			blight_pattern.append(0)

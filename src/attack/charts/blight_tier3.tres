@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="Chart" load_steps=2 format=3 uid="uid://de0v1of7nocud"]
+
+[ext_resource type="Script" path="res://src/attack/charts/chart.gd" id="1_2dxv3"]
+
+[resource]
+script = ExtResource("1_2dxv3")
+name = "Blight (Tier 3)"
+type = 1
+rank = 2
+values = Array[float]([7.1, 11.2, 16.3, 18.4, 20.5, 22.6, 24.7, 26.8])

@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="Chart" load_steps=2 format=3 uid="uid://1x5bybopxrlo"]
+
+[ext_resource type="Script" path="res://src/attack/charts/chart.gd" id="1_tqsb5"]
+
+[resource]
+script = ExtResource("1_tqsb5")
+name = ""
+type = 0
+rank = 0
+values = Array[float]([])

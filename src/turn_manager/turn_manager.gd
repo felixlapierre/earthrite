@@ -20,6 +20,9 @@ var blight_pattern = []
 var attack_pattern: AttackPattern
 var event_manager: EventManager
 
+var ritual_charts = []
+var blight_charts = []
+
 signal animate_blightroot
 
 # Called when the node enters the scene tree for the first time.
@@ -32,6 +35,14 @@ func _process(_delta: float) -> void:
 
 func setup(p_event_manager: EventManager):
 	event_manager = p_event_manager
+	ritual_charts.append(load("res://src/attack/charts/ritual_tier1.tres"))
+	ritual_charts.append(load("res://src/attack/charts/ritual_tier2.tres"))
+	ritual_charts.append(load("res://src/attack/charts/ritual_tier3.tres"))
+	ritual_charts.append(load("res://src/attack/charts/ritual_tier4.tres"))
+	blight_charts.append(load("res://src/attack/charts/blight_tier1.tres"))
+	blight_charts.append(load("res://src/attack/charts/blight_tier1.tres"))
+	blight_charts.append(load("res://src/attack/charts/blight_tier1.tres"))
+	blight_charts.append(load("res://src/attack/charts/blight_tier1.tres"))
 
 # Return bool indicating if the ritual is complete
 func gain_yellow_mana(amount, delay = false):
@@ -92,7 +103,8 @@ func end_turn():
 
 func register_attack_pattern(p_attack_pattern: AttackPattern):
 	attack_pattern = p_attack_pattern
-	attack_pattern.compute_blight_pattern(year+1)
+	var chart: Chart = get_chart(blight_charts)
+	attack_pattern.compute_blight_pattern(chart, year)
 	attack_pattern.compute_fortunes(year+1)
 	attack_pattern.register_fortunes(event_manager, 1)
 
@@ -132,24 +144,8 @@ func compute_blight_pattern(week, year):
 	return
 
 func get_ritual_requirements(year):
-	var difficulty_up = Global.DIFFICULTY >= Constants.DIFFICULTY_INCREASE_TARGETS
-	var amount = 15
-	amount += year * 10
-	if year <= 3:
-		amount += 10
-	if year > 2:
-		amount += year * 10
-		if difficulty_up:
-			amount += year * 3
-	if year > 5 and difficulty_up:
-		amount += year * 6
-	if year >= 8 and difficulty_up:
-		amount += 100
-	if Global.DIFFICULTY >= Constants.DIFFICULTY_HARD and year >= 2:
-		amount *= 1.3
-	if Mastery.MasteryLevel > 0 and year >= 3:
-		amount += year * 3 * Mastery.MasteryLevel
-	return amount
+	var chart: Chart = get_chart(ritual_charts)
+	return chart.get_value(year - 1)
 
 func get_blight_requirements(week, year):
 	if week > blight_pattern.size():
@@ -203,3 +199,16 @@ func get_current_ritual():
 
 func get_blight_strength():
 	return ceil(float(blight_damage + 1) / 20)
+
+func get_chart(list):
+	var chart: Chart = null
+	match Global.DIFFICULTY:
+		0:
+			chart = list[0]
+		1:
+			chart = list[1]
+		3:
+			chart = list[2]
+	if Mastery.get_total_mastery() >= 2:
+		chart = list[3]
+	return chart
