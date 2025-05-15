@@ -101,10 +101,16 @@ func do_unlocks(turn_manager: TurnManager, deck: Array[CardData]):
 		Unlocks.DIFFICULTIES_UNLOCKED["3"] = true
 		difficulties.append("Mastery")
 	
+	for i in range(4):
+		var diff = 4 + i
+		if !Unlocks.DIFFICULTIES_UNLOCKED[str(diff)] and win and Global.DIFFICULTY == diff - 1:
+			Unlocks.DIFFICULTIES_UNLOCKED[str(diff)] = true
+			difficulties.append("Mastery " + str(diff))
+	
 	# Forest, Mountain, Wilderness, Riverlands unlocked by default
 
 	# Lunar Temple: Win any farm
-	if !Unlocks.FARMS_UNLOCKED["4"]:
+	if !Unlocks.FARMS_UNLOCKED["4"] and win:
 		Unlocks.FARMS_UNLOCKED["4"] = true
 		farms.append("Lunar Temple")
 
@@ -125,7 +131,7 @@ func do_unlocks(turn_manager: TurnManager, deck: Array[CardData]):
 		Unlocks.MAGES_UNLOCKED[str(IceMageFortune.MAGE_ID)] = true
 		mages.append(IceMageFortune.MAGE_NAME)
 	# Alchemist: Win on normal
-	if !Unlocks.MAGES_UNLOCKED[str(WaterMage.MAGE_ID)] and Global.DIFFICULTY >= 2:
+	if !Unlocks.MAGES_UNLOCKED[str(WaterMage.MAGE_ID)] and Global.DIFFICULTY >= 2 and win:
 		Unlocks.MAGES_UNLOCKED[str(WaterMage.MAGE_ID)] = true
 		mages.append(WaterMage.MAGE_NAME)
 	# Blight mage: Win with a blight card in your deck

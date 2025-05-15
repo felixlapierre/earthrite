@@ -1,4 +1,4 @@
-[gd_scene load_steps=42 format=3 uid="uid://cswinrop881oo"]
+[gd_scene load_steps=43 format=3 uid="uid://cswinrop881oo"]
 
 [ext_resource type="Script" path="res://src/user_interface.gd" id="1_j28fq"]
 [ext_resource type="Theme" uid="uid://c21dhy264y6ty" path="res://assets/theme_large.tres" id="2_s7754"]
@@ -35,6 +35,7 @@
 [ext_resource type="PackedScene" uid="uid://cwkg82hfjopb6" path="res://src/ui/pause_menu.tscn" id="31_35tyo"]
 [ext_resource type="Script" path="res://src/fortune/blessings.gd" id="34_bvh0t"]
 [ext_resource type="PackedScene" uid="uid://k57mhgtv2uhb" path="res://src/ui/menus/tutorial2.tscn" id="36_jqnmk"]
+[ext_resource type="PackedScene" uid="uid://b4so7jrf5f1qb" path="res://src/ui/visuals/visuals_blight_ritual.tscn" id="36_p2py6"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_1tbmd"]
 particles_animation = true
@@ -584,6 +585,8 @@ z_index = 4
 script = ExtResource("34_bvh0t")
 
 [node name="Tutorial2" parent="." instance=ExtResource("36_jqnmk")]
+
+[node name="VisualsBlightRitual" parent="." instance=ExtResource("36_p2py6")]
 
 [connection signal="pressed" from="UI/Deck/DeckPeek" to="." method="_on_deck_peek_pressed"]
 [connection signal="pressed" from="UI/Deck/DiscardPeek" to="." method="_on_discard_peek_pressed"]

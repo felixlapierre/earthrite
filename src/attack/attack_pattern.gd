@@ -43,6 +43,7 @@ func compute_blight_pattern(chart: Chart, year: int):
 	var charge: float = 0.0
 	var chance = 0.0
 	var base_charge_inc = chart.get_value(year)
+	print("Base charge increment: " + str(base_charge_inc))
 	for i in range(1, Global.FINAL_WEEK):
 		charge += base_charge_inc
 		chance += 0.3

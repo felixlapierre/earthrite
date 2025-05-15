@@ -1,0 +1,35 @@
+[gd_resource type="SpriteFrames" load_steps=5 format=3 uid="uid://bbwnb31h3v566"]
+
+[ext_resource type="Texture2D" uid="uid://bk1xd7a1ecd6i" path="res://assets/random/blight_spike.png" id="1_j0uuy"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nh3nu"]
+atlas = ExtResource("1_j0uuy")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ra1tb"]
+atlas = ExtResource("1_j0uuy")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mmquf"]
+atlas = ExtResource("1_j0uuy")
+region = Rect2(128, 0, 64, 64)
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nh3nu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ra1tb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mmquf")
+}, {
+"duration": 1.0,
+"texture": null
+}],
+"loop": false,
+"name": &"default",
+"speed": 5.0
+}]

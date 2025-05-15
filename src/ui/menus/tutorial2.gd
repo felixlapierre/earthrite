@@ -102,6 +102,7 @@ func _process(delta):
 			set_text(text_week4_safe)
 			panel.position = anchor_left
 			user_interface.EndTurnButton.disabled = false
+			reset_cards()
 		else:
 			highlight_scythes(true)
 

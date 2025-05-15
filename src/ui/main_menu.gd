@@ -310,7 +310,9 @@ func populate_continue_preview():
 			difficulty = "Hard"
 		3:
 			difficulty = "Mastery" + str(int(save_json.state.difficulty) - 2)
-			$Root/HBox/Panel/Margin/VBox/HBox/Margin/VBox/MasteryCont.visible = true
+	if save_json.state.difficulty > 3:
+		difficulty = "Mastery" + str(int(save_json.state.difficulty) - 2)
+	
 	var diff_icon = StatisticsDisplay.get_difficulty_icon(difficulty)
 	SaveDiffTexture.texture = diff_icon
 	SaveDiffLabel.text = difficulty

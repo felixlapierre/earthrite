@@ -37,7 +37,6 @@ var debug_menu = preload("res://src/ui/menus/debug_menu.tscn")
 @onready var AlertDisplay: Alert = $AlertContainer
 @onready var GameEventDialog = $Winter/GameEventDialog
 
-@onready var BlightPanel = $UI/BlightPanel
 @onready var Stats = $UI/Stats
 @onready var UpgradeButton = $Winter/FarmUpgradeButton
 @onready var FortuneTellerButton = $Winter/FortuneTellerButton
@@ -56,6 +55,7 @@ var debug_menu = preload("res://src/ui/menus/debug_menu.tscn")
 @onready var tutorial2 = $Tutorial2
 @onready var EndTurnButton = $UI/EndTurnButton
 @onready var EnergyDisplay = $UI/EnergyDisplay
+@onready var VisualsBlightRitual = $VisualsBlightRitual
 
 var end_year_alert_text = "Ritual Complete! Time to rest and prepare for the next year"
 var structure_place_text = "Click on the farm tile where you'd like to place the structure"
@@ -408,7 +408,7 @@ func _on_end_turn_button_pressed() -> void:
 	Global.selected_card = null
 	end_turn_button_pressed.emit()
 
-func update_damage():
+func update_damage(damage: int = 0):
 	var damage_text = $UI/DamagePanel/VBox/DamageText
 	var damage_display = $UI/DamagePanel/VBox/BlightDamage
 	$UI/DamagePanel.visible = turn_manager.blight_damage != 0
@@ -427,6 +427,9 @@ func update_damage():
 			img.texture = load("res://assets/custom/Blight.png")
 		else:
 			img.texture = load("res://assets/custom/BlightEmpty.png")
+	
+	if damage > 0:
+		VisualsBlightRitual.on_blight_damage()
 
 func _on_next_year_button_pressed() -> void:
 	on_next_year.emit()
@@ -657,7 +660,8 @@ func _on_shop_view_deck() -> void:
 	display_cards(deck, "Deck")
 
 func before_end_year() -> void:
-	AlertDisplay.set_text(end_year_alert_text)
+	if turn_manager.year != Global.FINAL_YEAR:
+		AlertDisplay.set_text(end_year_alert_text)
 	$UI.visible = false
 
 func try_move_structure(tile: Tile):

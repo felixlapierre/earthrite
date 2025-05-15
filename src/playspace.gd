@@ -78,9 +78,6 @@ func _input(event: InputEvent) -> void:
 		Global.flip = (Global.flip + 1) % 2
 	
 func end_year(endless: bool):
-	if turn_manager.year == Global.FINAL_YEAR and !endless:
-		on_win()
-		return
 	$Cards.discard_hand()
 	$Cards.do_winter_clear()
 	$UserInterface.before_end_year()
@@ -95,6 +92,10 @@ func end_year(endless: bool):
 	await get_tree().create_timer(Constants.MANA_MOVE_TIME).timeout
 	shake_camera(30.0)
 	$Background.ritual_complete()
+	
+	if turn_manager.year == Global.FINAL_YEAR and !endless:
+		await on_win()
+		return
 	
 	await event_manager.notify(EventManager.EventType.EndYear)
 
@@ -134,17 +135,18 @@ func _on_farm_tiles_on_energy_gained(amount) -> void:
 func on_lose():
 	$Cards.discard_hand()
 	$Cards.do_winter_clear()
-	$UserInterface/UI/EndTurnButton.visible = false
+	$UserInterface/UI.visible = false
+	await get_tree().create_timer(4.0).timeout
 	$UserInterface/EndScreen.visible = true
 	$UserInterface/EndScreen.setup(turn_manager, deck, $FarmTiles)
 	$UserInterface/EndScreen.do_unlocks(turn_manager, deck)
-	$UserInterface/UI/Deck.visible = false
-	$UserInterface/UI/RitualPanel.visible = false
+
 
 func on_win():
 	$Cards.discard_hand()
 	$Cards.do_winter_clear()
-	$UserInterface/UI/EndTurnButton.visible = false
+	$UserInterface/UI.visible = false
+	await get_tree().create_timer(4.0).timeout
 	$UserInterface/EndScreen.visible = true
 	$UserInterface/EndScreen.setup(turn_manager, deck, $FarmTiles)
 	$UserInterface/EndScreen.do_unlocks(turn_manager, deck)
@@ -210,12 +212,21 @@ func on_turn_end():
 		$UserInterface.turn_ending = false
 		return
 	await $EventManager.notify(EventManager.EventType.OnTurnEnd)
-	var damage = $TurnManager.end_turn()
-	if damage:
-		$UserInterface.update_damage()
+	var damage: int = $TurnManager.end_turn()
+	if damage > 0:
+		$UserInterface.update_damage(damage)
+		var shake = 20.0
+		if damage > 15:
+			shake = 30.0
+		elif damage > 30:
+			shake = 40.0
+		elif damage > 50:
+			shake = 50.0
+		shake_camera(shake)
 	
 	if $TurnManager.blight_damage >= Global.MAX_HEALTH:
-		on_lose()
+		await on_lose()
+		return
 	#$UserInterface.update()
 	get_tree().create_timer(1.5).timeout.connect(func():
 		$UserInterface.turn_ending = false)

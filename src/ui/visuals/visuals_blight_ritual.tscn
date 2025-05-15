@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://b4so7jrf5f1qb"]
+
+[ext_resource type="Script" path="res://src/ui/visuals/visuals_blight_ritual.gd" id="1_xybjn"]
+[ext_resource type="SpriteFrames" uid="uid://bbwnb31h3v566" path="res://src/animation/blight/blight_spike_sf.tres" id="2_dqy37"]
+
+[node name="VisualsBlightRitual" type="Node2D"]
+script = ExtResource("1_xybjn")
+
+[node name="BlightSpike" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+position = Vector2(509, 111)
+scale = Vector2(7, 7)
+sprite_frames = ExtResource("2_dqy37")
+frame = 3
+frame_progress = 1.0
+centered = false

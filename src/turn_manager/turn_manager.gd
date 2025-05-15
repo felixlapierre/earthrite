@@ -74,15 +74,16 @@ func gain_purple_mana(amount, delay):
 
 # Return boolean if the player took damage
 func end_turn():
-	var damage = false
+	var damage = 0
 	var blight_remaining = target_blight - purple_mana
 
 	if blight_remaining > 0:
-		damage = true
+		damage = blight_remaining
 		if week < Global.FINAL_WEEK:
 			blight_damage += blight_remaining
 		else:
 			blight_damage = 100
+			damage = 100
 	elif next_turn_blight > 0:
 		animate_blightroot.emit("attack")
 	elif get_blight_requirements(week + 2, year) > 0:
@@ -112,6 +113,7 @@ func start_new_year():
 	year += 1
 	week = 1
 	blight_pattern = attack_pattern.get_blight_pattern()
+	print(blight_pattern)
 	ritual_counter = get_ritual_requirements(year)
 	total_ritual = ritual_counter
 	target_blight = get_blight_requirements(week, year)
@@ -204,11 +206,15 @@ func get_chart(list):
 	var chart: Chart = null
 	match Global.DIFFICULTY:
 		0:
+			print("Easy chart")
 			chart = list[0]
-		1:
+		1, 2, 3:
+			print("Normal-Mastery1 chart")
 			chart = list[1]
-		4:
+		4, 5, 6:
+			print("Mastery 2-4 chart")
 			chart = list[2]
 		7:
+			print("Mastery charts")
 			chart = list[3]
 	return chart
