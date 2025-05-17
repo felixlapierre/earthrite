@@ -10,10 +10,12 @@ func _init() -> void:
 
 func register_fortune(event_manager: EventManager):
 	Global.BLOCK_GROW = true
+	event_manager.user_interface.get_node("..").get_node("Background").set_snow_visible(true)
 	callback = func(args: EventArgs):
 		args.turn_manager.target_blight = 0
 	event_manager.register_listener(event_type, callback)
 
 func unregister_fortune(event_manager: EventManager):
 	Global.BLOCK_GROW = false
+	event_manager.user_interface.get_node("..").get_node("Background").set_snow_visible(false)
 	event_manager.unregister_listener(event_type, callback)

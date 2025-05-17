@@ -1,6 +1,7 @@
-[gd_resource type="Resource" script_class="CardData" load_steps=6 format=3 uid="uid://bp0hgq1xut4gn"]
+[gd_resource type="Resource" script_class="CardData" load_steps=7 format=3 uid="uid://bp0hgq1xut4gn"]
 
 [ext_resource type="Script" path="res://src/effect/effect.gd" id="1_dhx3u"]
+[ext_resource type="SpriteFrames" uid="uid://ersut7mm7xtb" path="res://src/animation/frames/draw_spark_sf.tres" id="1_rld1k"]
 [ext_resource type="Script" path="res://src/cards/card_data.gd" id="1_sqjt2"]
 [ext_resource type="Resource" uid="uid://cijtg3ddxitn3" path="res://src/effect/data/obliviate.tres" id="2_ch62j"]
 [ext_resource type="Texture2D" uid="uid://df4aih8443lqt" path="res://assets/card/inspiration.png" id="4_hvor5"]
@@ -31,6 +32,7 @@ targets = Array[String]([])
 effects = Array[ExtResource("1_dhx3u")]([SubResource("Resource_agk17"), ExtResource("2_ch62j")])
 enhances = Array[String]([])
 strength = 0.0
+animation = ExtResource("1_rld1k")
 delay = 0.0
-anim_on = 0
+anim_on = 2
 effects2 = Array[Resource("res://src/effect2/effect2.gd")]([])

@@ -44,7 +44,8 @@ func do_week(week: int):
 	do_ground(week)
 	do_trees(week)
 	do_snow(week)
-	$SnowParticles.visible = false
+	if week == 1:
+		set_snow_visible(false)
 	pass
 	
 func do_snow(week: int):
@@ -91,7 +92,7 @@ func do_winter(current_week: int):
 	if current_week <= 12:
 		tween.tween_callback(func(): 
 			do_snow(13)
-			$SnowParticles.visible = true)
+			set_snow_visible(true))
 	for tree in trees:
 		tree.play(animation)
 
@@ -100,7 +101,7 @@ func load_winter():
 	$Ground.modulate = winter
 	for tree in trees:
 		tree.play("winter2")
-	$SnowParticles.visible = true
+	set_snow_visible(true)
 	set_background_texture(load("res://assets/1616tinygarden/tileset-winter.png"))
 
 func do_trees(week: int):
@@ -202,3 +203,6 @@ func set_background(week: int):
 func ritual_complete():
 	$RitualComplete.play("default")
 	$RitualParticles.emitting = true
+
+func set_snow_visible(value: bool):
+	$SnowParticles.visible = value

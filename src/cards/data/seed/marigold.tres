@@ -1,5 +1,6 @@
-[gd_resource type="Resource" script_class="CardData" load_steps=5 format=3 uid="uid://dnut5oyry24wb"]
+[gd_resource type="Resource" script_class="CardData" load_steps=6 format=3 uid="uid://dnut5oyry24wb"]
 
+[ext_resource type="SpriteFrames" uid="uid://ersut7mm7xtb" path="res://src/animation/frames/draw_spark_sf.tres" id="1_3w31k"]
 [ext_resource type="Script" path="res://src/effect/effect.gd" id="1_k41bs"]
 [ext_resource type="Script" path="res://src/cards/card_data.gd" id="2_wr84k"]
 [ext_resource type="Texture2D" uid="uid://dgh15w1juye2e" path="res://assets/seed/marigold.png" id="3_8hes2"]
@@ -30,6 +31,7 @@ targets = Array[String]([])
 effects = Array[ExtResource("1_k41bs")]([SubResource("Resource_jafp6")])
 enhances = Array[String]([])
 strength = 0.0
+animation = ExtResource("1_3w31k")
 delay = 0.0
 anim_on = 0
 effects2 = Array[Resource("res://src/effect2/effect2.gd")]([])

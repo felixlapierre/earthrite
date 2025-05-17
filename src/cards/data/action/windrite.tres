@@ -1,7 +1,6 @@
-[gd_resource type="Resource" script_class="CardData" load_steps=6 format=3 uid="uid://c4spbxqdplssb"]
+[gd_resource type="Resource" script_class="CardData" load_steps=5 format=3 uid="uid://c4spbxqdplssb"]
 
 [ext_resource type="Script" path="res://src/effect2/data/harvest_replant.gd" id="1_avav4"]
-[ext_resource type="SpriteFrames" uid="uid://diefwvyetexud" path="res://src/animation/frames/windrite.tres" id="1_tdkep"]
 [ext_resource type="Script" path="res://src/cards/card_data.gd" id="2_i0148"]
 [ext_resource type="Texture2D" uid="uid://dx1l74fu4r20i" path="res://assets/card/hurricane.png" id="3_20xi6"]
 
@@ -29,7 +28,6 @@ targets = Array[String](["Mature"])
 effects = Array[Resource("res://src/effect/effect.gd")]([])
 enhances = Array[String]([])
 strength = 0.0
-animation = ExtResource("1_tdkep")
-delay = 0.2
-anim_on = 2
+delay = 0.0
+anim_on = 0
 effects2 = Array[Resource("res://src/effect2/effect2.gd")]([SubResource("Resource_mn2jh")])

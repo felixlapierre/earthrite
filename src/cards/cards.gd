@@ -143,6 +143,7 @@ func play_card():
 		notify_card_burned(playedcard.card_info)
 	elif playedcard.card_info.get_effect("fleeting") != null:
 		remove_hand_card(playedcard)
+		notify_card_burned(playedcard.card_info)
 	else:
 		discard_card(playedcard)
 	

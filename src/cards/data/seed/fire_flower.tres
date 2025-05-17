@@ -19,7 +19,7 @@ is_seed = null
 [resource]
 script = ExtResource("2_cvwwy")
 type = "SEED"
-name = "Fire Flower"
+name = "Flame Lily"
 rarity = "common"
 cost = 1
 yld = 20

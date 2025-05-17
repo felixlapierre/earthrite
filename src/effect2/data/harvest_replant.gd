@@ -1,8 +1,10 @@
 extends Effect2
 class_name HarvestReplant
 
+var sf = preload("res://src/animation/frames/windrite.tres")
 func register(event_manager: EventManager, p_tile: Tile):
 	callback = func(args: EventArgs):
+		args.farm.do_animation(sf, null)
 		await args.farm.get_tree().create_timer(0.2).timeout
 		for tile in args.farm.get_all_tiles():
 			if tile.state == Enums.TileState.Mature:

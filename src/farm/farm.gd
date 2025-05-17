@@ -648,7 +648,7 @@ func do_animation(spriteframes, grid_location):
 	var path: String = spriteframes.resource_path
 	if path.contains("catalyze") or path.contains("downpour"):
 		anim.position -= Vector2(0, Constants.TILE_SIZE.y / 2)
-	if path.contains("spark"):
+	if path.contains("spark") or path.contains("lightning"):
 		anim.position -= Vector2(0, Constants.TILE_SIZE.y)
 	add_child(anim)
 	anim.play("default")
