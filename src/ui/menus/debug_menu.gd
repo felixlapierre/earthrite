@@ -24,8 +24,12 @@ func setup(p_user_interface: UserInterface, p_turn_manager: TurnManager, p_on_cl
 	$Center/Panel/VBox/Menu/Year.text = "Add Year (Current: " + str(turn_manager.year) + ")"
 
 func _on_card_pressed() -> void:
-	var all_cards = cards_database.get_all_cards()
-	create_select_card(all_cards, "Select a card to add to your deck", func(card):
+	var combined = []
+	combined.append_array(cards_database.cards_rarity["basic"])
+	combined.append_array(cards_database.get_all_cards())
+	combined.append_array(cards_database.cards_rarity["unique"])
+	combined.append_array(cards_database.cards_rarity["blight"])
+	create_select_card(combined, "Select a card to add to your deck", func(card):
 		user_interface.deck.append(card))
 
 func create_select_card(options: Array[Variant], prompt: String, callback: Callable):

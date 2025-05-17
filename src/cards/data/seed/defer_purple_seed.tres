@@ -14,7 +14,7 @@ size = 1
 text = "[color=gold]On Harvest[/color]: {BLUE_MANA} will not be lost at the end of this turn."
 strength_increment = 1.0
 size_increment = 1
-seed_texture = 5
+seed_texture = 4
 texture_icon_offset = 16
 targets = Array[String]([])
 effects = Array[Resource("res://src/effect/effect.gd")]([])

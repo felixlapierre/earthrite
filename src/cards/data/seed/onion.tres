@@ -1,6 +1,7 @@
-[gd_resource type="Resource" script_class="Onion" load_steps=2 format=3 uid="uid://cktb3fdj5s2ik"]
+[gd_resource type="Resource" script_class="Onion" load_steps=3 format=3 uid="uid://cktb3fdj5s2ik"]
 
 [ext_resource type="Script" path="res://src/cards/custom/mana_cards_hand.gd" id="1_n2v1v"]
+[ext_resource type="Texture2D" uid="uid://fmpg8dts34pi" path="res://assets/seed/onion.png" id="2_6gq7v"]
 
 [resource]
 script = ExtResource("1_n2v1v")
@@ -14,6 +15,7 @@ size = 2
 text = "When you draw a card, gains {STRENGTH} {MANA}"
 strength_increment = null
 size_increment = null
+texture = ExtResource("2_6gq7v")
 seed_texture = 7
 texture_icon_offset = null
 targets = null

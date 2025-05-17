@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://src/effect/effect.gd" id="1_dhx3u"]
 [ext_resource type="Script" path="res://src/cards/card_data.gd" id="1_sqjt2"]
 [ext_resource type="Resource" uid="uid://cijtg3ddxitn3" path="res://src/effect/data/obliviate.tres" id="2_ch62j"]
-[ext_resource type="Texture2D" uid="uid://bnukunhjx4dno" path="res://assets/custom/FleetingInspiration.png" id="2_oyhgd"]
+[ext_resource type="Texture2D" uid="uid://df4aih8443lqt" path="res://assets/card/inspiration.png" id="4_hvor5"]
 
 [sub_resource type="Resource" id="Resource_agk17"]
 script = ExtResource("1_dhx3u")
@@ -24,7 +24,7 @@ size = 0
 text = ""
 strength_increment = 1.0
 size_increment = 1
-texture = ExtResource("2_oyhgd")
+texture = ExtResource("4_hvor5")
 seed_texture = 3
 texture_icon_offset = 16
 targets = Array[String]([])
@@ -33,3 +33,4 @@ enhances = Array[String]([])
 strength = 0.0
 delay = 0.0
 anim_on = 0
+effects2 = Array[Resource("res://src/effect2/effect2.gd")]([])

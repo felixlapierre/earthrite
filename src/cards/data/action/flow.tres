@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="GrowWatered" load_steps=3 format=3 uid="uid://d3ci7at83up4k"]
 
 [ext_resource type="Script" path="res://src/cards/custom/flow.gd" id="1_wty04"]
-[ext_resource type="Texture2D" uid="uid://buk7m0cvdpduu" path="res://assets/card/timeflow.png" id="2_dn060"]
+[ext_resource type="Texture2D" uid="uid://l27qpexox6eh" path="res://assets/card/flow.png" id="2_4mafw"]
 
 [resource]
 script = ExtResource("1_wty04")
@@ -15,7 +15,7 @@ size = -1
 text = "Grow all [color=gold]Watered[/color] tiles by {STRENGTH} weeks."
 strength_increment = 1.0
 size_increment = 1
-texture = ExtResource("2_dn060")
+texture = ExtResource("2_4mafw")
 seed_texture = 0
 texture_icon_offset = 16
 targets = Array[String](["Growing"])

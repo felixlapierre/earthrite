@@ -168,7 +168,7 @@ static var riverlands_deck = [
 		"count": 3
 	},
 	{
-		"name": "Radish",
+		"name": "Pumpkin",
 		"type": "seed",
 		"count": 1
 	},
@@ -214,7 +214,7 @@ static var mountains_deck = [
 		"count": 2,
 	},
 	{
-		"name": "Radish",
+		"name": "Potato",
 		"type": "seed",
 		"count": 1
 	},
