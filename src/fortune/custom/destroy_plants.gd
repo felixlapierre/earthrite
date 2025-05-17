@@ -14,7 +14,6 @@ func _init(strength: float = 1.0) -> void:
 
 func register_fortune(event_manager: EventManager):
 	callback_turn_start = func(args: EventArgs):
-		await popup_callback.call(true)
 		var targeted_tiles = []
 		for tile in args.farm.get_all_tiles():
 			if !tile.blight_targeted and [Enums.TileState.Growing, Enums.TileState.Mature].has(tile.state)\
@@ -23,7 +22,6 @@ func register_fortune(event_manager: EventManager):
 		targeted_tiles.shuffle()
 		for i in range(min(strength, targeted_tiles.size())):
 			targeted_tiles[i].set_destroy_targeted(true)
-		popup_callback.call(false)
 	event_manager.register_listener(type_turn_start, callback_turn_start)
 	
 	callback_after_grow = func(args: EventArgs):

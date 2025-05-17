@@ -122,11 +122,13 @@ func create_selection_display(item: Variant, callback: Callable):
 		new_node.setup(item)
 		if !display_only:
 			new_node.clicked.connect(callback)
+		new_node.tooltip = tooltip
 		return new_node
 	elif item.CLASS_NAME == "CardData":
 		var new_node = ShopCard.instantiate()
 		new_node.tooltip = tooltip
 		new_node.card_data = item
+		new_node.tooltip = tooltip
 		if !display_only:
 			new_node.on_clicked.connect(callback)
 		return new_node
@@ -135,10 +137,12 @@ func create_selection_display(item: Variant, callback: Callable):
 		new_node.set_data(item)
 		if !display_only:
 			new_node.callback = callback
+		new_node.tooltip = tooltip
 		return new_node
 	elif item.CLASS_NAME == "Enhance":
 		var new_node = ShopDisplay.instantiate()
 		new_node.set_data(item)
 		if !display_only:
 			new_node.callback = callback
+		new_node.tooltip = tooltip
 		return new_node

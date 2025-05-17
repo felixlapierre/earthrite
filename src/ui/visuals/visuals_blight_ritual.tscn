@@ -14,3 +14,9 @@ sprite_frames = ExtResource("2_dqy37")
 frame = 3
 frame_progress = 1.0
 centered = false
+
+[node name="WhiteSquare" type="ColorRect" parent="."]
+modulate = Color(1, 1, 1, 0)
+offset_right = 1920.0
+offset_bottom = 1080.0
+mouse_filter = 2

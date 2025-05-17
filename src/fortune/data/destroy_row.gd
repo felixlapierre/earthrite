@@ -12,7 +12,6 @@ func _init() -> void:
 
 func register_fortune(event_manager: EventManager):
 	callback_turn_start = func(args: EventArgs):
-		await popup_callback.call(true)
 		# Pick Row
 		var min = Global.FARM_TOPLEFT.x
 		var max = Global.FARM_BOTRIGHT.x
@@ -26,7 +25,6 @@ func register_fortune(event_manager: EventManager):
 				targeted_tiles.append(tile)
 		for i in range(targeted_tiles.size()):
 			targeted_tiles[i].set_destroy_targeted(true)
-		popup_callback.call(false)
 	event_manager.register_listener(type_turn_start, callback_turn_start)
 	
 	callback_after_grow = func(args: EventArgs):

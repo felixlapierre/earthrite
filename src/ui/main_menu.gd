@@ -426,6 +426,8 @@ func _on_no_button_pressed() -> void:
 	Unlocks.save_unlocks()
 
 func _on_view_continue_pressed():
+	_on_continue_button_pressed()
+	return
 	MainButtonsCont.visible = false
 	ContinuePanel.visible = true
 

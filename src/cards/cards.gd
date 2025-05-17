@@ -287,7 +287,7 @@ func _input(event: InputEvent):
 	if event is InputEventKey and event.pressed:
 		var i = 0
 		match event.keycode:
-			KEY_0:
+			KEY_0, KEY_T:
 				i = 9
 			KEY_1:
 				i = 0
@@ -299,16 +299,18 @@ func _input(event: InputEvent):
 				i = 3
 			KEY_5:
 				i = 4
-			KEY_6:
+			KEY_6, KEY_Q:
 				i = 5
-			KEY_7:
+			KEY_7, KEY_W:
 				i = 6
-			KEY_8:
+			KEY_8, KEY_E:
 				i = 7
-			KEY_9:
+			KEY_9, KEY_R:
 				i = 8
 			_:
 				return
+		if Input.is_action_pressed("shift") and i < 5:
+			i += 5
 		if i < HAND_CARDS.get_child_count():
 			var card = HAND_CARDS.get_child(i)
 			card.on_card_clicked()

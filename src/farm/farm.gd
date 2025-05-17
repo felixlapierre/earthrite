@@ -559,9 +559,11 @@ func remove_blight_from_all_tiles():
 		if tile.blighted:
 			tile.remove_blight()
 
-func blight_bubble_animation(tile: Tile, args: EventArgs.HarvestArgs, destination: Vector2):
+func blight_bubble_animation(tile, args: EventArgs.HarvestArgs, destination: Vector2, color_override: Color = Color.BLACK):
 	var mana_amount = args.yld
 	var color = Color8(166, 252, 219) if args.purple else Color8(255, 252, 64)
+	if color_override != Color.BLACK:
+		color = color_override
 	if args.green > 0:
 		mana_amount = args.green
 		color = Color8(15, 252, 3)

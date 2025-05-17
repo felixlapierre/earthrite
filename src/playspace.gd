@@ -90,12 +90,13 @@ func end_year(endless: bool):
 		$Background.animate_blightroots("safe_to_none")
 	
 	await get_tree().create_timer(Constants.MANA_MOVE_TIME).timeout
-	shake_camera(30.0)
-	$Background.ritual_complete()
 	
 	if turn_manager.year == Global.FINAL_YEAR and !endless:
 		await on_win()
 		return
+
+	shake_camera(30.0)
+	$Background.ritual_complete()
 	
 	await event_manager.notify(EventManager.EventType.EndYear)
 
@@ -136,7 +137,16 @@ func on_lose():
 	$Cards.discard_hand()
 	$Cards.do_winter_clear()
 	$UserInterface/UI.visible = false
-	await get_tree().create_timer(4.0).timeout
+	
+	await mana_bubble_eruption(1.0, 60, 5.0, Color.PURPLE)
+	user_interface.VisualsBlightRitual.on_blight_damage()
+	await mana_bubble_eruption(0.7, 60, 5.0, Color.PURPLE)
+	user_interface.VisualsBlightRitual.on_blight_damage()
+	await mana_bubble_eruption(0.5, 60, 5.0, Color.PURPLE)
+	user_interface.VisualsBlightRitual.on_blight_damage()
+	await mana_bubble_eruption(0.7, 60, 5.0, Color.PURPLE)
+	
+	await get_tree().create_timer(2.0).timeout
 	$UserInterface/EndScreen.visible = true
 	$UserInterface/EndScreen.setup(turn_manager, deck, $FarmTiles)
 	$UserInterface/EndScreen.do_unlocks(turn_manager, deck)
@@ -146,7 +156,18 @@ func on_win():
 	$Cards.discard_hand()
 	$Cards.do_winter_clear()
 	$UserInterface/UI.visible = false
-	await get_tree().create_timer(4.0).timeout
+	
+	# Make mana bubbles everywhere
+	
+	await mana_bubble_eruption(2.0, 50, 5.0)
+
+	shake_camera(50.0)
+	$Background.ritual_complete()
+	
+	user_interface.VisualsBlightRitual.flash()
+	await mana_bubble_eruption(1.3, 1, 0.0)
+	
+	await get_tree().create_timer(2.0).timeout
 	$UserInterface/EndScreen.visible = true
 	$UserInterface/EndScreen.setup(turn_manager, deck, $FarmTiles)
 	$UserInterface/EndScreen.do_unlocks(turn_manager, deck)
@@ -399,3 +420,17 @@ func shake_mana(mana: float):
 
 func shake_camera(amount: float = 30.0):
 	camera.apply_shake(amount)
+
+func mana_bubble_eruption(time: float, strength: float, shake: float, color: Color = Color.BLACK):
+	var counter = time
+	while counter > 0:
+		var vector = Vector2(randi_range(0, 1920), randi_range(0, 1080))
+		var tile = {
+			"position": vector
+		}
+		var args = EventArgs.HarvestArgs.new(randi_range(1, strength))
+		farm.blight_bubble_animation(tile, args, Vector2.ZERO, color)
+		if shake > 0:
+			shake_camera(shake)
+		await get_tree().create_timer(0.01).timeout
+		counter -= 0.01
