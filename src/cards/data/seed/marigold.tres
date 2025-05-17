@@ -1,7 +1,8 @@
-[gd_resource type="Resource" script_class="CardData" load_steps=4 format=3 uid="uid://dnut5oyry24wb"]
+[gd_resource type="Resource" script_class="CardData" load_steps=5 format=3 uid="uid://dnut5oyry24wb"]
 
 [ext_resource type="Script" path="res://src/effect/effect.gd" id="1_k41bs"]
 [ext_resource type="Script" path="res://src/cards/card_data.gd" id="2_wr84k"]
+[ext_resource type="Texture2D" uid="uid://dgh15w1juye2e" path="res://assets/seed/marigold.png" id="3_8hes2"]
 
 [sub_resource type="Resource" id="Resource_jafp6"]
 script = ExtResource("1_k41bs")
@@ -22,6 +23,7 @@ size = 1
 text = ""
 strength_increment = 1.0
 size_increment = 1
+texture = ExtResource("3_8hes2")
 seed_texture = 3
 texture_icon_offset = 16
 targets = Array[String]([])
@@ -30,3 +32,4 @@ enhances = Array[String]([])
 strength = 0.0
 delay = 0.0
 anim_on = 0
+effects2 = Array[Resource("res://src/effect2/effect2.gd")]([])

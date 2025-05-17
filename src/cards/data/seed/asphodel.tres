@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://src/effect/effect.gd" id="1_u76xm"]
 [ext_resource type="Script" path="res://src/cards/card_data.gd" id="2_opfeg"]
-[ext_resource type="Texture2D" uid="uid://ch67bv8rajaib" path="res://assets/seed/dark_rose.png" id="3_d5ank"]
+[ext_resource type="Texture2D" uid="uid://dor8vkuft5xly" path="res://assets/seed/asphodel.png" id="3_7g1ow"]
 
 [sub_resource type="Resource" id="Resource_c36p6"]
 script = ExtResource("1_u76xm")
@@ -14,7 +14,7 @@ range = "self"
 [resource]
 script = ExtResource("2_opfeg")
 type = "SEED"
-name = "Dark Rose"
+name = "Asphodel"
 rarity = "common"
 cost = 1
 yld = 12
@@ -23,12 +23,13 @@ size = 3
 text = ""
 strength_increment = 1.0
 size_increment = 1
-texture = ExtResource("3_d5ank")
+texture = ExtResource("3_7g1ow")
 seed_texture = 0
-texture_icon_offset = 10
+texture_icon_offset = 14
 targets = Array[String]([])
 effects = Array[ExtResource("1_u76xm")]([SubResource("Resource_c36p6")])
 enhances = Array[String]([])
 strength = 0.0
 delay = 0.0
 anim_on = 0
+effects2 = Array[Resource("res://src/effect2/effect2.gd")]([])

@@ -252,12 +252,12 @@ static func get_wilderness_seed_options():
 	return [
 		load("res://src/cards/data/seed/inky_cap.tres"),
 		load("res://src/fortune/unique/wildflower.tres"),
-		load("res://src/cards/data/seed/dark_rose.tres"),
+		load("res://src/cards/data/seed/asphodel.tres"),
 		load("res://src/cards/data/seed/gilded_rose.tres"),
 		load("res://src/cards/data/seed/corn.tres"),
 		load("res://src/cards/data/seed/watermelon.tres"),
 		load("res://src/cards/data/seed/mint.tres"),
-		load("res://src/cards/data/seed/puffshroom.tres"),
+		load("res://src/cards/data/seed/dandelion.tres"),
 		load("res://src/cards/data/seed/coffee.tres"),
 		load("res://src/cards/data/seed/cranberry.tres")
 	]

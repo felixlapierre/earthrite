@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://src/cards/card_data.gd" id="1_gfnd2"]
 [ext_resource type="Script" path="res://src/cards/custom/add_mana_all.gd" id="1_j6260"]
-[ext_resource type="Texture2D" uid="uid://yhuqnrpbmq1f" path="res://assets/seed/bleeding-heart.png" id="2_r3knm"]
+[ext_resource type="Texture2D" uid="uid://cftwmwafaljjd" path="res://assets/seed/bleeding-heart2.png" id="3_c4m00"]
 
 [sub_resource type="Resource" id="Resource_o1t7x"]
 script = ExtResource("1_j6260")
@@ -24,9 +24,9 @@ size = 1
 text = ""
 strength_increment = 1.0
 size_increment = 1
-texture = ExtResource("2_r3knm")
+texture = ExtResource("3_c4m00")
 seed_texture = 0
-texture_icon_offset = 16
+texture_icon_offset = 5
 targets = Array[String]([])
 effects = Array[Resource("res://src/effect/effect.gd")]([])
 enhances = Array[String]([])

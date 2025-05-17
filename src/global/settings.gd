@@ -4,7 +4,7 @@ class_name Settings
 static var DEBUG: bool = false
 static var TUTORIALS_ENABLED: bool = true
 static var CLICK_MODE: bool = false
-static var TUTORIALS_V2: bool = false
+static var TUTORIALS_V2: bool = true
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:

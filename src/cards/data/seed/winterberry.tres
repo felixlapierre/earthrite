@@ -1,0 +1,27 @@
+[gd_resource type="Resource" script_class="Rockbud" load_steps=3 format=3 uid="uid://cuo6v5pbe75rx"]
+
+[ext_resource type="Script" path="res://src/cards/custom/rockbud.gd" id="1_yagh2"]
+[ext_resource type="Texture2D" uid="uid://cluap7qt0k30i" path="res://assets/seed/winterberry.png" id="2_156ed"]
+
+[resource]
+script = ExtResource("1_yagh2")
+type = "SEED"
+name = "Winterberry"
+rarity = "common"
+cost = 1
+yld = 25
+time = 3
+size = 1
+text = "[color=gold]Protected[/color] from the Blight"
+strength_increment = 1.0
+size_increment = 1
+texture = ExtResource("2_156ed")
+seed_texture = 0
+texture_icon_offset = 12
+targets = Array[String]([])
+effects = Array[Resource("res://src/effect/effect.gd")]([])
+enhances = Array[String]([])
+strength = 0.0
+delay = 0.0
+anim_on = 0
+effects2 = Array[Resource("res://src/effect2/effect2.gd")]([])

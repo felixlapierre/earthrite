@@ -1,6 +1,7 @@
-[gd_resource type="Resource" script_class="RainbowCactus" load_steps=2 format=3 uid="uid://b1q2nkvd02duu"]
+[gd_resource type="Resource" script_class="RainbowCactus" load_steps=3 format=3 uid="uid://b1q2nkvd02duu"]
 
 [ext_resource type="Script" path="res://src/cards/custom/rainbow_cactus.gd" id="1_4cd45"]
+[ext_resource type="Texture2D" uid="uid://1h1xf8npuqe4" path="res://assets/seed/rainbow_cactus.png" id="2_4ykq4"]
 
 [resource]
 script = ExtResource("1_4cd45")
@@ -14,6 +15,7 @@ size = 1
 text = "When a plant is planted on an Adjacent tile, [color=gold]Destroy[/color] it and gain {STRENGTH} {MANA}"
 strength_increment = 5.0
 size_increment = 1
+texture = ExtResource("2_4ykq4")
 seed_texture = 0
 texture_icon_offset = 16
 targets = Array[String]([])

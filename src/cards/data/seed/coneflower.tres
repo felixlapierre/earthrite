@@ -6,8 +6,8 @@
 [resource]
 script = ExtResource("1_uq4us")
 type = "SEED"
-name = "Cornflower"
-rarity = "rare"
+name = "Coneflower"
+rarity = "unique"
 cost = 3
 yld = 20
 time = 1
@@ -23,3 +23,4 @@ enhances = Array[String]([])
 strength = 0.0
 delay = 0.0
 anim_on = 0
+effects2 = Array[Resource("res://src/effect2/effect2.gd")]([])

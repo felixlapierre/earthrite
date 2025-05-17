@@ -18,9 +18,9 @@ var playspace
 @onready var DebugCheck = $Root/HBox/SettingsPanel/Margin/VBox/DebugCheck
 @onready var ClickModeCheck = $Root/HBox/SettingsPanel/Margin/VBox/ClickModeCheck
 
-@onready var ViewContinue = $Root/HBox/VBox/ViewContinue
-@onready var ViewNewGame = $Root/HBox/VBox/ViewNewGame
-@onready var ViewSettings = $Root/HBox/VBox/ViewSettings
+@onready var ViewContinue = $Root/HBox/VBox/MarginContinue/vbox/ViewContinue
+@onready var ViewNewGame = $Root/HBox/VBox/MarginNew/ViewNewGame
+@onready var ViewSettings = $Root/HBox/VBox/MarginSettings/ViewSettings
 @onready var ExitGame = $Root/HBox/VBox/ExitGame
 
 @onready var NewGamePanel = $Root/HBox/Panel
@@ -98,9 +98,6 @@ func _ready():
 	DebugCheck.button_pressed = Settings.DEBUG
 	ClickModeCheck.button_pressed = Settings.CLICK_MODE
 	set_locked_options()
-	if !Unlocks.TUTORIAL_COMPLETE:
-		$Root.visible = false
-		$TutorialPrompt.visible = true
 	update_prompt("", null, "")
 	update_best_win()
 	for i in range(7):
@@ -252,6 +249,7 @@ func populate_continue_preview():
 		NoSaveFoundLabel.visible = true
 		SavePreview.visible = false
 		return
+	ViewContinue.disabled = false
 	NoSaveFoundLabel.visible = false
 	SavePreview.visible = true
 	ContinueButton.text = "Load Saved Game"
