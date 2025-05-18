@@ -40,9 +40,9 @@ func setup(p_event_manager: EventManager):
 	ritual_charts.append(load("res://src/attack/charts/ritual_tier3.tres"))
 	ritual_charts.append(load("res://src/attack/charts/ritual_tier4.tres"))
 	blight_charts.append(load("res://src/attack/charts/blight_tier1.tres"))
-	blight_charts.append(load("res://src/attack/charts/blight_tier1.tres"))
-	blight_charts.append(load("res://src/attack/charts/blight_tier1.tres"))
-	blight_charts.append(load("res://src/attack/charts/blight_tier1.tres"))
+	blight_charts.append(load("res://src/attack/charts/blight_tier2.tres"))
+	blight_charts.append(load("res://src/attack/charts/blight_tier3.tres"))
+	blight_charts.append(load("res://src/attack/charts/blight_tier4.tres"))
 
 # Return bool indicating if the ritual is complete
 func gain_yellow_mana(amount, delay = false):

@@ -39,7 +39,7 @@ func create_fortunes():
 			difficulty = "normal"
 		2:
 			difficulty = "hard"
-		3:
+		3, 4, 5, 6, 7:
 			difficulty = "mastery"
 	attack_pattern = Helper.pick_random(attack_database.get_attacks(difficulty, year))
 	attack_database.remove_attack(attack_pattern, difficulty, year)

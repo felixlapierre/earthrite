@@ -389,6 +389,8 @@ layout_mode = 2
 theme = ExtResource("2_s7754")
 bbcode_enabled = true
 text = "[center] 0 /100"
+scroll_active = false
+autowrap_mode = 0
 
 [node name="PeekButton" type="TextureButton" parent="UI"]
 custom_minimum_size = Vector2(80, 80)

@@ -51,7 +51,7 @@ func setup(turn_manager: TurnManager, deck: Array[CardData], farm: Farm, user_in
 		2:
 			difficulty = "Hard"
 	if Global.DIFFICULTY >= 3:
-		difficulty = "Mastery " + str(Global.DIFFICULTY - 2)
+		difficulty = "Mastery" + str(Global.DIFFICULTY - 2)
 	Stats.append_text("Difficulty: [img]" + StatisticsDisplay.get_difficulty_icon(difficulty).resource_path + "[/img] " + difficulty)
 
 	for card in deck:

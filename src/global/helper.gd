@@ -148,8 +148,8 @@ static func get_smart_select_shape(grid_position: Vector2, tiles, card: CardData
 static func can_expand_farm():
 	return Global.FARM_TOPLEFT.y > 0\
 	or Global.FARM_TOPLEFT.x > 0\
-	or Global.FARM_BOTRIGHT.x <= Constants.FARM_DIMENSIONS.x\
-	or Global.FARM_BOTRIGHT.y <= Constants.FARM_DIMENSIONS.y
+	or Global.FARM_BOTRIGHT.x < Constants.FARM_DIMENSIONS.x - 1\
+	or Global.FARM_BOTRIGHT.y < Constants.FARM_DIMENSIONS.y - 1
 
 static func pick_random(array):
 	var index = randi_range(0, array.size() - 1)

@@ -88,20 +88,20 @@ func populate_database():
 	#	.easy(3).normal(2).hard(2).mastery(2).build())
 	add(simple_every(DestroyTiles.new(1))
 		.easy(3).normal(2).hard(2).mastery(2).build())
-	add(simple_every(IncreaseRitualTarget.new(10.0))\
+	add(simple_every(IncreaseRitualTarget.new(5.0))\
 		.easy(3).normal(2).hard(2).mastery(2).build())
 	
 	# Easy year 4-5 / Normal first boss
-	add(simple_every(DestroyPlants.new(1)).fortune_once(EndTurnRandomizeColors.new())\
-		.easy(4).normal(3).build())
+	#add(simple_every(DestroyPlants.new(1)).fortune_once(EndTurnRandomizeColors.new())\
+	#	.easy(4).normal(3).build())
 	add(SimpleAttackBuilder.new().fortune_once(weeds_entire_farm)\
 		.easy(4).normal(3).build())
 	add(simple_every(add_blightroot).fortune_once(add_10_weeds)\
 		.easy(4).normal(3).build())
 	add(SimpleAttackBuilder.new().fortune_once(DestroyTiles.new(7))\
 		.easy(4).normal(3).build())
-	add(simple_every(DestroyPlants.new(1)).fortune_once(EndTurnRandomizeColors.new())\
-		.easy(5).build())
+	#add(simple_every(DestroyPlants.new(1)).fortune_once(EndTurnRandomizeColors.new())\
+	#	.easy(5).build())
 	add(SimpleAttackBuilder.new().fortune_once(weeds_entire_farm)\
 		.easy(5).build())
 	add(simple_every(add_blightroot).fortune_once(add_10_weeds)\

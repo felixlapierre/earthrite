@@ -160,7 +160,7 @@ func pick_binary_explore():
 		return "Structure" if !scrapyard() else "Bag of Tricks"
 	if i <= 55:
 		return "Remove Card"
-	if i <= 65 and Helper.can_expand_farm():
+	if i <= 65:
 		if Helper.can_expand_farm():
 			return "Expand Farm"
 		else:
