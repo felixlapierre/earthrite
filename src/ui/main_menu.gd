@@ -50,6 +50,9 @@ var playspace
 @onready var SaveDiffLabel = $Root/HBox/VBox/MarginContinue/vbox/SavePreview/Grid/SaveDiffLabel
 @onready var NoSaveFoundLabel = $Root/HBox/VBox/MarginContinue/vbox/NoSaveFound
 
+@onready var CharOptions = $Root/HBox/Panel/Margin/VBox/HBox/Margin/VBox/CharacterBox/CharOptions
+@onready var FarmOptions = $Root/HBox/Panel/Margin/VBox/HBox/Margin/VBox/FarmTypeBox/TypeOptions
+
 var difficulty_text = [
 	"Base difficulty",
 	"Increase [img]res://assets/custom/YellowMana.png[/img] Ritual Target and [img]res://assets/custom/PurpleMana.png[/img] Blight Attack\n", 
@@ -100,10 +103,6 @@ func _ready():
 	set_locked_options()
 	update_prompt("", null, "")
 	update_best_win()
-	for i in range(7):
-		if !Unlocks.FARMS_UNLOCKED[str(i)]:
-			var lock = load("res://assets/ui/lock.png")
-			$Root/HBox/Panel/Margin/VBox/HBox/Margin/VBox/FarmTypeBox/TypeOptions.set_item_icon(i, lock)
 	$Root/HBox/StatisticsPanel/StatisticsDisplay.create_stats_display(mage_fortune_list)
 	if Settings.TUTORIALS_V2:
 		_on_start_button_pressed()
@@ -396,6 +395,7 @@ func connect_main_menu_signal(playspace):
 		NewGamePanel.visible = false
 		update_mastery()
 		update_prompt("", null, "")
+		$Root/HBox/StatisticsPanel/StatisticsDisplay.create_stats_display(mage_fortune_list)
 		)
 
 
@@ -411,12 +411,27 @@ func _on_char_options_item_selected(index: int) -> void:
 
 func set_locked_options():
 	var farms = Unlocks.FARMS_UNLOCKED
-	#for i in range(7):
-	#	$Root/HBox/Panel/Margin/VBox/HBox/Margin/VBox/FarmTypeBox/TypeOptions.set_item_disabled(i, !Settings.DEBUG && !Unlocks.FARMS_UNLOCKED[str(i)])
+
+	for i in range(mage_fortune_list.size()):
+		var fortune = mage_fortune_list[i]
+		var icon = fortune.icon
+		var text = fortune.name
+		if !Unlocks.MAGES_UNLOCKED[str(fortune.rank)]:
+			icon = load("res://assets/ui/lock.png")
+			text = "(Locked)"
+		CharOptions.set_item_icon(fortune.rank, icon)
+		CharOptions.set_item_text(fortune.rank, text)
+
+	for i in range(7):
+		var farm_name = StartupHelper.get_farm_name_from_id(i)
+		var icon = StatisticsDisplay.get_farm_icon(farm_name)
+		if !Unlocks.FARMS_UNLOCKED[str(i)]:
+			icon = load("res://assets/ui/lock.png")
+		$Root/HBox/Panel/Margin/VBox/HBox/Margin/VBox/FarmTypeBox/TypeOptions.set_item_icon(i, icon)
+
+
 	for i in range(8):
 		$Root/HBox/Panel/Margin/VBox/HBox/Margin/VBox/DifficultyBox/DiffOptions.set_item_disabled(i, !Settings.DEBUG && !Unlocks.DIFFICULTIES_UNLOCKED[str(i)])
-	#for i in range(10):
-	#	$Root/HBox/Panel/Margin/VBox/HBox/Margin/VBox/CharacterBox/CharOptions.set_item_disabled(i, !Settings.DEBUG && !Unlocks.MAGES_UNLOCKED[str(i)])
 
 
 func _on_no_button_pressed() -> void:
@@ -537,7 +552,6 @@ func _on_continue_back_button_pressed():
 	ContinuePanel.visible = false
 	SettingsPanel.visible = false
 	StatisticsPanel.visible = false
-
 
 func _on_stats_button_pressed():
 	StatisticsPanel.visible = true

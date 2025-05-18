@@ -134,12 +134,14 @@ func on_other_clicked():
 		tile_hovered.emit(null)
 
 func plant_seed_animate(planted_seed) -> Array[Effect]:
-	var effects = plant_seed(planted_seed)
+	var copy = planted_seed.copy()
+	var effects = plant_seed(copy)
 	var tween = get_tree().create_tween()
 	tween.tween_property($PlantSprite, "scale", $PlantSprite.scale, 0.1);
 	$PlantSprite.scale = Vector2(0, 0)
 	return effects
 
+# MUST COPY SEED PROVIDED TO NOT BREAK EFFECTS
 func plant_seed(planted_seed) -> Array[Effect]:
 	var effects: Array[Effect] = []
 	if seed != null:
@@ -147,7 +149,9 @@ func plant_seed(planted_seed) -> Array[Effect]:
 	if card_can_target(planted_seed):
 		set_seed(planted_seed)
 		effects.append_array(get_effects("plant"))
-		event_manager.notify_specific_args(EventManager.EventType.OnPlantPlanted, EventArgs.SpecificArgs.new(self))
+		var specific_args = EventArgs.SpecificArgs.new(self)
+		event_manager.notify_card(planted_seed, EventManager.EventType.OnPlantPlanted)
+		event_manager.notify_specific_args(EventManager.EventType.OnPlantPlanted, specific_args)
 	return effects
 
 # Doesn't trigger on-plant stuff
@@ -522,3 +526,6 @@ func push_animate(vector: Vector2):
 	push_tween.set_ease(Tween.EASE_OUT)\
 		.set_trans(Tween.TRANS_CUBIC)\
 		.tween_property(self, "push_vector", Vector2.ZERO, 0.4)
+
+func get_id():
+	return str(grid_location.x) + "-" + str(grid_location.y)

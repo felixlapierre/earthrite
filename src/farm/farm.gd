@@ -450,9 +450,10 @@ func use_card_on_targets(card, targets, only_first, delay: float = 0.0):
 		if not target_tile.card_can_target(card):
 			continue
 		if card.type == "SEED":
-			effect_queue.append_array(target_tile.plant_seed_animate(card.copy()))
+			effect_queue.append_array(target_tile.plant_seed_animate(card))
 			var args = EventArgs.SpecificArgs.new(target_tile)
 			args.play_args = EventArgs.PlayArgs.new(card)
+			
 			event_manager.notify_specific_args(EventManager.EventType.OnActionCardUsed, args)
 		elif card.type == "ACTION":
 			await use_action_card(card, Vector2(target.x, target.y))

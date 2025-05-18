@@ -32,6 +32,13 @@ func create_stats_display(mage_fortune_list: Array[MageAbility]):
 	var farms: Array[String] = ["FOREST", "MOUNTAINS", "WILDERNESS", "RIVERLANDS", "LUNARTEMPLE", "STORMVALE", "SCRAPYARD"]
 	var farm_icons = [load("res://assets/mage/forest.png"), load("res://assets/fortune/mountains.png"), load("res://assets/fortune/wildflowers-fortune.png"), load("res://assets/mage/riverlands.png"), load("res://assets/card/temporal_rift.png"), load("res://assets/mage/Storm.png"), load("res://assets/custom/Temp.png")]
 	
+	for child in farm_stats_cont.get_children():
+		farm_stats_cont.remove_child(child)
+	for child in mage_wins_cont.get_children():
+		mage_wins_cont.remove_child(child)
+	for child in full_stats_cont.get_children():
+		full_stats_cont.remove_child(child)
+
 	# Farm stats display
 	for i in range(farms.size()):
 		var name = farms[i].to_lower().capitalize()

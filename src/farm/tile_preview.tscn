@@ -20,6 +20,10 @@ theme = ExtResource("1_phr11")
 [node name="VBox" type="VBoxContainer" parent="VBox/StatsPanel"]
 layout_mode = 2
 
+[node name="Coords" type="Label" parent="VBox/StatsPanel/VBox"]
+layout_mode = 2
+text = "(1-2)"
+
 [node name="StateLabel" type="RichTextLabel" parent="VBox/StatsPanel/VBox"]
 layout_mode = 2
 bbcode_enabled = true

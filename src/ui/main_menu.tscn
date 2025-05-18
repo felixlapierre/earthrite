@@ -292,6 +292,7 @@ popup/item_8/text = "Acorn Mage"
 popup/item_8/id = 9
 
 [node name="MasteryCont" type="VBoxContainer" parent="Root/HBox/Panel/Margin/VBox/HBox/Margin/VBox"]
+visible = false
 layout_mode = 2
 
 [node name="MasteryPrompt" type="Label" parent="Root/HBox/Panel/Margin/VBox/HBox/Margin/VBox/MasteryCont"]

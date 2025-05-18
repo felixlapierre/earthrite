@@ -5,6 +5,7 @@ extends Node2D
 @onready var duration_label = $VBox/StatsPanel/VBox/DurationLabel
 @onready var card_base = $VBox/CardBase
 @onready var tags_label = $VBox/StatsPanel/VBox/TagsLabel
+@onready var coords_label = $VBox/StatsPanel/VBox/Coords
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -12,6 +13,7 @@ func _ready() -> void:
 
 func setup(tile: Tile):
 	tags_label.clear()
+	coords_label.text = "(" + tile.get_id() + ")"
 	state_label.text = "State: " + str(Enums.TileState.find_key(tile.state))
 	if tile.seed != null:
 		card_base.set_card_info(tile.seed)

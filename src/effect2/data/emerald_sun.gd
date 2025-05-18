@@ -4,7 +4,7 @@ class_name PlantRandomSeeds
 var spriteframes = preload("res://src/animation/frames/emerald_sun_sf.tres")
 var anim
 
-var banned = ["Iris", "Fire Flower", "Morel", "Lotus", "Cactus", "Rainbow Cactus"]
+var banned = ["Iris", "Fire Flower", "Morel", "Lotus"]
 # To be overridden
 func register(event_manager: EventManager, tile: Tile):
 	anim = AnimatedSprite2D.new()

@@ -36,7 +36,7 @@ func register_fortune(event_manager: EventManager):
 				if !tile.is_protected():
 					if tile.seed != null:
 						tile.destroy_plant()
-					tile.plant_seed_animate(corpse_flower.copy())
+					tile.plant_seed_animate(corpse_flower)
 					args.farm.do_animation(spark_sf, tile.grid_location)
 		popup_callback.call(false)
 

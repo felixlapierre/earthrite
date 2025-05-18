@@ -11,6 +11,8 @@ var on_turn_end_listeners: Array[Callable] = []
 
 var listeners: Dictionary = {}
 
+var listeners2: Dictionary = {}
+
 enum EventType {
 	# Time-based triggers
 	BeforeYearStart,
@@ -40,6 +42,7 @@ enum EventType {
 func _ready() -> void:
 	for type in EventType.values():
 		listeners[type] = []
+		listeners2[type] = []
 
 func setup(p_farm: Farm, p_turn_manager: TurnManager, p_cards: Cards, p_user_interface: UserInterface):
 	farm = p_farm
@@ -68,6 +71,9 @@ func notify(event_type: EventType):
 	for listener in listeners_copy:
 		if !listener.is_null():
 			await listener.call(get_event_args(null))
+	
+	for listener in listeners2[event_type]:
+		listener.invoke(get_event_args(null))
 
 func notify_specific_args(event_type: EventType, specific_args: EventArgs.SpecificArgs):
 	var listeners_copy = []
@@ -75,9 +81,23 @@ func notify_specific_args(event_type: EventType, specific_args: EventArgs.Specif
 	for listener in listeners_copy:
 		if !listener.is_null():
 			await listener.call(get_event_args(specific_args))
+	
+	var remove = []
+	for listener in listeners2[event_type]:
+		if listener.disabled:
+			remove.append(listener)
+		listener.invoke(get_event_args(specific_args))
+	for listener in remove:
+		listeners2[event_type].erase(listener)
+
+func notify_card(card: CardData, event_type: EventType):
+	card.notify(event_type, get_event_args(null))
 
 func get_event_args(spec):
 	return EventArgs.new(farm, turn_manager, cards, spec, user_interface)
 
 func shake_screen(amount: float):
 	$"../".shake_camera(amount)
+
+func register(listener: Listener):
+	listeners2[listener.type].append(listener)

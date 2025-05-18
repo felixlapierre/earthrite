@@ -33,7 +33,7 @@ func register_events(event_manager: EventManager, p_tile: Tile):
 			tiles.shuffle()
 			for tile in tiles:
 				if tile.is_watered() and tile.state == Enums.TileState.Empty:
-					tile.plant_seed_animate(card.copy())
+					tile.plant_seed_animate(card)
 					var line = DrawLine.new()
 					line.setup(Vector2(963, 131), tile.position + Constants.TILE_SIZE / 2, Color.ROYAL_BLUE)
 					args.farm.add_child(line)

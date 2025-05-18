@@ -278,3 +278,13 @@ static func get_farm_type_index(type: String):
 			return 5
 		"SCRAPYARD":
 			return 6
+
+static func get_farm_name_from_id(id: int):
+	match id:
+		0: return "FOREST"
+		1: return "MOUNTAINS"
+		2: return "WILDERNESS"
+		3: return "RIVERLANDS"
+		4: return "LUNARTEMPLE"
+		5: return "STORMVALE"
+		6: return "SCRAPYARD"

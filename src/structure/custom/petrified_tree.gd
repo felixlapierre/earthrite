@@ -1,6 +1,9 @@
 extends Structure
 class_name PetrifiedTree
 
+var listener_destroy
+var listener_energy
+
 var callback: Callable
 var callback2: Callable
 var event_type = EventManager.EventType.BeforeTurnStart
@@ -15,11 +18,11 @@ func copy():
 	return copy
 
 func register_events(event_manager: EventManager, tile: Tile):
-	callback = func(args: EventArgs):
+	listener_energy = Listener.new("petrified-tree-energy", EventManager.EventType.BeforeTurnStart, func(args: EventArgs):
 		args.turn_manager.energy += 1
-		tile.play_effect_particles()
+		tile.play_effect_particles())
 
-	var callback2 = func(args: EventArgs):
+	listener_destroy = Listener.new("petrified-tree-tiles", EventManager.EventType.BeforeYearStart, func(args: EventArgs):
 		var destroy_count = Global.FARM_BOTRIGHT.x - Global.FARM_TOPLEFT.x
 		var candidates: Array[Tile] = []
 		for target_tile in args.farm.get_all_tiles():
@@ -34,10 +37,11 @@ func register_events(event_manager: EventManager, tile: Tile):
 				return adist2 < bdist2
 			return adist < bdist)
 		for i in range(min(destroy_count, candidates.size())):
-			candidates[i].destroy()
-	event_manager.register_listener(event_type, callback)
-	event_manager.register_listener(event_type_yearstart, callback2)
+			candidates[i].destroy())
+
+	event_manager.register(listener_energy)
+	event_manager.register(listener_destroy)
 
 func unregister_events(event_manager: EventManager):
-	event_manager.unregister_listener(event_type, callback)
-	event_manager.unregister_listener(event_type_yearstart, callback2)
+	listener_energy.disable()
+	listener_destroy.disable()
