@@ -31,7 +31,8 @@ func update_display():
 	if structure != null:
 		set_labels(structure.name, str(structure.cost), structure.get_description(), "Structure",\
 			structure.texture)
-		tooltip.register_tooltip($VBox/HBoxContainer, structure.tooltip)
+		if structure.tooltip.length() > 0:
+			tooltip.register_tooltip($VBox/HBoxContainer, structure.tooltip)
 		if structure.rarity == "rare":
 			$Border.texture = rare_border
 	elif enhance != null:

@@ -6,6 +6,7 @@
 [resource]
 script = ExtResource("1_lp58g")
 name = "Echo"
+type = 4
 rarity = "rare"
 strength = 0.0
 targets = Array[String](["SEED", "ACTION"])

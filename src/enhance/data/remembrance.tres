@@ -6,6 +6,7 @@
 [resource]
 script = ExtResource("1_kmluc")
 name = "Frozen"
+type = 8
 rarity = "uncommon"
 strength = 0.0
 targets = Array[String]([])

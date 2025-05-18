@@ -101,11 +101,12 @@ func set_card_info(card_data):
 			$HBoxContainer/VBoxContainer/BottomBar/TimeLabel.visible = card_info.time != 99
 			var yield_text = negative + str(card_info.yld)\
 				+ " (" + negative + str(card_info.yld * card_info.size) + ")"
-			if card_info.enhances.has("FlatYield"):
+			if card_info.has_enhance_type(Enhance.Type.Mana):
 				yield_text = "[color=aqua]" + yield_text
 			$HBoxContainer/VBoxContainer/BottomBar/YieldLabel.text = yield_text
 			var time_text = str(card_info.time)
-			if card_info.enhances.has("GrowSpeed"):
+
+			if card_info.has_enhance_type(Enhance.Type.GrowSpeed):
 				time_text = "[color=aqua][right]" + time_text + "[/right][/color]"
 			$HBoxContainer/VBoxContainer/BottomBar/TimeLabel.text = time_text
 			if corrupted:
@@ -127,7 +128,7 @@ func set_card_info(card_data):
 	$HBoxContainer/VBoxContainer/BottomBar/TypeLabel.text = card_info.type
 	$HBoxContainer/VBoxContainer/TopBar/CardNameLabel.text = card_info.name
 	var cost_label = str(card_info.cost if card_info.cost >= 0 else "X")
-	if card_data.type != "STRUCTURE" and card_data.enhances.has("Discount"):
+	if card_data.type != "STRUCTURE" and card_data.has_enhance_type(Enhance.Type.Discount):
 		cost_label = "[color=aqua]" + cost_label + "[/color]"
 	$HBoxContainer/VBoxContainer/TopBar/CardCostLabel.text = cost_label
 	$HBoxContainer/VBoxContainer/DescriptionLabel.text = card_info.get_description()
@@ -135,7 +136,7 @@ func set_card_info(card_data):
 		$HBoxContainer/VBoxContainer/ImageMargin/ImageCont/SizeCont.visible = false
 	else:
 		var size_text = str(card_info.size) if card_info.size != -1 else "All"
-		if card_info.type != "STRUCTURE" and card_info.enhances.has("Size"):
+		if card_info.type != "STRUCTURE" and card_info.has_enhance_type(Enhance.Type.Size):
 			size_text = "[color=aqua]" + size_text
 		SIZE_LABEL.text = size_text
 	if card_info.type == "SEED" or card_info.type == "ACTION":

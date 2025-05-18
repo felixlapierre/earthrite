@@ -138,17 +138,19 @@ func on_lose():
 	$Cards.do_winter_clear()
 	$UserInterface/UI.visible = false
 	
-	await mana_bubble_eruption(1.0, 60, 5.0, Color.PURPLE)
+	await mana_bubble_eruption(0.5, 20, 5.0, Color.PURPLE)
 	user_interface.VisualsBlightRitual.on_blight_damage()
-	await mana_bubble_eruption(0.7, 60, 5.0, Color.PURPLE)
+	await mana_bubble_eruption(0.5, 20, 5.0, Color.PURPLE)
 	user_interface.VisualsBlightRitual.on_blight_damage()
-	await mana_bubble_eruption(0.5, 60, 5.0, Color.PURPLE)
+	await mana_bubble_eruption(0.3, 20, 5.0, Color.PURPLE)
 	user_interface.VisualsBlightRitual.on_blight_damage()
-	await mana_bubble_eruption(0.7, 60, 5.0, Color.PURPLE)
+	#await mana_bubble_eruption(0.7, 60, 5.0, Color.PURPLE)
+	user_interface.VisualsBlightRitual.death_boom()
+	shake_camera(50.0)
 	
-	await get_tree().create_timer(2.0).timeout
+	await get_tree().create_timer(1.5).timeout
 	$UserInterface/EndScreen.visible = true
-	$UserInterface/EndScreen.setup(turn_manager, deck, $FarmTiles)
+	$UserInterface/EndScreen.setup(turn_manager, deck, $FarmTiles, $UserInterface)
 	$UserInterface/EndScreen.do_unlocks(turn_manager, deck)
 
 
@@ -169,7 +171,7 @@ func on_win():
 	
 	await get_tree().create_timer(2.0).timeout
 	$UserInterface/EndScreen.visible = true
-	$UserInterface/EndScreen.setup(turn_manager, deck, $FarmTiles)
+	$UserInterface/EndScreen.setup(turn_manager, deck, $FarmTiles, $UserInterface)
 	$UserInterface/EndScreen.do_unlocks(turn_manager, deck)
 	Statistics.record_win(user_interface.mage_fortune.name, Global.FARM_TYPE, Global.DIFFICULTY)
 	$UserInterface/EndScreen.on_endless_mode.connect(func(): on_endless())

@@ -216,3 +216,4 @@ static func get_long_description(effect_name: String, strength: float = 0.0):
 			return "[color=gold]Popcorn[/color]: Seed, 10" + Helper.mana_icon() + ", 1" + Helper.time_icon()
 		_:
 			return ""
+

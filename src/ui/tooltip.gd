@@ -49,6 +49,8 @@ func clear_tooltip():
 	hovered = false
 
 func register_tooltip(node: Control, text: String):
+	if text.length() == 0:
+		return
 	# Need to be able to update the tooltip with new string
 	if tooltip_dict.has(node.get_instance_id()):
 		tooltip_dict[node.get_instance_id()] = text

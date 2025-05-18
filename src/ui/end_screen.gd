@@ -1,9 +1,13 @@
 extends Node2D
 
-@onready var Title = $Center/Panel/VBoxContainer/Title
-@onready var Description = $Center/Panel/VBoxContainer/Description
-@onready var Stats = $Center/Panel/VBoxContainer/Grid/Stats
-@onready var Deck = $Center/Panel/VBoxContainer/Grid/Deck
+var MINI_CARD = preload("res://src/ui/menus/mini_card.tscn")
+
+@onready var Title = $Center/Panel/Margin/VBox/Title
+@onready var Description = $Center/Panel/Margin/VBox/Description
+@onready var Stats = $Center/Panel/Margin/VBox/Grid/Stats
+@onready var Deck = $Center/Panel/Margin/VBox/Grid/Deck
+@onready var Deck2 = $Center/Panel/Margin/VBox/Grid/Deck2/Flow
+@onready var SendPics = $Center/Panel/Margin/VBox/SendPics
 
 signal on_main_menu
 signal on_endless_mode
@@ -17,25 +21,25 @@ func _ready():
 func _process(delta):
 	pass
 	
-func setup(turn_manager: TurnManager, deck: Array[CardData], farm: Farm):
+func setup(turn_manager: TurnManager, deck: Array[CardData], farm: Farm, user_interface: UserInterface):
 	# Title
 	if turn_manager.blight_damage < Global.MAX_HEALTH:
 		Title.text = "You Win! :)"
 		Description.text = "The Blight has been cleansed"
 		if Global.DIFFICULTY >= 0:
-			$Center/Panel/VBoxContainer/EndlessMode.visible = true
+			$Center/Panel/Margin/VBox/EndlessMode.visible = true
 	else:
 		Title.text = "You Lose! :("
 		Description.text = "Your farm was overtaken by the Blight"
-		$Center/Panel/VBoxContainer/EndlessMode.visible = false
+		$Center/Panel/Margin/VBox/EndlessMode.visible = false
 	
 	Stats.clear()
-	Deck.clear()
 	
 	Stats.append_text("Year: " + str(turn_manager.year) + "\n")
 	Stats.append_text("Week: " + str(turn_manager.week) + "\n")
-	Stats.append_text("Damage: " + str(turn_manager.blight_damage) + "\n")
-	Stats.append_text("Farm: " + Global.FARM_TYPE + "\n")
+	Stats.append_text("Damage: " + str(turn_manager.blight_damage) + "\n\n")
+	Stats.append_text("Farm: [img]" + StatisticsDisplay.get_farm_icon(Global.FARM_TYPE).resource_path + "[/img] " + Global.FARM_TYPE.to_lower().capitalize() + "\n")
+	Stats.append_text("Mage: [img]" + user_interface.mage_fortune.icon.resource_path + "[/img] " + user_interface.mage_fortune.name + "\n")
 	var difficulty;
 	match Global.DIFFICULTY:
 		-1:
@@ -48,37 +52,25 @@ func setup(turn_manager: TurnManager, deck: Array[CardData], farm: Farm):
 			difficulty = "Hard"
 	if Global.DIFFICULTY >= 3:
 		difficulty = "Mastery " + str(Global.DIFFICULTY - 2)
-	Stats.append_text("Difficulty: " + difficulty)
-	
-	Deck.append_text("Deck: " + "\n")
-	var cards = {}
+	Stats.append_text("Difficulty: [img]" + StatisticsDisplay.get_difficulty_icon(difficulty).resource_path + "[/img] " + difficulty)
+
 	for card in deck:
-		if cards.has(card.name):
-			cards[card.name] += 1
-		else:
-			cards[card.name] = 1
+		var mini_card = MINI_CARD.instantiate()
+		mini_card.setup(card)
+		Deck2.add_child(mini_card)
 	
-	for cardname in cards.keys():
-		Deck.append_text(cardname + " x" + str(cards[cardname]) + "\n")
-	Deck.append_text("\n")
-	Deck.append_text("Structures: \n")
-	var structures = {}
 	for tile in farm.get_all_tiles():
 		if tile.structure != null:
 			var structure = tile.structure
-			if structures.has(structure.name):
-				structures[structure.name] += 1
-			else:
-				structures[structure.name] = 1
-	for structurename in structures.keys():
-		Deck.append_text(structurename + " x" + str(structures[structurename]) + "\n")
-
+			var mini_card = MINI_CARD.instantiate()
+			mini_card.setup_structure(structure)
+			Deck2.add_child(mini_card)
 
 func _on_main_menu_pressed() -> void:
 	on_main_menu.emit()
 
 func hide_send_pics():
-	$Center/Panel/VBoxContainer/SendPics.visible = false
+	SendPics.visible = false
 
 func do_unlocks(turn_manager: TurnManager, deck: Array[CardData]):
 	if Global.DIFFICULTY == -1:
@@ -87,8 +79,8 @@ func do_unlocks(turn_manager: TurnManager, deck: Array[CardData]):
 	var farms = []
 	var mages = []
 	var difficulties = []
-	var caption = $Center/Panel/VBoxContainer/Grid/UnlockedCaption
-	var value = $Center/Panel/VBoxContainer/Grid/UnlockValue
+	var caption = $Center/Panel/Margin/VBox/Grid/UnlockedCaption
+	var value = $Center/Panel/Margin/VBox/Grid/UnlockValue
 	
 	#Difficulty
 	if !Unlocks.DIFFICULTIES_UNLOCKED["1"] and win:

@@ -5,7 +5,8 @@
 
 [resource]
 script = ExtResource("1_pijlv")
-name = "SpreadGrow"
+name = "Spread"
+type = 9
 rarity = "rare"
 strength = 1.0
 targets = Array[String]([])

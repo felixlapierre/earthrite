@@ -231,8 +231,8 @@ static func _filter_seed_cards(choice):
 	if choice is CardData:
 		return choice.type != "SEED"
 	if choice is Enhance:
-		return ["Discount", "Echo", "Burn", "Frozen", "Size", "Springbound", "Strength"]\
-					.has(choice.name)
+		return [Enhance.Type.Discount, Enhance.Type.Echo, Enhance.Type.Burn, Enhance.Type.Frozen, Enhance.Type.Size, Enhance.Type.Springbound, Enhance.Type.Strength]\
+					.has(choice.type)
 
 static func get_random_action_cards(rarity, count: int):
 	var result = []
@@ -263,8 +263,8 @@ static func get_random_enhance_noseed(rarity, count):
 	for enh in enhances:
 		if result.size() >= count:
 			return result
-		if enh.rarity == rarity and ["Discount", "Echo", "Burn", "Frozen", "Size", "Springbound", "Strength"]\
-					.has(enh.name):
+		if enh.rarity == rarity and [Enhance.Type.Discount, Enhance.Type.Echo, Enhance.Type.Burn, Enhance.Type.Frozen, Enhance.Type.Size, Enhance.Type.Springbound, Enhance.Type.Strength]\
+					.has(enh.type):
 			result.append(enh)
 	return result
 

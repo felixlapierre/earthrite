@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://src/fortune/unique/corpse_flower.gd" id="1_ukawh"]
 [ext_resource type="Resource" uid="uid://cki4kkibw1qbq" path="res://src/effect/data/corrupted.tres" id="1_xogl8"]
-[ext_resource type="Texture2D" uid="uid://cfh5vlbilyh30" path="res://assets/seed/CorpseFlower.png" id="3_yqltd"]
+[ext_resource type="Texture2D" uid="uid://c87k4opdpdrsx" path="res://assets/seed/corpse-flower.png" id="3_6eeyh"]
 
 [resource]
 script = ExtResource("1_ukawh")
@@ -16,10 +16,13 @@ size = 1
 text = "On turn start, destroy 8 adjacent plants and gain {STRENGTH} {MANA} per plant destroyed."
 strength_increment = 1.0
 size_increment = 1
-texture = ExtResource("3_yqltd")
+texture = ExtResource("3_6eeyh")
 seed_texture = 0
 texture_icon_offset = 16
 targets = Array[String]([])
 effects = Array[Resource("res://src/effect/effect.gd")]([ExtResource("1_xogl8")])
 enhances = Array[String]([])
 strength = 5.0
+delay = 0.0
+anim_on = 0
+effects2 = Array[Resource("res://src/effect2/effect2.gd")]([])

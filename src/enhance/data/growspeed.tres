@@ -5,7 +5,8 @@
 
 [resource]
 script = ExtResource("1_mm31f")
-name = "GrowSpeed"
+name = "Grow Speed"
+type = 3
 rarity = "common"
 strength = 1.0
 targets = Array[String](["SEED"])

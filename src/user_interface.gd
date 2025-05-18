@@ -90,7 +90,7 @@ func _process(delta: float) -> void:
 			t = 0.0
 			ritual_current_amount = turn_manager.get_current_ritual()
 		$UI/RitualPanel/RitualCounter/Label.text = "[right]" + str(ritual_current_amount) + " /" + str(turn_manager.total_ritual)
-	$Obelisk.value = turn_manager.total_ritual - ritual_current_amount
+	$Obelisk.value = ritual_current_amount
 
 func setup(p_event_manager: EventManager, p_turn_manager: TurnManager, p_deck: Array[CardData], p_cards: Cards):
 	$FortuneTeller.setup(p_event_manager)
@@ -118,6 +118,7 @@ func setup(p_event_manager: EventManager, p_turn_manager: TurnManager, p_deck: A
 		weather_display.visible = false
 	tutorial2.setup(self, cards, event_manager, turn_manager)
 	FortuneTellerButton.visible = false
+	VisualsBlightRitual.setup($Obelisk, turn_manager)
 
 # Start and end year
 func end_year():

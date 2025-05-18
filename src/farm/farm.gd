@@ -170,7 +170,7 @@ func _process(delta: float) -> void:
 	if Global.selected_card == null:
 		precision_mode = false
 	# Disable confirm button if selection is empty
-	$ConfirmButton.disabled = selection.size() == 0
+	$ConfirmButton.disabled = selection.size() == 0 and precision_mode
 	
 func show_select_overlay():
 	var size = 0

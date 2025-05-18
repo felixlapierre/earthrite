@@ -19,7 +19,7 @@ const CLASS_NAME = "CardData"
 @export var texture_icon_offset: int = 16
 @export var targets: Array[String]
 @export var effects: Array[Effect]
-@export var enhances: Array[String]
+@export var enhances: Array[Dictionary]
 @export var strength: float
 
 @export var animation: SpriteFrames
@@ -95,46 +95,50 @@ func assign(other: CardData) -> void:
 
 func apply_enhance(enhance: Enhance):
 	var n_card = copy()
-	match enhance.name:
-		"Discount":
+	match enhance.type:
+		Enhance.Type.Discount:
 			n_card.cost = max(cost - int(enhance.strength), 0)
-		"GrowSpeed":
-			n_card.time -= int(enhance.strength) if time > int(enhance.strength) else 0
+		Enhance.Type.GrowSpeed:
+			n_card.time = (time - int(enhance.strength)) if time > int(enhance.strength) else 1
 			if n_card.time < 1:
 				n_card.time = 1
-		"FlatYield":
+		Enhance.Type.Mana:
 			n_card.yld += int(enhance.strength)
-		"SpreadGrow":
+		Enhance.Type.Spread:
 			n_card.effects.append(load("res://src/effect/data/spread_on_grow_1.tres"))
-		"SpreadHarvest":
-			n_card.effects.append(load("res://src/effect/data/spread_on_harvest.tres"))
-		"Burn":
+		Enhance.Type.Burn:
 			n_card.effects.append(load("res://src/effect/data/obliviate.tres"))
-		"Frozen":
+		Enhance.Type.Frozen:
 			n_card.effects.append(load("res://src/effect/data/remembrance.tres"))
-		"Echo":
+		Enhance.Type.Echo:
 			n_card.effects.append(load("res://src/effect/data/echo.tres"))
-		"RemoveObliviate":
+		Enhance.Type.Burn:
 			n_card.effects.erase(load("res://src/effect/data/obliviate.tres"))
-		"Strength":
+		Enhance.Type.Strength:
 			n_card.apply_strength(enhance)
-		"Size":
+		Enhance.Type.Size:
 			n_card.size += enhance.strength * size_increment
 			if n_card.size > 9:
 				n_card.size = 9
-		"Springbound":
+		Enhance.Type.Springbound:
 			n_card.effects.append(load("res://src/effect/data/springbound.tres"))
-		"Regrow":
+		Enhance.Type.Regrow:
 			for effect in n_card.effects:
 				if effect.name == "plant":
 					effect.strength += enhance.strength
-					n_card.enhances.append(enhance.name)
+					n_card.enhances.append({
+						"name": enhance.name,
+						"type": enhance.type
+						})
 					return n_card
 			n_card.effects.append(load("res://src/effect/data/regrow_0.tres"))
 			if enhance.strength == 1:
 				n_card.time += 1
-	if !n_card.enhances.has(enhance.name):
-		n_card.enhances.append(enhance.name)
+	if !n_card.has_enhance_type(enhance.type):
+		n_card.enhances.append({
+			"name": enhance.name,
+			"type": enhance.type
+		})
 	return n_card
 
 func apply_strength(enhance: Enhance):
@@ -178,7 +182,7 @@ func get_description() -> String:
 				descr += ". "
 			descr += effect_text
 	
-	if enhances.has("Strength"):
+	if has_enhance_type(Enhance.Type.Strength):
 		descr = descr.replace("{STRENGTH}", "[color=aqua]" + str(strength) + "[/color]")
 		descr = descr.replace("{STR_PER}", "[color=aqua]" + str(self.strength * 100) + "[/color]")
 	else:
@@ -317,10 +321,14 @@ func on_card_drawn(args: EventArgs):
 	pass
 	
 func highlight_effect(effect: Effect):
-	return enhances.has("Regrow") and effect.name == "plant"\
-		or enhances.has("Echo") and effect.name == "echo"\
-		or enhances.has("SpreadGrow") and effect.name == "spread"\
-		or enhances.has("Frozen") and effect.name == "frozen"\
-		or enhances.has("Burn") and effect.name == "burn"\
-		or enhances.has("Springbound") and effect.name == "springbound"\
-		or enhances.has("Strength") and !can_strengthen_custom_effect() and effect.strength > 1
+	return has_enhance_type(Enhance.Type.Regrow) and effect.name == "plant"\
+		or has_enhance_type(Enhance.Type.Echo) and effect.name == "echo"\
+		or has_enhance_type(Enhance.Type.Spread) and effect.name == "spread"\
+		or has_enhance_type(Enhance.Type.Frozen) and effect.name == "frozen"\
+		or has_enhance_type(Enhance.Type.Burn) and effect.name == "burn"\
+		or has_enhance_type(Enhance.Type.Springbound) and effect.name == "springbound"\
+		or has_enhance_type(Enhance.Type.Strength) and !can_strengthen_custom_effect() and effect.strength > 1
+
+func has_enhance_type(type: Enhance.Type):
+	return enhances.any(func(enh):
+		return enh.type == type)

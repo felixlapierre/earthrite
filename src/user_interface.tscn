@@ -1,7 +1,9 @@
-[gd_scene load_steps=43 format=3 uid="uid://cswinrop881oo"]
+[gd_scene load_steps=44 format=3 uid="uid://cswinrop881oo"]
 
 [ext_resource type="Script" path="res://src/user_interface.gd" id="1_j28fq"]
+[ext_resource type="Texture2D" uid="uid://0p1tevlogry8" path="res://assets/ui/obelisk-decaying.png" id="2_e2cij"]
 [ext_resource type="Theme" uid="uid://c21dhy264y6ty" path="res://assets/theme_large.tres" id="2_s7754"]
+[ext_resource type="Texture2D" uid="uid://cmgbh34cvhoxv" path="res://assets/ui/obelisk-runes.png" id="3_e5hu5"]
 [ext_resource type="Texture2D" uid="uid://b5gtwrgnirbxg" path="res://assets/custom/YellowMana.png" id="3_x0b3x"]
 [ext_resource type="Texture2D" uid="uid://c0mxwj13dwpml" path="res://assets/custom/PurpleMana.png" id="4_o6t76"]
 [ext_resource type="Texture2D" uid="uid://ykuefae3vde0" path="res://assets/custom/Energy.png" id="5_hqwjq"]
@@ -21,10 +23,8 @@
 [ext_resource type="PackedScene" uid="uid://ch1l0jofkrynh" path="res://src/shop/shop.tscn" id="17_q7vph"]
 [ext_resource type="PackedScene" uid="uid://dichc631kb472" path="res://src/ui/alert.tscn" id="18_ih37u"]
 [ext_resource type="PackedScene" uid="uid://dvjkkex6w162i" path="res://src/upgrade/upgrade_shop.tscn" id="18_wm5tb"]
-[ext_resource type="Texture2D" uid="uid://nkbrmv4f3xqe" path="res://assets/ui/obelisk_empty.png" id="19_83y2t"]
 [ext_resource type="PackedScene" uid="uid://cs4xf7kyndygr" path="res://src/ui/tooltip.tscn" id="20_dvki6"]
 [ext_resource type="PackedScene" uid="uid://b7luloyqjcwjb" path="res://src/ui/energy_display.tscn" id="20_i330f"]
-[ext_resource type="Texture2D" uid="uid://cn32li0bwuw1e" path="res://assets/ui/obelisk_full.png" id="20_udohm"]
 [ext_resource type="Texture2D" uid="uid://r85h2ey4h5ks" path="res://assets/custom/PreviewButton.png" id="21_tlcd4"]
 [ext_resource type="Texture2D" uid="uid://b1x8as1ltlxj0" path="res://assets/custom/PreviewButtonHover.png" id="22_oyub8"]
 [ext_resource type="PackedScene" uid="uid://28om5nbxx6qk" path="res://src/ui/display/weather_display.tscn" id="22_xo87j"]
@@ -36,6 +36,10 @@
 [ext_resource type="Script" path="res://src/fortune/blessings.gd" id="34_bvh0t"]
 [ext_resource type="PackedScene" uid="uid://k57mhgtv2uhb" path="res://src/ui/menus/tutorial2.tscn" id="36_jqnmk"]
 [ext_resource type="PackedScene" uid="uid://b4so7jrf5f1qb" path="res://src/ui/visuals/visuals_blight_ritual.tscn" id="36_p2py6"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tstwt"]
+atlas = ExtResource("2_e2cij")
+region = Rect2(0, 0, 32, 0)
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_1tbmd"]
 particles_animation = true
@@ -85,9 +89,9 @@ offset_right = 542.0
 offset_bottom = 260.0
 scale = Vector2(2.7, 2.7)
 value = 50.0
-fill_mode = 2
-texture_under = ExtResource("20_udohm")
-texture_progress = ExtResource("19_83y2t")
+fill_mode = 3
+texture_under = SubResource("AtlasTexture_tstwt")
+texture_progress = ExtResource("3_e5hu5")
 
 [node name="UI" type="Control" parent="."]
 layout_mode = 3

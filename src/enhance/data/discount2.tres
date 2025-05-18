@@ -5,7 +5,8 @@
 
 [resource]
 script = ExtResource("1_x1h83")
-name = "Discount"
+name = "Discount 2"
+type = 1
 rarity = "rare"
 strength = 2.0
 targets = Array[String]([])

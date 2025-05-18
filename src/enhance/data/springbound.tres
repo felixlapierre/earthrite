@@ -6,6 +6,7 @@
 [resource]
 script = ExtResource("1_4hvhj")
 name = "Springbound"
+type = 10
 rarity = "uncommon"
 strength = 0.0
 targets = Array[String]([])
