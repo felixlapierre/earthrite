@@ -97,7 +97,7 @@ func do_unlocks(turn_manager: TurnManager, deck: Array[CardData]):
 		var diff = 4 + i
 		if !Unlocks.DIFFICULTIES_UNLOCKED[str(diff)] and win and Global.DIFFICULTY == diff - 1:
 			Unlocks.DIFFICULTIES_UNLOCKED[str(diff)] = true
-			difficulties.append("Mastery " + str(diff))
+			difficulties.append("Mastery " + str(diff - 2))
 	
 	# Forest, Mountain, Wilderness, Riverlands unlocked by default
 

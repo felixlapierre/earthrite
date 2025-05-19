@@ -1,7 +1,7 @@
 extends Structure
 class_name PurpleTotem
 
-var purple_mana = 0
+static var purple_mana = 0
 
 var callback: Callable
 var callback2: Callable

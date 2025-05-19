@@ -486,7 +486,7 @@ func select_card_to_enhance(enhance: Enhance):
 	select_card.do_enhance_pick(deck, enhance, "Select a card to enhance")
 
 func next_year_allowed():
-	return ($Winter/Explore.explores == 0)\
+	return ($Winter/Explore.explores <= 0)\
 		|| Settings.DEBUG
 
 func _on_shop_on_blight_removed() -> void:

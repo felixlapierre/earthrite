@@ -32,14 +32,6 @@ var playspace
 @onready var DetailsImg = $Root/HBox/Panel/Margin/VBox/HBox/Details/VBox/DetailsImg
 @onready var DetailsDescr = $Root/HBox/Panel/Margin/VBox/HBox/Details/VBox/DetailsDescr
 
-@onready var MasteryContainer = $Root/HBox/Panel/Margin/VBox/HBox/Margin/VBox/MasteryCont
-@onready var RitualDisruption = $Root/HBox/Panel/Margin/VBox/HBox/Margin/VBox/MasteryCont/RitualDisruption
-@onready var BlightAttack = $Root/HBox/Panel/Margin/VBox/HBox/Margin/VBox/MasteryCont/BlightAttack
-@onready var Misfortune = $Root/HBox/Panel/Margin/VBox/HBox/Margin/VBox/MasteryCont/Misfortune
-@onready var Blindness = $Root/HBox/Panel/Margin/VBox/HBox/Margin/VBox/MasteryCont/Blindness
-@onready var LostPages = $"Root/HBox/Panel/Margin/VBox/HBox/Margin/VBox/MasteryCont/Lost Pages"
-@onready var Memoria = $Root/HBox/Panel/Margin/VBox/HBox/Margin/VBox/MasteryCont/Memoria
-
 @onready var SavePreview = $Root/HBox/VBox/MarginContinue/vbox/SavePreview
 @onready var SaveYearLabel = $Root/HBox/VBox/MarginContinue/vbox/SavePreview/Grid/SaveYear
 @onready var SaveFarmTexture = $Root/HBox/VBox/MarginContinue/vbox/SavePreview/Grid/SaveFarmTexture
@@ -112,7 +104,6 @@ func _process(delta):
 	pass
 
 func _on_diff_options_item_selected(index):
-	MasteryContainer.visible = false
 	var numbers = "- More Mana needed to complete the ritual. Increase Blight attack strength.\n"
 	var hexes = "- [color=yellow]Blight Hexes are stronger and trickier[/color]\n"
 	var explores = "- [color=mediumpurple]Fewer Explores per Winter[/color]\n"
@@ -181,8 +172,6 @@ func _on_start_button_pressed():
 	add_child(playspace)
 	
 	playspace.user_interface.set_mage_fortune(mage_fortune)
-	if Global.DIFFICULTY < 3:
-		Mastery.reset()
 	playspace.start_new_game()
 
 func _on_continue_button_pressed():
@@ -294,10 +283,6 @@ func populate_continue_preview():
 		_on_char_options_item_selected(0)
 
 	var difficulty
-	if save_json.has("mastery"):
-		Mastery.load_data(save_json.mastery)
-	else:
-		Mastery.reset()
 	match int(save_json.state.difficulty):
 		0:
 			difficulty = "Easy"
@@ -337,21 +322,6 @@ func populate_continue_preview():
 		for structurename in structures.keys():
 			Deck.append_text(structurename + " x" + str(structures[structurename]) + "\n")
 	
-	# Populate mastery
-	RitualDisruption.value = Mastery.RitualTarget
-	RitualDisruption.update_value()
-	BlightAttack.value = Mastery.BlightAttack
-	BlightAttack.update_value()
-	Misfortune.value = Mastery.Misfortune
-	Misfortune.update_value()
-	Blindness.value = Mastery.HidePreview
-	Blindness.update_value()
-	LostPages.value = Mastery.BlockShop
-	LostPages.update_value()
-	Memoria.value = Mastery.CardRemoveCost
-	Memoria.update_value()
-	update_mastery_2(Mastery.MasteryLevel)
-	
 func _on_tutorials_check_pressed() -> void:
 	Settings.TUTORIALS_V2 = TutorialsCheck.button_pressed
 	Settings.save_settings()
@@ -360,7 +330,6 @@ func _on_debug_check_pressed() -> void:
 	Settings.DEBUG = DebugCheck.button_pressed
 	Settings.save_settings()
 	set_locked_options()
-
 
 func _on_tutorial_button_pressed():
 	MainButtonsCont.visible = true
@@ -374,8 +343,6 @@ func _on_story_start_button_pressed() -> void:
 	connect_main_menu_signal(playspace)
 	add_child(playspace)
 	playspace.user_interface.set_mage_fortune(load("res://src/fortune/characters/blank_mage.gd").new())
-	if Global.DIFFICULTY < 3:
-		Mastery.reset()
 	playspace.start_new_game()
 
 func connect_main_menu_signal(playspace):
@@ -393,7 +360,6 @@ func connect_main_menu_signal(playspace):
 		MainButtonsCont.visible = true
 		ContinuePanel.visible = false
 		NewGamePanel.visible = false
-		update_mastery()
 		update_prompt("", null, "")
 		$Root/HBox/StatisticsPanel/StatisticsDisplay.create_stats_display(mage_fortune_list)
 		)
@@ -457,40 +423,6 @@ func _on_view_settings_pressed():
 func _on_exit_game_pressed():
 	get_tree().quit()
 
-func update_mastery():
-	$Root/HBox/Panel/Margin/VBox/HBox/Margin/VBox/MasteryCont/MasteryLevel.text = "Mastery Level: " + str(Mastery.get_total_mastery())
-	$Root/HBox/Panel/Margin/VBox/StartButton.disabled = Mastery.get_total_mastery() == 0 and Global.DIFFICULTY == 3
-
-func _on_ritual_disruption_on_value_updated(value: int):
-	Mastery.RitualTarget = value
-	update_mastery()
-	update_prompt("Mastery: Disruption", load("res://assets/custom/YellowMana.png"), "Each level increases mana required to complete the ritual")
-
-func _on_blight_attack_on_value_updated(value: int):
-	Mastery.BlightAttack = value
-	update_mastery()
-	update_prompt("Mastery: Blight Attack", load("res://assets/custom/BlightAttack.png"), "Each level increases the strength of the Blight's attacks")
-
-func _on_misfortune_on_value_updated(value: int):
-	Mastery.Misfortune = value
-	update_mastery()
-	update_prompt("Mastery: Misfortune", load("res://assets/fortune/CounterFortune.png"), "The Blight's special attacks will be more disruptive")
-
-func _on_blindness_on_value_updated(value: int):
-	Mastery.HidePreview = value
-	update_mastery()
-	update_prompt("Mastery: Blindness", load("res://assets/custom/Temp.png"), "Blight attack preview will only show the next turn.")
-
-func _on_lost_pages_on_value_updated(value: int):
-	Mastery.BlockShop = value
-	update_prompt("Mastery: Lost Pages", load("res://assets/custom/CardFragment.png"), "Each level reduces the amount of options available in the shop")
-	update_mastery()
-
-func _on_memoria_on_value_updated(value: int):
-	Mastery.CardRemoveCost = value
-	update_prompt("Mastery: Memoria", load("res://assets/enhance/obliviate.png"), "Removing a card from your deck will cost rerolls")
-	update_mastery()
-
 func update_prompt(title: String, image: Texture2D, description: String):
 	$Root/HBox/Panel/Margin/VBox/HBox/Details/VBox/DetailsPrompt.text = title
 	$Root/HBox/Panel/Margin/VBox/HBox/Details/VBox/DetailsImg.visible = image != null
@@ -508,30 +440,6 @@ func _input(event: InputEvent):
 		Settings.save_settings()
 		Global.MOBILE = true
 		ClickModeCheck.visible = false
-
-
-func _on_mastery_minus_pressed():
-	Mastery.MasteryLevel -= 1
-	if Mastery.MasteryLevel == 1:
-		$Root/HBox/Panel/Margin/VBox/HBox/Margin/VBox/MasteryCont/LevelSelector/Minus.disabled = true
-	$Root/HBox/Panel/Margin/VBox/HBox/Margin/VBox/MasteryCont/LevelSelector/Plus.disabled = false
-	update_mastery_2(Mastery.MasteryLevel)
-
-func _on_mastery_plus_pressed():
-	Mastery.MasteryLevel += 1
-	if Mastery.MasteryLevel == 5:
-		$Root/HBox/Panel/Margin/VBox/HBox/Margin/VBox/MasteryCont/LevelSelector/Plus.disabled = true
-	$Root/HBox/Panel/Margin/VBox/HBox/Margin/VBox/MasteryCont/LevelSelector/Minus.disabled = false
-	update_mastery_2(Mastery.MasteryLevel)
-
-func update_mastery_2(level: int):
-	$Root/HBox/Panel/Margin/VBox/HBox/Margin/VBox/MasteryCont/LevelSelector/LevelLabel.text = str(level)
-	if Mastery.MasteryLevel == 1:
-		$Root/HBox/Panel/Margin/VBox/HBox/Margin/VBox/MasteryCont/LevelSelector/Minus.disabled = true
-		$Root/HBox/Panel/Margin/VBox/HBox/Margin/VBox/MasteryCont/LevelSelector/Plus.disabled = false
-	var prompt_title = "Mastery " + str(level)
-	var prompt_text = Mastery.get_prompt_text()
-	update_prompt(prompt_title, load("res://assets/ui/Mastery" + str(level) + ".png"), prompt_text)
 
 func update_best_win():
 	var farm = Global.FARM_TYPE

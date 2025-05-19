@@ -73,8 +73,7 @@ func set_attack(p_attack: AttackPattern):
 		preview.selected.connect(func(week):
 			on_peek_week.emit(week))
 		$NextTurns/List.add_child(preview)
-		var last_visible = 3 if !Mastery.hide_preview() else 1
-		if i > last_visible:
+		if i > 3:
 			preview.visible = false
 	update_fortunes(fortunes[0])
 
@@ -119,13 +118,11 @@ func on_other_clicked():
 	on_peek_week.emit(-1)
 
 func show_full_preview():
-	if Mastery.hide_preview(): return
 	for i in range(0, $NextTurns/List.get_child_count()):
 		if i < 9:
 			$NextTurns/List.get_child(i).visible = true
 	
 func hide_full_preview():
-	if Mastery.hide_preview(): return
 	for i in range(0, $NextTurns/List.get_child_count()):
 		if i > 2:
 			$NextTurns/List.get_child(i).visible = false

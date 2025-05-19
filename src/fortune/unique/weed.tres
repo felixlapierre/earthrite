@@ -1,6 +1,5 @@
-[gd_resource type="Resource" script_class="CardData" load_steps=4 format=3 uid="uid://bctep4vp4cruk"]
+[gd_resource type="Resource" script_class="CardData" load_steps=3 format=3 uid="uid://bctep4vp4cruk"]
 
-[ext_resource type="Resource" uid="uid://cijtg3ddxitn3" path="res://src/effect/data/obliviate.tres" id="1_dc415"]
 [ext_resource type="Script" path="res://src/cards/card_data.gd" id="1_tocu1"]
 [ext_resource type="Texture2D" uid="uid://cd1h6bwxdmv25" path="res://assets/seed/weed.png" id="2_wst6g"]
 
@@ -20,8 +19,8 @@ texture = ExtResource("2_wst6g")
 seed_texture = 2
 texture_icon_offset = 16
 targets = Array[String]([])
-effects = Array[Resource("res://src/effect/effect.gd")]([ExtResource("1_dc415")])
-enhances = Array[String]([])
+effects = Array[Resource("res://src/effect/effect.gd")]([])
+enhances = Array[Dictionary]([])
 strength = 0.0
 delay = 0.0
 anim_on = 0

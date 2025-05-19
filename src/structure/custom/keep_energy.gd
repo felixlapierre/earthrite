@@ -21,6 +21,7 @@ func copy():
 func register_events(event_manager: EventManager, tile: Tile):
 	callback = func(args: EventArgs):
 		energy = args.turn_manager.energy
+		energy = 0
 	
 	callback2 = func(args: EventArgs):
 		args.turn_manager.energy += energy

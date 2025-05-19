@@ -368,7 +368,7 @@ R: Rotate
 F: Flip"
 
 [node name="EnergyDisplay" parent="UI" instance=ExtResource("20_i330f")]
-position = Vector2(5, 153)
+position = Vector2(28, 153)
 
 [node name="DamagePanel" type="PanelContainer" parent="UI"]
 layout_mode = 0
@@ -573,6 +573,7 @@ visible = false
 
 [node name="Shop" parent="." instance=ExtResource("17_q7vph")]
 visible = false
+player_money = 0
 
 [node name="UpgradeShop" parent="." instance=ExtResource("18_wm5tb")]
 visible = false

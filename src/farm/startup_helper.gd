@@ -125,7 +125,7 @@ static var wilderness_callable = func(event_args: EventArgs):
 	event_args.farm.use_card_random_tile(Global.WILDERNESS_PLANT.copy(), Global.WILDERNESS_PLANT.size)
 
 static func setup_mountain_farm(farm: Farm):
-	var rocks = 36
+	var rocks = 24
 	for tile: Tile in farm.get_all_tiles():
 		if rocks == 0:
 			return
