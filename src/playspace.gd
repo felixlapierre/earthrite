@@ -114,6 +114,7 @@ func end_year(endless: bool):
 	save_game()
 
 func start_year():
+	Global.LOCK = true
 	victory = false
 	$UserInterface.start_year()
 	save_game()
@@ -127,6 +128,8 @@ func start_year():
 	await $Cards.draw_hand($TurnManager.get_cards_drawn(), $TurnManager.week)
 	await $EventManager.notify(EventManager.EventType.AfterYearStart)
 	await $EventManager.notify(EventManager.EventType.BeforeTurnStart)
+	mana_gained_this_action = 0.0
+	Global.LOCK = false
 	$UserInterface.update()
 
 func _on_farm_tiles_on_energy_gained(amount) -> void:
@@ -220,6 +223,7 @@ func on_upgrade(upgrade: Upgrade):
 			print(upgrade.text)
 
 func on_turn_end():
+	Global.LOCK = true
 	await $EventManager.notify(EventManager.EventType.BeforeGrow)
 	if Global.END_TURN_DISCARD:
 		$Cards.discard_hand()
@@ -257,9 +261,11 @@ func on_turn_end():
 	await $Cards.draw_hand($TurnManager.get_cards_drawn(), $TurnManager.week)
 	$Background.set_background($TurnManager.week)
 	await $EventManager.notify(EventManager.EventType.BeforeTurnStart)
+	mana_gained_this_action = 0.0
 	if victory == true:
 		end_year(false)
 	$UserInterface.update()
+	Global.LOCK = false
 
 func _on_user_interface_on_blight_removed() -> void:
 	$FarmTiles.remove_blight_from_all_tiles()

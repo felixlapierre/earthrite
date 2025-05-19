@@ -48,8 +48,6 @@ func setup(deck, p_tooltip, p_tutorial_callback):
 func create_explore(p_explores, turn_manager: TurnManager):
 	year = turn_manager.year
 	explores = p_explores
-	explores += bonus_explores
-	bonus_explores = 0
 	if turn_manager.year >= 3 and Global.DIFFICULTY < 3:
 		explores += 1
 	if turn_manager.year == 3:
@@ -126,10 +124,11 @@ func create_point_from_name(name, location):
 				pick_bag_of_tricks(3 - Mastery.less_options(), true))
 
 func create_binary_explore():
-	$CenterContainer/PanelContainer/VBox/HBox/Label.text = "Explorations Remaining: " + str(explores)
+	var remaining = explores + bonus_explores
+	$CenterContainer/PanelContainer/VBox/HBox/Label.text = "Explorations Remaining: " + str(remaining)
 	for point in $Points.get_children():
 		$Points.remove_child(point)
-	if explores == 0:
+	if remaining == 0:
 		return
 	var DIST = 250
 	if fixed_explores.size() > 0:

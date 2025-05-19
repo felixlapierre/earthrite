@@ -52,6 +52,7 @@ static var ALL_WATERED = true
 static var pressed: bool = false
 static var pressed_time: float = 0.0
 static var MOBILE: bool = false
+static var LOCK: bool = false
 
 static var click_callbacks = []
 
@@ -92,6 +93,7 @@ static func reset():
 	ACORNS = 0
 	TOTAL_ACORNS = 0
 	ACORN_BONUS = 0.0
+	Explore.bonus_explores = 0
 
 static func register_click_callback(obj):
 	click_callbacks.append(obj)

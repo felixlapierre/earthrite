@@ -62,6 +62,8 @@ func setup(p_event_manager: EventManager):
 
 
 func use_card(grid_position, external_source: bool = false):
+	if Global.LOCK:
+		return
 	hover_time = 0.0
 	var energy = $"../TurnManager".energy
 	if Global.selected_card == null and Global.selected_structure == null:
