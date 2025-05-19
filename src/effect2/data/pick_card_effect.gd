@@ -152,7 +152,9 @@ func do_followup_action(args: EventArgs):
 			args.cards.draw_specific_card_from(card, args.user_interface.get_global_mouse_position())
 	elif and_then == AndThen.Use:
 		Global.selected_card = card
+		Global.LOCK = false
 		args.farm.use_card(tile.grid_location, true)
+		Global.LOCK = true
 		Global.selected_card = null
 
 func unregister(event_manager: EventManager):

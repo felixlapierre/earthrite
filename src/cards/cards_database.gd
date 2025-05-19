@@ -173,11 +173,12 @@ static func get_all_curses() -> Array[Fortune]:
 static func get_random_cards(rarity, count: int):
 	var result = []
 	var cards = get_all_cards_rarity(rarity)
+	
 	cards.shuffle()
 	for n_card in cards:
 		if result.size() >= count:
 			return result
-		if n_card.type != "STRUCTURE":
+		if n_card.type != "STRUCTURE" and _filter_seed_cards(n_card):
 			result.append(n_card)
 	return result
 
@@ -233,6 +234,7 @@ static func _filter_seed_cards(choice):
 	if choice is Enhance:
 		return [Enhance.Type.Discount, Enhance.Type.Echo, Enhance.Type.Burn, Enhance.Type.Frozen, Enhance.Type.Size, Enhance.Type.Springbound, Enhance.Type.Strength]\
 					.has(choice.type)
+	return true
 
 static func get_random_action_cards(rarity, count: int):
 	var result = []
@@ -295,7 +297,7 @@ static func get_element_cards(text: String):
 		]
 	elif text.contains("Water"):
 		return [
-			load("res://src/cards/data/action/channeling.tres"),
+			load("res://src/cards/data/action/downpour.tres"),
 			load("res://src/cards/data/action/flow.tres"),
 			load("res://src/cards/data/action/raincloud.tres"),
 			load("res://src/cards/data/action/water_rite.tres"),
@@ -304,9 +306,9 @@ static func get_element_cards(text: String):
 		]
 	elif text.contains("Earth"):
 		return [
-			load("res://src/cards/data/action/catalyze.tres"),
+			load("res://src/cards/data/action/kindling.tres"),
 			load("res://src/cards/data/action/earth_ward.tres"),
-			load("res://src/cards/data/seed/dark_rose.tres"),
+			load("res://src/cards/data/seed/asphodel.tres"),
 			load("res://src/cards/data/action/earthrite.tres")
 		]
 	elif text.contains("Nature"):

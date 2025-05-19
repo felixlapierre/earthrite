@@ -11,7 +11,7 @@ static var TILE_SIZE = Vector2(91, 91)
 
 static var BASE_BLIGHT_DAMAGE = 4
 
-static var HOVER_PREVIEW_DELAY = 0.7
+static var HOVER_PREVIEW_DELAY = 0.4
 
 static var MANA_MOVE_TIME = 0.5
 static var MANA_MOVE_VARIANCE = 0.2

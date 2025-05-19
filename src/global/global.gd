@@ -94,6 +94,7 @@ static func reset():
 	TOTAL_ACORNS = 0
 	ACORN_BONUS = 0.0
 	Explore.bonus_explores = 0
+	LOCK = false
 
 static func register_click_callback(obj):
 	click_callbacks.append(obj)

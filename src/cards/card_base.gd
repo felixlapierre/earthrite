@@ -167,7 +167,7 @@ func _process(delta: float) -> void:
 		Enums.CardState.InPlay:
 			pass
 		Enums.CardState.InMouse:
-			target_position = Constants.VIEWPORT_SIZE / Vector2(16, 4)
+			target_position = Constants.VIEWPORT_SIZE / Vector2(15, 4)
 			scale = resting_scale * 1.7
 			target_scale = scale
 			process_move_linear(delta, 0.1)

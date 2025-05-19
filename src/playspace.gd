@@ -81,6 +81,7 @@ func end_year(endless: bool):
 	$Cards.discard_hand()
 	$Cards.do_winter_clear()
 	$UserInterface.before_end_year()
+	Global.LOCK = false
 
 	if $TurnManager.target_blight > 0 and $TurnManager.purple_mana < $TurnManager.target_blight:
 		$Background.animate_blightroots("attack_to_none")

@@ -11,7 +11,7 @@ is_seed = false
 
 [resource]
 script = ExtResource("1_14eyx")
-name = "Sigil of Water"
+name = "Sprinkler"
 rarity = "common"
 cost = 0
 size = 8
