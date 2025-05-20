@@ -2,10 +2,14 @@ extends Control
 class_name StatisticsDisplay
 
 @onready var full_stats_cont: GridContainer = $FullStatsCont
-@onready var farm_stats_cont: GridContainer = $FarmWinsCont
-@onready var mage_wins_cont: GridContainer = $MageWinsCont
+@onready var farm_stats_cont: GridContainer = $HBox/FarmMargin/FarmVBox/FarmWinsCont
+@onready var mage_wins_cont: GridContainer = $HBox/MageMargin/MageVBox/MageWinsCont
+
+@onready var best_wins_cont = $HBox
 
 signal back
+
+var score = 0
 
 static var icons = {
 	"Easy": preload("res://assets/ui/Easy.png"),
@@ -48,6 +52,7 @@ func create_stats_display(mage_fortune_list: Array[MageAbility]):
 		farm_stats_cont.add_child(label)
 		farm_stats_cont.add_child(VSeparator.new())
 		var diff = Statistics.get_best_win_farm(farms[i])
+		add_score(diff)
 		var diff_icon = get_difficulty_icon(diff)
 		var label2 = Label.new()
 		label2.text = diff if diff != null else "None"
@@ -62,6 +67,7 @@ func create_stats_display(mage_fortune_list: Array[MageAbility]):
 		mage_wins_cont.add_child(label)
 		mage_wins_cont.add_child(VSeparator.new())
 		var diff = Statistics.get_best_win_mage(mage.name)
+		add_score(diff)
 		var diff_icon = get_difficulty_icon(diff)
 		var label2 = Label.new()
 		label2.text = diff if diff != null else "None"
@@ -79,6 +85,8 @@ func create_stats_display(mage_fortune_list: Array[MageAbility]):
 		for farm in farms:
 			var best = Statistics.get_best_win(mage.name, farm)
 			add_rect(full_stats_cont, get_difficulty_icon(best))
+	
+	$ScoreLabel.text = "Score: "+ str(score)
 
 static func get_difficulty_icon(diff):
 	if diff == null:
@@ -115,13 +123,31 @@ func _on_button_pressed():
 	back.emit()
 
 func _on_option_button_item_selected(index):
-	farm_stats_cont.visible = false
-	mage_wins_cont.visible = false
+	best_wins_cont.visible = false
 	full_stats_cont.visible = false
 	match index:
 		0:
-			farm_stats_cont.visible = true
+			best_wins_cont.visible = true
 		1:
-			mage_wins_cont.visible = true
-		2:
 			full_stats_cont.visible = true
+
+func add_score(win):
+	match win:
+		null:
+			score += 0
+		"Easy":
+			score += 1
+		"Normal":
+			score += 2
+		"Hard":
+			score += 3
+		"Mastery1":
+			score += 4
+		"Mastery2":
+			score += 5
+		"Mastery3":
+			score += 6
+		"Mastery4":
+			score += 7
+		"Mastery5":
+			score += 8

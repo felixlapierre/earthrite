@@ -19,7 +19,7 @@ func register_fortune(event_manager: EventManager):
 			if tile.is_destroyed():
 				args.farm.gain_yield(tile, EventArgs.HarvestArgs.new(strength, true, false))
 			elif tile.state == Enums.TileState.Empty:
-				args.farm.gain_yield(tile, EventArgs.HarvestArgs.new(0.75, true, false))
+				args.farm.gain_yield(tile, EventArgs.HarvestArgs.new(1.0, true, false))
 	event_manager.register_listener(event_type, event_callable)
 
 func unregister_fortune(event_manager: EventManager):

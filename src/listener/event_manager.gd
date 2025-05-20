@@ -72,8 +72,13 @@ func notify(event_type: EventType):
 		if !listener.is_null():
 			await listener.call(get_event_args(null))
 	
+	var remove = []
 	for listener in listeners2[event_type]:
-		listener.invoke(get_event_args(null))
+		if listener.disabled:
+			remove.append(listener)
+		await listener.invoke(get_event_args(null))
+	for listener in remove:
+		listeners2[event_type].erase(listener)
 
 func notify_specific_args(event_type: EventType, specific_args: EventArgs.SpecificArgs):
 	var listeners_copy = []
@@ -86,7 +91,7 @@ func notify_specific_args(event_type: EventType, specific_args: EventArgs.Specif
 	for listener in listeners2[event_type]:
 		if listener.disabled:
 			remove.append(listener)
-		listener.invoke(get_event_args(specific_args))
+		await listener.invoke(get_event_args(specific_args))
 	for listener in remove:
 		listeners2[event_type].erase(listener)
 

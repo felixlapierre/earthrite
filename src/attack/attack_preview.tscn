@@ -1,8 +1,10 @@
-[gd_scene load_steps=9 format=3 uid="uid://bks8p1urlqgax"]
+[gd_scene load_steps=11 format=3 uid="uid://bks8p1urlqgax"]
 
 [ext_resource type="Script" path="res://src/attack/attack_preview.gd" id="1_bcmmq"]
 [ext_resource type="Theme" uid="uid://c21dhy264y6ty" path="res://assets/theme_large.tres" id="1_nispc"]
 [ext_resource type="Texture2D" uid="uid://c0mxwj13dwpml" path="res://assets/custom/PurpleMana.png" id="2_jpcgr"]
+[ext_resource type="Texture2D" uid="uid://bvk0lh8bp63in" path="res://assets/custom/Time.png" id="3_he77y"]
+[ext_resource type="StyleBox" uid="uid://dlrsrdqrd6kj3" path="res://assets/panel_tutorial.tres" id="3_igfeb"]
 [ext_resource type="PackedScene" uid="uid://cxg7equ52kyde" path="res://src/fortune/fortune_hover.tscn" id="3_wpjb7"]
 [ext_resource type="Texture2D" uid="uid://cgmg6rhf832w0" path="res://assets/custom/BlightAttack.png" id="4_vip4o"]
 [ext_resource type="Texture2D" uid="uid://brhx5tlxxd0hh" path="res://assets/custom/BlightParticle.png" id="5_30kqw"]
@@ -33,10 +35,11 @@ anim_speed_max = 1.0
 script = ExtResource("1_bcmmq")
 
 [node name="CurrentTurn" type="PanelContainer" parent="."]
-custom_minimum_size = Vector2(0, 130)
+custom_minimum_size = Vector2(271, 180)
 offset_right = 40.0
 offset_bottom = 40.0
 theme = ExtResource("1_nispc")
+theme_override_styles/panel = ExtResource("3_igfeb")
 
 [node name="VBox" type="VBoxContainer" parent="CurrentTurn"]
 layout_mode = 2
@@ -51,6 +54,21 @@ fit_content = true
 [node name="HBox" type="HBoxContainer" parent="CurrentTurn/VBox"]
 layout_mode = 2
 alignment = 1
+
+[node name="Label" type="Label" parent="CurrentTurn/VBox/HBox"]
+layout_mode = 2
+text = "0"
+
+[node name="Time" type="TextureRect" parent="CurrentTurn/VBox/HBox"]
+custom_minimum_size = Vector2(24, 0)
+layout_mode = 2
+texture = ExtResource("3_he77y")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Colon" type="Label" parent="CurrentTurn/VBox/HBox"]
+layout_mode = 2
+text = ":"
 
 [node name="Mana" type="TextureRect" parent="CurrentTurn/VBox/HBox"]
 layout_mode = 2
@@ -97,9 +115,9 @@ lifetime = 0.5
 explosiveness = 0.3
 
 [node name="NextTurns" type="PanelContainer" parent="."]
-offset_left = 232.0
-offset_right = 272.0
-offset_bottom = 40.0
+offset_top = 182.0
+offset_right = 40.0
+offset_bottom = 222.0
 
 [node name="List" type="VBoxContainer" parent="NextTurns"]
 layout_mode = 2

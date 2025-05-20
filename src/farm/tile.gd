@@ -97,6 +97,8 @@ func update_display():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	$PlantSprite.material.set_shader_parameter("push", push_vector)
+	if seed != null:
+		$PlantSprite.material.set_shader_parameter("corrupted", seed.get_effect("corrupted") != null)
 
 func _on_tile_button_mouse_entered() -> void:
 	if !Settings.CLICK_MODE:
@@ -232,10 +234,10 @@ func update_plant_sprite():
 
 func harvest(delay) -> Array[Effect]:
 	var effects: Array[Effect] = []
-	var harvest_args = notify_harvest(delay)
+	var specific_args = get_harvest_event_args(delay)
 	effects.append_array(get_effects("harvest"))
 	state = Enums.TileState.Empty
-	on_yield_gained.emit(self, harvest_args)
+	on_yield_gained.emit(self, specific_args)
 	remove_seed()
 	$HarvestParticles.emitting = true
 	return effects
@@ -389,12 +391,9 @@ func destroy_plant():
 func update_purple_overlay():
 	$PurpleOverlay.visible = purple and state != Enums.TileState.Inactive and not_destroyed()
 
-func notify_harvest(delay: bool) -> EventArgs.HarvestArgs:
+func get_harvest_event_args(delay: bool) -> EventArgs.HarvestArgs:
 	var harvest_args: EventArgs.HarvestArgs = seed.get_yield(self)
 	harvest_args.delay = harvest_args.delay or delay
-	var specific_args = EventArgs.SpecificArgs.new(self)
-	specific_args.harvest_args = harvest_args
-	event_manager.notify_specific_args(EventManager.EventType.OnPlantHarvest, specific_args)
 	return harvest_args
 
 func notify_destroyed():

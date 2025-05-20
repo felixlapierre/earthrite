@@ -368,7 +368,7 @@ R: Rotate
 F: Flip"
 
 [node name="EnergyDisplay" parent="UI" instance=ExtResource("20_i330f")]
-position = Vector2(28, 153)
+position = Vector2(0, 153)
 
 [node name="DamagePanel" type="PanelContainer" parent="UI"]
 layout_mode = 0
@@ -405,7 +405,7 @@ texture_hover = ExtResource("22_oyub8")
 stretch_mode = 0
 
 [node name="AttackPreview" parent="UI" instance=ExtResource("24_5346t")]
-position = Vector2(1425, 388)
+position = Vector2(1400, 300)
 
 [node name="HelpButton" type="Button" parent="UI"]
 custom_minimum_size = Vector2(340, 0)
@@ -430,7 +430,7 @@ shortcut = SubResource("Shortcut_wpwor")
 text = "End Turn"
 
 [node name="WeatherDisplay" parent="UI" instance=ExtResource("22_xo87j")]
-position = Vector2(1389, 219)
+position = Vector2(1389, 140)
 
 [node name="AlertContainer" parent="." instance=ExtResource("18_ih37u")]
 visible = false

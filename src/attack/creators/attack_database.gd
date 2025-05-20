@@ -24,7 +24,8 @@ var destroy_col = DestroyCol.new()
 #var end_turn_rotate = EndTurnRotateColors.new()
 #var end_turn_randomize = EndTurnRandomizeColors.new()
 
-var increase_ritual_10 = IncreaseRitualTarget.new(10.0)
+var double_ritual_target = MultiplyRitualTarget.new(1.0)
+var increase_ritual_10 = MultiplyRitualTarget.new(0.1)
 var block_ritual = BlockRitual.new(1.0)
 var cold_snap = ColdSnap.new()
 var counter3 = Counter.new(3)
@@ -72,7 +73,7 @@ func add(attack: AttackPattern):
 
 # Create every single attack in the game lol
 func populate_database():
-	add(SimpleAttackBuilder.new().easy(1).build())
+	add(SimpleAttackBuilder.new().fortune_every_turn(MultiplyRitualTarget.new(1)).easy(1).build())
 	# Easy week 2
 	add(SimpleAttackBuilder.new().fortune_once(add_10_weeds)\
 		.easy(2).normal(1).hard(1).mastery(1).build())
@@ -88,7 +89,7 @@ func populate_database():
 	#	.easy(3).normal(2).hard(2).mastery(2).build())
 	add(simple_every(DestroyTiles.new(1))
 		.easy(3).normal(2).hard(2).mastery(2).build())
-	add(simple_every(IncreaseRitualTarget.new(5.0))\
+	add(simple_every(MultiplyRitualTarget.new(0.01))\
 		.easy(3).normal(2).hard(2).mastery(2).build())
 	
 	# Easy year 4-5 / Normal first boss

@@ -15,7 +15,7 @@ func _init(p_id = "", p_type = EventManager.EventType.BeforeTurnStart, p_callbac
 
 func invoke(args: EventArgs):
 	if !disabled:
-		callback.call(args)
+		await callback.call(args)
 
 func disable():
 	disabled = true

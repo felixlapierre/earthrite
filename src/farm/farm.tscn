@@ -16,9 +16,9 @@ script = ExtResource("1_1ma26")
 [node name="ConfirmButton" type="Button" parent="."]
 custom_minimum_size = Vector2(200, 80)
 offset_left = 1338.0
-offset_top = 619.0
-offset_right = 1516.0
-offset_bottom = 683.0
+offset_top = 680.0
+offset_right = 1538.0
+offset_bottom = 760.0
 theme = ExtResource("2_itouy")
 theme_override_font_sizes/font_size = 70
 text = "Confirm"

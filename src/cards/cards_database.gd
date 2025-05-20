@@ -44,6 +44,10 @@ static func load_cards():
 		var blight_cards = get_element_cards("Blight")
 		all_cards.append(blight_cards)
 		cards_rarity["common"].append(blight_cards)
+	
+	print("Common: " + str(cards_rarity["common"].size()))
+	print("Uncommon: " + str(cards_rarity["uncommon"].size()))
+	print("Rare: " + str(cards_rarity["rare"].size()))
 
 static func filter_card(card_data: CardData):
 	if Global.FARM_TYPE == "STORMVALE" and card_data.name == "Stormcall":

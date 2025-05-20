@@ -90,7 +90,7 @@ func popup_fortune(visible: bool):
 	fortune_display.visible = true
 
 	var base_position = global_position
-	var target_position = Vector2(250, 50) if fortune.type == Fortune.FortuneType.GoodFortune else Vector2(1400, 50)
+	var target_position = Vector2(250, 20) if fortune.type == Fortune.FortuneType.GoodFortune else Vector2(1400, 20)
 	var base_scale = Vector2.ZERO
 	var target_scale = Vector2.ONE
 

@@ -96,10 +96,10 @@ static func setup_wilderness_farm_callback(farm: Farm, event_manager: EventManag
 
 static func setup_riverlands_farm_callback(farm: Farm, event_manager: EventManager):
 	event_manager.register_listener(EventManager.EventType.BeforeYearStart, func(args: EventArgs):
-		for i in range(2, 4):
+		for i in range(2, 5):
 			farm.tiles[2][i].irrigate()
 			farm.tiles[3][i].irrigate()
-		for i in range(4, 6):
+		for i in range(3, 6):
 			farm.tiles[4][i].irrigate()
 			farm.tiles[5][i].irrigate())
 
@@ -125,6 +125,11 @@ static var wilderness_callable = func(event_args: EventArgs):
 	event_args.farm.use_card_random_tile(Global.WILDERNESS_PLANT.copy(), Global.WILDERNESS_PLANT.size)
 
 static func setup_mountain_farm(farm: Farm):
+	var rocks2 = [Vector2(0, 3), Vector2(0, 6), Vector2(1, 0), Vector2(1, 1), Vector2(2, 3), Vector2(1, 5), Vector2(3, 2), Vector2(2, 5), Vector2(4, 0), Vector2(5, 2), Vector2(6, 2), Vector2(7, 1), Vector2(4, 1), Vector2(7, 0)]
+	for rock in rocks2:
+		farm.tiles[rock.y][rock.x].rock = true
+		farm.tiles[7 - rock.y][7 - rock.x].rock = true
+	return
 	var rocks = 24
 	for tile: Tile in farm.get_all_tiles():
 		if rocks == 0:

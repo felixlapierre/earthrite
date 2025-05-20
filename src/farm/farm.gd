@@ -412,6 +412,9 @@ func perform_effect(effect, tile: Tile):
 
 func gain_yield(tile: Tile, args: EventArgs.HarvestArgs):
 	var destination = Global.MANA_TARGET_LOCATION_PURPLE if args.purple else Global.MANA_TARGET_LOCATION_YELLOW
+	var specific = EventArgs.SpecificArgs.new(tile)
+	specific.harvest_args = args
+	event_manager.notify_specific_args(EventManager.EventType.OnPlantHarvest, specific)
 	blight_bubble_animation(tile, args, destination)
 	on_yield_gained.emit(args)
 

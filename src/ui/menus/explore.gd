@@ -81,7 +81,7 @@ func create_point_from_name(name, location):
 				select_enhance("common"))
 		"Structure":
 			create_point("Structure", location, func(pt):
-				show_tutorial.call("structure")
+				show_tutorial.call("structure", "farleft")
 				use_explore(pt)
 				structures += 1
 				add_structure("common"))
@@ -93,21 +93,21 @@ func create_point_from_name(name, location):
 				expand_farm())
 		"Remove Card":
 			create_point("Remove Card", location, func(pt):
-				show_tutorial.call("remove")
+				show_tutorial.call("remove", "farleft", true)
 				select_card_to_remove(pt))
 		"Rare Card":
 			create_point("Rare Card", location, func(pt):
-				show_tutorial.call("card")
+				show_tutorial.call("card", "farleft")
 				use_explore(pt)
 				add_card("rare", 3))
 		"Rare Structure":
 			create_point("Rare Structure", location, func(pt):
-				show_tutorial.call("structure")
+				show_tutorial.call("structure", "farleft")
 				use_explore(pt)
 				add_structure("rare"))
 		"Rare Enhance":
 			create_point("Rare Enhance", location, func(pt):
-				show_tutorial.call("enhance")
+				show_tutorial.call("enhance", "farleft")
 				use_explore(pt)
 				select_enhance("rare"))
 		"Legendary Card":
