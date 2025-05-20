@@ -11,9 +11,8 @@ func _init(strength: float = 1.0) -> void:
 
 func register_fortune(event_manager: EventManager):
 	callback = func(args: EventArgs):
-		if event_manager.turn_manager.target_blight > 0:
+		if event_manager.turn_manager.week == 1:
 			await popup_callback.call(true)
-			event_manager.turn_manager.target_blight *= (1 + strength)
 			await popup_callback.call(false)
 	event_manager.register_listener(event_type, callback)
 

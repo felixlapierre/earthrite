@@ -4,7 +4,7 @@ var vessel_bound = load("res://src/cards/data/unique/vessel_bound.tres")
 var strength = preload("res://src/enhance/data/strength.tres")
 
 func _init():
-	super._init("Vessel Stone", "You come across a small abandoned town built around plaza with a cracked stone fountain. There are no dead; clearly, the residents had time to escape before the Blight spread this far.\n
+	super._init("Vessel Stone", "You come across a small abandoned town built around a plaza with a cracked stone fountain. There are no dead; clearly, the residents had time to escape before the Blight spread this far.\n
 		A huge cluster of overgrown, pulsing roots prompts you to investigate an abandoned house. As you cut the roots away with magic, raw magical energy bursts out of the house, threatening to vaporize you through your hastily-cast shield spell\n
 		Upon further investigation, it seems the Blight has been feeding on a vast source of power buried underneath this home.")
 

@@ -17,7 +17,7 @@ func _init():
 
 func update_text():
 	if Global.LUNAR_FARM or Global.FARM_TYPE == "LUNARTEMPLE":
-		text = text.replace("80%", "30%")
+		text = text.replace("75%", "15%")
 
 func copy():
 	var copy = PurpleTotem.new()
@@ -26,7 +26,7 @@ func copy():
 	return copy
 
 func register_events(event_manager: EventManager, tile: Tile):
-	var strength = 0.30 if Global.LUNAR_FARM else 0.80
+	var strength = 0.15 if Global.LUNAR_FARM else 0.75
 	update_text()
 	callback = func(args: EventArgs):
 		if args.turn_manager.flag_defer_excess:

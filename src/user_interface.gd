@@ -761,7 +761,7 @@ func _on_any_card_button_pressed():
 	self.add_child(debug)
 
 func pick_cards_event(cards):
-	$Winter/Explore.pick_card_from(cards, func(): return cards)
+	$Winter/Explore.pick_card_from(cards, func(rerolls: int = 0): return cards)
 
 func pick_enhance_event(rarity: String):
 	$Winter/Explore.select_enhance(rarity)

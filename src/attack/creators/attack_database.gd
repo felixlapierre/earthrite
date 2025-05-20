@@ -191,10 +191,10 @@ func populate_database():
 	add(SimpleAttackBuilder.new().fortune_every(destroy_plant_every_card, 3).hard(4).build())
 	
 	# Hard year 5 is normal 2nd boss, already done
-	add(SimpleAttackBuilder.new().fortune_every_turn(AddBlightroot.new(1))\
-		.fortune_odd(EndTurnSwapColors.new())\
-		.fortune_even(EndTurnBurn.new())
-		.hard(5).mastery(4).build())
+	#add(SimpleAttackBuilder.new().fortune_every_turn(AddBlightroot.new(1))\
+	#	.fortune_odd(EndTurnSwapColors.new())\
+	#	.fortune_even(EndTurnBurn.new())
+	#	.hard(5).mastery(4).build())
 	add(SimpleAttackBuilder.new().fortune_every_turn(DestroyPlants.new(1))\
 		.fortune_random(EndTurnBurn.new())\
 		.fortune_random(AddBlightroot.new(1))\
@@ -214,8 +214,8 @@ func populate_database():
 		.hard(6).mastery(5).build())
 	
 	# Hard year 7 is done earlier (easy final boss mostly)
-	add(SimpleAttackBuilder.new().fortune_every_turn(Helper.pick_random([EndTurnBurn.new(), EndTurnRotateColors.new(), AddDeathcap.new(1)]))\
-				.fortune_even(DestroyPlants.new(2)).hard(7).mastery(6).build())
+	#add(SimpleAttackBuilder.new().fortune_every_turn(Helper.pick_random([EndTurnBurn.new(), EndTurnRotateColors.new(), AddDeathcap.new(1)]))\
+	#			.fortune_even(DestroyPlants.new(2)).hard(7).mastery(6).build())
 
 	# Hard final boss
 	add(simple_every_list([Helper.pick_random([destroy_row, destroy_col]), weeds_entire_farm])\

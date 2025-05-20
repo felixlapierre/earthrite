@@ -1,7 +1,6 @@
-[gd_resource type="Resource" script_class="CardData" load_steps=4 format=3 uid="uid://barxfhscvj50g"]
+[gd_resource type="Resource" script_class="CardData" load_steps=3 format=3 uid="uid://barxfhscvj50g"]
 
 [ext_resource type="Script" path="res://src/cards/card_data.gd" id="1_lfoho"]
-[ext_resource type="Resource" uid="uid://cijtg3ddxitn3" path="res://src/effect/data/obliviate.tres" id="1_oub1d"]
 [ext_resource type="Texture2D" uid="uid://bi15e7ewmyyok" path="res://assets/seed/petrified_seed.png" id="2_e2yu5"]
 
 [resource]
@@ -20,6 +19,9 @@ texture = ExtResource("2_e2yu5")
 seed_texture = 3
 texture_icon_offset = 16
 targets = Array[String]([])
-effects = Array[Resource("res://src/effect/effect.gd")]([ExtResource("1_oub1d")])
-enhances = Array[String]([])
+effects = Array[Resource("res://src/effect/effect.gd")]([])
+enhances = Array[Dictionary]([])
 strength = 0.0
+delay = 0.0
+anim_on = 0
+effects2 = Array[Resource("res://src/effect2/effect2.gd")]([])

@@ -125,6 +125,8 @@ func draw_springbound_cards(count: int):
 	reorganize_hand()
 
 func play_card():
+	if Global.LOCK:
+		return
 	# Find the card in our hand
 	var playedcard
 	for card in $Hand.get_children():

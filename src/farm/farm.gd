@@ -161,7 +161,8 @@ func _process(delta: float) -> void:
 		clear_overlay()
 		precision_mode = true
 		selection.clear()
-		selection.append(hovered_tile.grid_location)
+		if hovered_tile != null:
+			selection.append(hovered_tile.grid_location)
 		show_select_overlay()
 	
 	# Clear overlay if you mouse off the farm

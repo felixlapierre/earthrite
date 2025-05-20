@@ -67,7 +67,7 @@ func create_point_from_name(name, location):
 			create_point("Gain Card", location, func(pt):
 				show_tutorial.call("card")
 				use_explore(pt)
-				add_card("common", 5 - Mastery.less_options()))
+				add_card("common", 4 - Mastery.less_options()))
 		"Event":
 			create_point("Event", location, func(pt):
 				show_tutorial.call("event", "", true)
@@ -159,18 +159,18 @@ func pick_binary_explore():
 		return "Structure" if !scrapyard() else "Bag of Tricks"
 	if i <= 55:
 		return "Remove Card"
-	if i <= 65:
+	if i <= 65.5:
 		if Helper.can_expand_farm():
 			return "Expand Farm"
 		else:
 			return "Gain Card" if !scrapyard() else "Bag of Tricks"
-	if i <= 67:
+	if i <= 67.5:
 		return "Rare Card" if !scrapyard() else "Rare Bag of Tricks"
 	if i <= 68.5:
 		return "Rare Structure" if !scrapyard() else "Rare Bag of Tricks"
-	if i <= 69.5:
+	if i <= 69.0:
 		return "Rare Enhance" if !scrapyard() else "Rare Bag of Tricks"
-	if i <= 70:
+	if i <= 69.4:
 		return "Legendary Card"
 	return "Gain Card" if !scrapyard() else "Bag of Tricks"
 

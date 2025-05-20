@@ -5,7 +5,6 @@ var MINI_CARD = preload("res://src/ui/menus/mini_card.tscn")
 @onready var Title = $Center/Panel/Margin/VBox/Title
 @onready var Description = $Center/Panel/Margin/VBox/Description
 @onready var Stats = $Center/Panel/Margin/VBox/Grid/Stats
-@onready var Deck = $Center/Panel/Margin/VBox/Grid/Deck
 @onready var Deck2 = $Center/Panel/Margin/VBox/Grid/Deck2/Flow
 @onready var SendPics = $Center/Panel/Margin/VBox/SendPics
 
@@ -73,15 +72,21 @@ func hide_send_pics():
 	SendPics.visible = false
 
 func do_unlocks(turn_manager: TurnManager, deck: Array[CardData]):
+	print("Start unlocks")
 	if Global.DIFFICULTY == -1:
 		return #no unlocks in tutorial
-	var win = turn_manager.blight_damage < 5
+	var win = turn_manager.blight_damage < Global.MAX_HEALTH
 	var farms = []
 	var mages = []
 	var difficulties = []
 	var caption = $Center/Panel/Margin/VBox/Grid/UnlockedCaption
 	var value = $Center/Panel/Margin/VBox/Grid/UnlockValue
 	
+	print("Win: " + str(win))
+	print("Difficulty: " + str(Global.DIFFICULTY))
+	print(Unlocks.DIFFICULTIES_UNLOCKED)
+	print(Unlocks.MAGES_UNLOCKED)
+	print(Unlocks.FARMS_UNLOCKED)
 	#Difficulty
 	if !Unlocks.DIFFICULTIES_UNLOCKED["1"] and win:
 		Unlocks.DIFFICULTIES_UNLOCKED["1"] = true
@@ -99,7 +104,8 @@ func do_unlocks(turn_manager: TurnManager, deck: Array[CardData]):
 			Unlocks.DIFFICULTIES_UNLOCKED[str(diff)] = true
 			difficulties.append("Mastery " + str(diff - 2))
 	
-	# Forest, Mountain, Wilderness, Riverlands unlocked by default
+	print(difficulties)
+	# Forest, Mountain, Wilderness, Riverlands unlocked by defaultF
 
 	# Lunar Temple: Win any farm
 	if !Unlocks.FARMS_UNLOCKED["4"] and win:
@@ -116,6 +122,7 @@ func do_unlocks(turn_manager: TurnManager, deck: Array[CardData]):
 		Unlocks.FARMS_UNLOCKED["6"] = true
 		farms.append("Scrapyard")
 	
+	print(farms)
 	# Mages
 	# Now: Novice [0], acorn[1], void[2] and time[3] unlocked by default
 	# Ice mage: Win on any difficulty
@@ -133,7 +140,7 @@ func do_unlocks(turn_manager: TurnManager, deck: Array[CardData]):
 		mages.append(BlightMageFortune.MAGE_NAME)
 	# Chaos mage: Embrace chaos / Have no basic cards in your final deck
 	if !Unlocks.MAGES_UNLOCKED[str(ChaosMageFortune.MAGE_ID)] and win and deck.all(func(card: CardData):
-			return card.rarity != "basic"):
+			return card.rarity != "basic" or card.enhances.size() > 0):
 		Unlocks.MAGES_UNLOCKED[str(ChaosMageFortune.MAGE_ID)] = true
 		mages.append(ChaosMageFortune.MAGE_NAME)
 	# Fire mage: Win on Hard
@@ -145,6 +152,7 @@ func do_unlocks(turn_manager: TurnManager, deck: Array[CardData]):
 		Unlocks.MAGES_UNLOCKED[str(ArchmageFortune.MAGE_ID)] = true
 		mages.append(ArchmageFortune.MAGE_NAME)
 	
+	print(mages)
 	if difficulties.size() > 0:
 		for diff in difficulties:
 			caption.append_text("[color=gold]Unlocked New Difficulty![/color]\n")
@@ -158,6 +166,7 @@ func do_unlocks(turn_manager: TurnManager, deck: Array[CardData]):
 			caption.append_text("[color=gold]Unlocked New Character![/color]\n")
 			value.append_text("[color=aqua]" + mage + "[/color]\n")
 
+	print("Saving unlocks")
 	Unlocks.save_unlocks()
 
 func _on_endless_mode_pressed() -> void:
