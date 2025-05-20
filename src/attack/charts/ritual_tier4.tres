@@ -7,4 +7,4 @@ script = ExtResource("1_nefnb")
 name = "Ritual (Tier 4)"
 type = 0
 rank = 3
-values = Array[float]([35.0, 59.0, 158.0, 200.0, 242.0, 330.0, 380.0, 560.0])
+values = Array[float]([35.0, 59.0, 158.0, 200.0, 330.0, 415.0, 560.0, 685.0])
