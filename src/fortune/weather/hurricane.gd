@@ -16,7 +16,7 @@ func register_fortune(event_manager: EventManager):
 				var seed = tile.seed
 				args.farm.effect_queue.append_array(tile.harvest(false))
 				if seed.get_effect("plant") == null and seed.yld != 0 and seed.get_effect("corrupted") == null:
-					args.farm.effect_queue.append_array(tile.plant_seed_animate(seed)
+					args.farm.effect_queue.append_array(tile.plant_seed_animate(seed))
 		args.farm.process_effect_queue()
 	event_manager.register_listener(event_type, callback)
 
