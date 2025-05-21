@@ -1,4 +1,6 @@
-This is a simple Worker that serves the web folder from the Earthrite game with the proper server response headers to avoid the [SharedArrayBuffer & Cross Origin Isolation issues](https://github.com/godotengine/godot/issues/69020).
+This is a simple Worker that serves the web folder from the Earthrite game with the proper server response headers to avoid the [SharedArrayBuffer & Cross Origin Isolation issues](https://github.com/godotengine/godot/issues/69020). You can access it here:
+
+[https://earthrite.tomsprojects.workers.dev/](https://earthrite.tomsprojects.workers.dev/)
 
 It will use Cloudflare Workers' support for assets, hosted and served for free (https://developers.cloudflare.com/workers/static-assets/). This is configured in `wrangler.jsonc`. To serve assets with the appropriate headers, we must add a custom `_headers` (no file extension) in the web folder to indicate to Workers that those assets are to be served with the needed headers to resolve SharedArrayBuffer issues. The content should be:
 
