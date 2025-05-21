@@ -145,22 +145,25 @@ func apply_enhance(enhance: Enhance):
 	return n_card
 
 func apply_strength(enhance: Enhance):
-	if can_strengthen_custom_effect():
+	var done = false
+	for effect in effects2:
+		if effect.can_strengthen():
+			if effect.strength >= 0.0:
+				effect.strength += enhance.strength * strength_increment
+			elif effect.strength < 0.0:
+				effect.strength -= enhance.strength * strength_increment
+			done = true
+			break
+	if !done and can_strengthen_custom_effect():
 		strength += enhance.strength * strength_increment
-	else:
+		done = true
+	if !done:
 		for effect in effects:
 			if effect.strength > 0.0:
 				effect.strength += enhance.strength * strength_increment
 				break
 			elif effect.strength < 0.0:
 				effect.strength -= enhance.strength * strength_increment
-				break
-		for effect in effects2:
-			if effect.can_strengthen():
-				if effect.strength >= 0.0:
-					effect.strength += enhance.strength * strength_increment
-				elif effect.strength < 0.0:
-					effect.strength -= enhance.strength * strength_increment
 				break
 	if enhance.strength > 1.0 and enhance.rarity == "uncommon":
 		cost += 1

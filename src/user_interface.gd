@@ -403,7 +403,7 @@ func _on_shop_on_card_removed(card) -> void:
 
 # End Turn
 func _on_end_turn_button_pressed() -> void:
-	if turn_ending:
+	if turn_ending or Global.LOCK:
 		return
 	turn_ending = true
 	Global.selected_card = null

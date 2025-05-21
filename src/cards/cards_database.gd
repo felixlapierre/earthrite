@@ -297,7 +297,7 @@ static func get_element_cards(text: String):
 		return [
 			load("res://src/event/unique/blight_rose.tres"),
 			load("res://src/cards/data/unique/bloodrite.tres"),
-			load("res://src/cards/data/unique/dark_visions.tres")
+			load("res://src/cards/data/unique/dark_visions.tres"),
 		]
 	elif text.contains("Water"):
 		return [
@@ -313,7 +313,9 @@ static func get_element_cards(text: String):
 			load("res://src/cards/data/action/kindling.tres"),
 			load("res://src/cards/data/action/earth_ward.tres"),
 			load("res://src/cards/data/seed/asphodel.tres"),
-			load("res://src/cards/data/action/earthrite.tres")
+			load("res://src/cards/data/action/earthrite.tres"),
+			load("res://src/cards/data/seed/cactus.tres"),
+			load("res://src/cards/data/seed/rainbow_cactus.tres")
 		]
 	elif text.contains("Nature"):
 		return [

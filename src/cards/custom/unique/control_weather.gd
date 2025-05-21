@@ -32,7 +32,7 @@ func register_events(event_manager: EventManager, p_tile: Tile):
 				WeatherDisplay.in_two_weeks = selected
 			args.user_interface.update()
 
-		pick_option_ui.setup("Choose a weather effect", options.slice(0, 3 + strength), on_pick, null)
+		pick_option_ui.setup("Choose a weather effect", options.slice(0, min(3 + strength, 5)), on_pick, null)
 
 	event_manager.register_listener(event_type_after_play, callback_after_play)
 
