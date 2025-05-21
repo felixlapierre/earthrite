@@ -111,7 +111,7 @@ func _on_diff_options_item_selected(index):
 	var hexes2 = "- [color=mediumpurple]Blight Hexes are even stronger and trickier[/color]\n"
 	var options = "- [color=mediumpurple]Fewer options are presented when exploring[/color]\n"
 	var numbers3 = "- [color=purple]Large amounts of Mana needed to complete the ritual. Maximize Blight attack strength[/color]\n"
-	
+	var hexes3 = "- [color=purple]Blight Hexes are absurdly strong[/color]\n"
 	match index:
 		0:
 			update_prompt("Difficulty: Easy", load("res://assets/ui/Easy.png"), "[color=burlywood]Base difficulty[/color]")
@@ -128,7 +128,7 @@ func _on_diff_options_item_selected(index):
 		6:
 			update_prompt("Difficulty: Mastery 4", load("res://assets/ui/Mastery4.png"), numbers2 + hexes2 + explores + options)
 		7:
-			update_prompt("Difficulty: Mastery 5", load("res://assets/ui/Mastery5.png"), numbers3 + hexes2 + explores + options)
+			update_prompt("Difficulty: Mastery 5", load("res://assets/ui/Mastery5.png"), numbers3 + hexes3 + explores + options)
 	Global.DIFFICULTY = index
 
 func _on_start_button_pressed():

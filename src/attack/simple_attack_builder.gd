@@ -79,6 +79,10 @@ func mastery(week: int):
 	attack.difficulty_map["mastery"] = week
 	return self
 
+func absurd(week: int):
+	attack.difficulty_map["absurd"] = week
+	return self
+
 func damage_multiplier(strength: float):
 	attack.damage_multiplier = strength
 	return self

@@ -20,11 +20,17 @@ var destroy_two_tiles = DestroyTiles.new(2)
 var destroy_row = DestroyRow.new()
 var destroy_col = DestroyCol.new()
 
+var destroy_entire_farm = DestroyEntireFarm.new()
+var corrupt_random = CorruptRandom.new()
+var corrupt_two_random = CorruptRandom.new(2)
+var corrupt_best = CorruptBest.new()
+
 #var end_turn_swap = EndTurnSwapColors.new()
 #var end_turn_rotate = EndTurnRotateColors.new()
 #var end_turn_randomize = EndTurnRandomizeColors.new()
 
 var double_ritual_target = MultiplyRitualTarget.new(1.0)
+var ritual_target_50p = MultiplyRitualTarget.new(0.5)
 var increase_ritual_10 = MultiplyRitualTarget.new(0.1)
 var block_ritual = BlockRitual.new(1.0)
 var cold_snap = ColdSnap.new()
@@ -73,129 +79,184 @@ func add(attack: AttackPattern):
 
 # Create every single attack in the game lol
 func populate_database():
-	add(SimpleAttackBuilder.new().fortune_every_turn(MultiplyRitualTarget.new(1)).easy(1).build())
-	# Easy week 2
+	add(SimpleAttackBuilder.new().easy(1).build())
+	
+	# ====================
+	# DESTROY
+	# =====
+	
+	add(simple_every(destroy_one_plant)\
+		.easy(3).normal(2).hard(2).mastery(2).absurd(1).build())
+	# Destroy 1 plant and minor ones (weeds once, blightroot once)
+	add(simple_every(destroy_one_plant).fortune_once([add_blightroot, add_10_weeds].pick_random())\
+		.easy(4).hard(3).mastery(3).absurd(2).build())
+	# Destroy 1 plant and first boss combo
+	add(simple_every_list([destroy_one_plant, add_blightroot])\
+		.easy(5).hard(4).mastery(4).absurd(3).build())
+	
+	# Destroy 2 plants (2nd boss)
+	add(simple_every(destroy_two_plants)\
+		.easy(6).hard(5).mastery(4).absurd(3).build())
+	# Combine with some minor stuff
+	add(simple_every(destroy_two_plants).fortune_every_turn([add_blightroot, destroy_one_tile].pick_random())\
+		.easy(7).hard(5).mastery(4).absurd(4).build())
+	add(simple_every(destroy_two_plants).fortune_once(ritual_target_50p)\
+		.easy(7).hard(5).mastery(4).absurd(4).build())
+	
+	# Destroy row or column
+	add(SimpleAttackBuilder.new().fortune_even(Helper.pick_random([destroy_row, destroy_col]))\
+		.easy(7).build())
+	add(SimpleAttackBuilder.new().fortune_every([destroy_col, destroy_row].pick_random(), 2)\
+		.hard(6).mastery(5).absurd(4).build())
+
+	add(simple_every([destroy_col, destroy_row].pick_random())\
+		.easy(8).hard(7).mastery(6).absurd(5).build())
+	add(simple_every_list([destroy_col, destroy_row])\
+		.mastery(8).absurd(7).build())
+	
+	# Mark a plant to be destroyed per card played
+	add(simple_every(destroy_plant_every_card).hard(6).mastery(5).absurd(4).build())
+
+	add(simple_every_list([destroy_plant_every_card, add_blightroot]).hard(7).mastery(6).absurd(5).build())
+
+	add(SimpleAttackBuilder.new().fortune_every(destroy_plant_every_card, 3)\
+		.hard(4).mastery(3).absurd(2).build())
+	
+	# ======
+	# PLANTS
+	# =====
+
 	add(SimpleAttackBuilder.new().fortune_once(add_10_weeds)\
 		.easy(2).normal(1).hard(1).mastery(1).build())
 	add(SimpleAttackBuilder.new().fortune_once(add_blightroot)\
 		.easy(2).normal(1).hard(1).mastery(1).build())
 	
-	# Easy first boss
-	add(simple_every(destroy_one_plant)\
-		.easy(3).normal(2).hard(2).mastery(2).build())
 	add(SimpleAttackBuilder.new().fortune_every_turn(add_blightroot)\
-		.easy(3).normal(2).hard(2).mastery(2).build())
-	#add(simple_every(end_turn_swap)
-	#	.easy(3).normal(2).hard(2).mastery(2).build())
-	add(simple_every(DestroyTiles.new(1))
-		.easy(3).normal(2).hard(2).mastery(2).build())
-	add(simple_every(MultiplyRitualTarget.new(0.01))\
-		.easy(3).normal(2).hard(2).mastery(2).build())
-	
-	# Easy year 4-5 / Normal first boss
-	#add(simple_every(DestroyPlants.new(1)).fortune_once(EndTurnRandomizeColors.new())\
-	#	.easy(4).normal(3).build())
+		.easy(3).normal(2).hard(2).mastery(2).absurd(1).build())
+		
 	add(SimpleAttackBuilder.new().fortune_once(weeds_entire_farm)\
-		.easy(4).normal(3).build())
+		.easy(4).hard(3).mastery(2).absurd(1).build())
 	add(simple_every(add_blightroot).fortune_once(add_10_weeds)\
-		.easy(4).normal(3).build())
-	add(SimpleAttackBuilder.new().fortune_once(DestroyTiles.new(7))\
-		.easy(4).normal(3).build())
-	#add(simple_every(DestroyPlants.new(1)).fortune_once(EndTurnRandomizeColors.new())\
-	#	.easy(5).build())
-	add(SimpleAttackBuilder.new().fortune_once(weeds_entire_farm)\
-		.easy(5).build())
+		.easy(4).hard(3).mastery(2).absurd(1).build())
+
 	add(simple_every(add_blightroot).fortune_once(add_10_weeds)\
 		.easy(5).build())
-	#TODO One more at least
 	
-	# Easy 2nd boss
-	add(simple_every(burn_rightmost)\
-		.easy(6).normal(5).hard(5).mastery(4).build())
-	add(SimpleAttackBuilder.new().fortune_every_turn(add_deathcap)\
-		.easy(6).normal(5).hard(5).mastery(4).build())
-	#add(simple_every(end_turn_rotate)\
-	#	.easy(6).normal(5).hard(5).mastery(4).build())
-	add(simple_every(destroy_two_plants)\
-		.easy(6).normal(5).hard(5).mastery(4).build())
-	#TODO More
-	
-	# Easy year 7
-	add(SimpleAttackBuilder.new().fortune_even(Helper.pick_random([destroy_row, destroy_col]))\
-		.easy(7).build())
-	add(SimpleAttackBuilder.new().fortune_odd(add_corpse_flower)\
-		.easy(7).build())
-	add(SimpleAttackBuilder.new().fortune_every_turn(IncreaseBlightStrength.new(0.5)).damage_multiplier(1.5)\
-		.easy(7).build())
-	
-	# Easy final boss
-	add(simple_every(add_corpse_flower)\
-		.easy(8).hard(7).mastery(6).build())
-	add(simple_every(Helper.pick_random([destroy_row, destroy_col]))\
-		.easy(8).hard(7).mastery(6).build())
-	add(SimpleAttackBuilder.new().fortune_every_turn(IncreaseBlightStrength.new(1.0)).damage_multiplier(2.0)\
-		.easy(8).hard(7).build())
-	add(simple_every(destroy_two_tiles)
-		.easy(8).hard(7).mastery(6).build())
-	add(simple_every_list([burn_rightmost, add_deathcap])\
-		.easy(8).normal(7).hard(6).mastery(5).build())
-	
-	# Normal-Hard-Mastery turns 1-2 are already done
-	
-	# Normal 3: thorns are new
-	add(simple_every(increase_ritual_10).fortune_once(Helper.pick_random([two_blood_thorns, two_dark_thorns]))\
-		.normal(3).build())
-	
-	# Two easy 1st bosses: Normal 4, Hard 3, Mastery 3
 	add(simple_every_list([destroy_one_plant, add_blightroot])\
-		.normal(4).hard(3).mastery(3).build())
-	add(simple_every_list([destroy_one_tile, increase_ritual_10])\
-		.normal(4).hard(3).mastery(3).build())
-	add(simple_every_list([add_blightroot, increase_ritual_10])\
-		.normal(4).hard(3).mastery(3).build())
-	add(simple_every_list([destroy_one_plant, increase_ritual_10])\
-		.normal(4).hard(3).mastery(3).build())
-	
-	# Normal 5 is already done, it's easy second boss
-	# Normal 2nd boss
-	add(simple_every_list([burn_rightmost, add_blightroot])\
-		.normal(6).hard(5).mastery(4).build())
-	add(simple_every(Helper.pick_random([one_blood_thorn, one_dark_thorn]))\
-		.normal(6).hard(5).mastery(4).build())
+		.easy(6).hard(5).mastery(4).absurd(3).build())
+		
+	add(SimpleAttackBuilder.new().fortune_every_turn(add_deathcap)\
+		.easy(6).normal(5).hard(5).mastery(4).absurd(3).build())
+		
+	add(SimpleAttackBuilder.new().fortune_odd(add_corpse_flower)\
+		.easy(7).hard(6).mastery(5).absurd(4).build())
+
+	add(simple_every(add_corpse_flower)\
+		.easy(8).hard(7).mastery(6).absurd(5).build())
+
 	add(simple_every(WeedsEveryCard.new(1)).fortune_every_turn(destroy_one_plant)\
-		.normal(6).hard(5).mastery(4).build())
+		.hard(5).mastery(4).absurd(3).build())
+
 	add(simple_every_list([add_deathcap, AddWeeds.new(2)])\
-		.normal(6).hard(5).mastery(4).build())
-	add(simple_every_list([destroy_two_plants, increase_ritual_10])\
-		.normal(6).hard(5).mastery(4).build())
-	
-	# Normal week 7
-	add(simple_every_list([Helper.pick_random([one_dark_thorn, one_blood_thorn]), add_10_weeds])\
-		.normal(7).build())
-	# We also have burn + deathcap from easy final boss
-	
-	# Normal year 8 final boss
-	add(simple_every(Helper.pick_random([destroy_row, destroy_col])).fortune_once(Helper.pick_random([AddBloodThornsDeck.new(3), AddDarkThornsDeck.new(3)]))\
-		.normal(8).mastery(6).build())
+		.normal(6).hard(5).mastery(4).absurd(3).build())
+
 	add(simple_every_list([add_corpse_flower, add_blightroot])\
-		.normal(8).mastery(6).build())
-	add(simple_every_list([IncreaseBlightStrength.new(1.0), increase_ritual_10]).damage_multiplier(2.0)\
-		.normal(8).hard(8).mastery(7).build())
+		.hard(8).mastery(7).absurd(6).build())
+
+	add(simple_every(weeds_2_every_card)\
+		.hard(4).mastery(3).absurd(2).build())
+
+	add(simple_every(weeds_every_card).fortune_even(block_ritual)\
+		.hard(4).mastery(3).absurd(2).build())
+
+	# =====
+	# DESTROY TILES
+	# =====
+	
+	add(simple_every(destroy_one_tile)\
+		.easy(3).hard(3).mastery(2).absurd(1).build())
+	
+	add(SimpleAttackBuilder.new().fortune_once(DestroyTiles.new(7))\
+		.easy(4).normal(3).mastery(2).absurd(1).build())
+
+	add(SimpleAttackBuilder.new().fortune_once(DestroyTiles.new(10))\
+		.hard(3).mastery(3).absurd(2).build())
+
+	add(simple_every(destroy_two_tiles)
+		.easy(8).hard(7).mastery(6).absurd(5).build())
+
 	add(simple_every_list([destroy_two_tiles, add_10_weeds])\
-		.normal(8).mastery(6).build())
+		.hard(8).mastery(7).absurd(6).build())
 	
-	# Hard: Year 4
-	add(simple_every(weeds_2_every_card).hard(4).build())
-	add(simple_every(weeds_every_card).fortune_even(block_ritual).hard(4).build())
-	add(SimpleAttackBuilder.new().fortune_every(cold_snap, 4).hard(4).build())
-	add(SimpleAttackBuilder.new().fortune_every(counter3, 3).hard(4).build())
-	add(SimpleAttackBuilder.new().fortune_every(destroy_plant_every_card, 3).hard(4).build())
+	# =====
+	# NUMBERS
+	# =====
 	
-	# Hard year 5 is normal 2nd boss, already done
-	#add(SimpleAttackBuilder.new().fortune_every_turn(AddBlightroot.new(1))\
-	#	.fortune_odd(EndTurnSwapColors.new())\
-	#	.fortune_even(EndTurnBurn.new())
-	#	.hard(5).mastery(4).build())
+	add(SimpleAttackBuilder.new().fortune_once(MultiplyRitualTarget.new(0.50))\
+		.easy(3).normal(2).hard(2).mastery(2).build())
+
+	add(SimpleAttackBuilder.new().fortune_every_turn(IncreaseBlightStrength.new(0.5)).damage_multiplier(1.5)\
+		.easy(7).hard(7).mastery(7).absurd(6).build())
+		
+	add(SimpleAttackBuilder.new().fortune_every_turn(IncreaseBlightStrength.new(1.0)).damage_multiplier(2.0)\
+		.easy(8).hard(7).mastery(7).absurd(7).build())
+
+	add(simple_every(IncreaseBlightStrength.new(1.0)).damage_multiplier(2.0)\
+		.hard(8).mastery(8).absurd(8).build())
+
+	add(SimpleAttackBuilder.new().fortune_every(counter3, 3)\
+		.hard(4).mastery(3).absurd(3).build())
+	
+	# =====
+	# DECK MANIPULATION
+	# =====
+
+	add(simple_every(burn_rightmost)\
+		.easy(6).hard(5).mastery(4).absurd(3).build())
+
+	add(simple_every_list([burn_rightmost, add_blightroot])\
+		.hard(5).mastery(4).absurd(3).build())
+
+	add(simple_every_list([burn_rightmost, add_deathcap])\
+		.easy(8).hard(7).mastery(5).absurd(4).build())
+		
+	add(SimpleAttackBuilder.new().fortune_once(Helper.pick_random([two_blood_thorns, two_dark_thorns]))\
+		.hard(2).mastery(1).absurd(1).build())
+
+	add(simple_every(Helper.pick_random([one_blood_thorn, one_dark_thorn]))\
+		.normal(6).hard(5).mastery(4).absurd(3).build())
+
+	add(simple_every_list([Helper.pick_random([one_dark_thorn, one_blood_thorn]), add_10_weeds])\
+		.hard(7).mastery(5).absurd(4).build())
+
+	add(SimpleAttackBuilder.new().fortune_every_turn(weeds_entire_farm)\
+		.fortune_every_turn([one_blood_thorn, one_dark_thorn].pick_random())\
+		.hard(6).mastery(5).absurd(4).build())
+	
+	# =====
+	# FREEZE
+	# =====
+	
+	add(SimpleAttackBuilder.new().fortune_every(cold_snap, 4)\
+		.hard(4).mastery(3).absurd(2).build())
+	
+	add(SimpleAttackBuilder.new().fortune_every(cold_snap, 3)\
+		.hard(6).mastery(5).absurd(4).build())
+	
+	add(SimpleAttackBuilder.new().fortune_even(cold_snap)\
+		.mastery(8).absurd(7).build())
+
+	add(simple_every(cold_snap).absurd(8).build())
+
+	# =====
+	# Big Combinations
+	# =====
+
+	add(SimpleAttackBuilder.new().fortune_every_turn(AddBlightroot.new(1))\
+		.fortune_odd(destroy_one_plant)\
+		.fortune_even(EndTurnBurn.new())\
+		.hard(5).mastery(4).build())
+
 	add(SimpleAttackBuilder.new().fortune_every_turn(DestroyPlants.new(1))\
 		.fortune_random(EndTurnBurn.new())\
 		.fortune_random(AddBlightroot.new(1))\
@@ -203,49 +264,59 @@ func populate_database():
 		.normal(6).hard(5).mastery(4).build())
 
 	# Hard 2nd boss
-	add(SimpleAttackBuilder.new().fortune_every_turn(weeds_entire_farm).fortune_once(Helper.pick_random([two_blood_thorns, two_dark_thorns]))\
-		.hard(6).mastery(5).build())
 	add(SimpleAttackBuilder.new().fortune_even(counter3).fortune_odd(block_ritual)\
-		.hard(6).mastery(5).build())
+		.hard(6).mastery(5).absurd(4).build())
 	add(simple_every(add_deathcap).fortune_once(AddDeathcap.new(8))\
-		.hard(6).mastery(5).build())
+		.hard(6).mastery(5).absurd(4).build())
 	add(SimpleAttackBuilder.new().fortune_even(destroy_plant_every_card).fortune_every(cold_snap, 4)\
-		.hard(6).mastery(5).build())
+		.hard(6).mastery(5).absurd(4).build())
 	add(simple_every_list([destroy_two_plants, burn_rightmost])\
-		.hard(6).mastery(5).build())
+		.hard(6).mastery(5).absurd(4).build())
 	
-	# Hard year 7 is done earlier (easy final boss mostly)
-	#add(SimpleAttackBuilder.new().fortune_every_turn(Helper.pick_random([EndTurnBurn.new(), EndTurnRotateColors.new(), AddDeathcap.new(1)]))\
-	#			.fortune_even(DestroyPlants.new(2)).hard(7).mastery(6).build())
-
 	# Hard final boss
 	add(simple_every_list([Helper.pick_random([destroy_row, destroy_col]), weeds_entire_farm])\
-		.hard(8).mastery(7).build())
+		.hard(8).mastery(7).absurd(6).build())
 	add(SimpleAttackBuilder.new().fortune_every_turn(Helper.pick_random([destroy_row, destroy_col, AddCorpseFlower.new()]))\
 		.fortune_even(Helper.pick_random([EndTurnBurn.new(), BlockRitual.new(1.0), Counter.new(3)]))\
-		.hard(8).mastery(7).build())
+		.hard(8).mastery(7).absurd(6).build())
 	add(SimpleAttackBuilder.new().custom_attack(CounterAttackPattern.new())\
-		.hard(8).mastery(7).build())
+		.hard(8).mastery(7).absurd(6).build())
 	add(simple_every_list([burn_rightmost, Helper.pick_random([one_blood_thorn, one_dark_thorn])])\
-		.hard(8).mastery(7).build())
-	add(SimpleAttackBuilder.new().fortune_even(cold_snap)\
-		.hard(8).mastery(7).build())
-	add(simple_every_list([destroy_two_tiles, increase_ritual_10])\
-		.hard(8).mastery(7).build())
+		.hard(8).mastery(7).absurd(6).build())
+
+	# ======
+	# Destroy entire farm
+	# ======
+	add(SimpleAttackBuilder.new().fortune_every(destroy_entire_farm, 3)\
+		.mastery(8).absurd(7).build())
+	add(SimpleAttackBuilder.new().fortune_odd(destroy_entire_farm)\
+		.absurd(8).build())
 	
-	#TODO: Mastery 8 (just a copy of above for now)
-	add(simple_every_list([Helper.pick_random([destroy_row, destroy_col]), weeds_entire_farm])\
-		.mastery(8).build())
-	add(SimpleAttackBuilder.new().fortune_every_turn(Helper.pick_random([destroy_row, destroy_col, AddCorpseFlower.new()]))\
-		.fortune_even(Helper.pick_random([EndTurnBurn.new(), BlockRitual.new(1.0), Counter.new(3)]))\
-		.mastery(8).build())
-	add(SimpleAttackBuilder.new().custom_attack(CounterAttackPattern.new())\
-		.mastery(8).build())
-	add(simple_every_list([burn_rightmost, Helper.pick_random([one_blood_thorn, one_dark_thorn])])\
-		.mastery(8).build())
-	add(SimpleAttackBuilder.new().fortune_even(cold_snap)\
-		.mastery(8).build())
-	add(simple_every_list([destroy_two_tiles, increase_ritual_10])\
-		.mastery(8).build())
-	add(simple_every(IncreaseBlightStrength.new(1.5)).damage_multiplier(2.5)\
-		.mastery(8).build())
+	# ========
+	# Corrupt plants
+	# ========
+	add(SimpleAttackBuilder.new().fortune_odd(corrupt_random).absurd(3).build())
+	add(simple_every(corrupt_random)\
+		.hard(7).mastery(6).absurd(5).build())
+	add(simple_every(corrupt_two_random)\
+		.mastery(8).absurd(7).build())
+	add(simple_every(corrupt_best)
+		.mastery(8).absurd(7).build())
+
+	# =====
+	# Multiply ritual target
+	# =====
+	add(SimpleAttackBuilder.new().fortune_once(double_ritual_target)\
+		.easy(8).hard(8).mastery(6).absurd(6).build())
+	add(SimpleAttackBuilder.new().fortune_once(MultiplyRitualTarget.new(2.0))\
+		.mastery(8).absurd(8).build())
+	
+	# My most absurd creations
+	add(simple_every_list([AddCorpseFlower.new(2), weeds_entire_farm])\
+		.absurd(8).build())
+	
+	add(simple_every_list([destroy_two_plants, corrupt_two_random])\
+		.absurd(8).build())
+
+	add(SimpleAttackBuilder.new().fortune_once(AddBloodThornsDeck.new(20))\
+		.absurd(8).build())

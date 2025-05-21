@@ -103,10 +103,12 @@ func _on_attack_pressed() -> void:
 	var attack_database: AttackDatabase = user_interface.FortuneTeller.attack_database
 	var difficulty = "easy"
 	match Global.DIFFICULTY:
-		2:
+		2, 3, 4:
 			difficulty = "hard"
-		5:
+		5, 6:
 			difficulty = "mastery"
+		7:
+			difficulty = "absurd"
 	var attacks: Array[AttackPattern] = attack_database.get_attacks(difficulty, turn_manager.year)
 	var select_options = $Center/Panel/VBox/SelectOptions2
 	for attack in attacks:

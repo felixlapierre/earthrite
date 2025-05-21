@@ -12,10 +12,11 @@ func register_seed_events(event_manager: EventManager, p_tile: Tile):
 	callback = func(args: EventArgs):
 		var shape = Helper.get_tile_shape(8, Enums.CursorShape.Elbow)
 		for entry in shape:
-			var target_tile: Tile = args.farm.tiles[tile.grid_location.x + entry.x][tile.grid_location.y + entry.y]
-			if !target_tile.is_protected() and (target_tile.state == Enums.TileState.Growing or target_tile.state == Enums.TileState.Mature):
-				target_tile.destroy_plant()
-				tile.add_yield(strength)
+			if Helper.in_bounds(tile.grid_location + entry):
+				var target_tile: Tile = args.farm.tiles[tile.grid_location.x + entry.x][tile.grid_location.y + entry.y]
+				if !target_tile.is_protected() and (target_tile.state == Enums.TileState.Growing or target_tile.state == Enums.TileState.Mature):
+					target_tile.destroy_plant()
+					tile.add_yield(strength)
 	event_manager.register_listener(event_type, callback)
 
 func unregister_seed_events(event_manager: EventManager):

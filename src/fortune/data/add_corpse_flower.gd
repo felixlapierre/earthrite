@@ -21,7 +21,7 @@ func register_fortune(event_manager: EventManager):
 		targeted_tiles = []
 		for tile in args.farm.get_all_tiles():
 			if !tile.blight_targeted and [Enums.TileState.Growing, Enums.TileState.Mature, Enums.TileState.Empty].has(tile.state)\
-				and !tile.is_protected() and !tile.rock and (tile.seed == null or tile.seed.get_effect("corrupted") != null or tile.seed_base_yield != 0.0):
+				and !tile.is_protected() and !tile.rock and (tile.seed == null or tile.seed.get_effect("corrupted") == null):
 				options.append(tile)
 		options.shuffle()
 		for i in range(min(strength, options.size())):
