@@ -1,5 +1,55 @@
 # Changelog
 
+## Version 0.1.0
+
+Alpha "release" - released May 20th, 1 year after development on Earthrite began :D
+
+Features
+
+- Added a new tutorial that integrates into regular gameplay
+- New cards: Dewdrop, Mirror Image, Witch-Hazel, Emerald Sun, Winterberry, Windrite, Stormcall
+- New mages: Druid and Archmage. Reworked Water Mage into Alchemist.
+- New farm: Scrapyard
+- New sprites: Corpse Flower, Carrot, Potato, Radish, Bamboo, Papyrus, Onion, Coffee, Mint, Inspiration, Flow, Focus, Time Hop, Asphodel (replaces Dark Rose), Cactus, Rainbow Cactus, Dandelion, Bleeding Heart, Iris, Marigold, Weeds.
+- New animations: Victory, Defeat, Taking damage, Waterrite, most Blight attacks, Stormlands weather effects, Inspiration, Flow
+- Reworked Explore system to present the player with fewer, more random options at a time.
+- Screen now shakes when gaining large amounts of mana, completing the ritual, winning or losing the game, playing certain cards
+- Mastery mode now split into 5 fixed difficulties. Rebalanced all difficulties. High mastery difficulties are now extremely hard (hopefully)
+- Plants now shift in the wind when clicked or when cards are played
+- Reworked card/structure/enhance rarity system. Added Legendary rarity for cards.
+- Added Lucky Acorns that can be obtained when picking designated options in card choices. Lucky acorns allow you to reroll a card selection, and may even increase the rarity of the cards offered.
+- Reworked criteria for unlocking many of the farm types and mages. More mages and farm types are unlocked by default.
+- Damage taken is no longer a discrete value from 0-5 but rather goes from 0-100. Damage taken is proportional to unblocked blight damage. Blight attack strength no longer carries over to the next turn if unblocked.
+- Cards can now be found enhanced when exploring
+- Added Statistics page showing best win records with each farm / mage combination.
+- Added 'Cabbage' basic plant on Riverlands and Mountains, instead of 'Radish'.
+- Added a little bird
+- New Blight attacks (Apocalypse, Corruption) featured at higher difficulties
+
+QoL
+- New 'eye' icon can be hovered for a quick peek at how much mana each tile has, and how much total mana each side of the farm has. Hovering future turns in the attack preview will show the same peek interface, estimating the state of the farm on that turn.
+- Added precision tile selection mode, activated by holding the mouse down when playing a card.
+- Added more mouse-hover descriptions (still a work in progress)
+- Reworked main menu to be a bit cleaner.
+
+Balance
+
+- Made lunar totem much weaker on lunar temple
+- Voidcaster now gains 1 mana per empty tile
+- Riverlands has +2 watered tiles
+- Mountains has fewer rocks and rock locations are hard-coded to a pleasant configuration
+- Made basic cards weaker
+- Sprinkler structure is now common and waters one adjacent tile each turn.
+- Frost mage max hand size up to 10 from 8 (10->11 when upgraded)
+- Chaos mage now randomizes all non-enhanced cards every year, instead of randomizing the entire deck at the start of the run only.
+- Bloodrite no longer plants a blightroot on the farm
+- Control Weather can now be strengthened to offer more options
+- Changed many card's mana, grow time, energy cost, and rarity
+
+And of course
+- Fixed a ton of bugs
+- Refactored a ton of code
+
 ## Version 0.0.9
 
 Released Jan 15th
