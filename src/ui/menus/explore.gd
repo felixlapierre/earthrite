@@ -170,7 +170,7 @@ func pick_binary_explore():
 		return "Rare Structure" if !scrapyard() else "Rare Bag of Tricks"
 	if i <= 69.0:
 		return "Rare Enhance" if !scrapyard() else "Rare Bag of Tricks"
-	if i <= 69.4:
+	if i <= 69.4 and Global.FARM_TYPE != "WILDERNESS":
 		return "Legendary Card"
 	return "Gain Card" if !scrapyard() else "Bag of Tricks"
 
@@ -267,28 +267,33 @@ func select_enhance(rarity: String):
 	pick_option_ui.reroll_enabled = true
 	add_sibling(pick_option_ui)
 	var prompt = "Pick an enhance to apply"
-	pick_option_ui.setup(prompt, get_enhances_fn.call(), func(selected):
+	
+	var enhance_picked_callback = func(selected):
 		show_tutorial.call("")
-		select_card_to_enhance(selected)
-		remove_sibling(pick_option_ui),
-		func():
-			remove_sibling(pick_option_ui)
-			visible = true)
+		select_card_to_enhance(selected, pick_option_ui)
+	var enhance_canceled_callback = func():
+		remove_sibling(pick_option_ui)
+		visible = true
 
-func select_card_to_enhance(enhance: Enhance):
+	pick_option_ui.setup(prompt, get_enhances_fn.call(), enhance_picked_callback, enhance_canceled_callback)
+
+func select_card_to_enhance(enhance: Enhance, pick_enhance_ui: Node):
 	var select_card = SelectCard.instantiate()
 	select_card.tooltip = tooltip
 	select_card.size = Constants.VIEWPORT_SIZE
 	select_card.z_index = 2
 	select_card.theme = load("res://assets/theme_large.tres")
-	select_card.disable_cancel()
 	select_card.select_callback = func(card_data: CardData):
 		remove_sibling(select_card)
+		remove_sibling(pick_enhance_ui)
 		var new_card = card_data.apply_enhance(enhance)
 		player_deck.erase(card_data)
 		player_deck.append(new_card)
 		visible = true
-	add_sibling(select_card)
+	pick_enhance_ui.add_sibling(select_card)
+	select_card.select_cancelled.connect(func():
+		remove_sibling(select_card)
+		pick_enhance_ui.visible = true)
 	select_card.do_enhance_pick(player_deck, enhance, "Select a card to enhance")
 	
 func add_structure(rarity: String):
@@ -341,16 +346,20 @@ func pick_bag_of_tricks(count: int, rare: bool = false):
 	pick_option_ui.reroll_callable = get_options_fn
 	pick_option_ui.reroll_enabled = true
 	var on_pick = func(selected):
-		remove_sibling(pick_option_ui)
 		if selected is CardData:
 			player_deck.append(selected)
+			remove_sibling(pick_option_ui)
 			visible = true
 		elif selected is Enhance:
-			select_card_to_enhance(selected)
+			select_card_to_enhance(selected, pick_option_ui)
 		elif selected is Structure:
+			remove_sibling(pick_option_ui)
 			on_structure_select.emit(selected, func():
 				visible = true)
-	pick_option_ui.setup("Pick something!", get_options_fn.call(), on_pick, null)
+	var on_skip = func():
+		remove_sibling(pick_option_ui)
+		visible = true
+	pick_option_ui.setup("Pick something!", get_options_fn.call(), on_pick, on_skip)
 
 func get_bag_of_tricks_option(rerolls: int):
 	# Card, Enhance, Structure

@@ -121,11 +121,11 @@ func _on_tile_button_gui_input(event: InputEvent) -> void:
 			if Global.pressed_time <= 0.5:
 				$"../../".use_card(grid_location)
 	# TILE_BUTTON.disabled used only in tutorial
-	elif event.is_action_pressed("leftclick") and Settings.CLICK_MODE and !TILE_BUTTON.disabled:
-		if $"../../".hovered_tile == self:
-			$"../../".use_card(grid_location)
-		else:
-			tile_hovered.emit(self)
+	#elif event.is_action_pressed("leftclick") and Settings.CLICK_MODE and !TILE_BUTTON.disabled:
+	#	if $"../../".hovered_tile == self:
+	#		$"../../".use_card(grid_location)
+	#	else:
+	#		tile_hovered.emit(self)
 	if event.is_action_released("leftclick") and !TILE_BUTTON.disabled:
 		$"../../".tile_mouse_up(grid_location)
 	elif event.is_action_pressed("leftclick") and !TILE_BUTTON.disabled:
@@ -234,10 +234,13 @@ func update_plant_sprite():
 
 func harvest(delay) -> Array[Effect]:
 	var effects: Array[Effect] = []
-	var specific_args = get_harvest_event_args(delay)
+	var harvest_args = get_harvest_event_args(delay)
+	var specific_args = EventArgs.SpecificArgs.new(self)
+	specific_args.harvest_args = harvest_args
+	event_manager.notify_specific_args(EventManager.EventType.OnPlantHarvest, specific_args)
 	effects.append_array(get_effects("harvest"))
 	state = Enums.TileState.Empty
-	on_yield_gained.emit(self, specific_args)
+	on_yield_gained.emit(self, harvest_args)
 	remove_seed()
 	$HarvestParticles.emitting = true
 	return effects
@@ -304,7 +307,6 @@ func do_winter_clear():
 		structure.do_winter_clear()
 
 func multiply_yield(strength):
-	$AddYieldParticles.emitting = true
 	on_yield_added.emit(self, current_yield * (strength - 1))
 	current_yield *= strength
 

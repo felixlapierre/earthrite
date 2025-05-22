@@ -33,6 +33,7 @@ func _process(delta):
 
 func create_stats_display(mage_fortune_list: Array[MageAbility]):
 	Statistics.load_stats()
+	score = 0
 	var farms: Array[String] = ["FOREST", "MOUNTAINS", "WILDERNESS", "RIVERLANDS", "LUNARTEMPLE", "STORMVALE", "SCRAPYARD"]
 	var farm_icons = [load("res://assets/mage/forest.png"), load("res://assets/fortune/mountains.png"), load("res://assets/fortune/wildflowers-fortune.png"), load("res://assets/mage/riverlands.png"), load("res://assets/card/temporal_rift.png"), load("res://assets/mage/Storm.png"), load("res://assets/custom/Temp.png")]
 	

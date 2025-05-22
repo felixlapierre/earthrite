@@ -4,7 +4,7 @@ class_name FallBlessing
 var icon = preload("res://assets/custom/YellowMana.png")
 var callback
 var event_type = EventManager.EventType.OnYieldPreview
-var event_type_2 = EventManager.EventType.OnPlantHarvest
+var event_type_2 = EventManager.EventType.OnManaGained
 
 func _init() -> void:
 	super("Fall's Blessing", Fortune.FortuneType.GoodFortune, "Gain +20% [img]res://assets/custom/YellowMana.png[/img] in Fall", 0, icon, 1.0)

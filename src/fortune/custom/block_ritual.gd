@@ -2,7 +2,7 @@ extends Fortune
 class_name BlockRitual
 
 var callback_harvest: Callable
-var event_type_harvest = EventManager.EventType.OnPlantHarvest
+var event_type_harvest = EventManager.EventType.OnManaGained
 var event_type_preview = EventManager.EventType.OnYieldPreview
 var texture_display = load("res://assets/fortune/BlockRitual.png")
 

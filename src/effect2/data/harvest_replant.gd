@@ -20,7 +20,7 @@ func unregister(event_manager: EventManager):
 
 func get_description(size: int):
 	var size_descr = "all" if size == -1 else str(size)
-	return get_timing_text() + "Harvest and Replant " + size_descr + " plants"
+	return get_timing_text() + "Harvest and Replant " + size_descr + " non-blight plants"
 
 func copy():
 	var copy = HarvestReplant.new()

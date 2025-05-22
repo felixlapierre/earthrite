@@ -188,7 +188,7 @@ func show_select_overlay():
 	elif Global.selected_structure != null:
 		size = Global.selected_structure.size
 		targets = ["Empty", "Growing", "Mature"]
-	elif hovered_tile != null and (hover_time > Constants.HOVER_PREVIEW_DELAY or Settings.CLICK_MODE):
+	elif hovered_tile != null and (hover_time > Constants.HOVER_PREVIEW_DELAY or (Settings.CLICK_MODE and !precision_mode)):
 		clear_overlay()
 		on_show_tile_preview.emit(hovered_tile)
 		return
@@ -414,7 +414,7 @@ func gain_yield(tile: Tile, args: EventArgs.HarvestArgs):
 	var destination = Global.MANA_TARGET_LOCATION_PURPLE if args.purple else Global.MANA_TARGET_LOCATION_YELLOW
 	var specific = EventArgs.SpecificArgs.new(tile)
 	specific.harvest_args = args
-	event_manager.notify_specific_args(EventManager.EventType.OnPlantHarvest, specific)
+	event_manager.notify_specific_args(EventManager.EventType.OnManaGained, specific)
 	blight_bubble_animation(tile, args, destination)
 	on_yield_gained.emit(args)
 
@@ -683,14 +683,20 @@ func tile_mouse_up(grid_location: Vector2):
 		use_card(grid_location)
 
 func tile_mouse_down(grid_location: Vector2):
+	var tile = tiles[grid_location.x][grid_location.y]
 	if Settings.CLICK_MODE and !precision_mode:
+		# Move structure on the first click
+
+		if tile.structure != null:
+			try_move_structure.emit(tile)
 		# Double click = use card
 		if hovered_tile != null and hovered_tile.grid_location == grid_location:
 			use_card(grid_location)
 		# First click = set as hovered
 		else:
-			hovered_tile = tiles[grid_location.x][grid_location.y]
+			on_tile_hover(tile)
 	if precision_mode:
+		hovered_tile = tile
 		toggle_tile_selection(grid_location)
 
 func toggle_tile_selection(grid_location: Vector2):
