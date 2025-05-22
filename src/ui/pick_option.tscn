@@ -28,6 +28,7 @@ text = "Prompt text"
 horizontal_alignment = 1
 
 [node name="RerollButton" type="Button" parent="Center/Panel/VBox"]
+custom_minimum_size = Vector2(0, 70)
 layout_mode = 2
 text = "Reroll "
 icon = ExtResource("3_25rhx")
@@ -38,6 +39,7 @@ layout_mode = 2
 alignment = 1
 
 [node name="SkipButton" type="Button" parent="Center/Panel/VBox"]
+custom_minimum_size = Vector2(0, 70)
 layout_mode = 2
 text = "Skip"
 

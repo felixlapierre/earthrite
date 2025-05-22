@@ -226,10 +226,10 @@ func pick_card_from(cards, callback: Callable):
 		player_deck.append(selected)
 		remove_sibling(pick_option_ui)
 		show_tutorial.call("")
-		visible = true, func():
+		show_window(), func():
 			remove_sibling(pick_option_ui)
 			show_tutorial.call("")
-			visible = true)
+			show_window())
 
 func select_card_to_remove(pt):
 	var select_card = SelectCard.instantiate()
@@ -240,13 +240,13 @@ func select_card_to_remove(pt):
 	select_card.select_callback = func(card_data):
 		remove_sibling(select_card)
 		player_deck.erase(card_data)
-		visible = true
+		show_window()
 		use_explore(pt)
 		removals += 1
 	select_card.select_cancelled.connect(func():
 		remove_sibling(select_card)
 		show_tutorial.call("")
-		visible = true)
+		show_window())
 	add_sibling(select_card)
 	select_card.do_card_pick(player_deck, "Select a card to remove")
 
@@ -273,7 +273,7 @@ func select_enhance(rarity: String):
 		select_card_to_enhance(selected, pick_option_ui)
 	var enhance_canceled_callback = func():
 		remove_sibling(pick_option_ui)
-		visible = true
+		show_window()
 
 	pick_option_ui.setup(prompt, get_enhances_fn.call(), enhance_picked_callback, enhance_canceled_callback)
 
@@ -289,7 +289,7 @@ func select_card_to_enhance(enhance: Enhance, pick_enhance_ui: Node):
 		var new_card = card_data.apply_enhance(enhance)
 		player_deck.erase(card_data)
 		player_deck.append(new_card)
-		visible = true
+		show_window()
 	pick_enhance_ui.add_sibling(select_card)
 	select_card.select_cancelled.connect(func():
 		remove_sibling(select_card)
@@ -314,11 +314,11 @@ func add_structure(rarity: String):
 		remove_sibling(pick_option_ui)
 		show_tutorial.call("")
 		on_structure_select.emit(selected, func():
-			visible = true)
+			show_window())
 	var on_cancel = func(): 
 		remove_sibling(pick_option_ui)
 		show_tutorial.call("")
-		visible = true
+		show_window()
 	pick_option_ui.setup(prompt, get_structures_fn.call(), on_pick, on_cancel)
 
 func pick_fortune(prompt: String, options: Array[Fortune]):
@@ -349,16 +349,16 @@ func pick_bag_of_tricks(count: int, rare: bool = false):
 		if selected is CardData:
 			player_deck.append(selected)
 			remove_sibling(pick_option_ui)
-			visible = true
+			show_window()
 		elif selected is Enhance:
 			select_card_to_enhance(selected, pick_option_ui)
 		elif selected is Structure:
 			remove_sibling(pick_option_ui)
 			on_structure_select.emit(selected, func():
-				visible = true)
+				show_window())
 	var on_skip = func():
 		remove_sibling(pick_option_ui)
-		visible = true
+		show_window()
 	pick_option_ui.setup("Pick something!", get_options_fn.call(), on_pick, on_skip)
 
 func get_bag_of_tricks_option(rerolls: int):
@@ -384,9 +384,15 @@ func get_bag_of_tricks_option_rare():
 func remove_sibling(node):
 	$'../'.remove_child(node)
 
+func show_window():
+	if explores + bonus_explores == 0:
+		_on_close_pressed()
+	else:
+		visible = true
+
 func _on_close_pressed():
 	visible = false
-	if explores == 0:
+	if explores + bonus_explores == 0:
 		show_tutorial.call("winter_end", "center")
 
 func expand_farm():

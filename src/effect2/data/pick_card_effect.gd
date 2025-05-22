@@ -148,6 +148,8 @@ func display_options(args: EventArgs, options: Array, set_card: Callable):
 		select_card.do_card_pick(args.cards.discard_pile_cards, "Select a card")
 
 func do_followup_action(args: EventArgs):
+	if card == null:
+		return
 	if and_then == AndThen.Burn:
 		args.cards.remove_card_with_info(card)
 		args.cards.notify_card_burned(card)
