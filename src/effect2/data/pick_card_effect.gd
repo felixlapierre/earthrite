@@ -26,8 +26,11 @@ enum AndThen {
 @export var skippable: bool
 
 var card: CardData = null
-var callback2: Callable
+
 var tile: Tile = null
+
+var listener_play: Listener
+var listener_andthen: Listener
 
 # An effect involving picking cards
 # Pick 
@@ -56,20 +59,20 @@ func _init(p_timing = EventManager.EventType.AfterCardPlayed, p_seed = false, p_
 
 func register(event_manager: EventManager, p_tile: Tile):
 	tile = p_tile
-	callback = func(args: EventArgs):
-		pick_card_event(args)
-
-	callback2 = func(args: EventArgs):
+	listener_play = Listener.new("pick-card", timing, func(args: EventArgs):
+		pick_card_event(args))
+	
+	listener_andthen = Listener.new("pick-card-then", timing2, func(args: EventArgs):
 		# If timing2 is Plant Harvest, it must not trigger when other plants are harvested
 		if timing2 != EventManager.EventType.OnPlantHarvest or args.specific.tile == tile:
-			do_followup_action(args)
-	
-	event_manager.register_listener(timing, callback)
+			await do_followup_action(args))
+
+	owner.register(listener_play)
 	
 	# As an exception the AfterCardPlayed trigger is done immediately
 	# after timing1 function is executed
 	if timing2 != EventManager.EventType.AfterCardPlayed:
-		event_manager.register_listener(timing2, callback2)
+		event_manager.register(listener_andthen)
 
 func pick_card_event(args: EventArgs):
 	if card != null:
@@ -91,7 +94,9 @@ func pick_card_event(args: EventArgs):
 			options.assign(DataFetcher.get_element_cards("blight"))
 	if count != -1:
 		options.shuffle()
+	Global.LOCK = true
 	display_options(args, options, func(card_data):
+		Global.LOCK = false
 		card = card_data
 		if timing == EventManager.EventType.OnActionCardUsed:
 			args.specific.tile.play_effect_particles()
@@ -152,15 +157,12 @@ func do_followup_action(args: EventArgs):
 			args.cards.draw_specific_card_from(card, args.user_interface.get_global_mouse_position())
 	elif and_then == AndThen.Use:
 		Global.selected_card = card
-		Global.LOCK = false
 		args.farm.use_card(tile.grid_location, true)
-		Global.LOCK = true
 		Global.selected_card = null
 
 func unregister(event_manager: EventManager):
-	event_manager.unregister_listener(timing, callback)
-	if timing2 != EventManager.EventType.AfterCardPlayed:
-		event_manager.unregister_listener(timing2, callback2)
+	listener_play.disable()
+	listener_andthen.disable()
 
 func get_description(size: int):
 	var descr = ""

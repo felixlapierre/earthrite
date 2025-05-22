@@ -152,7 +152,7 @@ func plant_seed(planted_seed) -> Array[Effect]:
 		set_seed(planted_seed)
 		effects.append_array(get_effects("plant"))
 		var specific_args = EventArgs.SpecificArgs.new(self)
-		event_manager.notify_card(planted_seed, EventManager.EventType.OnPlantPlanted)
+		planted_seed.notify(event_manager, EventManager.EventType.OnPlantPlanted, specific_args)
 		event_manager.notify_specific_args(EventManager.EventType.OnPlantPlanted, specific_args)
 	return effects
 
@@ -193,6 +193,7 @@ func grow_one_week() -> Array[Effect]:
 		grow_animation()
 		if current_grow_progress == seed_grow_time:
 			state = Enums.TileState.Mature
+	seed.notify(event_manager, EventManager.EventType.OnPlantGrow, EventArgs.SpecificArgs.new(self))
 	event_manager.notify_specific_args(EventManager.EventType.OnPlantGrow, EventArgs.SpecificArgs.new(self))
 	return effects
 
@@ -399,6 +400,8 @@ func get_harvest_event_args(delay: bool) -> EventArgs.HarvestArgs:
 	return harvest_args
 
 func notify_destroyed():
+	if seed != null:
+		seed.notify(event_manager, EventManager.EventType.OnPlantDestroyed, EventArgs.SpecificArgs.new(self))
 	event_manager.notify_specific_args(EventManager.EventType.OnPlantDestroyed,\
 		EventArgs.SpecificArgs.new(self))
 

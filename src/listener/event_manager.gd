@@ -96,9 +96,6 @@ func notify_specific_args(event_type: EventType, specific_args: EventArgs.Specif
 	for listener in remove:
 		listeners2[event_type].erase(listener)
 
-func notify_card(card: CardData, event_type: EventType):
-	card.notify(event_type, get_event_args(null))
-
 func get_event_args(spec):
 	return EventArgs.new(farm, turn_manager, cards, spec, user_interface)
 

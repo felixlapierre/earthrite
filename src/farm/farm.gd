@@ -62,7 +62,7 @@ func setup(p_event_manager: EventManager):
 
 
 func use_card(grid_position, external_source: bool = false):
-	if Global.LOCK:
+	if Global.LOCK and !external_source:
 		return
 	hover_time = 0.0
 	var energy = $"../TurnManager".energy
@@ -95,7 +95,8 @@ func use_card(grid_position, external_source: bool = false):
 	card.register_events(event_manager, null)
 	var args = EventArgs.SpecificArgs.new(tiles[grid_position.x][grid_position.y])
 	args.play_args = EventArgs.PlayArgs.new(card)
-	event_manager.notify_specific_args(EventManager.EventType.BeforeCardPlayed, args)
+	await card.notify(event_manager, EventManager.EventType.BeforeCardPlayed, args)
+	await event_manager.notify_specific_args(EventManager.EventType.BeforeCardPlayed, args)
 	# Animate
 	var spriteframes: SpriteFrames = null
 	var delay = 0.0
@@ -132,7 +133,10 @@ func use_card(grid_position, external_source: bool = false):
 	await use_card_on_targets(card, targets, false)
 	clear_overlay()
 	process_effect_queue()
-	event_manager.notify_specific_args(EventManager.EventType.AfterCardPlayed, args)
+	
+	await card.notify(event_manager, EventManager.EventType.AfterCardPlayed, args)
+	await event_manager.notify_specific_args(EventManager.EventType.AfterCardPlayed, args)
+
 	card.unregister_events(event_manager)
 	$"../".shake_mana(mana_added)
 	mana_added = 0.0
@@ -342,7 +346,9 @@ func process_one_week(week: int):
 func use_action_card(card, grid_location):
 	var args = EventArgs.SpecificArgs.new(tiles[grid_location.x][grid_location.y])
 	args.play_args = EventArgs.PlayArgs.new(card)
+	await card.notify(event_manager, EventManager.EventType.OnActionCardUsed, args)
 	await event_manager.notify_specific_args(EventManager.EventType.OnActionCardUsed, args)
+	
 	for effect in card.effects:
 		var n_effect = effect.copy().set_location(grid_location)
 		if n_effect.name == "spread":
@@ -459,7 +465,7 @@ func use_card_on_targets(card, targets, only_first, delay: float = 0.0):
 			effect_queue.append_array(target_tile.plant_seed_animate(card))
 			var args = EventArgs.SpecificArgs.new(target_tile)
 			args.play_args = EventArgs.PlayArgs.new(card)
-			
+			target_tile.seed.notify(event_manager, EventManager.EventType.OnActionCardUsed, args)
 			event_manager.notify_specific_args(EventManager.EventType.OnActionCardUsed, args)
 		elif card.type == "ACTION":
 			await use_action_card(card, Vector2(target.x, target.y))

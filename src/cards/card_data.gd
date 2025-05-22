@@ -202,6 +202,7 @@ func get_description() -> String:
 # To be overridden by specific code seeds
 func register_events(event_manager: EventManager, tile: Tile):
 	for eff in effects2:
+		eff.owner = self
 		eff.register_events(event_manager, tile)
 
 func unregister_events(event_manager: EventManager):
@@ -210,6 +211,7 @@ func unregister_events(event_manager: EventManager):
 
 func register_seed_events(event_manager: EventManager, tile: Tile):
 	for eff in effects2:
+		eff.owner = self
 		eff.register_seed_events(event_manager, tile)
 
 func unregister_seed_events(event_manager: EventManager):
@@ -343,7 +345,8 @@ func has_enhance_type(type: Enhance.Type):
 func register(listener: Listener):
 	card_listeners.append(listener)
 
-func notify(type: EventManager.EventType, args: EventArgs):
+func notify(event_manager: EventManager, type: EventManager.EventType, specific_args: EventArgs.SpecificArgs = null):
+	var args = event_manager.get_event_args(specific_args)
 	for listener in card_listeners:
 		if listener.type == type:
-			listener.invoke(args)
+			await listener.invoke(args)

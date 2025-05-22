@@ -1,10 +1,9 @@
 extends CardData
 class_name Stormcall
 
-var callback_after_play: Callable
-var event_type_after_play = EventManager.EventType.AfterCardPlayed
-
 var PickOption = preload("res://src/ui/pick_option.tscn")
+
+var listener: Listener
 
 func copy():
 	var new = Stormcall.new()
@@ -13,7 +12,7 @@ func copy():
 
 # To be overridden by specific code seeds
 func register_events(event_manager: EventManager, p_tile: Tile):
-	callback_after_play = func(args: EventArgs):
+	listener = Listener.new("stormcall", EventManager.EventType.AfterCardPlayed, func(args: EventArgs):
 		var options = []
 		options.assign(WeatherDisplay.options)
 		if strength < 2:
@@ -28,12 +27,12 @@ func register_events(event_manager: EventManager, p_tile: Tile):
 			WeatherDisplay.in_two_weeks = selected
 			args.user_interface.update()
 
-		pick_option_ui.setup("Choose a weather effect", options.slice(0, 3 + strength), on_pick, null)
-
-	event_manager.register_listener(event_type_after_play, callback_after_play)
+		pick_option_ui.setup("Choose a weather effect", options.slice(0, 3 + strength), on_pick, null))
+	
+	register(listener)
 
 func unregister_events(event_manager: EventManager):
-	event_manager.unregister_listener(event_type_after_play, callback_after_play)
+	listener.disable()
 
 func can_strengthen_custom_effect():
 	return true

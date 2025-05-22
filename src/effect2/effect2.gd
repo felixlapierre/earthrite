@@ -6,9 +6,12 @@ var callback: Callable
 @export var timing: EventManager.EventType
 @export var is_seed: bool = false
 
+var owner: CardData
+
 func _init(p_timing = EventManager.EventType.AfterCardPlayed, p_seed = false):
 	timing = p_timing
 	is_seed = p_seed
+	owner = null
 
 func register_events(event_manager: EventManager, tile: Tile):
 	if !is_seed:
