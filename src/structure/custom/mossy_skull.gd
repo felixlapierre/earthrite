@@ -7,7 +7,7 @@ func register(event_manager: EventManager, p_tile: Tile):
 	listener = Listener.new("mossy_skull", timing, func(args: EventArgs):
 		var tile = args.specific.tile
 		var seed = tile.seed
-		if seed.yld > 0 and seed.get_effect("corrupted") == null:
+		if seed != null and seed.yld > 0 and seed.get_effect("corrupted") == null:
 			var effect = Effect.new("plant", 0.0, "", "", tile.grid_location, seed)
 			args.farm.effect_queue.append(effect)
 		)
