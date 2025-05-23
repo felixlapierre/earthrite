@@ -45,7 +45,7 @@ static func load_unlocks():
 	for i in range(8):
 		if !DIFFICULTIES_UNLOCKED.has(str(i)):
 			DIFFICULTIES_UNLOCKED[str(i)] = false
-	for i in range(6):
+	for i in range(7):
 		if !FARMS_UNLOCKED.has(str(i)):
 			FARMS_UNLOCKED[str(i)] = false
 	fill(MAGES_UNLOCKED, 11)
@@ -64,7 +64,8 @@ static func default_unlocks():
 		"3": true,
 		"4": false,
 		"5": false,
-		"6": false
+		"6": false,
+		"7": false
 	}
 	DIFFICULTIES_UNLOCKED = {
 		"0": true,

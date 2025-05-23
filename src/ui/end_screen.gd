@@ -37,7 +37,7 @@ func setup(turn_manager: TurnManager, deck: Array[CardData], farm: Farm, user_in
 	Stats.append_text("Year: " + str(turn_manager.year) + "\n")
 	Stats.append_text("Week: " + str(turn_manager.week) + "\n")
 	Stats.append_text("Damage: " + str(turn_manager.blight_damage) + "\n\n")
-	Stats.append_text("Farm: [img]" + StatisticsDisplay.get_farm_icon(Global.FARM_TYPE).resource_path + "[/img] " + Global.FARM_TYPE.to_lower().capitalize() + "\n")
+	Stats.append_text("Farm: [img]" + FarmType.farms[Global.FARM_TYPE].icon.resource_path + "[/img] " + Global.FARM_TYPE.to_lower().capitalize() + "\n")
 	Stats.append_text("Mage: [img]" + user_interface.mage_fortune.icon.resource_path + "[/img] " + user_interface.mage_fortune.name + "\n")
 	var difficulty;
 	match Global.DIFFICULTY:

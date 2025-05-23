@@ -23,6 +23,7 @@ func _process(delta):
 	pass
 	
 static func get_starter_deck():
+	return FarmType.farms[Global.FARM_TYPE].load_deck()
 	var data;
 	match Global.FARM_TYPE:
 		"FOREST", "LUNARTEMPLE", "SCRAPYARD":
@@ -56,6 +57,11 @@ static func load_deck(data):
 	return deck
 
 static func setup_farm(farm: Farm, event_manager: EventManager):
+	var farm_type: FarmType = FarmType.farms[Global.FARM_TYPE]
+	farm_type.setup(farm)
+	farm_type.register(event_manager)
+	return
+	
 	match Global.FARM_TYPE:
 		"RIVERLANDS":
 			setup_riverlands_farm_callback(farm, event_manager)
@@ -82,12 +88,7 @@ static func setup_farm(farm: Farm, event_manager: EventManager):
 			setup_lunar_temple_callback(farm, event_manager)
 
 static func load_farm(farm: Farm, event_manager: EventManager):
-	if Global.FARM_TYPE == "WILDERNESS":
-		setup_wilderness_farm_callback(farm, event_manager)
-	elif Global.FARM_TYPE == "RIVERLANDS":
-		setup_riverlands_farm_callback(farm, event_manager)
-	elif Global.FARM_TYPE == "LUNARTEMPLE":
-		setup_lunar_temple_callback(farm, event_manager)
+	FarmType.farms[Global.FARM_TYPE].register(event_manager)
 	for tile in farm.get_all_tiles():
 		tile.do_active_check()
 

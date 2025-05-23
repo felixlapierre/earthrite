@@ -85,9 +85,18 @@ func _ready():
 			name = "(Locked)"
 			icon = load("res://assets/ui/lock.png")
 		$Root/HBox/Panel/Margin/VBox/HBox/Margin/VBox/CharacterBox/CharOptions.add_icon_item(icon, name, fortune.rank)
-	populate_continue_preview()
+	FarmType.load_farms()
 	Settings.load_settings()
+	
 
+
+	$Root/HBox/Panel/Margin/VBox/HBox/Margin/VBox/FarmTypeBox/TypeOptions.clear()
+	var farm_names = FarmType.farms.keys()
+	for i in range(farm_names.size()):
+		var data = FarmType.farms_id_map[i]
+		$Root/HBox/Panel/Margin/VBox/HBox/Margin/VBox/FarmTypeBox/TypeOptions.add_icon_item(data.icon, data.display_name, data.id)
+
+	populate_continue_preview()
 	Statistics.load_stats()
 	TutorialsCheck.button_pressed = Settings.TUTORIALS_V2
 	DebugCheck.button_pressed = Settings.DEBUG
@@ -136,7 +145,7 @@ func _on_start_button_pressed():
 	Global.reset()
 	
 	# Wilderness farm: Pick wilderness plant
-	if Global.FARM_TYPE == "WILDERNESS" and Global.WILDERNESS_PLANT == null:
+	if Global.FARM_TYPE == "WILDERNESS" and WildernessFarm.WILDERNESS_PLANT == null:
 		var select_card = SelectCardScene.instantiate()
 		select_card.size = Constants.VIEWPORT_SIZE
 		select_card.z_index = 2
@@ -147,22 +156,22 @@ func _on_start_button_pressed():
 		select_card.do_card_pick(options, "Select the native plant on the Wilderness Farm")
 		select_card.select_cancelled.connect(func():
 			remove_child(select_card)
-			Global.WILDERNESS_PLANT = Helper.pick_random(options)
+			WildernessFarm.WILDERNESS_PLANT = Helper.pick_random(options)
 			_on_start_button_pressed())
 		select_card.select_callback = func(card: CardData):
 			remove_child(select_card)
-			Global.WILDERNESS_PLANT = card
+			WildernessFarm.WILDERNESS_PLANT = card
 			_on_start_button_pressed()
 		return
 	
 	# Mountains farm: Start with structure
-	if Global.FARM_TYPE == "MOUNTAINS" and StartupHelper.MOUNTAIN_START_STRUCTURE == null:
+	if Global.FARM_TYPE == "MOUNTAINS" and MountainsFarm.START_STRUCTURE == null:
 		var pick_options = PickOptionsScene.instantiate()
 		var structures = DataFetcher.get_structures_names(["Harvester", "Beehive", "Flower Totem", "Sigil of Water", "Rooted Core", "Geode", "Dreamcatcher", "Frost Totem", "Toolshed"])
 		add_child(pick_options)
 		pick_options.setup("Pick a starting Structure", structures, func(selected):
 			remove_child(pick_options)
-			StartupHelper.MOUNTAIN_START_STRUCTURE = selected
+			MountainsFarm.START_STRUCTURE = selected
 			_on_start_button_pressed())
 		return
 
@@ -184,28 +193,9 @@ func _on_continue_button_pressed():
 
 
 func _on_type_options_item_selected(index):
-	match index:
-		0:
-			Global.FARM_TYPE = "FOREST"
-			update_prompt("Farm: Forest", load("res://assets/mage/forest.png"), "Basic farm, with no special effects.")
-		3:
-			Global.FARM_TYPE = "RIVERLANDS"
-			update_prompt("Farm: Riverlands", load("res://assets/mage/riverlands.png"), "Start each year with 8 tiles already [color=gold] Watered [/color] on your farm.\n\nOnly plants on [color=gold]Watered[/color] tiles will grow naturally at the end of the turn.")
-		2:
-			Global.FARM_TYPE = "WILDERNESS"
-			update_prompt("Farm: Wilderness", load("res://assets/mage/wilderness.png"), "Choose a [color=gold]Native Seed[/color] at the start of the game.\n\nStart each year with the [color=gold]Native Seed[/color] already planted on the farm.\n\nStarting deck has no Seed cards, and you cannot add Seed cards to your deck.")
-		1:
-			Global.FARM_TYPE = "MOUNTAINS"
-			update_prompt("Farm: Mountains", load("res://assets/fortune/mountains.png"), "Start with a Structure on your farm.\n\nSome farm tiles contain rocks that can hold structures, but not plants.")
-		4:
-			Global.FARM_TYPE = "LUNARTEMPLE"
-			update_prompt("Farm: Lunar Temple", load("res://assets/card/temporal_rift.png"), "All tiles on the farm generated [color=aqua]Blue Mana[/color]" + Helper.blue_mana() + ".\n\nAt the end of the turn, 70% of [color=aqua]Blue Mana[/color] " + Helper.blue_mana() + " is converted to [color=gold]Yellow Mana[/color] " + Helper.mana_icon())
-		5:
-			Global.FARM_TYPE = "STORMVALE"
-			update_prompt("Farm: Storm Vale", load("res://assets/mage/Storm.png"), "Trigger a random weather effect every 2 weeks.")
-		6:
-			Global.FARM_TYPE = "SCRAPYARD"
-			update_prompt("Farm: Scrap Yard", load("res://assets/custom/Temp.png"), "When Exploring, find Bag of Tricks instead of Card, Enhance or Structure.")
+	var farm = FarmType.farms_id_map[index]
+	Global.FARM_TYPE = farm.name
+	update_prompt("Farm: " + farm.display_name, farm.icon, farm.description)
 
 	check_lock_start_button()
 	
@@ -215,21 +205,7 @@ func _on_type_options_item_selected(index):
 	update_best_win()
 
 func get_index_of_farm_type(type):
-	match type:
-		"FOREST":
-			return 0
-		"RIVERLANDS":
-			return 3
-		"WILDERNESS":
-			return 2
-		"MOUNTAINS":
-			return 1
-		"LUNARTEMPLE":
-			return 4
-		"STORMVALE":
-			return 5
-		"SCRAPYARD":
-			return 6
+	return FarmType.farms[type].id
 
 func populate_continue_preview():
 	if not FileAccess.file_exists("user://savegame.save"):
@@ -350,6 +326,8 @@ func connect_main_menu_signal(playspace):
 		remove_child(playspace)
 		menu_root.visible = true
 		var difficulty = Global.DIFFICULTY if Global.DIFFICULTY != -1 else 0
+		WildernessFarm.WILDERNESS_PLANT = null
+		MountainsFarm.START_STRUCTURE = null
 		Global.WILDERNESS_PLANT = null
 		$Root/HBox/Panel/Margin/VBox/HBox/Margin/VBox/DifficultyBox/DiffOptions.selected = difficulty
 		_on_diff_options_item_selected(difficulty)
