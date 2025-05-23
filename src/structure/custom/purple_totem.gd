@@ -29,20 +29,20 @@ func register_events(event_manager: EventManager, tile: Tile):
 	var strength = 0.15 if Global.LUNAR_FARM or Global.FARM_TYPE == "LUNARTEMPLE" else 0.75
 	update_text()
 	
-	listener_turn_end = Listener.new("lunartotem-turnend", event_type, func(args: EventArgs):
+	listener_turn_end = Listener.new(event_type, func(args: EventArgs):
 		if args.turn_manager.flag_defer_excess:
 			self.purple_mana = 0
 		else:
 			self.purple_mana = args.turn_manager.purple_mana - args.turn_manager.target_blight
 			self.purple_mana = 0 if self.purple_mana < 0 else self.purple_mana)
 
-	listener_turn_start = Listener.new("lunartotem_turnstart", event2, func(args: EventArgs):
+	listener_turn_start = Listener.new(event2, func(args: EventArgs):
 		args.turn_manager.purple_mana += ceil(self.purple_mana * strength)
 		if self.purple_mana > 0:
 			tile.play_effect_particles()
 		self.purple_mana = 0)
 
-	listener_year_start = Listener.new("lunartotem_yearstart", event3, func(args: EventArgs):
+	listener_year_start = Listener.new(event3, func(args: EventArgs):
 		self.purple_mana = 0)
 
 	event_manager.register(listener_turn_start)

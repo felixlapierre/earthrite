@@ -21,4 +21,4 @@ func get_description(size: int) -> String:
 	return get_timing_text() + get_description_interp("Add {STRENGTH} " + Helper.mana_icon() + " to all plants")
 
 func get_type():
-	return "add_yield"
+	return Enums.EffectType.AddMana

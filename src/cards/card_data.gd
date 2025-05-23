@@ -60,7 +60,7 @@ func get_effect(effect_name):
 		if effect.name == effect_name:
 			return effect
 	for effect in effects2:
-		if effect.get_type() == effect_name:
+		if Enums.EffectType.keys()[effect.get_type()] == effect_name:
 			return effect
 	return null
 

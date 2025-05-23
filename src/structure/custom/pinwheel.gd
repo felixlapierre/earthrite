@@ -4,7 +4,7 @@ class_name Pinwheel
 var listener: Listener
 
 func register(event_manager: EventManager, tile: Tile):
-	listener = Listener.new("pinwheel", timing, func(args: EventArgs):
+	listener = Listener.new(timing, func(args: EventArgs):
 		if args.specific.play_args.card.get_effect("harvest") != null\
 			or args.specific.play_args.card.get_effect("harvest_delay") != null:
 			if randi_range(0, 100) > 50:

@@ -176,6 +176,15 @@ static func get_long_description_list(effects: Array[String]):
 			text += d
 	return text
 
+static func get_long_description_type(type: Enums.EffectType, strength: float = 0.0):
+	match type:
+		Enums.EffectType.DestroyPlant:
+			return get_long_description("destroy_plant", strength)
+		Enums.EffectType.Harvest:
+			return get_long_description("harvest", strength)
+		_:
+			return ""
+
 static func get_long_description(effect_name: String, strength: float = 0.0):
 	match effect_name:
 		"regrow":

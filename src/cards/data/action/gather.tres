@@ -1,23 +1,23 @@
-[gd_resource type="Resource" script_class="CardData" load_steps=7 format=3 uid="uid://cjlt0pkdf6lyb"]
+[gd_resource type="Resource" script_class="CardData" load_steps=8 format=3 uid="uid://cjlt0pkdf6lyb"]
 
 [ext_resource type="Script" path="res://src/cards/card_data.gd" id="1_c5yxm"]
 [ext_resource type="SpriteFrames" uid="uid://doevney0jy8ti" path="res://src/animation/frames/gather_sf.tres" id="1_i43e8"]
-[ext_resource type="Script" path="res://src/effect/effect.gd" id="1_tftdn"]
+[ext_resource type="Script" path="res://src/effect2/basic/harvest.gd" id="2_v0mvt"]
+[ext_resource type="Script" path="res://src/effect2/basic/draw.gd" id="3_fxmug"]
 [ext_resource type="Texture2D" uid="uid://dau5clxh37urh" path="res://assets/card/gather.png" id="3_qtugd"]
 
-[sub_resource type="Resource" id="Resource_k4tb7"]
-script = ExtResource("1_tftdn")
-name = "harvest"
-strength = 0.0
-on = ""
-range = "self"
+[sub_resource type="Resource" id="Resource_mqyra"]
+script = ExtResource("2_v0mvt")
+timing = 13
+is_seed = false
 
-[sub_resource type="Resource" id="Resource_g3occ"]
-script = ExtResource("1_tftdn")
-name = "draw"
+[sub_resource type="Resource" id="Resource_6yg5s"]
+script = ExtResource("3_fxmug")
 strength = 1.0
-on = "play"
-range = "self"
+base_strength = 1.0
+strength_increment = 1.0
+timing = 11
+is_seed = false
 
 [resource]
 script = ExtResource("1_c5yxm")
@@ -35,9 +35,10 @@ texture = ExtResource("3_qtugd")
 seed_texture = 3
 texture_icon_offset = 16
 targets = Array[String](["Mature"])
-effects = Array[ExtResource("1_tftdn")]([SubResource("Resource_k4tb7"), SubResource("Resource_g3occ")])
-enhances = Array[String]([])
+effects = Array[Resource("res://src/effect/effect.gd")]([])
+enhances = Array[Dictionary]([])
 strength = 0.0
 animation = ExtResource("1_i43e8")
 delay = 0.4
 anim_on = 0
+effects2 = Array[Resource("res://src/effect2/effect2.gd")]([SubResource("Resource_mqyra"), SubResource("Resource_6yg5s")])

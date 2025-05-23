@@ -28,4 +28,4 @@ func copy():
 	return copy
 
 func get_type():
-	return "harvest"
+	return Enums.EffectType.Harvest

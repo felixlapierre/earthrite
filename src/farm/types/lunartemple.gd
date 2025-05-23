@@ -13,13 +13,13 @@ func _init():
 	super(ID, NAME, ICON, DESCR)
 
 func register(event_manager: EventManager):
-	listener_beforegrow = Listener.new("lunartemple-beforegrow", EventManager.EventType.BeforeGrow, func(args: EventArgs):
+	listener_beforegrow = Listener.new(EventManager.EventType.BeforeGrow, func(args: EventArgs):
 		if !args.turn_manager.flag_defer_excess:
 			var excess = max(args.turn_manager.purple_mana - args.turn_manager.target_blight, 0)
 			args.farm.gain_yield(args.farm.tiles[4][4], EventArgs.HarvestArgs.new(excess * 0.70, false, false))
 		)
 
-	listener_yearstart = Listener.new("lunartemple-yearstart", EventManager.EventType.AfterYearStart, func(args: EventArgs):
+	listener_yearstart = Listener.new(EventManager.EventType.AfterYearStart, func(args: EventArgs):
 		for tile in args.farm.get_all_tiles():
 			tile.purple = true
 			tile.update_display()

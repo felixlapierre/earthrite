@@ -4,7 +4,7 @@ class_name MossySkull
 var listener: Listener
 
 func register(event_manager: EventManager, p_tile: Tile):
-	listener = Listener.new("mossy_skull", timing, func(args: EventArgs):
+	listener = Listener.new(timing, func(args: EventArgs):
 		var tile = args.specific.tile
 		var seed = tile.seed
 		if seed != null and seed.yld > 0 and seed.get_effect("corrupted") == null:

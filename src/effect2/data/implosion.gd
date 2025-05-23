@@ -4,7 +4,7 @@ class_name Implosion
 var listener: Listener
 
 func register(event_manager: EventManager, tile: Tile):
-	listener = Listener.new("implosion", timing, func(args: EventArgs):
+	listener = Listener.new(timing, func(args: EventArgs):
 		var center = args.specific.tile
 		var ring = Helper.get_adjacent_active_tiles(center.grid_location, args.farm)
 		var mana = 0.0
@@ -19,7 +19,7 @@ func get_description(_size):
 	return "Target plant [color=gold]Destroys[/color] all adjacent plants and gains their {MANA}"
 
 func get_type():
-	return "destroy"
+	return Enums.EffectType.DestroyPlant
 
 func unregister(event_manager: EventManager):
 	pass

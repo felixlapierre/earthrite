@@ -14,7 +14,7 @@ func _init(strength: float = 1.0) -> void:
 	super("Corruption", Fortune.FortuneType.BadFortune, "Turn end: Add 'Corrupted' to the {STRENGTH} strongest plant(s)", 0, fortune_texture, strength)
 
 func register_fortune(event_manager: EventManager):
-	listener = Listener.new("corruption-best-fortune", type_after_grow, func(args: EventArgs):
+	listener = Listener.new(type_after_grow, func(args: EventArgs):
 		var candidates = []
 		for tile in args.farm.get_all_tiles():
 			if [Enums.TileState.Growing, Enums.TileState.Mature].has(tile.state) and !tile.is_protected() and tile.seed_base_yield > 0 and tile.seed.get_effect("corrupted") == null:

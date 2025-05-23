@@ -59,10 +59,10 @@ func _init(p_timing = EventManager.EventType.AfterCardPlayed, p_seed = false, p_
 
 func register(event_manager: EventManager, p_tile: Tile):
 	tile = p_tile
-	listener_play = Listener.new("pick-card", timing, func(args: EventArgs):
+	listener_play = Listener.new(timing, func(args: EventArgs):
 		pick_card_event(args))
 	
-	listener_andthen = Listener.new("pick-card-then", timing2, func(args: EventArgs):
+	listener_andthen = Listener.new(timing2, func(args: EventArgs):
 		# If timing2 is Plant Harvest, it must not trigger when other plants are harvested
 		if timing2 != EventManager.EventType.OnPlantHarvest or args.specific.tile == tile:
 			await do_followup_action(args))

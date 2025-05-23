@@ -18,11 +18,11 @@ func copy():
 	return copy
 
 func register_events(event_manager: EventManager, tile: Tile):
-	listener_energy = Listener.new("petrified-tree-energy", EventManager.EventType.BeforeTurnStart, func(args: EventArgs):
+	listener_energy = Listener.new(EventManager.EventType.BeforeTurnStart, func(args: EventArgs):
 		args.turn_manager.energy += 1
 		tile.play_effect_particles())
 
-	listener_destroy = Listener.new("petrified-tree-tiles", EventManager.EventType.BeforeYearStart, func(args: EventArgs):
+	listener_destroy = Listener.new(EventManager.EventType.BeforeYearStart, func(args: EventArgs):
 		var destroy_count = Global.FARM_BOTRIGHT.x - Global.FARM_TOPLEFT.x
 		var candidates: Array[Tile] = []
 		for target_tile in args.farm.get_all_tiles():

@@ -7,8 +7,8 @@ var type: EventManager.EventType
 var callback: Callable
 var disabled: bool
 
-func _init(p_id = "", p_type = EventManager.EventType.BeforeTurnStart, p_callback = null):
-	id = p_id
+func _init(p_type = EventManager.EventType.BeforeTurnStart, p_callback = null):
+	id = str(randi())
 	type = p_type
 	callback = p_callback
 	disabled = false

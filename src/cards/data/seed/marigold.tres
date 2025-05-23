@@ -1,16 +1,17 @@
 [gd_resource type="Resource" script_class="CardData" load_steps=6 format=3 uid="uid://dnut5oyry24wb"]
 
 [ext_resource type="SpriteFrames" uid="uid://ersut7mm7xtb" path="res://src/animation/frames/draw_spark_sf.tres" id="1_3w31k"]
-[ext_resource type="Script" path="res://src/effect/effect.gd" id="1_k41bs"]
 [ext_resource type="Script" path="res://src/cards/card_data.gd" id="2_wr84k"]
+[ext_resource type="Script" path="res://src/effect2/basic/draw.gd" id="2_xw5c5"]
 [ext_resource type="Texture2D" uid="uid://dgh15w1juye2e" path="res://assets/seed/marigold.png" id="3_8hes2"]
 
-[sub_resource type="Resource" id="Resource_jafp6"]
-script = ExtResource("1_k41bs")
-name = "draw"
+[sub_resource type="Resource" id="Resource_rai2b"]
+script = ExtResource("2_xw5c5")
 strength = 3.0
-on = "play"
-range = "self"
+base_strength = 3.0
+strength_increment = 1.0
+timing = 10
+is_seed = false
 
 [resource]
 script = ExtResource("2_wr84k")
@@ -28,10 +29,10 @@ texture = ExtResource("3_8hes2")
 seed_texture = 3
 texture_icon_offset = 11
 targets = Array[String]([])
-effects = Array[ExtResource("1_k41bs")]([SubResource("Resource_jafp6")])
-enhances = Array[String]([])
+effects = Array[Resource("res://src/effect/effect.gd")]([])
+enhances = Array[Dictionary]([])
 strength = 0.0
 animation = ExtResource("1_3w31k")
 delay = 0.0
 anim_on = 0
-effects2 = Array[Resource("res://src/effect2/effect2.gd")]([])
+effects2 = Array[Resource("res://src/effect2/effect2.gd")]([SubResource("Resource_rai2b")])

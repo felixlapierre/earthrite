@@ -14,12 +14,12 @@ func register_seed_events(event_manager: EventManager, p_tile: Tile):
 	print("Instance " + str(get_instance_id()) + " tile " + current_tile_id + " = " + p_tile.get_id())
 	tile = p_tile
 
-	listener_other_plant_played = Listener.new("cactus-" + tile.get_id(), EventManager.EventType.OnPlantPlanted, func(args: EventArgs):
+	listener_other_plant_played = Listener.new(EventManager.EventType.OnPlantPlanted, func(args: EventArgs):
 		var planted_tile = args.specific.tile
 		if planted_tile != tile and Helper.is_adjacent(planted_tile.grid_location, tile.grid_location):
 			planted_tile.destroy_plant())
 
-	listener_cactus_played = Listener.new("cactus-self-" + tile.get_id(), EventManager.EventType.OnPlantPlanted, func(args: EventArgs):
+	listener_cactus_played = Listener.new(EventManager.EventType.OnPlantPlanted, func(args: EventArgs):
 		var shape = Helper.get_tile_shape(8, Enums.CursorShape.Elbow)
 		for entry in shape:
 			var target = tile.grid_location + entry

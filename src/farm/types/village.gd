@@ -14,7 +14,7 @@ func _init():
 	super(ID, NAME, ICON, DESCR)
 
 func register(event_manager: EventManager):
-	listener_year_start = Listener.new("village", EventManager.EventType.BeforeYearStart, func(args: EventArgs):
+	listener_year_start = Listener.new(EventManager.EventType.BeforeYearStart, func(args: EventArgs):
 		# Make all tiles yellow
 		for tile in args.farm.get_all_tiles():
 			tile.purple = false
@@ -35,12 +35,12 @@ func register(event_manager: EventManager):
 		args.user_interface.update()
 		)
 	
-	listener_lose = Listener.new("village2", EventManager.EventType.OnTurnEnd, func(args: EventArgs):
+	listener_lose = Listener.new(EventManager.EventType.OnTurnEnd, func(args: EventArgs):
 		if args.turn_manager.week >= Global.FINAL_WEEK - 1:
 			args.turn_manager.blight_damage = Global.MAX_HEALTH
 		)
 		
-	listener_mana = Listener.new("village3", EventManager.EventType.OnManaGained, func(args: EventArgs):
+	listener_mana = Listener.new(EventManager.EventType.OnManaGained, func(args: EventArgs):
 		args.specific.harvest_args.purple = false
 		)
 

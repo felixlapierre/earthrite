@@ -33,7 +33,14 @@ func assign(other: Effect2):
 	strength = other.strength
 	strength_increment = other.strength_increment
 	base_strength = other.base_strength
+	return self
 
 func get_description_interp(child_description: String) -> String:
-	var replacement = str(strength) if strength == base_strength else "[color=aqua]" + str(strength) + "[/color]"
-	return child_description.replace("{STRENGTH}", replacement)
+	return child_description.replace("{STRENGTH}", highlight(str(strength)))
+
+func highlight(text: String):
+	if strength > base_strength:
+		return "[color=aqua]" + text + "[/color]"
+	elif strength < base_strength:
+		return "[color=red]" + text + "[/color]"
+	return text

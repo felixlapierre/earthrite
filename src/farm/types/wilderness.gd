@@ -14,7 +14,7 @@ func _init():
 	super(ID, NAME, ICON, DESCR)
 
 func register(event_manager: EventManager):
-	listener = Listener.new("wilderness_farm", EventManager.EventType.BeforeYearStart, func(args: EventArgs):
+	listener = Listener.new(EventManager.EventType.BeforeYearStart, func(args: EventArgs):
 		args.farm.use_card_random_tile(Global.WILDERNESS_PLANT.copy(), Global.WILDERNESS_PLANT.size)
 	)
 

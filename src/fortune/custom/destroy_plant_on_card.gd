@@ -13,7 +13,7 @@ func _init(strength: float = 1.0) -> void:
 	super("Spell Breaker", FortuneType.BadFortune, "Whenever you play a card, mark {STRENGTH} plant(s) to be destroyed at the end of the turn", -1, texture_display, strength)
 
 func register_fortune(event_manager: EventManager):
-	listener_end_turn = Listener.new("destroy-plant-per-card", EventManager.EventType.AfterGrow, func(args: EventArgs):
+	listener_end_turn = Listener.new(EventManager.EventType.AfterGrow, func(args: EventArgs):
 		var tiles_to_destroy = []
 		for tile in args.farm.get_all_tiles():
 			if tile.destroy_targeted:

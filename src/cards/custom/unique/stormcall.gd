@@ -12,7 +12,7 @@ func copy():
 
 # To be overridden by specific code seeds
 func register_events(event_manager: EventManager, p_tile: Tile):
-	listener = Listener.new("stormcall", EventManager.EventType.AfterCardPlayed, func(args: EventArgs):
+	listener = Listener.new(EventManager.EventType.AfterCardPlayed, func(args: EventArgs):
 		var options = []
 		options.assign(WeatherDisplay.options)
 		if strength < 2:

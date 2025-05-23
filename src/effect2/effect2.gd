@@ -71,9 +71,10 @@ func can_strengthen():
 func assign(other: Effect2):
 	timing = other.timing
 	is_seed = other.is_seed
+	return self
 
-func get_type() -> String:
-	return "other"
+func get_type() -> Enums.EffectType:
+	return Enums.EffectType.Other
 
 func get_long_description() -> String:
-	return Helper.get_long_description(get_type())
+	return Helper.get_long_description_type(get_type())
