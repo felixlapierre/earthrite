@@ -218,3 +218,6 @@ func get_chart(list):
 			print("Mastery charts")
 			chart = list[3]
 	return chart
+
+func gain_energy():
+	energy += 1

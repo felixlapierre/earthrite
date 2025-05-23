@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="Structure" load_steps=5 format=3 uid="uid://c7h58hqmgvvk2"]
+
+[ext_resource type="Script" path="res://src/cards/structure.gd" id="1_3n8ji"]
+[ext_resource type="Script" path="res://src/structure/custom/pinwheel.gd" id="1_j25sr"]
+[ext_resource type="Texture2D" uid="uid://c7erjo65l8u4t" path="res://assets/structure/temporal_rift.png" id="3_4o7s6"]
+
+[sub_resource type="Resource" id="Resource_qcx3j"]
+script = ExtResource("1_j25sr")
+timing = 11
+is_seed = false
+
+[resource]
+script = ExtResource("1_3n8ji")
+name = "Pinwheel of Destiny"
+rarity = "unique"
+cost = 0
+size = 0
+text = "When you Play a Harvest card, 50% to gain 1 Energy"
+texture = ExtResource("3_4o7s6")
+effects = Array[Resource("res://src/effect/effect.gd")]([])
+tooltip = ""
+effects2 = Array[Resource("res://src/effect2/effect2.gd")]([SubResource("Resource_qcx3j")])

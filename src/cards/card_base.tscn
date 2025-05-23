@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://2yu7drphx7ur"]
+[gd_scene load_steps=19 format=3 uid="uid://2yu7drphx7ur"]
 
 [ext_resource type="Script" path="res://src/cards/card_base.gd" id="1_ohx6w"]
 [ext_resource type="Theme" uid="uid://c3hfmpsb3fvhr" path="res://assets/game_theme.tres" id="1_w62ds"]
@@ -7,7 +7,7 @@
 [ext_resource type="FontFile" uid="uid://drlkmr7jve2ep" path="res://assets/m5x7.ttf" id="3_inew6"]
 [ext_resource type="Theme" uid="uid://c21dhy264y6ty" path="res://assets/theme_large.tres" id="4_jm2oq"]
 [ext_resource type="Texture2D" uid="uid://ykuefae3vde0" path="res://assets/custom/Energy.png" id="5_8u4qp"]
-[ext_resource type="Texture2D" uid="uid://budddmtnr8xsu" path="res://assets/seed/cactus.png" id="6_ju4kb"]
+[ext_resource type="Texture2D" uid="uid://bndp3pw8itwa" path="res://assets/card/corruption.png" id="6_4wisu"]
 [ext_resource type="Texture2D" uid="uid://b5gtwrgnirbxg" path="res://assets/custom/YellowMana.png" id="8_md8ou"]
 [ext_resource type="Texture2D" uid="uid://bvk0lh8bp63in" path="res://assets/custom/Time.png" id="9_63ik7"]
 [ext_resource type="Texture2D" uid="uid://b54p2v6xa8vgl" path="res://assets/custom/EnhanceChevron.png" id="9_odxue"]
@@ -15,10 +15,6 @@
 
 [sub_resource type="Theme" id="Theme_xgb3r"]
 default_font = ExtResource("3_inew6")
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_ek5de"]
-atlas = ExtResource("6_ju4kb")
-region = Rect2(48, 16, 16, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_g65hf"]
 atlas = ExtResource("9_odxue")
@@ -119,7 +115,7 @@ size_flags_horizontal = 3
 texture_filter = 1
 custom_minimum_size = Vector2(50, 50)
 layout_mode = 2
-texture = SubResource("AtlasTexture_ek5de")
+texture = ExtResource("6_4wisu")
 expand_mode = 5
 stretch_mode = 4
 

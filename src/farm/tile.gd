@@ -275,6 +275,7 @@ func lose_irrigate():
 
 func build_structure(n_structure: Structure, rotate):
 	state = Enums.TileState.Structure
+	var image_scale = (n_structure.texture.get_size() / Vector2(16, 16))
 	structure = n_structure.copy()
 	structure_rotate = rotate
 	structure.register_events(event_manager, self)
@@ -284,8 +285,9 @@ func build_structure(n_structure: Structure, rotate):
 	$PlantSprite.region_enabled = false
 	var rest_position = $PlantSprite.position
 	$PlantSprite.position += Vector2(0, -200)
-	$PlantSprite.offset = Vector2(0, -8)
-	$PlantSprite.scale = Vector2(5.7, 5.7)
+	$PlantSprite.offset = Vector2(0, -8 * image_scale.y)
+	$PlantSprite.scale = Vector2(5.7, 5.7) / image_scale
+
 	var tween = get_tree().create_tween()
 	tween.tween_property($PlantSprite, "position", rest_position, 0.6).set_trans(Tween.TRANS_BOUNCE)\
 		.set_ease(Tween.EASE_OUT)
@@ -459,7 +461,8 @@ func show_peek(weeks: int = 0):
 
 	var projected_state = Enums.TileState.Growing if current_grow_progress + weeks < seed_grow_time else Enums.TileState.Mature
 
-	$PeekCont/CenterCont/PeekLabel.text = str(round(projected_mana))
+	projected_mana = round(projected_mana)
+	$PeekCont/CenterCont/PeekLabel.text = str(projected_mana)
 	var corrupted = false
 	if seed != null and seed.get_effect("corrupted") != null:
 		corrupted = true
