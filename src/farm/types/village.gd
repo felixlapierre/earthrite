@@ -3,7 +3,7 @@ class_name VillageFarm
 
 static var ID = 7
 static var NAME = "VILLAGE"
-static var ICON = preload("res://assets/custom/Temp.png")
+static var ICON = preload("res://assets/mage/village.png")
 static var DESCR = "Greatly increase Ritual Target. No Blight Attacks or Hexes.\n\nLose if the ritual is incomplete at the end of Week 12."
 
 var listener_year_start: Listener

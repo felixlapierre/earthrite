@@ -238,7 +238,7 @@ func populate_continue_preview():
 	Stats.append_text("Farm: " + str(save_json.state.farm_type) + "\n")
 	
 	var farm = save_json.state.farm_type
-	var farm_icon = StatisticsDisplay.get_farm_icon(farm)
+	var farm_icon = FarmType.farms[farm].icon
 	SaveFarmTexture.texture = farm_icon
 	SaveFarmLabel.text = " " + farm.to_lower().capitalize() + "   "
 	SaveYearLabel.text = "Year: " + year + "   "
@@ -366,9 +366,9 @@ func set_locked_options():
 		CharOptions.set_item_icon(fortune.rank, icon)
 		CharOptions.set_item_text(fortune.rank, text)
 
-	for i in range(7):
-		var farm_name = StartupHelper.get_farm_name_from_id(i)
-		var icon = StatisticsDisplay.get_farm_icon(farm_name)
+	for i in range(8):
+		var farm = FarmType.farms_id_map[i]
+		var icon = farm.icon
 		if !Unlocks.FARMS_UNLOCKED[str(i)]:
 			icon = load("res://assets/ui/lock.png")
 		$Root/HBox/Panel/Margin/VBox/HBox/Margin/VBox/FarmTypeBox/TypeOptions.set_item_icon(i, icon)

@@ -7,7 +7,7 @@ static var ICON = preload("res://assets/mage/Storm.png")
 static var DESCR = "Trigger a random weather effect every 2 weeks."
 
 func _init():
-	super(ID, NAME, ICON)
+	super(ID, NAME, ICON, DESCR)
 
 func get_starter_deck():
 	var deck = super.get_starter_deck()
