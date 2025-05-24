@@ -113,7 +113,7 @@ func create_point_from_name(name, location):
 		"Legendary Card":
 			create_point("Legendary Card", location, func(pt):
 				use_explore(pt)
-				add_card("legendary", 1))
+				add_card("legendary", 2 - Mastery.less_options()))
 		"Bag of Tricks":
 			create_point("Bag of Tricks", location, func(pt):
 				use_explore(pt)
@@ -170,7 +170,7 @@ func pick_binary_explore():
 		return "Rare Structure" if !scrapyard() else "Rare Bag of Tricks"
 	if i <= 69.0:
 		return "Rare Enhance" if !scrapyard() else "Rare Bag of Tricks"
-	if i <= 69.4 and Global.FARM_TYPE != "WILDERNESS":
+	if i <= 69.4:
 		return "Legendary Card"
 	return "Gain Card" if !scrapyard() else "Bag of Tricks"
 
