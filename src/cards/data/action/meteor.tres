@@ -1,0 +1,38 @@
+[gd_resource type="Resource" script_class="CardData" load_steps=6 format=3 uid="uid://dx2h6jgcf7qai"]
+
+[ext_resource type="SpriteFrames" uid="uid://bvh2lt137hdb2" path="res://src/animation/frames/meteor_sf.tres" id="1_4mxov"]
+[ext_resource type="Script" path="res://src/cards/card_data.gd" id="1_413bo"]
+[ext_resource type="Script" path="res://src/cards/custom/meteor.gd" id="2_npcor"]
+[ext_resource type="Texture2D" uid="uid://baddiykvc3bx3" path="res://assets/card/meteor.png" id="4_ahsv5"]
+
+[sub_resource type="Resource" id="Resource_1hqw8"]
+script = ExtResource("2_npcor")
+strength = 1.0
+base_strength = 1.0
+strength_increment = 1.0
+timing = 13
+is_seed = false
+
+[resource]
+script = ExtResource("1_413bo")
+type = "ACTION"
+name = "Meteor"
+rarity = "unique"
+cost = 2
+yld = 0
+time = 0
+size = 9
+text = ""
+strength_increment = 1.0
+size_increment = 1
+texture = ExtResource("4_ahsv5")
+seed_texture = 0
+texture_icon_offset = 16
+targets = Array[String](["Empty", "Growing", "Mature"])
+effects = Array[Resource("res://src/effect/effect.gd")]([])
+enhances = Array[Dictionary]([])
+strength = 0.0
+animation = ExtResource("1_4mxov")
+delay = 0.4
+anim_on = 0
+effects2 = Array[Resource("res://src/effect2/effect2.gd")]([SubResource("Resource_1hqw8")])

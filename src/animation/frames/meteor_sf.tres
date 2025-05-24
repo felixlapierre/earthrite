@@ -1,0 +1,53 @@
+[gd_resource type="SpriteFrames" load_steps=8 format=3 uid="uid://bvh2lt137hdb2"]
+
+[ext_resource type="Texture2D" uid="uid://1g0s7n1nt7ur" path="res://assets/animations/meteor.png" id="1_8xxh7"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f0bdq"]
+atlas = ExtResource("1_8xxh7")
+region = Rect2(0, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ojwqt"]
+atlas = ExtResource("1_8xxh7")
+region = Rect2(128, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qiv2e"]
+atlas = ExtResource("1_8xxh7")
+region = Rect2(256, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hwuhl"]
+atlas = ExtResource("1_8xxh7")
+region = Rect2(384, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3podq"]
+atlas = ExtResource("1_8xxh7")
+region = Rect2(512, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_86c4q"]
+atlas = ExtResource("1_8xxh7")
+region = Rect2(640, 0, 128, 128)
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f0bdq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ojwqt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qiv2e")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hwuhl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3podq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_86c4q")
+}],
+"loop": false,
+"name": &"default",
+"speed": 10.0
+}]
