@@ -328,7 +328,6 @@ func connect_main_menu_signal(playspace):
 		var difficulty = Global.DIFFICULTY if Global.DIFFICULTY != -1 else 0
 		WildernessFarm.WILDERNESS_PLANT = null
 		MountainsFarm.START_STRUCTURE = null
-		Global.WILDERNESS_PLANT = null
 		$Root/HBox/Panel/Margin/VBox/HBox/Margin/VBox/DifficultyBox/DiffOptions.selected = difficulty
 		_on_diff_options_item_selected(difficulty)
 		$Root/HBox/Panel/Margin/VBox/HBox/Margin/VBox/FarmTypeBox/TypeOptions.selected = get_index_of_farm_type(Global.FARM_TYPE)

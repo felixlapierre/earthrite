@@ -123,7 +123,7 @@ static func teardown_wilderness_farm_callback(event_manager: EventManager):
 	event_manager.unregister_listener(EventManager.EventType.BeforeYearStart, wilderness_callable)
 
 static var wilderness_callable = func(event_args: EventArgs):
-	event_args.farm.use_card_random_tile(Global.WILDERNESS_PLANT.copy(), Global.WILDERNESS_PLANT.size)
+	pass
 
 static func setup_mountain_farm(farm: Farm):
 	var rocks2 = [Vector2(0, 3), Vector2(0, 6), Vector2(1, 0), Vector2(1, 1), Vector2(2, 3), Vector2(1, 5), Vector2(3, 2), Vector2(2, 5), Vector2(4, 0), Vector2(5, 2), Vector2(6, 2), Vector2(7, 1), Vector2(4, 1), Vector2(7, 0)]

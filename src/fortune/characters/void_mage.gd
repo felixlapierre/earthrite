@@ -16,7 +16,7 @@ func register_fortune(event_manager: EventManager):
 	update_text()
 	event_callable = func(args: EventArgs):
 		for tile in args.farm.get_all_tiles():
-			if tile.is_destroyed():
+			if tile.is_destroyed() or (RockCoral.ACTIVE and tile.is_watered()):
 				args.farm.gain_yield(tile, EventArgs.HarvestArgs.new(strength, true, false))
 			elif tile.state == Enums.TileState.Empty:
 				args.farm.gain_yield(tile, EventArgs.HarvestArgs.new(1.0, true, false))

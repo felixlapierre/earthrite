@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="Structure" load_steps=5 format=3 uid="uid://bsssgelh7knpi"]
+
+[ext_resource type="Script" path="res://src/cards/structure.gd" id="1_4s2g0"]
+[ext_resource type="Script" path="res://src/structure/custom/brain_jar.gd" id="1_7t4a6"]
+[ext_resource type="Texture2D" uid="uid://bk224v5jjhxxf" path="res://assets/structure/brain-jar.png" id="3_rar8o"]
+
+[sub_resource type="Resource" id="Resource_b5r30"]
+script = ExtResource("1_7t4a6")
+timing = 0
+is_seed = false
+
+[resource]
+script = ExtResource("1_4s2g0")
+name = "Brain in a Jar"
+rarity = "unique"
+cost = 0
+size = 0
+text = ""
+texture = ExtResource("3_rar8o")
+effects = Array[Resource("res://src/effect/effect.gd")]([])
+tooltip = ""
+effects2 = Array[Resource("res://src/effect2/effect2.gd")]([SubResource("Resource_b5r30")])

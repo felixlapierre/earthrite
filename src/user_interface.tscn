@@ -113,8 +113,10 @@ custom_minimum_size = Vector2(150, 40)
 layout_mode = 2
 size_flags_horizontal = 3
 bbcode_enabled = true
-text = "[right]0 /300"
+text = "[right]100 / 3000"
+fit_content = true
 scroll_active = false
+autowrap_mode = 0
 text_direction = 1
 
 [node name="TextureRect" type="TextureRect" parent="UI/RitualPanel/RitualCounter"]

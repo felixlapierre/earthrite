@@ -42,7 +42,6 @@ static var FINAL_WEEK = 13
 static var FARM_TYPE = "FOREST"
 static var LUNAR_FARM = false
 static var MAGE: String = ""
-static var WILDERNESS_PLANT = null
 
 static var END_TURN_DISCARD = true
 static var BLOCK_RITUAL = false
@@ -95,6 +94,7 @@ static func reset():
 	ACORN_BONUS = 0.0
 	Explore.bonus_explores = 0
 	LOCK = false
+	RockCoral.ACTIVE = false
 
 static func register_click_callback(obj):
 	click_callbacks.append(obj)

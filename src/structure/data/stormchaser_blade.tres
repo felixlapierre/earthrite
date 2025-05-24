@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="Structure" load_steps=5 format=3 uid="uid://bfki47md5w4yr"]
+
+[ext_resource type="Script" path="res://src/structure/custom/stormchaser-blade.gd" id="1_48kx3"]
+[ext_resource type="Script" path="res://src/cards/structure.gd" id="1_fsa41"]
+[ext_resource type="Texture2D" uid="uid://dv0anoh8o604h" path="res://assets/structure/stormchaser-blade.png" id="3_tlquc"]
+
+[sub_resource type="Resource" id="Resource_3jl5s"]
+script = ExtResource("1_48kx3")
+timing = 11
+is_seed = false
+
+[resource]
+script = ExtResource("1_fsa41")
+name = "Stormchaser Blade"
+rarity = "unique"
+cost = 0
+size = 0
+text = ""
+texture = ExtResource("3_tlquc")
+effects = Array[Resource("res://src/effect/effect.gd")]([])
+tooltip = ""
+effects2 = Array[Resource("res://src/effect2/effect2.gd")]([SubResource("Resource_3jl5s")])

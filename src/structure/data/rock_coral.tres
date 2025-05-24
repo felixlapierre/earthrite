@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="Structure" load_steps=5 format=3 uid="uid://blk5v33e4pwvy"]
+
+[ext_resource type="Script" path="res://src/structure/custom/rock-coral.gd" id="1_40fp7"]
+[ext_resource type="Script" path="res://src/cards/structure.gd" id="1_ouswf"]
+[ext_resource type="Texture2D" uid="uid://b6sinfibxpfv2" path="res://assets/structure/stone-coral.png" id="3_ea0jg"]
+
+[sub_resource type="Resource" id="Resource_yfui1"]
+script = ExtResource("1_40fp7")
+timing = 0
+is_seed = false
+
+[resource]
+script = ExtResource("1_ouswf")
+name = "Rock Coral"
+rarity = "unique"
+cost = 0
+size = 0
+text = ""
+texture = ExtResource("3_ea0jg")
+effects = Array[Resource("res://src/effect/effect.gd")]([])
+tooltip = ""
+effects2 = Array[Resource("res://src/effect2/effect2.gd")]([SubResource("Resource_yfui1")])

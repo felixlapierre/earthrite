@@ -23,9 +23,9 @@ func register_fortune(event_manager: EventManager):
 		for card: CardData in args.cards.get_hand_info():
 			apply_time(card)
 		args.cards.update_hand_display()
-		if Global.WILDERNESS_PLANT != null:
+		if WildernessFarm.WILDERNESS_PLANT != null:
 			for tile: Tile in args.farm.get_all_tiles():
-				if tile.seed != null and tile.seed.name == Global.WILDERNESS_PLANT.name:
+				if tile.seed != null and tile.seed.name == WildernessFarm.WILDERNESS_PLANT.name:
 					apply_time(tile.seed)
 	event_manager.register_listener(event_type, event_callable)
 

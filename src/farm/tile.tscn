@@ -240,6 +240,7 @@ explosiveness = 0.8
 
 [node name="ProtectOverlay" type="Sprite2D" parent="."]
 visible = false
+modulate = Color(1, 1, 1, 0.321569)
 texture_filter = 1
 scale = Vector2(5.7, 5.7)
 texture = ExtResource("13_atcg2")

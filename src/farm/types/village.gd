@@ -21,7 +21,8 @@ func register(event_manager: EventManager):
 			tile.update_display()
 		
 		var bonus = get_bonus(args)
-
+		print(args.turn_manager.total_ritual)
+		print(bonus)
 		# Increase ritual terget
 		args.turn_manager.total_ritual *= (3 + bonus)
 		args.turn_manager.ritual_counter *= (3 + bonus)
@@ -58,9 +59,9 @@ func get_bonus(args: EventArgs):
 	var bonus = 0
 	if Global.DIFFICULTY >= 2:
 		bonus = 1.0
-	elif Global.DIFFICULTY >= 5:
+	if Global.DIFFICULTY >= 5:
 		bonus = 2.0
-	elif Global.DIFFICULTY >= 7:
+	if Global.DIFFICULTY >= 7:
 		bonus = 3.0
 	
 	if args.turn_manager.year < 7:

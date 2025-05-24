@@ -30,6 +30,8 @@ func register_fortune(event_manager: EventManager):
 			if tile.destroy_targeted:
 				if !tile.is_protected():
 					tiles_to_destroy.append(tile)
+				else:
+					tile.set_destroy_targeted(false)
 		if tiles_to_destroy.size() > 0:
 			await popup_callback.call(true)
 			for tile in tiles_to_destroy:

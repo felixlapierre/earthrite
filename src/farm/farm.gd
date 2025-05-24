@@ -85,7 +85,7 @@ func use_card(grid_position, external_source: bool = false):
 		for effect in card.effects:
 			if effect.strength < 0:
 				effect.strength = (effect.strength * -1) * energy
-				card.cost = 1
+				card.cost = energy
 	var targets = []
 	if selection.size() > 0:
 		targets.assign(selection)
@@ -333,7 +333,7 @@ func process_one_week(week: int):
 			effect_queue.append_array(tile.grow_one_week())
 			await get_tree().create_timer(0.01).timeout
 		process_effect_queue()
-	for tile in $Tiles.get_children():
+	for tile: Tile in $Tiles.get_children():
 		effect_queue.append_array(tile.get_after_grow_effects())
 	process_effect_queue()
 	for tile in $Tiles.get_children():
@@ -446,6 +446,11 @@ func do_winter_clear():
 			if i < ceil(float(blighted_tiles.size()) / 2.0):
 				blighted_tiles[i].remove_blight()
 	next_turn_effects.clear()
+
+func remove_protected():
+	for tile: Tile in get_all_tiles():
+		tile.protected = false
+		tile.update_display()
 
 func spread(card, grid_position, size, shape):
 	var targets = get_targeted_tiles(grid_position, card, size, shape, 0)

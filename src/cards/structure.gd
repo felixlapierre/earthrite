@@ -62,8 +62,16 @@ func assign(s: Structure):
 	effects2.assign(s.effects2)
 
 func get_description():
-	return text.replace("{MANA}", Helper.mana_icon())\
-		.replace("{BLUE_MANA}", Helper.blue_mana())
+	var result = text
+	for effect in effects2:
+		var descr = effect.get_description(size)
+		if descr.length() > 0:
+			if result.length() > 0:
+				result += ". "
+			result += descr
+	return result.replace("{MANA}", Helper.mana_icon())\
+		.replace("{BLUE_MANA}", Helper.blue_mana())\
+		.replace("{ENERGY}", Helper.energy_icon())
 
 # To be overridden by specific script structures
 func register_events(event_manager: EventManager, tile: Tile):

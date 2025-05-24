@@ -239,6 +239,7 @@ func on_turn_end():
 		end_year(false)
 		$UserInterface.turn_ending = false
 		return
+	$FarmTiles.remove_protected()
 	await $EventManager.notify(EventManager.EventType.OnTurnEnd)
 	var damage: int = $TurnManager.end_turn()
 	if damage > 0:
@@ -310,7 +311,7 @@ func save_game():
 	}
 	user_interface.save_data(save_json)
 	save_json.misc = {
-		"wilderness_plant": Global.WILDERNESS_PLANT.save_data() if Global.WILDERNESS_PLANT != null else null
+		"wilderness_plant": WildernessFarm.WILDERNESS_PLANT.save_data() if WildernessFarm.WILDERNESS_PLANT != null else null
 	}
 
 	var save_game = FileAccess.open("user://savegame.save", FileAccess.WRITE)
@@ -351,8 +352,8 @@ func load_game():
 	Global.ACORNS = save_json.state.acorns if save_json.state.has("acorns") else 0
 	Global.TOTAL_ACORNS = save_json.state.total_acorns if save_json.state.has("total_acorns") else 0
 	if save_json.misc.wilderness_plant != null:
-		Global.WILDERNESS_PLANT = load(save_json.misc.wilderness_plant.path).new()
-		Global.WILDERNESS_PLANT.load_data(save_json.misc.wilderness_plant)
+		WildernessFarm.WILDERNESS_PLANT = load(save_json.misc.wilderness_plant.path).new()
+		WildernessFarm.WILDERNESS_PLANT.load_data(save_json.misc.wilderness_plant)
 
 	StartupHelper.load_farm($FarmTiles, $EventManager)
 	$UserInterface.load_data(save_json)

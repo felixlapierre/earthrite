@@ -213,6 +213,8 @@ static func get_long_description(effect_name: String, strength: float = 0.0):
 			return "[color=gold]Corrupted[/color]: On Harvest, " + Helper.mana_icon() + " is lost, not gained."
 		"destroy_tile":
 			return "[color=gold]Destroy Tile[/color]: Destroyed tiles are unusable until the end of the year."
+		"destroyed_tile":
+			return "[color=gold]Destroyed Tile[/color]: Some effects Destroy tiles. Destroyed tiles are unusable until the end of the year."
 		"destroy_plant":
 			return "[color=gold]Destroy Plant[/color]: Remove a plant from your farm, without gaining its Mana " + Helper.mana_icon()
 		"destroyed":

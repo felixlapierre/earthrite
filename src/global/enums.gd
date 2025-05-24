@@ -41,5 +41,6 @@ enum EffectType {
 	GainMana,
 	DestroyPlant,
 	DestroyTile,
-	Other
+	Other,
+	Protect
 }

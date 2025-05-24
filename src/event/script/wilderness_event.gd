@@ -24,9 +24,9 @@ func get_options():
 	nodes_preview(message, [node1]), func():
 		var cards = []
 		cards.assign(StartupHelper.get_wilderness_seed_options())
-		if Global.WILDERNESS_PLANT != null:
+		if WildernessFarm.WILDERNESS_PLANT != null:
 			cards = cards.filter(func(card):
-				return card.name != Global.WILDERNESS_PLANT.name)
+				return card.name != WildernessFarm.WILDERNESS_PLANT.name)
 		var pick_option_ui = PickOption.instantiate()
 		user_interface.add_child(pick_option_ui)
 		var prompt = "Pick the Native Seed"
@@ -45,7 +45,7 @@ func get_options():
 	
 	var options = [option1]
 	if is_wilderness:
-		var native_seed: CardData = Global.WILDERNESS_PLANT
+		var native_seed: CardData = WildernessFarm.WILDERNESS_PLANT
 		var card1 = ShopCard.instantiate()
 		card1.card_data = native_seed
 		var option2 = CustomEvent.Option.new("Enhance the Native Seed", nodes_preview("Add an Enhance to your Native Seed", [card1]), func():
@@ -65,7 +65,7 @@ func get_options():
 			var prompt = "Pick an Enhance"
 			enhances.shuffle()
 			pick_option_ui.setup(prompt, enhances.slice(0, 3), func(selected):
-				Global.WILDERNESS_PLANT = native_seed.copy().apply_enhance(selected)
+				WildernessFarm.WILDERNESS_PLANT = native_seed.copy().apply_enhance(selected)
 				user_interface.remove_child(pick_option_ui), func():
 					user_interface.remove_child(pick_option_ui)
 		))
