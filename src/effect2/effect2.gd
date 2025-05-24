@@ -50,7 +50,7 @@ func get_timing_text(p_timing: EventManager.EventType = timing) -> String:
 		EventManager.EventType.BeforeCardPlayed, EventManager.EventType.AfterCardPlayed, EventManager.EventType.OnActionCardUsed:
 			return ""
 		_:
-			return "On ???: "
+			return ""
 
 func save_data() -> Dictionary:
 	var save_dict = {

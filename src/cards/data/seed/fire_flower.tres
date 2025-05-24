@@ -7,14 +7,14 @@
 script = ExtResource("1_1d53c")
 timing2 = 11
 count = -1
-pick_from = null
+pick_from = 0
 and_then = 1
-skippable = null
-strength = null
-base_strength = null
-strength_increment = null
+skippable = false
+strength = 0.0
+base_strength = 1.0
+strength_increment = 1.0
 timing = 13
-is_seed = null
+is_seed = true
 
 [resource]
 script = ExtResource("2_cvwwy")
@@ -32,7 +32,7 @@ seed_texture = 1
 texture_icon_offset = 16
 targets = Array[String]([])
 effects = Array[Resource("res://src/effect/effect.gd")]([])
-enhances = Array[String]([])
+enhances = Array[Dictionary]([])
 strength = 0.0
 delay = 0.0
 anim_on = 0

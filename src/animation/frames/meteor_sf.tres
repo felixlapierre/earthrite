@@ -1,4 +1,4 @@
-[gd_resource type="SpriteFrames" load_steps=8 format=3 uid="uid://bvh2lt137hdb2"]
+[gd_resource type="SpriteFrames" load_steps=9 format=3 uid="uid://bvh2lt137hdb2"]
 
 [ext_resource type="Texture2D" uid="uid://1g0s7n1nt7ur" path="res://assets/animations/meteor.png" id="1_8xxh7"]
 
@@ -26,6 +26,10 @@ region = Rect2(512, 0, 128, 128)
 atlas = ExtResource("1_8xxh7")
 region = Rect2(640, 0, 128, 128)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_pksy6"]
+atlas = ExtResource("1_8xxh7")
+region = Rect2(768, 0, 128, 128)
+
 [resource]
 animations = [{
 "frames": [{
@@ -46,6 +50,9 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_86c4q")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pksy6")
 }],
 "loop": false,
 "name": &"default",

@@ -12,10 +12,10 @@ is_seed = false
 [resource]
 script = ExtResource("1_3n8ji")
 name = "Pinwheel of Destiny"
-rarity = "unique"
+rarity = "rare"
 cost = 0
 size = 0
-text = "When you Play a Harvest card, 50% to gain 1 Energy"
+text = ""
 texture = ExtResource("3_ktb75")
 effects = Array[Resource("res://src/effect/effect.gd")]([])
 tooltip = ""

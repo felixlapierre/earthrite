@@ -20,6 +20,12 @@ func register(event_manager: EventManager, tile: Tile):
 func unregister(event_manager: EventManager):
 	event_manager.unregister_listener(timing, callback)
 
+func get_description(size):
+	return get_timing_text() + "Water an unwatered adjacent tile"
+
+func get_type():
+	return Enums.EffectType.Water
+
 func copy():
 	var c = WaterUnwateredAdjacent.new()
 	c.assign(self)

@@ -3,6 +3,7 @@ class_name PickCardEffect
 
 var PickOption = preload("res://src/ui/pick_option.tscn")
 var SelectCard = preload("res://src/cards/select_card.tscn")
+var strength_enhance = load("res://src/enhance/data/strength.tres")
 
 enum PickFrom {
 	Hand,
@@ -10,13 +11,15 @@ enum PickFrom {
 	Burned,
 	RandomSeed,
 	Blight,
-	HandCost1
+	HandCost1,
+	HandCanStrengthen
 }
 
 enum AndThen {
 	Draw,
 	Burn,
-	Use
+	Use,
+	Strengthen
 }
 
 @export var timing2: EventManager.EventType
@@ -92,6 +95,14 @@ func pick_card_event(args: EventArgs):
 			options.assign(pick_from_random_seed())
 		PickFrom.Blight:
 			options.assign(DataFetcher.get_element_cards("blight"))
+		PickFrom.HandCanStrengthen:
+			options.assign(args.cards.get_hand_info().filter(func(card_data: CardData):
+				if card_data.can_strengthen_custom_effect():
+					return true
+				for effect in card_data.effects:
+					if effect.strength != 0:
+						return true
+				return false))
 	if count != -1:
 		options.shuffle()
 	Global.LOCK = true
@@ -161,6 +172,11 @@ func do_followup_action(args: EventArgs):
 		Global.selected_card = card
 		args.farm.use_card(tile.grid_location, true)
 		Global.selected_card = null
+	elif and_then == AndThen.Strengthen:
+		var copy: CardData = card.apply_enhance(strength_enhance)
+		for hand_card: CardBase in args.cards.HAND_CARDS.get_children():
+			if hand_card.card_info == card:
+				hand_card.set_card_info(copy)
 
 func unregister(event_manager: EventManager):
 	listener_play.disable()
@@ -184,7 +200,7 @@ func get_pick_from_description():
 		count_text = " 1 of " + str(count) + " cards"
 
 	match pick_from:
-		PickFrom.Hand:
+		PickFrom.Hand, PickFrom.HandCanStrengthen:
 			return "Pick" + count_text + "from your hand"
 		PickFrom.HandCost1:
 			return "Pick" + count_text.replace("card", ("[color=aqua]" if strength > 1 else "")\
@@ -221,6 +237,8 @@ func get_and_then_description():
 			return " and [color=gold]Burn[/color] it"
 		AndThen.Use:
 			return (". " if card == null else "") + get_timing_text(timing2) + "Cast " + ("it" if card == null else card.name) + " on this plant"
+		AndThen.Strengthen:
+			return " and increase its Strength by " + highlight(str(strength))
 
 func copy():
 	var copy = PickCardEffect.new()
@@ -256,7 +274,7 @@ func assign(other):
 	return self
 
 func can_strengthen():
-	return and_then == AndThen.Draw or pick_from == PickFrom.HandCost1
+	return and_then == AndThen.Draw or pick_from == PickFrom.HandCost1 or and_then == AndThen.Strengthen
 
 func get_long_description():
 	if and_then == AndThen.Burn:

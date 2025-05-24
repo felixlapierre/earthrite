@@ -42,5 +42,6 @@ enum EffectType {
 	DestroyPlant,
 	DestroyTile,
 	Other,
-	Protect
+	Protect,
+	Water
 }

@@ -45,9 +45,10 @@ static func load_cards():
 		all_cards.append(blight_cards)
 		cards_rarity["common"].append(blight_cards)
 	
-	print("Common: " + str(cards_rarity["common"].size()))
-	print("Uncommon: " + str(cards_rarity["uncommon"].size()))
-	print("Rare: " + str(cards_rarity["rare"].size()))
+	print("Common Cards: " + str(cards_rarity["common"].size()))
+	print("Uncommon Cards: " + str(cards_rarity["uncommon"].size()))
+	print("Rare Cards: " + str(cards_rarity["rare"].size()))
+	print("Legendary Cards: " + str(cards_rarity["legendary"].size()))
 
 static func filter_card(card_data: CardData):
 	if Global.FARM_TYPE == "STORMVALE" and card_data.name == "Stormcall":
@@ -75,6 +76,9 @@ static func load_structures():
 			print(path)
 		all_structures.append(structure)
 		structures_rarity[structure.rarity].append(structure)
+	print("Common Structures: " + str(structures_rarity["common"].size()))
+	print("Uncommon Structures: " + str(structures_rarity["uncommon"].size()))
+	print("Rare Structures: " + str(structures_rarity["rare"].size()))
 	
 static func get_all_cards() -> Array[CardData]:
 	return get_all_cards_rarity(null)

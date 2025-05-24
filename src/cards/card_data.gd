@@ -64,6 +64,12 @@ func get_effect(effect_name):
 			return effect
 	return null
 
+func has_effect(type: Enums.EffectType):
+	for effect in effects2:
+		if effect.get_type() == type:
+			return true
+	return false
+
 func copy() -> CardData:
 	var new = CardData.new()
 	new.assign(self)

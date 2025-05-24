@@ -12,7 +12,7 @@ is_seed = false
 [resource]
 script = ExtResource("1_4s2g0")
 name = "Brain in a Jar"
-rarity = "unique"
+rarity = "uncommon"
 cost = 0
 size = 0
 text = ""

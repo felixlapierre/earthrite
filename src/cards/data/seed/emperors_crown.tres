@@ -1,0 +1,41 @@
+[gd_resource type="Resource" script_class="CardData" load_steps=5 format=3 uid="uid://yflcpshm1es"]
+
+[ext_resource type="Script" path="res://src/cards/card_data.gd" id="1_g538x"]
+[ext_resource type="Script" path="res://src/effect2/data/pick_card_effect.gd" id="1_kh385"]
+[ext_resource type="Texture2D" uid="uid://cyv7er42ucm8n" path="res://assets/seed/emperors-crown.png" id="2_5y3l3"]
+
+[sub_resource type="Resource" id="Resource_q2fvy"]
+script = ExtResource("1_kh385")
+timing2 = 11
+count = -1
+pick_from = 6
+and_then = 3
+skippable = true
+strength = 1.0
+base_strength = 1.0
+strength_increment = 1.0
+timing = 13
+is_seed = true
+
+[resource]
+script = ExtResource("1_g538x")
+type = "SEED"
+name = "Emperor's Crown"
+rarity = "rare"
+cost = 1
+yld = 50
+time = 5
+size = 1
+text = ""
+strength_increment = 1.0
+size_increment = 1
+texture = ExtResource("2_5y3l3")
+seed_texture = 0
+texture_icon_offset = 5
+targets = Array[String]([])
+effects = Array[Resource("res://src/effect/effect.gd")]([])
+enhances = Array[Dictionary]([])
+strength = 0.0
+delay = 0.0
+anim_on = 0
+effects2 = Array[Resource("res://src/effect2/effect2.gd")]([SubResource("Resource_q2fvy")])
