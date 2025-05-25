@@ -1,11 +1,15 @@
-[gd_resource type="Resource" script_class="CardData" load_steps=5 format=3 uid="uid://cjel5nhm6w5t1"]
+[gd_resource type="Resource" script_class="CardData" load_steps=6 format=3 uid="uid://cjel5nhm6w5t1"]
 
 [ext_resource type="Script" path="res://src/effect2/data/implosion.gd" id="1_b45kj"]
+[ext_resource type="SpriteFrames" uid="uid://c12ypym04rf82" path="res://src/animation/frames/implosion_sf.tres" id="1_h6k2o"]
 [ext_resource type="Script" path="res://src/cards/card_data.gd" id="1_qygqc"]
 [ext_resource type="Texture2D" uid="uid://bgb8qjg7mjbop" path="res://assets/random/void.png" id="3_snbob"]
 
 [sub_resource type="Resource" id="Resource_gv45t"]
 script = ExtResource("1_b45kj")
+strength = 0.0
+base_strength = 0.0
+strength_increment = 0.2
 timing = 13
 is_seed = false
 
@@ -28,6 +32,7 @@ targets = Array[String](["Growing", "Mature"])
 effects = Array[Resource("res://src/effect/effect.gd")]([])
 enhances = Array[Dictionary]([])
 strength = 0.0
+animation = ExtResource("1_h6k2o")
 delay = 0.0
-anim_on = 0
+anim_on = 1
 effects2 = Array[Resource("res://src/effect2/effect2.gd")]([SubResource("Resource_gv45t")])

@@ -1,4 +1,4 @@
-extends Effect2
+extends StrEffect
 class_name Implosion
 
 var listener: Listener
@@ -12,11 +12,14 @@ func register(event_manager: EventManager, tile: Tile):
 			if t.seed != null:
 				mana += t.current_yield
 				t.destroy_plant()
-		center.add_yield(mana))
+		await args.farm.get_tree().create_timer(1.0).timeout
+		var increased_mana = mana * (1.0 + strength)
+		center.add_yield(increased_mana))
 	owner.register(listener)
 
 func get_description(_size):
-	return "Target plant [color=gold]Destroys[/color] all adjacent plants and gains their {MANA}"
+	var str_text = highlight(str((1.0 + strength) * 100) + "% of ") if strength != base_strength else ""
+	return "Target plant [color=gold]Destroys[/color] all adjacent plants and gains " + str_text + "their {MANA}"
 
 func get_type():
 	return Enums.EffectType.DestroyPlant

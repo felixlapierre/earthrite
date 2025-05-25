@@ -287,7 +287,7 @@ func select_enhance(rarity: String):
 	if pick_option_ui.has_acorn and enhances > 1:
 		show_tutorial.call("lucky acorns", "farleft")
 
-func select_card_to_enhance(enhance: Enhance, pick_enhance_ui: Node):
+func select_card_to_enhance(enhance: Enhance, pick_enhance_ui: Node = null):
 	var select_card = SelectCard.instantiate()
 	select_card.tooltip = tooltip
 	select_card.size = Constants.VIEWPORT_SIZE
@@ -295,15 +295,21 @@ func select_card_to_enhance(enhance: Enhance, pick_enhance_ui: Node):
 	select_card.theme = load("res://assets/theme_large.tres")
 	select_card.select_callback = func(card_data: CardData):
 		remove_sibling(select_card)
-		remove_sibling(pick_enhance_ui)
+		if pick_enhance_ui != null:
+			remove_sibling(pick_enhance_ui)
 		var new_card = card_data.apply_enhance(enhance)
 		player_deck.erase(card_data)
 		player_deck.append(new_card)
 		show_window()
-	pick_enhance_ui.add_sibling(select_card)
+	if pick_enhance_ui != null:
+		pick_enhance_ui.add_sibling(select_card)
+	else:
+		add_sibling(select_card)
+		select_card.disable_cancel()
 	select_card.select_cancelled.connect(func():
 		remove_sibling(select_card)
-		pick_enhance_ui.visible = true)
+		if pick_enhance_ui != null:
+			pick_enhance_ui.visible = true)
 	select_card.do_enhance_pick(player_deck, enhance, "Select a card to enhance")
 	
 func add_structure(rarity: String):

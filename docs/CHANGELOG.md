@@ -12,6 +12,8 @@ Balance
 - Druid now starts with 3 acorns instead of 1
 
 Bugs / QoL
+
+- Many improvements to the tutorial
 - End turn button, blight attack panel, and obelisk are now highlighted in certain contexts
 - Wilderness farm plants are now secretly protected turn 1 to avoid instant-lose scenarios when drawing no spread cards turn 1 against Destruction hex.
 
