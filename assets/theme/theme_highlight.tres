@@ -1,0 +1,27 @@
+[gd_resource type="Theme" load_steps=5 format=3 uid="uid://nytw04pdd0on"]
+
+[ext_resource type="StyleBox" uid="uid://cx848a4s3hh4" path="res://assets/theme/stylebox_highlighted.tres" id="1_rbsr1"]
+[ext_resource type="FontFile" uid="uid://drlkmr7jve2ep" path="res://assets/m5x7.ttf" id="2_8rlq1"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_u4cip"]
+bg_color = Color(0.458824, 0.521569, 1, 0.929412)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.145098, 0.145098, 0.145098, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_q44pb"]
+bg_color = Color(0.345098, 0.462745, 1, 0.929412)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.145098, 0.145098, 0.145098, 1)
+
+[resource]
+default_font = ExtResource("2_8rlq1")
+default_font_size = 50
+Button/styles/hover = SubResource("StyleBoxFlat_u4cip")
+Button/styles/normal = ExtResource("1_rbsr1")
+Button/styles/pressed = SubResource("StyleBoxFlat_q44pb")

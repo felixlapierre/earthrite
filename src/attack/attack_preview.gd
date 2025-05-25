@@ -6,8 +6,12 @@ class_name AttackPreview
 @onready var AttackParticles = $CurrentTurn/AttackParticles
 @onready var AttackImg = $CurrentTurn/VBox/HBox/Attack
 @onready var Fortunes = $CurrentTurn/VBox/Margin/Fortunes
+@onready var CurrentTurnPanel: PanelContainer = $CurrentTurn
+
 var FutureTurnPreview = preload("res://src/attack/future_turn_preview.tscn")
 var FortuneHover = preload("res://src/fortune/fortune_hover.tscn")
+
+var highlight_panel = preload("res://assets/theme/stylebox_blight.tres")
 
 var turn_manager: TurnManager
 var mage_fortune: Fortune
@@ -32,12 +36,14 @@ func _process(delta):
 func update():
 	AttackParticles.emitting = false
 	AttackImg.modulate = Color8(94, 102, 115)
+	CurrentTurnPanel.remove_theme_stylebox_override("panel")
 	if turn_manager.target_blight > 0:
 		AmountLabel.text = str(turn_manager.purple_mana) + " / " + str(turn_manager.target_blight)
 	if turn_manager.purple_mana < turn_manager.target_blight:
 		PromptLabel.text = "Blight Attack!"
 		AttackParticles.emitting = true
 		AttackImg.modulate = Color8(255, 255, 255)
+		CurrentTurnPanel.add_theme_stylebox_override("panel", highlight_panel)
 	elif turn_manager.purple_mana > turn_manager.target_blight and turn_manager.flag_defer_excess:
 		PromptLabel.text = "Defer: " + str(turn_manager.purple_mana - turn_manager.target_blight) + Helper.blue_mana()
 	elif turn_manager.purple_mana > turn_manager.target_blight and turn_manager.target_blight == 0 and Global.FARM_TYPE != "LUNARTEMPLE":

@@ -28,7 +28,8 @@ var FORTUNE_HOVER = preload("res://src/fortune/fortune_hover.tscn")
 var CARD_ANATOMY = preload("res://src/ui/menus/card_anatomy.tscn")
 var debug_menu = preload("res://src/ui/menus/debug_menu.tscn")
 
-var highlight_stylebox = preload("res://assets/theme/stylebox_highlighted.tres")
+var highlight_theme = preload("res://assets/theme/theme_highlight.tres")
+var theme_large = preload("res://assets/theme_large.tres")
 
 @onready var shop: Shop = $Shop
 @onready var tooltip: Tooltip = $Tooltip
@@ -58,6 +59,7 @@ var highlight_stylebox = preload("res://assets/theme/stylebox_highlighted.tres")
 @onready var EndTurnButton: Button = $UI/EndTurnButton
 @onready var EnergyDisplay = $UI/EnergyDisplay
 @onready var VisualsBlightRitual = $VisualsBlightRitual
+@onready var Obelisk = $Obelisk
 
 var end_year_alert_text = "Ritual Complete! Time to rest and prepare for the next year"
 var structure_place_text = "Click on the farm tile where you'd like to place the structure"
@@ -197,13 +199,9 @@ func update():
 	var highlight_end_turn = cards.get_hand_info().all(func(card_data: CardData):
 		return card_data.cost > turn_manager.energy)
 	if highlight_end_turn and Global.LOCK == false:
-		EndTurnButton.add_theme_stylebox_override("normal", highlight_stylebox)
-		EndTurnButton.add_theme_stylebox_override("hover", highlight_stylebox)
-		EndTurnButton.add_theme_stylebox_override("pressed", highlight_stylebox)
+		EndTurnButton.theme = highlight_theme
 	else:
-		EndTurnButton.remove_theme_stylebox_override("normal")
-		EndTurnButton.remove_theme_stylebox_override("hover")
-		EndTurnButton.remove_theme_stylebox_override("pressed")
+		EndTurnButton.theme = theme_large
 
 # Fortune Teller
 func _on_fortune_teller_button_pressed() -> void:
