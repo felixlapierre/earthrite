@@ -298,7 +298,7 @@ func can_strengthen_custom_effect():
 func preview_yield(tile: Tile):
 	var defer = get_effect("harvest_delay") != null
 	if (get_effect("harvest") != null\
-		or get_effect("harvest_delay") != null)\
+		or get_effect("harvest_delay") != null or has_effect(Enums.EffectType.Harvest))\
 		and tile.card_can_target(self):
 		var harvest: EventArgs.HarvestArgs = tile.preview_harvest()
 		harvest.delay = defer or harvest.delay

@@ -6,7 +6,7 @@ var listener: Listener
 func register(event_manager: EventManager, tile: Tile):
 	listener = Listener.new(timing, func(args: EventArgs):
 		var card = args.specific.play_args.card
-		if card.cost >= 3:
+		if card.cost >= 3 and !args.specific.play_args.external_source:
 			args.turn_manager.energy += 2
 			args.user_interface.update()
 			tile.play_effect_particles()

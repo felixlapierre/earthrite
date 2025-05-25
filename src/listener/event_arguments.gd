@@ -42,8 +42,10 @@ class DestroyArgs:
 
 class PlayArgs:
 	var card: CardData
-	func _init(p_card: CardData = null):
+	var external_source: bool
+	func _init(p_card: CardData = null, p_ext = false):
 		card = p_card
+		external_source = p_ext
 
 class PickArgs:
 	var options: Array[CardData]

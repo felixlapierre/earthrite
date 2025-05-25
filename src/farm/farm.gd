@@ -94,7 +94,7 @@ func use_card(grid_position, external_source: bool = false):
 	targets.shuffle()
 	card.register_events(event_manager, null)
 	var args = EventArgs.SpecificArgs.new(tiles[grid_position.x][grid_position.y])
-	args.play_args = EventArgs.PlayArgs.new(card)
+	args.play_args = EventArgs.PlayArgs.new(card, external_source)
 	await card.notify(event_manager, EventManager.EventType.BeforeCardPlayed, args)
 	await event_manager.notify_specific_args(EventManager.EventType.BeforeCardPlayed, args)
 	# Animate
@@ -489,7 +489,7 @@ func preview_yield(card, targeted_tile: Tile):
 	var yld_yellow = 0.0
 	var defer = card.get_effect("harvest_delay") != null
 	if (card.get_effect("harvest") != null\
-		or card.get_effect("harvest_delay") != null)\
+		or card.get_effect("harvest_delay") != null or card.has_effect(Enums.EffectType.Harvest))\
 		and targeted_tile.card_can_target(card):
 		var harvest: EventArgs.HarvestArgs = targeted_tile.preview_harvest()
 		harvest.yld = round(harvest.yld)

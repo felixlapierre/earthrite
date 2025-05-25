@@ -245,8 +245,8 @@ func select_card_to_remove(pt):
 	select_card.select_callback = func(card_data):
 		remove_sibling(select_card)
 		player_deck.erase(card_data)
-		show_window()
 		use_explore(pt)
+		show_window()
 		removals += 1
 	select_card.select_cancelled.connect(func():
 		remove_sibling(select_card)
