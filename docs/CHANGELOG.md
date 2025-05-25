@@ -1,5 +1,15 @@
 # Changelog
 
+## Version 0.1.1 (Upcoming)
+
+- Added 5 new cards (Implosion, Shelter, Epochrite, Meteor, Emperor's Crown)
+- Added 7 new structures (Firefly Lantern, Mossy Skull, Rock Coral, Brain in a Jar, Pinwheel of Destiny, Stormchaser Blade, Crystal Ball)
+- Added new farm type (Village)
+- Emerald Sun is now Legendary rarity, cost 4->3
+- Druid now starts with 3 acorns instead of 1
+- Fixed bugs and made quality of life improvements
+- Added bugs (probably!)
+
 ## Version 0.1.0
 
 Alpha "release" - released May 20th, 1 year after development on Earthrite began :D
