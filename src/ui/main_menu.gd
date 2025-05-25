@@ -105,8 +105,9 @@ func _ready():
 	update_prompt("", null, "")
 	update_best_win()
 	$Root/HBox/StatisticsPanel/StatisticsDisplay.create_stats_display(mage_fortune_list)
-	if Settings.TUTORIALS_V2:
-		_on_start_button_pressed()
+	if Settings.TUTORIALS_V2 and ViewContinue.disabled:
+		tutorial_prompt.visible = true
+		menu_root.visible = false
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -308,8 +309,8 @@ func _on_debug_check_pressed() -> void:
 	set_locked_options()
 
 func _on_tutorial_button_pressed():
-	MainButtonsCont.visible = true
-	NewGamePanel.visible = false
+	tutorial_prompt.visible = false
+	_on_start_button_pressed()
 
 func _on_story_start_button_pressed() -> void:
 	introduction.visible = false
@@ -380,8 +381,8 @@ func set_locked_options():
 func _on_no_button_pressed() -> void:
 	tutorial_prompt.visible = false
 	menu_root.visible = true
-	Unlocks.TUTORIAL_COMPLETE = true
-	Unlocks.save_unlocks()
+	Settings.TUTORIALS_V2 = false
+	Settings.save_settings()
 
 func _on_view_continue_pressed():
 	_on_continue_button_pressed()

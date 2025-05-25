@@ -32,6 +32,8 @@ func setup(turn_manager: TurnManager, deck: Array[CardData], farm: Farm, user_in
 		Description.text = "Your farm was overtaken by the Blight"
 		$Center/Panel/Margin/VBox/EndlessMode.visible = false
 	
+	Settings.TUTORIALS_V2 = false
+	Settings.save_settings()
 	Stats.clear()
 	
 	Stats.append_text("Year: " + str(turn_manager.year) + "\n")

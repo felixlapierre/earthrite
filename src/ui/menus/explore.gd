@@ -68,17 +68,17 @@ func create_point_from_name(name, location):
 	match name:
 		"Gain Card":
 			create_point("Gain Card", location, func(pt):
-				show_tutorial.call("card")
+				show_tutorial.call("card", "farleft")
 				use_explore(pt)
 				add_card("common", 4 - Mastery.less_options()))
 		"Event":
 			create_point("Event", location, func(pt):
-				show_tutorial.call("event", "", true)
+				show_tutorial.call("event", "farleft")
 				use_explore(pt)
 				on_event.emit())
 		"Enhance Card":
 			create_point("Enhance Card", location, func(pt):
-				show_tutorial.call("enhance")
+				show_tutorial.call("enhance", "farleft")
 				use_explore(pt)
 				enhances += 1
 				select_enhance("common"))
@@ -90,7 +90,7 @@ func create_point_from_name(name, location):
 				add_structure("common"))
 		"Expand Farm":
 			create_point("Expand Farm", location, func(pt):
-				show_tutorial.call("expand")
+				show_tutorial.call("expand", "farleft")
 				use_explore(pt)
 				expands += 1
 				expand_farm())
@@ -115,6 +115,7 @@ func create_point_from_name(name, location):
 				select_enhance("rare"))
 		"Legendary Card":
 			create_point("Legendary Card", location, func(pt):
+				show_tutorial.call("card", "farleft")
 				use_explore(pt)
 				add_card("legendary", 2 - Mastery.less_options()))
 		"Bag of Tricks":
@@ -235,6 +236,8 @@ func pick_card_from(cards, callback: Callable):
 			remove_sibling(pick_option_ui)
 			show_tutorial.call("")
 			show_window())
+	if pick_option_ui.has_acorn and player_deck.size() > 10:
+		show_tutorial.call("lucky acorns", "farleft")
 
 func select_card_to_remove(pt):
 	var select_card = SelectCard.instantiate()
@@ -281,6 +284,8 @@ func select_enhance(rarity: String):
 		show_window()
 
 	pick_option_ui.setup(prompt, get_enhances_fn.call(), enhance_picked_callback, enhance_canceled_callback)
+	if pick_option_ui.has_acorn and enhances > 1:
+		show_tutorial.call("lucky acorns", "farleft")
 
 func select_card_to_enhance(enhance: Enhance, pick_enhance_ui: Node):
 	var select_card = SelectCard.instantiate()
@@ -325,7 +330,8 @@ func add_structure(rarity: String):
 		show_tutorial.call("")
 		show_window()
 	pick_option_ui.setup(prompt, get_structures_fn.call(), on_pick, on_cancel)
-
+	if pick_option_ui.has_acorn and structures > 1:
+		show_tutorial.call("lucky acorns", "farleft")
 func pick_fortune(prompt: String, options: Array[Fortune]):
 	if options.size() == 0:
 		options = cards_database.get_all_blessings()
@@ -399,7 +405,9 @@ func show_window():
 func _on_close_pressed():
 	visible = false
 	if explores + bonus_explores == 0:
-		show_tutorial.call("winter_end", "center")
+		var shown = show_tutorial.call("winter_end", "center")
+		if !shown and structures > 0:
+			show_tutorial.call("moving structures", "right")
 
 func expand_farm():
 	if Helper.can_expand_farm():

@@ -5,10 +5,15 @@
 - Added 5 new cards (Implosion, Shelter, Epochrite, Meteor, Emperor's Crown)
 - Added 7 new structures (Firefly Lantern, Mossy Skull, Rock Coral, Brain in a Jar, Pinwheel of Destiny, Stormchaser Blade, Crystal Ball)
 - Added new farm type (Village)
+
+Balance
+
 - Emerald Sun is now Legendary rarity, cost 4->3
 - Druid now starts with 3 acorns instead of 1
-- Fixed bugs and made quality of life improvements
-- Added bugs (probably!)
+
+Bugs / QoL
+- End turn button, blight attack panel, and obelisk are now highlighted in certain contexts
+- Wilderness farm plants are now secretly protected turn 1 to avoid instant-lose scenarios when drawing no spread cards turn 1 against Destruction hex.
 
 ## Version 0.1.0
 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=44 format=3 uid="uid://cswinrop881oo"]
+[gd_scene load_steps=46 format=3 uid="uid://cswinrop881oo"]
 
 [ext_resource type="Script" path="res://src/user_interface.gd" id="1_j28fq"]
 [ext_resource type="Texture2D" uid="uid://0p1tevlogry8" path="res://assets/ui/obelisk-decaying.png" id="2_e2cij"]
@@ -70,6 +70,14 @@ unicode = 101
 
 [sub_resource type="Shortcut" id="Shortcut_wpwor"]
 events = [SubResource("InputEventKey_3fge0")]
+
+[sub_resource type="InputEventKey" id="InputEventKey_dxi0a"]
+device = -1
+keycode = 69
+unicode = 101
+
+[sub_resource type="Shortcut" id="Shortcut_i83pa"]
+events = [SubResource("InputEventKey_dxi0a")]
 
 [sub_resource type="InputEventKey" id="InputEventKey_1m5ts"]
 device = -1
@@ -491,6 +499,7 @@ offset_top = 440.0
 offset_right = 1638.0
 offset_bottom = 504.0
 theme = ExtResource("24_jal2o")
+shortcut = SubResource("Shortcut_i83pa")
 text = "Explore"
 metadata/_edit_use_anchors_ = true
 

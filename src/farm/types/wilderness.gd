@@ -15,7 +15,9 @@ func _init():
 
 func register(event_manager: EventManager):
 	listener = Listener.new(EventManager.EventType.BeforeYearStart, func(args: EventArgs):
-		args.farm.use_card_random_tile(WILDERNESS_PLANT.copy(), WILDERNESS_PLANT.size)
+		var locations = args.farm.use_card_random_tile(WILDERNESS_PLANT.copy(), WILDERNESS_PLANT.size)
+		for l in locations:
+			args.farm.tiles[l.x][l.y].protected = true
 	)
 	event_manager.register(listener)
 

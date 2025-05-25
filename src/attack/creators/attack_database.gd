@@ -79,7 +79,7 @@ func add(attack: AttackPattern):
 
 # Create every single attack in the game lol
 func populate_database():
-	add(SimpleAttackBuilder.new().fortune_odd(block_ritual).easy(1).build())
+	add(SimpleAttackBuilder.new().easy(1).build())
 	
 	# ====================
 	# DESTROY

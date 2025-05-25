@@ -509,7 +509,9 @@ layout_mode = 2
 
 [node name="Label" type="Label" parent="TutorialPrompt/Panel/Margin/VBox"]
 layout_mode = 2
-text = "Would you like to play a tutorial?"
+text = "Would you like to play a tutorial?
+(Re-enable tutorials anytime from the Settings page)"
+horizontal_alignment = 1
 
 [node name="ReferenceRect" type="ReferenceRect" parent="TutorialPrompt/Panel/Margin/VBox"]
 custom_minimum_size = Vector2(30, 20)

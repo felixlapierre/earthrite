@@ -3,6 +3,7 @@ extends Node2D
 var ShopCard = preload("res://src/shop/shop_card.tscn")
 var ShopDisplay = preload("res://src/shop/shop_display.tscn")
 var FortuneDisplay = preload("res://src/fortune/fortune.tscn")
+
 @onready var options_container = $Center/Panel/VBox/HBox
 @onready var prompt_label = $Center/Panel/VBox/PromptLabel
 @onready var tooltip: Tooltip = $Tooltip
@@ -15,6 +16,7 @@ var reroll_enabled: bool = false
 var pick_callback: Callable
 
 var rerolls = 0
+var has_acorn = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -48,6 +50,7 @@ func setup_items(items):
 				Global.ACORNS += 1
 				Global.TOTAL_ACORNS += 1
 			acorn = true
+			has_acorn = true
 		var new_node = null
 		if item is Fortune:
 			new_node = FortuneDisplay.instantiate()
