@@ -24,8 +24,10 @@ func get_options():
 		user_interface.deck.erase(deck[0])
 		user_interface.deck.erase(deck[1])
 		user_interface.deck.erase(deck[2])
+		user_interface.explore.show_window()
 	)
-	var option3 = CustomEvent.Option.new("Wake Up", text_preview("Do nothing"), func(): pass)
+	var option3 = CustomEvent.Option.new("Wake Up", text_preview("Do nothing"), func(): 
+		user_interface.explore.show_window())
 	return [option1, option2, option3]
 
 func check_prerequisites():

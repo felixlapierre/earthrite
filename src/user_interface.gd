@@ -28,6 +28,8 @@ var FORTUNE_HOVER = preload("res://src/fortune/fortune_hover.tscn")
 var CARD_ANATOMY = preload("res://src/ui/menus/card_anatomy.tscn")
 var debug_menu = preload("res://src/ui/menus/debug_menu.tscn")
 
+var highlight_stylebox = preload("res://assets/theme/stylebox_highlighted.tres")
+
 @onready var shop: Shop = $Shop
 @onready var tooltip: Tooltip = $Tooltip
 @onready var year_label = $UI/Stats/VBox/YearLabel
@@ -53,7 +55,7 @@ var debug_menu = preload("res://src/ui/menus/debug_menu.tscn")
 @onready var explore = $Winter/Explore
 @onready var explore_button = $Winter/ExploreButton
 @onready var tutorial2 = $Tutorial2
-@onready var EndTurnButton = $UI/EndTurnButton
+@onready var EndTurnButton: Button = $UI/EndTurnButton
 @onready var EnergyDisplay = $UI/EnergyDisplay
 @onready var VisualsBlightRitual = $VisualsBlightRitual
 
@@ -91,13 +93,17 @@ func _process(delta: float) -> void:
 			ritual_current_amount = turn_manager.get_current_ritual()
 		$UI/RitualPanel/RitualCounter/Label.text = "[right]" + str(ritual_current_amount) + " /" + str(turn_manager.total_ritual)
 	$Obelisk.value = ritual_current_amount
+	
+	var explores_left = explore.explores + explore.bonus_explores
+	explore_button.text = "Explore (" + str(explores_left) + ")"
+	explore_button.disabled = explores_left <= 0
 
 func setup(p_event_manager: EventManager, p_turn_manager: TurnManager, p_deck: Array[CardData], p_cards: Cards):
 	$FortuneTeller.setup(p_event_manager)
 	turn_manager = p_turn_manager
 	deck = p_deck
 	cards = p_cards
-	GameEventDialog.setup(deck, turn_manager, self)
+	GameEventDialog.setup(deck, turn_manager, self, $Winter/Explore)
 	event_manager = p_event_manager
 	$Shop.setup(deck, turn_manager)
 	register_tooltips()
@@ -175,32 +181,6 @@ func update():
 		fragment.expand_mode = TextureRect.EXPAND_FIT_WIDTH
 		$UI/Stats/VBox/CardsHbox/Fragments.add_child(fragment)
 
-	#Blight Panels
-	#$UI/BlightPanel.visible = turn_manager.target_blight > 0 or turn_manager.purple_mana > 0
-#
-	#$UI/BlightPanel/AttackParticles.emitting = false
-	#if turn_manager.target_blight > 0:
-		#$UI/BlightPanel/VBox/BlightCounter/Label.text = str(turn_manager.purple_mana) + " / " + str(turn_manager.target_blight) + " [img]res://assets/custom/PurpleMana.png[/img]"
-	#else:
-		#$UI/BlightPanel/VBox/BlightCounter/Label.text = str(turn_manager.purple_mana) + "[img]res://assets/custom/PurpleMana.png[/img]"
-	#if turn_manager.purple_mana < turn_manager.target_blight:
-		#$UI/BlightPanel/VBox/AttackLabel.text = "Blight Attack!"
-		#$UI/BlightPanel/AttackParticles.emitting = true
-	#elif turn_manager.purple_mana > turn_manager.target_blight and turn_manager.flag_defer_excess:
-		#$UI/BlightPanel/VBox/AttackLabel.text = "Defer: " + str(turn_manager.purple_mana - turn_manager.target_blight) + Helper.blue_mana()
-	#elif turn_manager.purple_mana > turn_manager.target_blight and turn_manager.target_blight == 0 and mage_fortune.name != "Lunar Priest":
-		#$UI/BlightPanel/VBox/AttackLabel.text = "Wasted"
-	#elif turn_manager.purple_mana > turn_manager.target_blight and mage_fortune.name == "Lunar Priest":
-		#$UI/BlightPanel/VBox/AttackLabel.text = "Excess: " + str((turn_manager.purple_mana - turn_manager.target_blight) * mage_fortune.strength) + Helper.mana_icon()
-	#else:
-		#$UI/BlightPanel/VBox/AttackLabel.text = "Safe!"
-
-	#Next turn blight
-	#$UI/NextBlightPanel.visible = turn_manager.next_turn_blight > 0
-	#$UI/NextBlightPanel/NextTurnLabel.text = "Attack\nNext Turn: " + str(turn_manager.next_turn_blight) + " [img]res://assets/custom/PurpleMana.png[/img]"
-	#if turn_manager.flag_defer_excess:
-		#var next_turn_amount = turn_manager.purple_mana - turn_manager.target_blight
-		#$UI/NextBlightPanel/NextTurnLabel.text = "Attack\nNext Turn: [color=9f78e3]" + str(max(turn_manager.next_turn_blight - next_turn_amount, 0)) + "[/color]"
 	$UI/AttackPreview.update()
 	
 	$Shop.update_labels()
@@ -214,6 +194,16 @@ func update():
 	$Obelisk.max_value = turn_manager.total_ritual
 	$UpgradeShop.update()
 	weather_display.update()
+	var highlight_end_turn = cards.get_hand_info().all(func(card_data: CardData):
+		return card_data.cost > turn_manager.energy)
+	if highlight_end_turn and Global.LOCK == false:
+		EndTurnButton.add_theme_stylebox_override("normal", highlight_stylebox)
+		EndTurnButton.add_theme_stylebox_override("hover", highlight_stylebox)
+		EndTurnButton.add_theme_stylebox_override("pressed", highlight_stylebox)
+	else:
+		EndTurnButton.remove_theme_stylebox_override("normal")
+		EndTurnButton.remove_theme_stylebox_override("hover")
+		EndTurnButton.remove_theme_stylebox_override("pressed")
 
 # Fortune Teller
 func _on_fortune_teller_button_pressed() -> void:
@@ -712,6 +702,7 @@ func on_expand_farm() -> void:
 
 func _on_expand_farm_on_close() -> void:
 	after_farm_expanded.emit()
+	explore.show_window()
 
 func set_mage_fortune(fortune):
 	mage_fortune = fortune

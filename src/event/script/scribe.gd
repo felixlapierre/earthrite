@@ -15,7 +15,8 @@ func get_options():
 	var option1 = CustomEvent.Option.new("Copy a card in your deck", null, func():
 		user_interface.select_card_to_copy()
 	)
-	var option2 = CustomEvent.Option.new("Refuse the offer", null, func(): pass)
+	var option2 = CustomEvent.Option.new("Refuse the offer", null, func():
+		user_interface.show_explore())
 	return [option1, option2]
 
 func check_prerequisites():

@@ -20,7 +20,7 @@ func copy():
 	return RockCoral.new().assign(self)
 
 func get_description(size: int):
-	return "Effects that activate for each [color=gold]Destroyed[/color] tile also activate for each [color=gold]Watered[/color] tile, and vice-versa."
+	return "Effects treat [color=gold]Destroyed[/color] tiles as [color=gold]Watered[/color] and vice-versa."
 
 func get_long_description():
 	return Helper.get_long_description_list(["destroyed_tile", "watered"])

@@ -35,7 +35,7 @@ func get_options():
 		user_interface.apply_enhance_event(strength)
 		)
 	var option3 = CustomEvent.Option.new("Leave", text_preview("Leave"), func():
-		pass)
+		user_interface.explore.show_window())
 	return [option1, option2, option3]
 
 func check_prerequisites():

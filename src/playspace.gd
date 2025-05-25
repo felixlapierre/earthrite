@@ -118,6 +118,7 @@ func start_year():
 	Global.LOCK = true
 	victory = false
 	$UserInterface.start_year()
+	$UserInterface.update()
 	save_game()
 	turn_manager.start_new_year();
 	$UserInterface.update()

@@ -18,6 +18,9 @@ var event = preload("res://assets/ui/explore/event.png")
 var bag_tricks = preload("res://assets/ui/explore/bag-tricks.png")
 var bag_tricks_rare = preload("res://assets/ui/explore/bag-tricks-rare.png")
 
+var point_name
+static var PEEK_EVENT_NAME = false
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass # Replace with function body.
@@ -26,16 +29,20 @@ func _ready():
 func _process(delta):
 	pass
 
-func setup(name: String):
+func setup(name: String, current_event: CustomEvent = null):
+	point_name = name
 	$VBox/Button.text = name
 	var display = $VBox/DisplayButton
 	var container = $VBox
 	var texture = preload("res://assets/custom/Temp.png")
+	$VBox/EventNameLabel.visible = false
 	match name:
 		"Gain Card":
 			texture = gain_card
 		"Event":
 			texture = event
+			if PEEK_EVENT_NAME:
+				$VBox/Button.text = current_event.name
 		"Expand Farm":
 			texture = expand
 		"Remove Card":

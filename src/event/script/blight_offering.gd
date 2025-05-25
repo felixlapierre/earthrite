@@ -30,7 +30,8 @@ func get_options():
 	)
 	var option2 = CustomEvent.Option.new("Reject the offering",\
 	OptionPreview.instantiate().text_preview("Remove 20 Blight damage"), func():
-		user_interface._on_upgrade_shop_on_upgrade(Upgrade.new(Upgrade.UpgradeType.RemoveBlight, "", 20)))
+		user_interface._on_upgrade_shop_on_upgrade(Upgrade.new(Upgrade.UpgradeType.RemoveBlight, "", 20))
+		user_interface.explore.show_window())
 	return [option1, option2]
 
 func check_prerequisites():

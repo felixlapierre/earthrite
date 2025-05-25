@@ -596,6 +596,7 @@ script = ExtResource("34_bvh0t")
 [node name="Tutorial2" parent="." instance=ExtResource("36_jqnmk")]
 
 [node name="VisualsBlightRitual" parent="." instance=ExtResource("36_p2py6")]
+metadata/_edit_lock_ = true
 
 [connection signal="pressed" from="UI/Deck/DeckPeek" to="." method="_on_deck_peek_pressed"]
 [connection signal="pressed" from="UI/Deck/DiscardPeek" to="." method="_on_discard_peek_pressed"]

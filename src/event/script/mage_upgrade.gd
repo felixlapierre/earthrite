@@ -33,7 +33,8 @@ func get_options():
 	var option1 = CustomEvent.Option.new("Upgrade your Mage Power",\
 		nodes_preview("Upgrade your Mage Power", nodes), func():
 		user_interface.mage_fortune.upgrade_power()
-		user_interface.create_fortune_display())
+		user_interface.create_fortune_display()
+		user_interface.explore.show_window())
 	
 	return [option1]
 

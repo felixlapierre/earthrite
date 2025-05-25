@@ -21,8 +21,10 @@ func get_options():
 	
 	var option1 = CustomEvent.Option.new("Accept the seed", nodes_preview("Add 'Petrified Seed' to your deck. Maybe someday it will grow again...", cards), func():
 		user_interface.deck.append(seed)
+		user_interface.explore.show_window()
 	)
-	var option2 = CustomEvent.Option.new("Refuse the squirrel's gift", text_preview("Refuse the squirrel's gift"), func(): pass)
+	var option2 = CustomEvent.Option.new("Refuse the squirrel's gift", text_preview("Refuse the squirrel's gift"), func(): 
+		user_interface.explore.show_window())
 	return [option1, option2]
 
 func check_prerequisites():

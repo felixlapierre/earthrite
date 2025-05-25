@@ -1,6 +1,8 @@
 extends Node
 class_name Mastery
 
+static var BonusOptions: int = 0
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass # Replace with function body.
@@ -11,7 +13,7 @@ func _process(delta):
 	pass
 
 static func less_options():
-	return 1 if Global.DIFFICULTY >= 6 else 0
+	return (1 if Global.DIFFICULTY >= 6 else 0) - BonusOptions
 
 static func less_enhance():
 	return 0

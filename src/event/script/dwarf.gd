@@ -17,7 +17,8 @@ func get_options():
 		user_interface.on_expand_farm()
 	)
 	var option2 = CustomEvent.Option.new("No dig",\
-	OptionPreview.instantiate().text_preview("No dig"), func(): pass)
+	OptionPreview.instantiate().text_preview("No dig"), func(): 
+		user_interface.explore.show_window())
 	return [option1, option2]
 
 func check_prerequisites():

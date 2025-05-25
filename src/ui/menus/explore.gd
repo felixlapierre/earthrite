@@ -30,6 +30,9 @@ var show_tutorial: Callable
 var fixed_explores = []
 static var bonus_explores = 0
 
+var current_event: CustomEvent
+var generate_random_event: Callable
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass # Replace with function body.
@@ -160,7 +163,7 @@ func pick_binary_explore():
 	if i <= 55:
 		return "Remove Card"
 	if i <= 65.5:
-		if Helper.can_expand_farm():
+		if Helper.can_expand_farm() and expands < 4:
 			return "Expand Farm"
 		else:
 			return "Gain Card" if !scrapyard() else "Bag of Tricks"
@@ -177,6 +180,8 @@ func pick_binary_explore():
 func use_explore(node):
 	if node != null:
 		explores -= 1
+		if node.point_name != "Event":
+			generate_random_event.call()
 		create_binary_explore()
 		return
 	
@@ -190,7 +195,7 @@ func use_explore(node):
 
 func create_point(name: String, pos: Vector2, callback: Callable):
 	var point: ExplorePoint = ExplorePoint.instantiate()
-	point.setup(name)
+	point.setup(name, current_event)
 	point.position = pos
 	point.on_select.connect(func():
 		visible = false
@@ -332,6 +337,7 @@ func pick_fortune(prompt: String, options: Array[Fortune]):
 	var on_pick = func(selected):
 		remove_sibling(pick_option_ui)
 		on_fortune.emit(selected)
+		show_window()
 	pick_option_ui.setup(prompt, options, on_pick, null)
 
 func pick_bag_of_tricks(count: int, rare: bool = false):
@@ -396,7 +402,10 @@ func _on_close_pressed():
 		show_tutorial.call("winter_end", "center")
 
 func expand_farm():
-	$"../../".on_expand_farm()
+	if Helper.can_expand_farm():
+		$"../../".on_expand_farm()
+	else:
+		add_card("common", 4 - Mastery.less_options())
 
 func scrapyard():
 	return Global.FARM_TYPE == "SCRAPYARD"
@@ -414,3 +423,12 @@ func load_data(data):
 	structures = data.structures
 	removals = data.removals
 	enhances = data.enhances
+
+func set_current_event(event: CustomEvent):
+	current_event = event
+	for point: ExplorePoint in $Points.get_children():
+		if point.point_name == "Event":
+			point.setup("Event", current_event)
+
+func has_explores_remaining():
+	return explores + bonus_explores > 0

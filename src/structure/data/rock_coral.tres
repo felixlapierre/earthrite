@@ -12,7 +12,7 @@ is_seed = false
 [resource]
 script = ExtResource("1_ouswf")
 name = "Rock Coral"
-rarity = "rare"
+rarity = "uncommon"
 cost = 0
 size = 0
 text = ""

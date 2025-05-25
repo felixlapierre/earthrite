@@ -10,6 +10,7 @@ var card_database: DataFetcher
 var deck: Array[CardData] = []
 var turn_manager: TurnManager = null
 var user_interface: UserInterface = null
+var explore: Explore = null
 
 var custom_event: CustomEvent
 
@@ -17,10 +18,12 @@ var custom_event: CustomEvent
 func _ready() -> void:
 	card_database = preload("res://src/cards/cards_database.gd").new()
 
-func setup(p_deck: Array[CardData], p_turn_manager: TurnManager, p_ui: UserInterface):
+func setup(p_deck: Array[CardData], p_turn_manager: TurnManager, p_ui: UserInterface, p_explore: Explore):
 	deck = p_deck
 	turn_manager = p_turn_manager
 	user_interface = p_ui
+	explore = p_explore
+	explore.generate_random_event = generate_random_event
 
 func generate_random_event():
 	if always_do_event != null and !completed_events.has(always_do_event.name):
@@ -40,6 +43,7 @@ func generate_random_event():
 			custom_event = options[0]
 
 	if custom_event != null:
+		explore.set_current_event(custom_event)
 		update_interface()
 		return
 
@@ -69,4 +73,6 @@ func _on_event_dialog_on_confirm() -> void:
 	generate_random_event()
 	update_interface()
 	visible = false
-	user_interface._on_explore_button_pressed()
+
+	#if explore.has_explores_remaining():
+	#	user_interface._on_explore_button_pressed()

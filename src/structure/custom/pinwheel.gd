@@ -24,7 +24,7 @@ func unregister(event_manager: EventManager):
 	listener.disable()
 
 func get_description(size):
-	return "When you Play a Harvest card, 50% to gain 1 {ENERGY} and 50% chance to draw 1 card"
+	return "When you Play a Harvest card, 50% chance to gain 1 {ENERGY} and 50% chance to draw 1 card"
 
 func copy():
 	var copy = Pinwheel.new()

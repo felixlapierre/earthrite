@@ -9,14 +9,14 @@ var event_type = EventManager.EventType.BeforeTurnStart
 var callback: Callable
 
 func _init() -> void:
-	super(MAGE_NAME, Fortune.FortuneType.GoodFortune, "Start with 1 Lucky Acorn. Find Lucky Acorns twice as often.\n\nTurn Start: Gain 1 " +  Helper.mana_icon() + " for each acorn found", MAGE_ID, icon, 1.0)
+	super(MAGE_NAME, Fortune.FortuneType.GoodFortune, "Start with 3 Lucky Acorns. Find Lucky Acorns twice as often.\n\nTurn Start: Gain 1 " +  Helper.mana_icon() + " for each acorn found", MAGE_ID, icon, 1.0)
 
 func register_fortune(event_manager: EventManager):
 	super.register_fortune(event_manager)
 	update_text()
 	if event_manager.turn_manager.year < 1:
-		Global.ACORNS += 1
-		Global.TOTAL_ACORNS += 1
+		Global.ACORNS += 3
+		Global.TOTAL_ACORNS += 3
 	
 	callback = func(args: EventArgs):
 		args.turn_manager.gain_yellow_mana(Global.TOTAL_ACORNS)

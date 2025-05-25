@@ -95,6 +95,8 @@ static func reset():
 	Explore.bonus_explores = 0
 	LOCK = false
 	RockCoral.ACTIVE = false
+	Mastery.BonusOptions = 0
+	ExplorePoint.PEEK_EVENT_NAME = false
 
 static func register_click_callback(obj):
 	click_callbacks.append(obj)

@@ -24,7 +24,8 @@ func _init():
 
 	var option2 = CustomEvent.Option.new("Give in to the chaos",\
 	OptionPreview.instantiate().text_preview("Transform all [color=aqua]non-enhanced[/color] cards in your deck into random cards.\nSeed cards will be transformed into Seed cards, Cards that Harvest will be transformed into other cards that Harvest, and Action cards will be transformed into Action cards."), func(): 
-		ChaosMageFortune.randomize_deck(user_interface.deck))
+		ChaosMageFortune.randomize_deck(user_interface.deck)
+		user_interface.explore.show_window())
 
 	options = [option1, option3, option2]
 

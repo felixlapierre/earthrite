@@ -167,7 +167,7 @@ func _on_start_button_pressed():
 	# Mountains farm: Start with structure
 	if Global.FARM_TYPE == "MOUNTAINS" and MountainsFarm.START_STRUCTURE == null:
 		var pick_options = PickOptionsScene.instantiate()
-		var structures = DataFetcher.get_structures_names(["Harvester", "Beehive", "Flower Totem", "Sigil of Water", "Rooted Core", "Geode", "Dreamcatcher", "Frost Totem", "Toolshed"])
+		var structures = DataFetcher.get_structures_names(["Harvester", "Beehive", "Sigil of Water", "Rooted Core", "Geode", "Crucible", "Frost Totem", "Toolshed", "Brain in a Jar", "Firefly Lantern", "Rock Coral"])
 		add_child(pick_options)
 		pick_options.setup("Pick a starting Structure", structures, func(selected):
 			remove_child(pick_options)

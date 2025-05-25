@@ -35,6 +35,7 @@ func get_options():
 	var option2 = CustomEvent.Option.new("Steal all of the blessings", nodes_preview("Gain all 3 Blessings, and the Curse of Solas", [node1, node2, node3, node4]), func():
 		for fortune in [spring_blessing, summer_blessing, fall_blessing, solas_curse]:
 			user_interface._on_explore_on_fortune(fortune)
+		user_interface.explore.show_window()
 	)
 	return [option1, option2]
 
