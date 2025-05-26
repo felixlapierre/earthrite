@@ -65,7 +65,7 @@ static func default_unlocks():
 		"4": false,
 		"5": false,
 		"6": false,
-		"7": false
+		"7": true
 	}
 	DIFFICULTIES_UNLOCKED = {
 		"0": true,

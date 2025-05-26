@@ -1,6 +1,6 @@
 # Changelog
 
-## Version 0.1.1 (Upcoming)
+## Version 0.1.1 - May 25th
 
 - Added 5 new cards (Implosion, Shelter, Epochrite, Meteor, Emperor's Crown)
 - Added 7 new structures (Firefly Lantern, Mossy Skull, Rock Coral, Brain in a Jar, Pinwheel of Destiny, Stormchaser Blade, Crystal Ball)
@@ -19,9 +19,9 @@ Bugs / QoL
 - End turn button, blight attack panel, and obelisk are now highlighted in certain contexts
 - Wilderness farm plants are now secretly protected turn 1 to avoid instant-lose scenarios when drawing no spread cards turn 1 against Destruction hex.
 
-## Version 0.1.0
+## Version 0.1.0 - May 20th
 
-Alpha "release" - released May 20th, 1 year after development on Earthrite began :D
+Alpha "release", 1 year after development on Earthrite began :D
 
 Features
 

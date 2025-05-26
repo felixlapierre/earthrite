@@ -42,6 +42,7 @@ var year2_start2 = "Each turn the Blight may inflict one or more [color=mediumpu
 var tutorial_precision_mode = "[color=gold]Tip:[/color] When playing a card, click and hold the mouse to enter [color=gold]Precision Mode[/color].\n\nIn Precision Mode, click on a tile to add/remove it from your selection.\n\n(Not available for tiles that affect your entire farm)"
 var tutorial_lucky_acorns = "When Exploring, some options will have a '+1[img]res://assets/custom/acorn.png[/img]' icon beneath them.\n\nIf you pick this option, gain a [color=gold]Lucky Acorn[/color] for free!\n\nLucky Acorns can be used later to [color=gold]Reroll[/color] a choice - getting a different set of options instead."
 var tutorial_move_structures = "During Winter, click on a Structure on your farm to move it to a new location."
+var tutorial_week_limit = "[color=gold]Tip[/color]: Your plants will stop growing at the end of Fall (Week 12).\n\nIf you take ANY damage on or after Week 13 you'll instantly lose."
 
 var completed_tutorials = {}
 
@@ -166,8 +167,13 @@ func start_year(args: EventArgs):
 			set_text(year2_start2)
 			short_label.text = "Tutorial: Hexes")
 	elif turn_manager.year == 3:
-		panel.visible = false
-		Settings.save_settings()
+		panel.position = anchor_left
+		set_text(tutorial_week_limit)
+		short_label.text = "Tutorial: Time Limit"
+	elif turn_manager.year == 4:
+		panel.position = anchor_left
+		set_text(tutorial_precision_mode)
+		short_label.text = "Tutorial: Precision Mode"
 	else:
 		panel.visible = false
 
@@ -204,7 +210,7 @@ func start_turn(args: EventArgs):
 		set_text(text_week5)
 		panel.position = anchor_center
 		await wait_click_out()
-	elif year == 2 and week > 1:
+	elif year > 2 and week > 1:
 		panel.visible = false
 	elif week > 5:
 		panel.visible = false

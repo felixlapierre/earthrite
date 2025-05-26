@@ -124,6 +124,10 @@ func do_unlocks(turn_manager: TurnManager, deck: Array[CardData]):
 		Unlocks.FARMS_UNLOCKED["6"] = true
 		farms.append("Scrapyard")
 	
+	if !Unlocks.FARMS_UNLOCKED["7"]:
+		Unlocks.FARMS_UNLOCKED["7"] = true
+		farms.append("Village")
+	
 	print(farms)
 	# Mages
 	# Now: Novice [0], acorn[1], void[2] and time[3] unlocked by default
