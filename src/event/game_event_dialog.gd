@@ -30,17 +30,21 @@ func generate_random_event():
 		custom_event = always_do_event
 		custom_event.setup(turn_manager, $"../../", card_database)
 	else:
-		# Prioritize custom events
-		var custom_events = card_database.get_custom_events()
-		var options = []
-		for event in custom_events:
-			event.setup(turn_manager, $"../../", card_database)
-			if event.check_prerequisites() and !completed_events.has(event.name):
-				options.append(event)
-		
-		if options.size() > 0:
-			options.shuffle()
-			custom_event = options[0]
+		custom_event = null
+		while custom_event == null:
+			# Prioritize custom events
+			var custom_events = card_database.get_custom_events()
+			var options = []
+			for event in custom_events:
+				event.setup(turn_manager, $"../../", card_database)
+				if event.check_prerequisites() and !completed_events.has(event.name):
+					options.append(event)
+			
+			if options.size() > 0:
+				options.shuffle()
+				custom_event = options[0]
+			else:
+				completed_events.clear()
 
 	if custom_event != null:
 		explore.set_current_event(custom_event)

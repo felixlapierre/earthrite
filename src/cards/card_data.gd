@@ -114,7 +114,7 @@ func apply_enhance(enhance: Enhance):
 		Enhance.Type.Mana:
 			n_card.yld += int(enhance.strength)
 		Enhance.Type.Spread:
-			n_card.effects.append(load("res://src/effect/data/spread_on_grow_1.tres"))
+			n_card.effects.append(load("res://src/effect/data/spread_on_grow.tres"))
 		Enhance.Type.Burn:
 			n_card.effects.append(load("res://src/effect/data/obliviate.tres"))
 		Enhance.Type.Frozen:

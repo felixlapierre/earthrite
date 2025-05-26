@@ -93,7 +93,6 @@ text = "Main Menu"
 
 [node name="EndlessMode" type="Button" parent="Center/Panel/Margin/VBox"]
 layout_mode = 2
-disabled = true
 text = "Endless Mode"
 
 [connection signal="pressed" from="Center/Panel/Margin/VBox/MainMenu" to="." method="_on_main_menu_pressed"]

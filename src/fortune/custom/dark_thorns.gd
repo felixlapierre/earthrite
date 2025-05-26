@@ -12,7 +12,8 @@ func _init(strength: float = 1.0) -> void:
 
 func register_fortune(event_manager: EventManager):
 	callback_turn_start = func(args: EventArgs):
-		args.cards.deck_cards.append(dark_thorn.copy())
+		for i in range(strength):
+			args.cards.deck_cards.append(dark_thorn.copy())
 	event_manager.register_listener(type_turn_start, callback_turn_start)
 
 func unregister_fortune(event_manager: EventManager):

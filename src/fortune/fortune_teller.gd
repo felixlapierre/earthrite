@@ -33,15 +33,17 @@ func create_fortunes():
 	var misfortune = Global.DIFFICULTY >= Constants.DIFFICULTY_MISFORTUNE
 	var year = event_manager.turn_manager.year
 	
-	var difficulty = "easy"
-	match Global.DIFFICULTY:
-		2, 3, 4:
-			difficulty = "hard"
-		5, 6:
-			difficulty = "mastery"
-		7:
-			difficulty = "absurd"
-	attack_pattern = Helper.pick_random(attack_database.get_attacks(difficulty, year))
+	var difficulty_int = Global.DIFFICULTY
+	var difficulty = get_difficulty_string(Global.DIFFICULTY)
+	var year_attacks = attack_database.get_attacks(difficulty, year)
+	while year_attacks.size() == 0:
+		if difficulty_int == 7:
+			attack_database.populate_database()
+		else:
+			difficulty_int += 1
+		difficulty = get_difficulty_string(difficulty_int)
+		year_attacks = attack_database.get_attacks(difficulty, year)
+	attack_pattern = Helper.pick_random(year_attacks)
 	attack_database.remove_attack(attack_pattern, difficulty, year)
 	
 	#if Global.DIFFICULTY >= Constants.DIFFICULTY_HARD:
@@ -87,6 +89,17 @@ func get_current_fortunes_regular():
 			bad_fortune(3)
 			bad_fortune(2)
 			bad_fortune(1)
+
+func get_difficulty_string(diff: int):
+	var difficulty = "easy"
+	match diff:
+		2, 3, 4:
+			difficulty = "hard"
+		5, 6:
+			difficulty = "mastery"
+		7:
+			difficulty = "absurd"
+	return difficulty
 
 func bad_fortune(rank: int):
 	current_fortunes.append(get_fortune(Fortune.FortuneType.BadFortune, rank))

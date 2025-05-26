@@ -63,8 +63,12 @@ func get_attacks(difficulty: String, week: int) -> Array[AttackPattern]:
 	result.assign(options)
 	return result
 
-func remove_attack(attack: AttackPattern, difficulty: String, week: int):
-	var options: Array = database[difficulty][week + 1]
+func remove_attack(attack: AttackPattern, difficulty: String, year: int):
+	var next = year + 1
+	var db = database[difficulty]
+	if !db.has(next):
+		next = 8
+	var options: Array = db[next]
 	options.erase(attack)
 
 func add(attack: AttackPattern):
@@ -79,6 +83,7 @@ func add(attack: AttackPattern):
 
 # Create every single attack in the game lol
 func populate_database():
+	database = {}
 	add(SimpleAttackBuilder.new().easy(1).build())
 	
 	# ====================

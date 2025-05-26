@@ -8,7 +8,7 @@ var fortune_texture = preload("res://assets/fortune/DestroyFarm.png")
 var spark_sf = preload("res://src/animation/blight/blight_spark.tres")
 
 func _init(strength: float = 1.0) -> void:
-	super("Annihilation", Fortune.FortuneType.BadFortune, "Turn Start: Mark {STRENGTH} plants to be destroyed at the end of the turn", 0, fortune_texture, strength)
+	super("Annihilation", Fortune.FortuneType.BadFortune, "Turn Start: Destroy ALL plants", 0, fortune_texture, strength)
 
 func register_fortune(event_manager: EventManager):
 	callback_after_grow = func(args: EventArgs):

@@ -8,6 +8,6 @@ script = ExtResource("1_pijlv")
 name = "Spread"
 type = 9
 rarity = "rare"
-strength = 1.0
+strength = 0.5
 targets = Array[String]([])
 texture = ExtResource("2_qg0rg")

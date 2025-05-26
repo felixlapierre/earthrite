@@ -147,7 +147,10 @@ func compute_blight_pattern(week, year):
 
 func get_ritual_requirements(year):
 	var chart: Chart = get_chart(ritual_charts)
-	return chart.get_value(year - 1)
+	var value = chart.get_value(year - 1)
+	for i in range(8, year):
+		value *= 1.5
+	return value
 
 func get_blight_requirements(week, year):
 	if week > blight_pattern.size():

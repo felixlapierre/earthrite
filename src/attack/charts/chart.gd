@@ -19,6 +19,6 @@ func _init(p_values = [], p_rank = 0, p_name = ""):
 func get_value(at: int) -> float:
 	if values.size() == 0:
 		return 0.0
-	if at > values.size():
+	if at >= values.size():
 		return values.back()
 	return values[at]
