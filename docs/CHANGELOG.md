@@ -5,11 +5,13 @@
 - Added 5 new cards (Implosion, Shelter, Epochrite, Meteor, Emperor's Crown)
 - Added 7 new structures (Firefly Lantern, Mossy Skull, Rock Coral, Brain in a Jar, Pinwheel of Destiny, Stormchaser Blade, Crystal Ball)
 - Added new farm type (Village)
+- Re-added Endless mode
 
 Balance
 
 - Emerald Sun is now Legendary rarity, cost 4->3
 - Druid now starts with 3 acorns instead of 1
+- "Spread" rare enhance reduced to 50% chance to spread on grow
 
 Bugs / QoL
 

@@ -591,7 +591,7 @@ func blight_bubble_animation(tile, args: EventArgs.HarvestArgs, destination: Vec
 		return
 	var mana_particles: ManaParticles = ManaParticles.instantiate()
 	mana_particles.color = color
-	mana_particles.amount = min(int(mana_amount / 5), 10)
+	mana_particles.amount = min(max(int(mana_amount / 5), 3), 10)
 	mana_particles.max_scale = min(1.3 + mana_amount / 15, 4.0)
 	mana_particles.size = 100
 	mana_particles.position = tile.position + TILE_SIZE / 2
