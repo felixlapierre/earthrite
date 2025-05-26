@@ -1,0 +1,182 @@
+[gd_scene load_steps=4 format=3 uid="uid://nqgeqxuxwif6"]
+
+[ext_resource type="Theme" uid="uid://bdodinwpnjkw8" path="res://assets/theme_huge.tres" id="1_ubcim"]
+[ext_resource type="Script" path="res://src/multiplayer/multiplayer_menu.gd" id="2_pbjo7"]
+[ext_resource type="PackedScene" uid="uid://473mflrxdlk8" path="res://src/multiplayer/lobby.tscn" id="3_tjd1d"]
+
+[node name="MultiplayerMenu" type="PanelContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_ubcim")
+script = ExtResource("2_pbjo7")
+
+[node name="VBox" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="HBox" type="HBoxContainer" parent="VBox"]
+layout_mode = 2
+
+[node name="JoinButton" type="Button" parent="VBox/HBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Join"
+
+[node name="HostButton" type="Button" parent="VBox/HBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Host"
+
+[node name="HBox2" type="HBoxContainer" parent="VBox"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Common" type="VBoxContainer" parent="VBox/HBox2"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="DisplayNameCont" type="MarginContainer" parent="VBox/HBox2/Common"]
+layout_mode = 2
+theme_override_constants/margin_left = 30
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 30
+theme_override_constants/margin_bottom = 10
+
+[node name="VBox" type="VBoxContainer" parent="VBox/HBox2/Common/DisplayNameCont"]
+layout_mode = 2
+
+[node name="DisplayNameLabel" type="Label" parent="VBox/HBox2/Common/DisplayNameCont/VBox"]
+layout_mode = 2
+text = "Display Name:"
+horizontal_alignment = 1
+
+[node name="DisplayNameInput" type="LineEdit" parent="VBox/HBox2/Common/DisplayNameCont/VBox"]
+layout_mode = 2
+placeholder_text = "Display Name"
+alignment = 1
+
+[node name="FarmMargin" type="MarginContainer" parent="VBox/HBox2/Common"]
+layout_mode = 2
+theme_override_constants/margin_left = 30
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 30
+theme_override_constants/margin_bottom = 10
+
+[node name="FarmType" type="HBoxContainer" parent="VBox/HBox2/Common/FarmMargin"]
+layout_mode = 2
+
+[node name="FarmTypeLabel" type="Label" parent="VBox/HBox2/Common/FarmMargin/FarmType"]
+layout_mode = 2
+text = "Farm Type: "
+
+[node name="FarmTypeOption" type="OptionButton" parent="VBox/HBox2/Common/FarmMargin/FarmType"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="CharacterMargin" type="MarginContainer" parent="VBox/HBox2/Common"]
+layout_mode = 2
+theme_override_constants/margin_left = 30
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 30
+theme_override_constants/margin_bottom = 10
+
+[node name="Character" type="HBoxContainer" parent="VBox/HBox2/Common/CharacterMargin"]
+layout_mode = 2
+
+[node name="CharacterLabel" type="Label" parent="VBox/HBox2/Common/CharacterMargin/Character"]
+layout_mode = 2
+text = "Character: "
+
+[node name="CharacterOption" type="OptionButton" parent="VBox/HBox2/Common/CharacterMargin/Character"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="JoinGameStuff" type="VBoxContainer" parent="VBox/HBox2"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="IpAddressContainer" type="MarginContainer" parent="VBox/HBox2/JoinGameStuff"]
+layout_mode = 2
+theme_override_constants/margin_left = 30
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 30
+theme_override_constants/margin_bottom = 10
+
+[node name="VBox" type="VBoxContainer" parent="VBox/HBox2/JoinGameStuff/IpAddressContainer"]
+layout_mode = 2
+
+[node name="IpAddressLabel" type="Label" parent="VBox/HBox2/JoinGameStuff/IpAddressContainer/VBox"]
+layout_mode = 2
+text = "IP Address:"
+horizontal_alignment = 1
+
+[node name="IpAddressInput" type="LineEdit" parent="VBox/HBox2/JoinGameStuff/IpAddressContainer/VBox"]
+layout_mode = 2
+placeholder_text = "0.0.0.0"
+alignment = 1
+
+[node name="JoinGameButton" type="Button" parent="VBox/HBox2/JoinGameStuff"]
+layout_mode = 2
+size_flags_vertical = 10
+text = "Join Game"
+
+[node name="HostGameStuff" type="VBoxContainer" parent="VBox/HBox2"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="GameTypeCont" type="HBoxContainer" parent="VBox/HBox2/HostGameStuff"]
+layout_mode = 2
+
+[node name="GameTypeLabel" type="Label" parent="VBox/HBox2/HostGameStuff/GameTypeCont"]
+layout_mode = 2
+text = "Game Type"
+
+[node name="GameTypeOption" type="OptionButton" parent="VBox/HBox2/HostGameStuff/GameTypeCont"]
+layout_mode = 2
+item_count = 2
+selected = 0
+popup/item_0/text = "Versus"
+popup/item_0/id = 0
+popup/item_1/text = "Cooperative"
+popup/item_1/id = 1
+
+[node name="DifficultyCont" type="HBoxContainer" parent="VBox/HBox2/HostGameStuff"]
+layout_mode = 2
+
+[node name="DifficultyLabel" type="Label" parent="VBox/HBox2/HostGameStuff/DifficultyCont"]
+layout_mode = 2
+text = "Difficulty: "
+
+[node name="DifficultyOption" type="OptionButton" parent="VBox/HBox2/HostGameStuff/DifficultyCont"]
+layout_mode = 2
+
+[node name="StartGameButton" type="Button" parent="VBox/HBox2/HostGameStuff"]
+layout_mode = 2
+size_flags_vertical = 10
+text = "Start Game"
+
+[node name="LobbyCont" type="VBoxContainer" parent="VBox/HBox2"]
+visible = false
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="UsersLabel" type="Label" parent="VBox/HBox2/LobbyCont"]
+layout_mode = 2
+text = "Connected Users:"
+
+[node name="UsersList" type="VBoxContainer" parent="VBox/HBox2/LobbyCont"]
+layout_mode = 2
+
+[node name="Lobby" parent="." instance=ExtResource("3_tjd1d")]
+
+[connection signal="pressed" from="VBox/HBox/JoinButton" to="." method="_on_join_button_pressed"]
+[connection signal="pressed" from="VBox/HBox/HostButton" to="." method="_on_host_button_pressed"]
+[connection signal="item_selected" from="VBox/HBox2/Common/FarmMargin/FarmType/FarmTypeOption" to="." method="_on_farm_type_option_item_selected"]
+[connection signal="item_selected" from="VBox/HBox2/Common/CharacterMargin/Character/CharacterOption" to="." method="_on_character_option_item_selected"]
+[connection signal="pressed" from="VBox/HBox2/JoinGameStuff/JoinGameButton" to="." method="_on_join_game_button_pressed"]
+[connection signal="item_selected" from="VBox/HBox2/HostGameStuff/GameTypeCont/GameTypeOption" to="." method="_on_game_type_option_item_selected"]
+[connection signal="item_selected" from="VBox/HBox2/HostGameStuff/DifficultyCont/DifficultyOption" to="." method="_on_difficulty_option_item_selected"]
+[connection signal="pressed" from="VBox/HBox2/HostGameStuff/StartGameButton" to="." method="_on_start_game_button_pressed"]

@@ -149,7 +149,7 @@ func get_ritual_requirements(year):
 	var chart: Chart = get_chart(ritual_charts)
 	var value = chart.get_value(year - 1)
 	for i in range(8, year):
-		value *= 1.5
+		value *= 2
 	return value
 
 func get_blight_requirements(week, year):
