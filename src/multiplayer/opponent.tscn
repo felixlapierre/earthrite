@@ -1,0 +1,58 @@
+[gd_scene load_steps=4 format=3 uid="uid://7r84j4crfqbs"]
+
+[ext_resource type="Theme" uid="uid://c21dhy264y6ty" path="res://assets/theme_large.tres" id="1_ko473"]
+[ext_resource type="Texture2D" uid="uid://d4eydc0tjlxyj" path="res://assets/custom/Blight.png" id="2_xclvy"]
+[ext_resource type="Texture2D" uid="uid://ci7ibfi81g2ax" path="res://assets/custom/BlightEmpty.png" id="3_lnaab"]
+
+[node name="Opponent" type="CenterContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_ko473")
+
+[node name="VBox" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBox"]
+layout_mode = 2
+text = "Opponent Name"
+horizontal_alignment = 1
+
+[node name="HPBox" type="HBoxContainer" parent="VBox"]
+layout_mode = 2
+alignment = 1
+
+[node name="hp1" type="TextureRect" parent="VBox/HPBox"]
+layout_mode = 2
+texture = ExtResource("2_xclvy")
+
+[node name="hp2" type="TextureRect" parent="VBox/HPBox"]
+layout_mode = 2
+texture = ExtResource("3_lnaab")
+
+[node name="hp3" type="TextureRect" parent="VBox/HPBox"]
+layout_mode = 2
+texture = ExtResource("3_lnaab")
+
+[node name="hp4" type="TextureRect" parent="VBox/HPBox"]
+layout_mode = 2
+texture = ExtResource("3_lnaab")
+
+[node name="hp5" type="TextureRect" parent="VBox/HPBox"]
+layout_mode = 2
+texture = ExtResource("3_lnaab")
+
+[node name="OpponentHealth" type="RichTextLabel" parent="VBox"]
+visible = false
+layout_mode = 2
+bbcode_enabled = true
+text = "[center]0 / 100"
+fit_content = true
+
+[node name="Balance" type="RichTextLabel" parent="VBox"]
+layout_mode = 2
+bbcode_enabled = true
+text = "[center][img]res://assets/custom/BlightAttack.png[/img] 0 / 0 [img]res://assets/custom/PurpleManaText.png[/img]"
+fit_content = true

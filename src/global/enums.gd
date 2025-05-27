@@ -45,3 +45,8 @@ enum EffectType {
 	Protect,
 	Water
 }
+
+enum MultiplayerGameType {
+	Versus,
+	Cooperative
+}

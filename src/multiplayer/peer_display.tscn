@@ -1,0 +1,43 @@
+[gd_scene load_steps=3 format=3 uid="uid://upgvpgrxxgp1"]
+
+[ext_resource type="Theme" uid="uid://c21dhy264y6ty" path="res://assets/theme_large.tres" id="1_we6gp"]
+[ext_resource type="PackedScene" uid="uid://7r84j4crfqbs" path="res://src/multiplayer/opponent.tscn" id="2_0q5fu"]
+
+[node name="PeerDisplay" type="PanelContainer"]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -133.5
+offset_top = -232.0
+offset_right = 133.5
+grow_horizontal = 2
+grow_vertical = 0
+theme = ExtResource("1_we6gp")
+
+[node name="Margin" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VBox" type="VBoxContainer" parent="Margin"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Margin/VBox"]
+layout_mode = 2
+text = "Opponents"
+horizontal_alignment = 1
+
+[node name="HBox" type="HBoxContainer" parent="Margin/VBox"]
+layout_mode = 2
+
+[node name="Button" type="Button" parent="Margin/VBox/HBox"]
+visible = false
+layout_mode = 2
+text = "Select"
+
+[node name="Opponent" parent="Margin/VBox/HBox" instance=ExtResource("2_0q5fu")]
+layout_mode = 2

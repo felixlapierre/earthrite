@@ -569,7 +569,6 @@ text = "Skip Tutorial"
 [connection signal="pressed" from="Root/HBox/SettingsPanel/Margin/VBox/DebugCheck" to="." method="_on_debug_check_pressed"]
 [connection signal="pressed" from="Root/HBox/SettingsPanel/Margin/VBox/ClickModeCheck" to="." method="_on_click_mode_check_pressed"]
 [connection signal="pressed" from="Root/HBox/SettingsPanel/Margin/VBox/BackButton" to="." method="_on_continue_back_button_pressed"]
-[connection signal="back" from="Root/HBox/StatisticsPanel/StatisticsDisplay" to="." method="_on_continue_back_button_pressed"]
 [connection signal="back_pressed" from="Root/HBox/MultiplayerMenu" to="." method="_on_continue_back_button_pressed"]
 [connection signal="start_multiplayer_game" from="Root/HBox/MultiplayerMenu" to="." method="_on_multiplayer_menu_start_multiplayer_game"]
 [connection signal="pressed" from="Introduction/Panel/VBox/MarginContainer/StoryStartButton" to="." method="_on_story_start_button_pressed"]
