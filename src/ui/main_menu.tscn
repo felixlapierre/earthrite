@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://c4gqastokl1qh"]
+[gd_scene load_steps=25 format=3 uid="uid://c4gqastokl1qh"]
 
 [ext_resource type="Script" path="res://src/ui/main_menu.gd" id="1_b0cyn"]
 [ext_resource type="Theme" uid="uid://c21dhy264y6ty" path="res://assets/theme_large.tres" id="1_l63em"]
@@ -23,6 +23,7 @@
 [ext_resource type="Texture2D" uid="uid://bbnwx5oxkh1ib" path="res://assets/ui/Mastery4.png" id="16_8m5wh"]
 [ext_resource type="Texture2D" uid="uid://1ieyrs8dbhl4" path="res://assets/ui/Mastery5.png" id="17_lnnqf"]
 [ext_resource type="PackedScene" uid="uid://c0h2vyrb4yxlk" path="res://src/ui/main_menus/statistics_display.tscn" id="23_k8mck"]
+[ext_resource type="PackedScene" uid="uid://nqgeqxuxwif6" path="res://src/multiplayer/multiplayer_menu.tscn" id="24_h2rw3"]
 
 [node name="MainMenu" type="Node2D"]
 script = ExtResource("1_b0cyn")
@@ -116,6 +117,15 @@ theme_override_constants/margin_bottom = 50
 custom_minimum_size = Vector2(200, 100)
 layout_mode = 2
 text = "New Game"
+
+[node name="MarginMultiplayer" type="MarginContainer" parent="Root/HBox/VBox"]
+layout_mode = 2
+theme_override_constants/margin_bottom = 50
+
+[node name="ViewMultiplayer" type="Button" parent="Root/HBox/VBox/MarginMultiplayer"]
+custom_minimum_size = Vector2(200, 100)
+layout_mode = 2
+text = "Multiplayer"
 
 [node name="MarginSettings" type="MarginContainer" parent="Root/HBox/VBox"]
 layout_mode = 2
@@ -443,6 +453,11 @@ size_flags_horizontal = 6
 [node name="StatisticsDisplay" parent="Root/HBox/StatisticsPanel" instance=ExtResource("23_k8mck")]
 layout_mode = 2
 
+[node name="MultiplayerMenu" parent="Root/HBox" instance=ExtResource("24_h2rw3")]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+
 [node name="Introduction" type="CenterContainer" parent="."]
 visible = false
 custom_minimum_size = Vector2(1920, 1080)
@@ -539,6 +554,7 @@ text = "Skip Tutorial"
 
 [connection signal="pressed" from="Root/HBox/VBox/MarginContinue/vbox/ViewContinue" to="." method="_on_view_continue_pressed"]
 [connection signal="pressed" from="Root/HBox/VBox/MarginNew/ViewNewGame" to="." method="_on_view_new_game_pressed"]
+[connection signal="pressed" from="Root/HBox/VBox/MarginMultiplayer/ViewMultiplayer" to="." method="_on_view_multiplayer_pressed"]
 [connection signal="pressed" from="Root/HBox/VBox/MarginSettings/ViewSettings" to="." method="_on_view_settings_pressed"]
 [connection signal="pressed" from="Root/HBox/VBox/MarginStats/StatsButton" to="." method="_on_stats_button_pressed"]
 [connection signal="pressed" from="Root/HBox/VBox/ExitGame" to="." method="_on_exit_game_pressed"]
@@ -546,7 +562,7 @@ text = "Skip Tutorial"
 [connection signal="item_selected" from="Root/HBox/Panel/Margin/VBox/HBox/Margin/VBox/DifficultyBox/DiffOptions" to="." method="_on_diff_options_item_selected"]
 [connection signal="item_selected" from="Root/HBox/Panel/Margin/VBox/HBox/Margin/VBox/CharacterBox/CharOptions" to="." method="_on_char_options_item_selected"]
 [connection signal="pressed" from="Root/HBox/Panel/Margin/VBox/StartButton" to="." method="_on_start_button_pressed"]
-[connection signal="pressed" from="Root/HBox/Panel/Margin/VBox/BackButton" to="." method="_on_tutorial_button_pressed"]
+[connection signal="pressed" from="Root/HBox/Panel/Margin/VBox/BackButton" to="." method="_on_continue_back_button_pressed"]
 [connection signal="pressed" from="Root/HBox/ContPanel/VBox/Margin/VBox/ContinueButton" to="." method="_on_continue_button_pressed"]
 [connection signal="pressed" from="Root/HBox/ContPanel/VBox/Margin/VBox/BackButton" to="." method="_on_continue_back_button_pressed"]
 [connection signal="pressed" from="Root/HBox/SettingsPanel/Margin/VBox/TutorialsCheck" to="." method="_on_tutorials_check_pressed"]
@@ -554,6 +570,8 @@ text = "Skip Tutorial"
 [connection signal="pressed" from="Root/HBox/SettingsPanel/Margin/VBox/ClickModeCheck" to="." method="_on_click_mode_check_pressed"]
 [connection signal="pressed" from="Root/HBox/SettingsPanel/Margin/VBox/BackButton" to="." method="_on_continue_back_button_pressed"]
 [connection signal="back" from="Root/HBox/StatisticsPanel/StatisticsDisplay" to="." method="_on_continue_back_button_pressed"]
+[connection signal="back_pressed" from="Root/HBox/MultiplayerMenu" to="." method="_on_continue_back_button_pressed"]
+[connection signal="start_multiplayer_game" from="Root/HBox/MultiplayerMenu" to="." method="_on_multiplayer_menu_start_multiplayer_game"]
 [connection signal="pressed" from="Introduction/Panel/VBox/MarginContainer/StoryStartButton" to="." method="_on_story_start_button_pressed"]
 [connection signal="pressed" from="TutorialPrompt/Panel/Margin/VBox/HBox/YesButton" to="." method="_on_tutorial_button_pressed"]
 [connection signal="pressed" from="TutorialPrompt/Panel/Margin/VBox/HBox/NoButton" to="." method="_on_no_button_pressed"]

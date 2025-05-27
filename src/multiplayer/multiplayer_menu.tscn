@@ -1,8 +1,16 @@
-[gd_scene load_steps=4 format=3 uid="uid://nqgeqxuxwif6"]
+[gd_scene load_steps=12 format=3 uid="uid://nqgeqxuxwif6"]
 
-[ext_resource type="Theme" uid="uid://bdodinwpnjkw8" path="res://assets/theme_huge.tres" id="1_ubcim"]
+[ext_resource type="Theme" uid="uid://c21dhy264y6ty" path="res://assets/theme_large.tres" id="1_3b5tf"]
 [ext_resource type="Script" path="res://src/multiplayer/multiplayer_menu.gd" id="2_pbjo7"]
+[ext_resource type="Texture2D" uid="uid://djfe248r85tuq" path="res://assets/ui/Easy.png" id="3_048eb"]
 [ext_resource type="PackedScene" uid="uid://473mflrxdlk8" path="res://src/multiplayer/lobby.tscn" id="3_tjd1d"]
+[ext_resource type="Texture2D" uid="uid://k0j5u0imo8k3" path="res://assets/ui/Normal.png" id="4_hfowr"]
+[ext_resource type="Texture2D" uid="uid://c227lgcxce4ol" path="res://assets/ui/Hard.png" id="5_qgiy4"]
+[ext_resource type="Texture2D" uid="uid://bxn7jkap77xy2" path="res://assets/ui/Mastery.png" id="6_o5lr5"]
+[ext_resource type="Texture2D" uid="uid://n3bmnhhvec40" path="res://assets/ui/Mastery2.png" id="7_8qfdx"]
+[ext_resource type="Texture2D" uid="uid://da0ootbhd8wa6" path="res://assets/ui/Mastery3.png" id="8_lahs0"]
+[ext_resource type="Texture2D" uid="uid://bbnwx5oxkh1ib" path="res://assets/ui/Mastery4.png" id="9_6jyug"]
+[ext_resource type="Texture2D" uid="uid://1ieyrs8dbhl4" path="res://assets/ui/Mastery5.png" id="10_66en7"]
 
 [node name="MultiplayerMenu" type="PanelContainer"]
 anchors_preset = 15
@@ -10,7 +18,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme = ExtResource("1_ubcim")
+theme = ExtResource("1_3b5tf")
 script = ExtResource("2_pbjo7")
 
 [node name="VBox" type="VBoxContainer" parent="."]
@@ -144,6 +152,7 @@ popup/item_1/text = "Cooperative"
 popup/item_1/id = 1
 
 [node name="DifficultyCont" type="HBoxContainer" parent="VBox/HBox2/HostGameStuff"]
+visible = false
 layout_mode = 2
 
 [node name="DifficultyLabel" type="Label" parent="VBox/HBox2/HostGameStuff/DifficultyCont"]
@@ -152,6 +161,32 @@ text = "Difficulty: "
 
 [node name="DifficultyOption" type="OptionButton" parent="VBox/HBox2/HostGameStuff/DifficultyCont"]
 layout_mode = 2
+item_count = 8
+selected = 0
+popup/item_0/text = "Easy"
+popup/item_0/icon = ExtResource("3_048eb")
+popup/item_0/id = 0
+popup/item_1/text = "Normal"
+popup/item_1/icon = ExtResource("4_hfowr")
+popup/item_1/id = 1
+popup/item_2/text = "Hard"
+popup/item_2/icon = ExtResource("5_qgiy4")
+popup/item_2/id = 2
+popup/item_3/text = "Mastery"
+popup/item_3/icon = ExtResource("6_o5lr5")
+popup/item_3/id = 3
+popup/item_4/text = "Mastery 2"
+popup/item_4/icon = ExtResource("7_8qfdx")
+popup/item_4/id = 4
+popup/item_5/text = "Mastery 3"
+popup/item_5/icon = ExtResource("8_lahs0")
+popup/item_5/id = 5
+popup/item_6/text = "Mastery 4"
+popup/item_6/icon = ExtResource("9_6jyug")
+popup/item_6/id = 6
+popup/item_7/text = "Mastery 5"
+popup/item_7/icon = ExtResource("10_66en7")
+popup/item_7/id = 7
 
 [node name="StartGameButton" type="Button" parent="VBox/HBox2/HostGameStuff"]
 layout_mode = 2
@@ -159,24 +194,32 @@ size_flags_vertical = 10
 text = "Start Game"
 
 [node name="LobbyCont" type="VBoxContainer" parent="VBox/HBox2"]
-visible = false
 layout_mode = 2
+size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="UsersLabel" type="Label" parent="VBox/HBox2/LobbyCont"]
 layout_mode = 2
-text = "Connected Users:"
+text = "Not Connected"
 
 [node name="UsersList" type="VBoxContainer" parent="VBox/HBox2/LobbyCont"]
 layout_mode = 2
+
+[node name="BackButton" type="Button" parent="VBox"]
+custom_minimum_size = Vector2(0, 70)
+layout_mode = 2
+text = "Back"
 
 [node name="Lobby" parent="." instance=ExtResource("3_tjd1d")]
 
 [connection signal="pressed" from="VBox/HBox/JoinButton" to="." method="_on_join_button_pressed"]
 [connection signal="pressed" from="VBox/HBox/HostButton" to="." method="_on_host_button_pressed"]
+[connection signal="text_changed" from="VBox/HBox2/Common/DisplayNameCont/VBox/DisplayNameInput" to="." method="_on_display_name_input_text_changed"]
 [connection signal="item_selected" from="VBox/HBox2/Common/FarmMargin/FarmType/FarmTypeOption" to="." method="_on_farm_type_option_item_selected"]
 [connection signal="item_selected" from="VBox/HBox2/Common/CharacterMargin/Character/CharacterOption" to="." method="_on_character_option_item_selected"]
 [connection signal="pressed" from="VBox/HBox2/JoinGameStuff/JoinGameButton" to="." method="_on_join_game_button_pressed"]
 [connection signal="item_selected" from="VBox/HBox2/HostGameStuff/GameTypeCont/GameTypeOption" to="." method="_on_game_type_option_item_selected"]
 [connection signal="item_selected" from="VBox/HBox2/HostGameStuff/DifficultyCont/DifficultyOption" to="." method="_on_difficulty_option_item_selected"]
 [connection signal="pressed" from="VBox/HBox2/HostGameStuff/StartGameButton" to="." method="_on_start_game_button_pressed"]
+[connection signal="pressed" from="VBox/BackButton" to="." method="_on_back_button_pressed"]
+[connection signal="start_game" from="Lobby" to="." method="_on_lobby_start_game"]

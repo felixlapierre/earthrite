@@ -27,6 +27,7 @@ var playspace
 @onready var ContinuePanel = $Root/HBox/ContPanel
 @onready var SettingsPanel = $Root/HBox/SettingsPanel
 @onready var StatisticsPanel = $Root/HBox/StatisticsPanel
+@onready var MultiplayerMenu = $Root/HBox/MultiplayerMenu
 
 @onready var Prompt = $Root/HBox/Panel/Margin/VBox/HBox/Details/VBox/DetailsPrompt
 @onready var DetailsImg = $Root/HBox/Panel/Margin/VBox/HBox/Details/VBox/DetailsImg
@@ -438,7 +439,17 @@ func _on_continue_back_button_pressed():
 	ContinuePanel.visible = false
 	SettingsPanel.visible = false
 	StatisticsPanel.visible = false
+	NewGamePanel.visible = false
+	MultiplayerMenu.visible = false
 
 func _on_stats_button_pressed():
 	StatisticsPanel.visible = true
 	MainButtonsCont.visible = false
+
+func _on_view_multiplayer_pressed():
+	MainButtonsCont.visible = false
+	MultiplayerMenu.visible = true
+
+func _on_multiplayer_menu_start_multiplayer_game(mage):
+	mage_fortune = mage
+	_on_start_button_pressed()

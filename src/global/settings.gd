@@ -5,6 +5,7 @@ static var DEBUG: bool = false
 static var TUTORIALS_ENABLED: bool = true
 static var CLICK_MODE: bool = false
 static var TUTORIALS_V2: bool = true
+static var DISPLAY_NAME: String = "Mage"
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -19,7 +20,8 @@ static func save_settings():
 		"debug": DEBUG,
 		"tutorials": TUTORIALS_ENABLED,
 		"click_mode": CLICK_MODE,
-		"tutorials_v2": TUTORIALS_V2
+		"tutorials_v2": TUTORIALS_V2,
+		"display_name": DISPLAY_NAME
 	}
 	var settings = FileAccess.open("user://settings.save", FileAccess.WRITE)
 	settings.store_line(JSON.stringify(settings_json))
@@ -39,3 +41,4 @@ static func load_settings():
 	TUTORIALS_ENABLED = settings_json.tutorials
 	CLICK_MODE = (settings_json.has("click_mode") and settings_json.click_mode) or false
 	TUTORIALS_V2 = (settings_json.has("tutorials_v2") and settings_json.tutorials_v2) or false
+	DISPLAY_NAME = (settings_json.display_name if settings_json.has("display_name") else "Mage")

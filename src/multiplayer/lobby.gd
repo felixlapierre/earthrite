@@ -5,6 +5,8 @@ signal player_connected(peer_id, player_info)
 signal player_disconnected(peer_id)
 signal server_disconnected
 
+signal start_game
+
 const PORT = 7000
 const DEFAULT_SERVER_IP = "127.0.0.1"
 const MAX_CONNECTIONS = 20
@@ -17,7 +19,7 @@ var players = {}
 # before the connection is made. It will be passed to every other peer.
 # For example, the value of "name" can be set to something the player
 # entered in a UI scene.
-var player_info = {"name": "Name"}
+var player_info
 
 var players_loaded = 0
 
@@ -31,19 +33,23 @@ func _ready():
 
 # Call from outside when a player wants to join a game
 func join_game(address = ""):
+	player_info = {"name": Settings.DISPLAY_NAME}
 	if address.is_empty():
 		address = DEFAULT_SERVER_IP
 	var peer = ENetMultiplayerPeer.new()
 	var error = peer.create_client(address, PORT)
-	if error:
+	print(error)
+	if error > 0:
 		return error
 	multiplayer.multiplayer_peer = peer
 
 # Host: Call to create game and become a server
 func create_game():
+	player_info = {"name": Settings.DISPLAY_NAME}
 	var peer = ENetMultiplayerPeer.new()
 	var error = peer.create_server(PORT, MAX_CONNECTIONS)
-	if error:
+	print(error)
+	if error > 0:
 		return error
 	multiplayer.multiplayer_peer = peer
 
@@ -59,9 +65,14 @@ func remove_multiplayer_peer():
 # do Lobby.load_game.rpc(filepath)
 # Basically this will call the function for all users
 # TODO: Change this to start the game my way
+
+# Game info:
+# - difficulty
+# - versus or coop
 @rpc("call_local", "reliable")
-func load_game(game_scene_path):
-	get_tree().change_scene_to_file(game_scene_path)
+func load_game(game_info):
+	Global.DIFFICULTY = game_info.difficulty
+	start_game.emit()
 	
 
 # Every peer has to call this when they have loaded the game
