@@ -16,7 +16,7 @@ func get_options():
 		user_interface.select_card_to_copy()
 	)
 	var option2 = CustomEvent.Option.new("Refuse the offer", null, func():
-		user_interface.show_explore())
+		user_interface.explore.show_window())
 	return [option1, option2]
 
 func check_prerequisites():

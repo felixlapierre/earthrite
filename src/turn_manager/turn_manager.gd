@@ -52,7 +52,7 @@ func gain_yellow_mana(amount, delay = false):
 	ritual_counter -= amount
 	if ritual_counter > total_ritual:
 		ritual_counter = total_ritual
-	if ritual_counter <= 0:
+	if ritual_counter <= 0 and !multiplayer_enabled():
 		ritual_counter = 0
 		return true
 	return false
@@ -100,6 +100,7 @@ func end_turn():
 		damage = result.damage - blight_damage
 		blight_damage = result.damage
 		target_blight = result.blight_attack
+		ritual_counter = result.ritual_counter
 		week += 1
 		if result.victory == true:
 			$'../'.victory = true
@@ -256,4 +257,7 @@ func wait_next_year():
 	if multiplayer_turn.enabled:
 		multiplayer_turn.notify_done_exploring.rpc()
 		print("Waiting for other players (explore)")
-		await multiplayer_turn.on_end_explore_results_received
+		await multiplayer_turn.wait_for_explore_results()
+
+func multiplayer_enabled():
+	return multiplayer_turn.enabled

@@ -18,6 +18,7 @@ var example_end_turn = {
 var example_response = {
 	"damage": 15,
 	"blight_attack": 50,
+	"ritual_counter": 10,
 	"victory": false,
 	"defeat": false,
 	"opponents": {
@@ -64,12 +65,7 @@ var groups = [] # 2D array with all the groups in the lobby
 var lobby: Lobby
 
 var latest_end_turn_response
-
-var listener_purple: Listener = Listener.new(EventManager.EventType.BeforeYearStart, func(args: EventArgs):
-	for tile in args.farm.get_all_tiles():
-		tile.purple = true
-		tile.update_display()
-	)
+var latest_explore_response
 
 func setup(p_lobby: Lobby, p_game_type: Enums.MultiplayerGameType):
 	lobby = p_lobby
@@ -87,7 +83,6 @@ func setup(p_lobby: Lobby, p_game_type: Enums.MultiplayerGameType):
 			"lives": 3
 		}
 	enabled = true
-	$"../".event_manager.register(listener_purple)
 	print("Start multiplayer game. " + str(player_count) + " players.")
 
 # A function on the server that peers call when they finish the turn
@@ -135,9 +130,10 @@ func do_end_turn():
 			var turn_state = end_turn_states[id]
 			# calculate how much damage taken, or inflicted
 			var damage = max(turn_state.blight_attack - turn_state.purple_mana, 0)
-			var attack_strength = max(turn_state.purple_mana - turn_state.blight_attack, 0)
+			var attack_strength = max(turn_state.ritual_target - turn_state.ritual_counter, 0)
 			# take damage
 			response_map[id].damage = turn_state.damage + damage
+			response_map[id].ritual_counter = turn_state.ritual_target
 			# die if dead
 			if response_map[id].damage >= 100:
 				player_state.alive = false
@@ -151,13 +147,23 @@ func do_end_turn():
 					damage_pool[id] = attack_strength
 				else:
 					damage_map[turn_state.target][id] += attack_strength
-					damage_map[id][turn_state.target] -= attack_strength
+					#damage_map[id][turn_state.target] -= attack_strength
 		# if only one player left in the group, they win
 		if alive_count == 1:
 			for id in group_alive:
 				if player_states[id].alive:
 					response_map[id].victory = true
 					active_player_count -= 1
+					
+		# if simultaneous death, the winner is the one who took less damage
+		if alive_count == 0:
+			var best = response_map[group_alive[0]].damage
+			var winner = group_alive[0]
+			for id in group_alive:
+				if response_map[id].damage < best:
+					best = response_map[id].damage
+					winner = group_alive[id]
+			response_map[winner].victory = true
 
 		# distribute damage pool
 		for id in damage_pool.keys():
@@ -166,16 +172,17 @@ func do_end_turn():
 			for id2 in group_alive:
 				if id2 != id and player_states[id2].alive:
 					damage_map[id2][id] += divided_damage
-					damage_map[id][id2] -= divided_damage
+					#damage_map[id][id2] -= divided_damage
 		
 		# calculate damage for everyone
 		for id in group_alive:
-			var total_damage = 0
-			var map = damage_map[id]
-			for key in map:
-				if map[key] > 0:
-					total_damage += map[key]
-			response_map[id].blight_attack = total_damage
+			if player_states[id].alive:
+				var total_damage = 0
+				var map = damage_map[id]
+				for key in map:
+					if map[key] > 0:
+						total_damage += map[key]
+				response_map[id].blight_attack = total_damage
 	
 		# update everyone on their opponent statuses
 		for id in group_alive:
@@ -239,7 +246,8 @@ func notify_client_end_turn_results(response):
 @rpc("authority", "call_local", "reliable")
 func notify_exploring_results():
 	print("Client: Received notification that exploring is done")
-	on_end_explore_results_received.emit()
+	latest_explore_response = true
+	on_end_explore_results_received.emit(true)
 
 # If the server ends turn last, it synchronously executes the end turn code, and
 # will notify the on_end_turn_results_received signal before its own code starts
@@ -252,4 +260,11 @@ func wait_for_end_turn_results():
 	if results == null:
 		results = await on_end_turn_results_received
 	latest_end_turn_response = null
+	return results
+
+func wait_for_explore_results():
+	var results = latest_explore_response
+	if results == null:
+		await on_end_explore_results_received
+	latest_explore_response = null
 	return results
