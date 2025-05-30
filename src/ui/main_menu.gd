@@ -143,6 +143,10 @@ func _on_diff_options_item_selected(index):
 	Global.DIFFICULTY = index
 
 func _on_start_button_pressed():
+	# Skip first year if debug mode on enabled
+	start_new_game(Settings.DEBUG)
+
+func start_new_game(winter: bool = false):
 	menu_root.visible = false
 	Global.reset()
 	
@@ -183,7 +187,7 @@ func _on_start_button_pressed():
 	add_child(playspace)
 	
 	playspace.user_interface.set_mage_fortune(mage_fortune)
-	playspace.start_new_game()
+	playspace.start_new_game(winter)
 
 func _on_continue_button_pressed():
 	menu_root.visible = false
@@ -450,6 +454,9 @@ func _on_view_multiplayer_pressed():
 	MainButtonsCont.visible = false
 	MultiplayerMenu.visible = true
 
-func _on_multiplayer_menu_start_multiplayer_game(mage):
+func _on_multiplayer_menu_start_multiplayer_game(mage, game_info):
 	mage_fortune = mage
-	_on_start_button_pressed()
+	var winter = game_info.type == Enums.MultiplayerGameType.Versus
+	start_new_game(winter)
+	playspace.turn_manager.multiplayer_turn.setup(MultiplayerMenu.Lobby, game_info.type)
+	

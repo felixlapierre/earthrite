@@ -72,18 +72,7 @@ func remove_multiplayer_peer():
 @rpc("call_local", "reliable")
 func load_game(game_info):
 	Global.DIFFICULTY = game_info.difficulty
-	start_game.emit()
-	
-
-# Every peer has to call this when they have loaded the game
-# TODO: Implement
-@rpc("any_peer", "call_local", "reliable")
-func player_loaded():
-	if multiplayer.is_server():
-		players_loaded += 1
-		if players_loaded == players.size():
-			$/root/Game.start_game()
-			players_loaded = 0
+	start_game.emit(game_info)
 
 # When a peer connects, send them my player info.
 # This allows transfer of all desired data for each player, not only the unique ID.

@@ -1,6 +1,10 @@
-[gd_scene load_steps=2 format=3 uid="uid://bc8n6jk05ybsj"]
+[gd_scene load_steps=3 format=3 uid="uid://bc8n6jk05ybsj"]
 
 [ext_resource type="Script" path="res://src/turn_manager/turn_manager.gd" id="1_14js7"]
+[ext_resource type="Script" path="res://src/multiplayer/multiplayer_turn.gd" id="2_l0h0h"]
 
 [node name="TurnManager" type="Node"]
 script = ExtResource("1_14js7")
+
+[node name="MultiplayerTurn" type="Node" parent="."]
+script = ExtResource("2_l0h0h")

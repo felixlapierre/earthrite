@@ -1,7 +1,8 @@
 extends PanelContainer
+class_name MultiplayerMenu
 
 signal back_pressed
-signal start_multiplayer_game(mage: MageAbility)
+signal start_multiplayer_game(mage: MageAbility, game_info)
 
 @onready var JoinGameStuff = $VBox/HBox2/JoinGameStuff
 @onready var HostGameStuff = $VBox/HBox2/HostGameStuff
@@ -16,7 +17,7 @@ signal start_multiplayer_game(mage: MageAbility)
 @onready var FarmTypeOption: OptionButton = $VBox/HBox2/Common/FarmMargin/FarmType/FarmTypeOption
 @onready var CharacterOption: OptionButton = $VBox/HBox2/Common/CharacterMargin/Character/CharacterOption
 
-@onready var Lobby = $Lobby
+@onready var Lobby: Lobby = $Lobby
 
 var mage_fortune_list: Array[MageAbility] = [
 	load("res://src/fortune/characters/novice.gd").new(),
@@ -32,12 +33,7 @@ var mage_fortune_list: Array[MageAbility] = [
 
 var mages_map: Dictionary = {}
 
-enum GameType {
-	Versus,
-	Cooperative
-}
-
-var game_type: GameType = GameType.Versus
+var game_type: Enums.MultiplayerGameType = Enums.MultiplayerGameType.Versus
 
 var users_map = {}
 
@@ -105,18 +101,17 @@ func _on_join_game_button_pressed():
 func _on_game_type_option_item_selected(index):
 	match index:
 		0:
-			game_type = GameType.Versus
+			game_type = Enums.MultiplayerGameType.Versus
 			DifficultyCont.visible = false
 		1:
-			game_type = GameType.Cooperative
+			game_type = Enums.MultiplayerGameType.Cooperative
 			DifficultyCont.visible = true
 
 func _on_difficulty_option_item_selected(index):
 	difficulty = index
 
 func _on_start_game_button_pressed():
-	#TODO implement
-	Lobby.load_game({"difficulty": difficulty})
+	Lobby.load_game.rpc({"difficulty": difficulty, "type": game_type})
 
 func update_users_list_display():
 	for child in UsersListVbox.get_children():
@@ -136,7 +131,7 @@ func _on_display_name_input_text_changed(new_text):
 	Lobby._register_player({"name": Settings.DISPLAY_NAME})
 
 
-func _on_lobby_start_game():
+func _on_lobby_start_game(game_info):
 	Global.DIFFICULTY = difficulty
 	Global.FARM_TYPE = farm
-	start_multiplayer_game.emit(mage_fortune)
+	start_multiplayer_game.emit(mage_fortune, game_info)

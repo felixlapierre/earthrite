@@ -242,7 +242,7 @@ func on_turn_end():
 		return
 	$FarmTiles.remove_protected()
 	await $EventManager.notify(EventManager.EventType.OnTurnEnd)
-	var damage: int = $TurnManager.end_turn()
+	var damage: int = await $TurnManager.end_turn()
 	if damage > 0:
 		$UserInterface.update_damage(damage)
 		var shake = 20.0
@@ -364,7 +364,7 @@ func load_game():
 	else:
 		background.load_winter()
 
-func start_new_game():
+func start_new_game(winter: bool = false):
 	if FileAccess.file_exists("user://savegame.save"):
 		DirAccess.remove_absolute("user://savegame.save")
 	for card in StartupHelper.get_starter_deck():
@@ -372,8 +372,15 @@ func start_new_game():
 	user_interface.mage_fortune.modify_deck_callback.call(deck)
 	StartupHelper.setup_farm($FarmTiles, $EventManager)
 	user_interface.mage_fortune.register_fortune($EventManager)
-	start_year()
-
+	
+	if winter:
+		turn_manager.year += 1
+		user_interface.before_end_year()
+		user_interface.end_year()
+		$Background.do_winter(13)
+		$Background.set_background_winter(13)
+	else:
+		start_year()
 
 func _on_farm_tiles_try_move_structure(tile: Tile) -> void:
 	$UserInterface.try_move_structure(tile)

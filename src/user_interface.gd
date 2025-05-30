@@ -421,6 +421,7 @@ func update_damage(damage: int = 0):
 		VisualsBlightRitual.on_blight_damage()
 
 func _on_next_year_button_pressed() -> void:
+	await turn_manager.wait_next_year()
 	on_next_year.emit()
 
 func _on_farm_upgrade_button_pressed() -> void:

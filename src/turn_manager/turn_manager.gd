@@ -23,6 +23,8 @@ var event_manager: EventManager
 var ritual_charts = []
 var blight_charts = []
 
+@onready var multiplayer_turn: MultiplayerTurn = $MultiplayerTurn
+
 signal animate_blightroot
 
 # Called when the node enters the scene tree for the first time.
@@ -76,27 +78,52 @@ func gain_purple_mana(amount, delay):
 func end_turn():
 	var damage = 0
 	var blight_remaining = target_blight - purple_mana
-
-	if blight_remaining > 0:
-		damage = blight_remaining
-		if week < Global.FINAL_WEEK:
-			blight_damage += blight_remaining
+	
+	if multiplayer_turn.enabled:
+		# Multiplayer
+		var data = {
+			"ritual_counter": ritual_counter,
+			"ritual_target": total_ritual,
+			"blight_attack": target_blight,
+			"purple_mana": purple_mana,
+			"target": -1, #-1 for no specific target, otherwise ID of the peer under attack
+			"damage": blight_damage
+		}
+		if flag_defer_excess and purple_mana > target_blight:
+			purple_mana -= target_blight
+			data.purple_mana = target_blight
 		else:
-			blight_damage = 100
-			damage = 100
-	elif next_turn_blight > 0:
-		animate_blightroot.emit("attack")
-	elif get_blight_requirements(week + 2, year) > 0:
-		animate_blightroot.emit("threat")
-
-	blight_remaining = 0 if blight_remaining < 0 else blight_remaining
-	week += 1
-	if !flag_defer_excess or purple_mana < target_blight:
-		purple_mana = 0
+			purple_mana = 0
+		multiplayer_turn.notify_turn_ended.rpc(data)
+		print("Waiting for other players (turn end)")
+		var result = await multiplayer_turn.wait_for_end_turn_results()
+		damage = result.damage - blight_damage
+		blight_damage = result.damage
+		target_blight = result.blight_attack
+		week += 1
+		if result.victory == true:
+			$'../'.victory = true
 	else:
-		purple_mana -= target_blight
-	target_blight = next_turn_blight
-	next_turn_blight = get_blight_requirements(week + 1, year)
+		if blight_remaining > 0:
+			damage = blight_remaining
+			if week < Global.FINAL_WEEK:
+				blight_damage += blight_remaining
+			else:
+				blight_damage = 100
+				damage = 100
+		elif next_turn_blight > 0:
+			animate_blightroot.emit("attack")
+		elif get_blight_requirements(week + 2, year) > 0:
+			animate_blightroot.emit("threat")
+
+		blight_remaining = 0 if blight_remaining < 0 else blight_remaining
+		week += 1
+		if !flag_defer_excess or purple_mana < target_blight:
+			purple_mana = 0
+		else:
+			purple_mana -= target_blight
+		target_blight = next_turn_blight
+		next_turn_blight = get_blight_requirements(week + 1, year)
 	energy = get_max_energy()
 	flag_defer_excess = false
 	attack_pattern.register_fortunes(event_manager, week)
@@ -224,3 +251,9 @@ func get_chart(list):
 
 func gain_energy():
 	energy += 1
+
+func wait_next_year():
+	if multiplayer_turn.enabled:
+		multiplayer_turn.notify_done_exploring.rpc()
+		print("Waiting for other players (explore)")
+		await multiplayer_turn.on_end_explore_results_received

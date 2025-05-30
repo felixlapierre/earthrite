@@ -55,6 +55,8 @@ static var LOCK: bool = false
 
 static var click_callbacks = []
 
+static var MULTIPLAYER = false
+
 static func reset():
 	selected_card = null
 	selected_structure = null
