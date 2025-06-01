@@ -60,6 +60,7 @@ var theme_large = preload("res://assets/theme_large.tres")
 @onready var EnergyDisplay = $UI/EnergyDisplay
 @onready var VisualsBlightRitual = $VisualsBlightRitual
 @onready var Obelisk = $Obelisk
+@onready var MultiplayerUi = $MultiplayerUi
 
 var end_year_alert_text = "Ritual Complete! Time to rest and prepare for the next year"
 var structure_place_text = "Click on the farm tile where you'd like to place the structure"
@@ -127,6 +128,7 @@ func setup(p_event_manager: EventManager, p_turn_manager: TurnManager, p_deck: A
 	tutorial2.setup(self, cards, event_manager, turn_manager)
 	FortuneTellerButton.visible = false
 	VisualsBlightRitual.setup($Obelisk, turn_manager)
+	turn_manager.multiplayer_turn.multiplayer_ui = $MultiplayerUi
 
 # Start and end year
 func end_year():

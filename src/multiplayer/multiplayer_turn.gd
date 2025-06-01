@@ -5,6 +5,7 @@ signal on_end_turn_results_received
 signal on_end_explore_results_received
 
 var enabled = false
+var multiplayer_ui: MultiplayerUi
 
 var example_end_turn = {
 	"ritual_counter": 10,
@@ -258,13 +259,17 @@ func notify_exploring_results():
 func wait_for_end_turn_results():
 	var results = latest_end_turn_response
 	if results == null:
+		multiplayer_ui.set_waiting_visible(true)
 		results = await on_end_turn_results_received
+		multiplayer_ui.set_waiting_visible(false)
 	latest_end_turn_response = null
 	return results
 
 func wait_for_explore_results():
 	var results = latest_explore_response
 	if results == null:
+		multiplayer_ui.set_waiting_visible(true)
 		await on_end_explore_results_received
+		multiplayer_ui.set_waiting_visible(false)
 	latest_explore_response = null
 	return results

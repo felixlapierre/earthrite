@@ -13,6 +13,7 @@ signal start_multiplayer_game(mage: MageAbility, game_info)
 @onready var IpAddressInput = $VBox/HBox2/JoinGameStuff/IpAddressContainer/VBox/IpAddressInput
 @onready var DisplayNameInput = $VBox/HBox2/Common/DisplayNameCont/VBox/DisplayNameInput
 @onready var UsersListVbox = $VBox/HBox2/LobbyCont/UsersList
+@onready var StartGameButton = $VBox/HBox2/HostGameStuff/StartGameButton
 
 @onready var FarmTypeOption: OptionButton = $VBox/HBox2/Common/FarmMargin/FarmType/FarmTypeOption
 @onready var CharacterOption: OptionButton = $VBox/HBox2/Common/CharacterMargin/Character/CharacterOption
@@ -70,6 +71,9 @@ func _ready():
 
 	Settings.load_settings()
 	DisplayNameInput.text = Settings.DISPLAY_NAME
+
+func _process(_delta):
+	StartGameButton.disabled = Lobby.players.keys().size() <= 1
 
 func _on_join_button_pressed():
 	JoinGameStuff.visible = true
