@@ -29,11 +29,13 @@ class HarvestArgs:
 	var purple: bool
 	var delay: bool
 	var green: float
-	func _init(p_yld: float = 0.0, p_purple: bool = false, p_delay: bool = false, p_green: float = 0.0):
+	var seed: CardData
+	func _init(p_yld: float = 0.0, p_purple: bool = false, p_delay: bool = false, p_green: float = 0.0, p_seed = null):
 		yld = p_yld
 		purple = p_purple
 		delay = p_delay
 		green = p_green
+		seed = p_seed
 
 class DestroyArgs:
 	var protect: bool

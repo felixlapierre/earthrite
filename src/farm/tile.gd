@@ -234,21 +234,24 @@ func update_plant_sprite():
 		$PlantSprite.scale = Vector2(91.0 / resolution, 91.0 / resolution)
 
 func harvest(delay) -> Array[Effect]:
-	var effects: Array[Effect] = []
 	var harvest_args = get_harvest_event_args(delay)
 	var specific_args = EventArgs.SpecificArgs.new(self)
 	specific_args.harvest_args = harvest_args
-	event_manager.notify_specific_args(EventManager.EventType.OnPlantHarvest, specific_args)
-	effects.append_array(get_effects("harvest"))
+	var seed_copy = seed
+
 	state = Enums.TileState.Empty
 	on_yield_gained.emit(self, harvest_args)
 	remove_seed()
 	$HarvestParticles.emitting = true
-	return effects
+	
+	seed_copy.notify(event_manager, EventManager.EventType.OnPlantHarvest, specific_args)
+	event_manager.notify_specific_args(EventManager.EventType.OnPlantHarvest, specific_args)
+
+	return []
 
 func remove_seed():
-	if seed != null:
-		seed.unregister_seed_events(event_manager)
+	#if seed != null:
+	#	seed.unregister_seed_events(event_manager)
 	seed_base_yield = 0
 	seed_grow_time = 0
 	current_grow_progress = 0.0

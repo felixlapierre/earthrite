@@ -227,7 +227,7 @@ func unregister_seed_events(event_manager: EventManager):
 func get_yield(tile: Tile) -> EventArgs.HarvestArgs:
 	var yld = tile.current_yield if get_effect("corrupted") == null else -tile.current_yield
 	yld = round(yld)
-	return EventArgs.HarvestArgs.new(yld, tile.purple, false)
+	return EventArgs.HarvestArgs.new(yld, tile.purple, false, 0, self)
 
 func save_data() -> Dictionary:
 	var save_dict = {

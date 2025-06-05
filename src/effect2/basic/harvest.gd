@@ -19,4 +19,6 @@ func get_type():
 	return Enums.EffectType.Harvest
 
 func copy():
-	return HarvestEffect.new().assign(self)
+	var copy = HarvestEffect.new()
+	copy.assign(self)
+	return copy

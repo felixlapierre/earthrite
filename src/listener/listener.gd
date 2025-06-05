@@ -23,7 +23,7 @@ static func create(owner: Resource, p_callback: Callable):
 	if "name" in owner:
 		new_name += owner.name
 	if "tile" in owner and owner.tile != null:
-		new_name += "-%s-%s" % [owner.tile.grid_location.x, owner.tile.grid_location.y]
+		new_name += "[%s-%s]" % [owner.tile.grid_location.x, owner.tile.grid_location.y]
 	if "effect_type" in owner:
 		n_effect_type = owner.effect_type
 	if owner.has_method("get_type"):
