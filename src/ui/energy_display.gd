@@ -25,17 +25,20 @@ func set_energy(p_energy: int):
 		color = "red"
 	else:
 		$Sprite2D.modulate = mod_white
-	$Label.text = "[color=" + color + "]" + str(energy) + "[/color]"
+	set_text(str(energy), color)
 
 func no_energy():
 	flashing = true
 	for i in range(5):
 		await get_tree().create_timer(0.05).timeout
-		$Label.text = "[color=white]" + str(energy) + "[/color]"
+		set_text(str(energy), "white")
 		$Sprite2D.modulate = mod_red
 		await get_tree().create_timer(0.05).timeout
-		$Label.text = "[color=red]" + str(energy) + "[/color]"
+		set_text(str(energy), "red")
 		$Sprite2D.modulate = mod_black
 	set_energy(energy)
 	await get_tree().create_timer(1.0).timeout
 	flashing = false
+
+func set_text(text: String, color: String):
+	$Label.text = "[center][color=%s]%s[/color][/center]" % [color, text]

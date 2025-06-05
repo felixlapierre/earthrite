@@ -43,7 +43,9 @@ enum EffectType {
 	DestroyTile,
 	Other,
 	Protect,
-	Water
+	Water,
+	Burn,
+	Plant
 }
 
 enum MultiplayerGameType {

@@ -123,3 +123,35 @@ func load_data(data) -> Structure:
 	rotate = data.rotate
 	tooltip = data.tooltip
 	return self
+
+class Builder:
+	var instance
+	func _init():
+		instance = Structure.new()
+	
+	func name(p_name) -> Builder:
+		instance.name = p_name
+		return self
+	
+	func size(p_size) -> Builder:
+		instance.size = p_size
+		return self
+	
+	func rarity(p_rarity) -> Builder:
+		instance.rarity = p_rarity
+		return self
+	
+	func text(p_text) -> Builder:
+		instance.text = p_text
+		return self
+	
+	func texture(p_texture) -> Builder:
+		instance.texture = p_texture
+		return self
+	
+	func effect(p_effect: Effect2) -> Builder:
+		instance.effects2.append(p_effect)
+		return self
+	
+	func build() -> Structure:
+		return instance

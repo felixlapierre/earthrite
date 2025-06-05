@@ -22,6 +22,7 @@ var example_response = {
 	"ritual_counter": 10,
 	"victory": false,
 	"defeat": false,
+	"lives": 2,
 	"opponents": {
 		"2": {
 			"name": "felix",
@@ -43,7 +44,8 @@ var end_turn_states: Dictionary = {}
 var end_explore_states: Dictionary = {}
 
 # id: int
-# alive: bool
+# alive: bool (false when all lives run out)
+# active: bool (false when they are done the current year)
 # lives: int
 # name: string
 var player_states: Dictionary = {}
@@ -67,6 +69,7 @@ var lobby: Lobby
 
 var latest_end_turn_response
 var latest_explore_response
+var my_lives: int = 3
 
 func setup(p_lobby: Lobby, p_game_type: Enums.MultiplayerGameType):
 	lobby = p_lobby
@@ -80,6 +83,7 @@ func setup(p_lobby: Lobby, p_game_type: Enums.MultiplayerGameType):
 		player_states[key] = {
 			"name": name,
 			"id": key,
+			"active": true,
 			"alive": true,
 			"lives": 3
 		}
@@ -103,9 +107,9 @@ func do_end_turn():
 	var response_map = {}
 	for group in groups:
 		var damage_pool = {}
-		var group_alive = []
+		var group_active = []
 		for id in group:
-			if player_states[id].alive:
+			if player_states[id].active:
 				response_map[id] = {
 					"damage": 0,
 					"blight_attack": 0,
@@ -113,20 +117,20 @@ func do_end_turn():
 					"defeat": false,
 					"opponents": {}
 				}
-			group_alive.append(id)
-		var alive_count = group_alive.size()
+			group_active.append(id)
+		var active_count = group_active.size()
 		var damage_map = {}
-		for id in group_alive:
+		for id in group_active:
 			damage_map[id] = {}
-		for id in group_alive:
-			for id2 in group_alive:
+		for id in group_active:
+			for id2 in group_active:
 				if id != id2:
 					damage_map[id][id2] = 0
 					damage_map[id2][id] = 0
 		
-		for id in group_alive:
+		for id in group_active:
 			var player_state = player_states[id]
-			if !player_state.alive:
+			if !player_state.active:
 				continue
 			var turn_state = end_turn_states[id]
 			# calculate how much damage taken, or inflicted
@@ -137,10 +141,13 @@ func do_end_turn():
 			response_map[id].ritual_counter = turn_state.ritual_target
 			# die if dead
 			if response_map[id].damage >= 100:
-				player_state.alive = false
 				player_state.lives -= 1
+				if player_state.lives <= 0:
+					player_state.alive = false
+					living_player_count -= 1
+					print("Player " + str(id) + " has been eliminated")
 				response_map[id].defeat = true
-				alive_count -= 1
+				active_count -= 1
 				active_player_count -= 1
 			else:
 				# deal damage if not dead
@@ -148,35 +155,36 @@ func do_end_turn():
 					damage_pool[id] = attack_strength
 				else:
 					damage_map[turn_state.target][id] += attack_strength
-					#damage_map[id][turn_state.target] -= attack_strength
+			response_map[id].lives = player_states[id].lives
+
 		# if only one player left in the group, they win
-		if alive_count == 1:
-			for id in group_alive:
-				if player_states[id].alive:
+		if active_count == 1:
+			for id in group_active:
+				if player_states[id].active:
 					response_map[id].victory = true
 					active_player_count -= 1
-					
+
 		# if simultaneous death, the winner is the one who took less damage
-		if alive_count == 0:
-			var best = response_map[group_alive[0]].damage
-			var winner = group_alive[0]
-			for id in group_alive:
+		if active_count == 0:
+			var best = response_map[group_active[0]].damage
+			var winner = group_active[0]
+			for id in group_active:
 				if response_map[id].damage < best:
 					best = response_map[id].damage
-					winner = group_alive[id]
+					winner = group_active[id]
 			response_map[winner].victory = true
 
 		# distribute damage pool
 		for id in damage_pool.keys():
-			var divided_damage = round(float(damage_pool[id]) / (alive_count - 1))
+			var divided_damage = round(float(damage_pool[id]) / (active_count - 1))
 			print(str(divided_damage))
-			for id2 in group_alive:
+			for id2 in group_active:
 				if id2 != id and player_states[id2].alive:
 					damage_map[id2][id] += divided_damage
 					#damage_map[id][id2] -= divided_damage
 		
 		# calculate damage for everyone
-		for id in group_alive:
+		for id in group_active:
 			if player_states[id].alive:
 				var total_damage = 0
 				var map = damage_map[id]
@@ -186,7 +194,7 @@ func do_end_turn():
 				response_map[id].blight_attack = total_damage
 	
 		# update everyone on their opponent statuses
-		for id in group_alive:
+		for id in group_active:
 			for id2 in group:
 				if id2 != id:
 					var opponent = {
@@ -199,7 +207,7 @@ func do_end_turn():
 					response_map[id].opponents[id2] = opponent
 
 		# ok we're done!
-		for id in group_alive:
+		for id in group_active:
 			print("Notifying ID " + str(id) + " of turn results " + JSON.stringify(response_map[id]))
 			notify_client_end_turn_results.rpc_id(id, response_map[id])
 	
@@ -263,6 +271,7 @@ func wait_for_end_turn_results():
 		results = await on_end_turn_results_received
 		multiplayer_ui.set_waiting_visible(false)
 	latest_end_turn_response = null
+	my_lives = results.lives
 	return results
 
 func wait_for_explore_results():

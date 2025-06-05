@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://cs4xf7kyndygr" path="res://src/ui/tooltip.tscn" id="4_6ar5m"]
 
 [node name="PickOption" type="Node2D"]
+z_index = 1
 script = ExtResource("1_0tf8x")
 
 [node name="Center" type="CenterContainer" parent="."]
@@ -34,9 +35,8 @@ text = "Reroll "
 icon = ExtResource("3_25rhx")
 icon_alignment = 2
 
-[node name="HBox" type="HBoxContainer" parent="Center/Panel/VBox"]
+[node name="HBox" type="GridContainer" parent="Center/Panel/VBox"]
 layout_mode = 2
-alignment = 1
 
 [node name="SkipButton" type="Button" parent="Center/Panel/VBox"]
 custom_minimum_size = Vector2(0, 70)

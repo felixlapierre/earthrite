@@ -76,6 +76,13 @@ static func load_structures():
 			print(path)
 		all_structures.append(structure)
 		structures_rarity[structure.rarity].append(structure)
+	
+	for path in get_all_file_paths("res://src/structure/custom"):
+		var script = load(path)
+		if script.has_method("get_resource"):
+			var structure = script.get_resource()
+			all_structures.append(structure)
+			structures_rarity[structure.rarity].append(structure)
 	print("Common Structures: " + str(structures_rarity["common"].size()))
 	print("Uncommon Structures: " + str(structures_rarity["uncommon"].size()))
 	print("Rare Structures: " + str(structures_rarity["rare"].size()))

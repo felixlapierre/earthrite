@@ -414,6 +414,8 @@ func _on_close_pressed():
 		var shown = show_tutorial.call("winter_end", "center")
 		if !shown and structures > 0:
 			show_tutorial.call("moving structures", "right")
+		else:
+			show_tutorial.call("")
 
 func expand_farm():
 	if Helper.can_expand_farm():

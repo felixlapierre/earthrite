@@ -114,6 +114,15 @@ func end_year(endless: bool):
 
 	save_game()
 
+func start_winter():
+	turn_manager.year += 1
+	user_interface.before_end_year()
+	user_interface.end_year()
+	$Background.do_winter(13)
+	$Background.set_background_winter(13)
+	$FarmTiles.do_winter_clear()
+	$TurnManager.end_year()
+
 func start_year():
 	Global.LOCK = true
 	victory = false
@@ -154,9 +163,13 @@ func on_lose():
 	shake_camera(50.0)
 	
 	await get_tree().create_timer(1.5).timeout
-	$UserInterface/EndScreen.visible = true
-	$UserInterface/EndScreen.setup(turn_manager, deck, $FarmTiles, $UserInterface)
-	$UserInterface/EndScreen.do_unlocks(turn_manager, deck)
+
+	if turn_manager.multiplayer_turn.enabled and turn_manager.multiplayer_turn.my_lives > 0:
+		start_winter()
+	else:
+		$UserInterface/EndScreen.visible = true
+		$UserInterface/EndScreen.setup(turn_manager, deck, $FarmTiles, $UserInterface)
+		$UserInterface/EndScreen.do_unlocks(turn_manager, deck)
 
 
 func on_win():

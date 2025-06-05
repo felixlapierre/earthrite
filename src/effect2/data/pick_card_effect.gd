@@ -63,7 +63,7 @@ func _init(p_timing = EventManager.EventType.AfterCardPlayed, p_seed = false, p_
 func register(event_manager: EventManager, p_tile: Tile):
 	tile = p_tile
 	listener_play = Listener.new(timing, func(args: EventArgs):
-		pick_card_event(args))
+		await pick_card_event(args))
 	
 	listener_andthen = Listener.new(timing2, func(args: EventArgs):
 		# If timing2 is Plant Harvest, it must not trigger when other plants are harvested
@@ -106,7 +106,7 @@ func pick_card_event(args: EventArgs):
 	if count != -1:
 		options.shuffle()
 	Global.LOCK = true
-	display_options(args, options, func(card_data):
+	await display_options(args, options, func(card_data):
 		Global.LOCK = false
 		card = card_data
 		if timing == EventManager.EventType.OnActionCardUsed:
@@ -130,7 +130,7 @@ func display_options(args: EventArgs, options: Array, set_card: Callable):
 		options = options.slice(0, count + strength)
 	if options.size() == 1 and !skippable and pick_from == PickFrom.Hand:
 		set_card.call(options[0])
-	elif options.size() <= 7:
+	else:
 		var pick_option_ui = PickOption.instantiate()
 		args.user_interface.add_child(pick_option_ui)
 		var prompt = "Pick a card"
@@ -141,22 +141,7 @@ func display_options(args: EventArgs, options: Array, set_card: Callable):
 		pick_option_ui.setup(prompt, options, func(selected):
 			set_card.call(selected)
 			args.user_interface.remove_child(pick_option_ui), cancel_callback)
-	else:
-		var select_card = SelectCard.instantiate()
-		select_card.tooltip = args.user_interface.tooltip
-		select_card.size = Constants.VIEWPORT_SIZE
-		select_card.z_index = 2
-		select_card.theme = load("res://assets/theme_large.tres")
-		if !skippable:
-			select_card.disable_cancel()
-		select_card.select_callback = func(card_data: CardData):
-			args.user_interface.remove_child(select_card)
-			set_card.call(card_data)
-		select_card.select_cancelled.connect(func():
-			args.user_interface.remove_child(select_card)
-			set_card.call(null))
-		args.user_interface.add_child(select_card)
-		select_card.do_card_pick(args.cards.discard_pile_cards, "Select a card")
+		await pick_option_ui.pick_finished
 
 func do_followup_action(args: EventArgs):
 	if card == null:
@@ -173,7 +158,8 @@ func do_followup_action(args: EventArgs):
 		args.farm.use_card(tile.grid_location, true)
 		Global.selected_card = null
 	elif and_then == AndThen.Strengthen:
-		var copy: CardData = card.apply_enhance(strength_enhance)
+		var str_enhance = Enhance.new("strength", "common", strength)
+		var copy: CardData = card.apply_enhance(str_enhance)
 		for hand_card: CardBase in args.cards.HAND_CARDS.get_children():
 			if hand_card.card_info == card:
 				hand_card.set_card_info(copy)

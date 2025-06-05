@@ -120,9 +120,9 @@ func populate_database():
 		.mastery(8).absurd(7).build())
 	
 	# Mark a plant to be destroyed per card played
-	add(simple_every(destroy_plant_every_card).hard(6).mastery(5).absurd(4).build())
+	add(simple_every(destroy_plant_every_card).hard(7).mastery(6).absurd(5).build())
 
-	add(simple_every_list([destroy_plant_every_card, add_blightroot]).hard(7).mastery(6).absurd(5).build())
+	add(simple_every_list([destroy_plant_every_card, add_blightroot]).hard(8).mastery(7).absurd(6).build())
 
 	add(SimpleAttackBuilder.new().fortune_every(destroy_plant_every_card, 3)\
 		.hard(4).mastery(3).absurd(2).build())

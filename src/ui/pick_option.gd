@@ -8,6 +8,8 @@ var FortuneDisplay = preload("res://src/fortune/fortune.tscn")
 @onready var prompt_label = $Center/Panel/VBox/PromptLabel
 @onready var tooltip: Tooltip = $Tooltip
 
+signal pick_finished
+
 var on_skip: Callable
 
 var reroll_callable: Callable
@@ -36,13 +38,14 @@ func setup(prompt: String, items, p_pick_callback: Callable, skip_callback = nul
 	update_reroll_button()
 	setup_items(items)
 
-func setup_items(items):
+func setup_items(items: Array):
 	for child in options_container.get_children():
 		options_container.remove_child(child)
 	for item in items:
 		var acorn = false
 		var callback = func(option):
 			pick_callback.call(option)
+			pick_finished.emit()
 		var bonus = Global.ACORN_BONUS
 		if reroll_enabled and randi_range(0, 100) < 15 * (1.0 + bonus):
 			callback = func(option):
@@ -87,10 +90,23 @@ func setup_items(items):
 			new_node = vbox
 
 		options_container.add_child(new_node)
+	# Set the column count on the grid container
+	var count = items.size()
+	var columns = count
+	if count == 6:
+		columns = 3
+	elif count == 7 or count == 8:
+		columns = 4
+	else:
+		columns = 5
+
+	options_container.columns = columns
+	
 
 func _on_skip_button_pressed():
 	if on_skip != null:
 		on_skip.call()
+		pick_finished.emit()
 
 func _on_reroll_button_pressed():
 	Global.ACORNS -= 1
