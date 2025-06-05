@@ -1,6 +1,9 @@
 extends Effect2
 class_name BrainInAJar
 
+func _init():
+	super(EventManager.EventType.BeforeTurnStart, false, Enums.EffectType.Other, "BrainInAJar")
+	
 func register(event_manager: EventManager, tile: Tile):
 	Global.MAX_HAND_SIZE = 100
 

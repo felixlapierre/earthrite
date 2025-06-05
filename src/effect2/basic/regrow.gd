@@ -3,11 +3,14 @@ class_name RegrowEffect
 
 var listener: Listener
 
+func _init():
+	super(EventManager.EventType.OnPlantHarvest, true, Enums.EffectType.Regrow, "Regrow")
+
 func register(event_manager: EventManager, tile: Tile):
-	listener = Listener.new(timing, func(args: EventArgs):
+	listener = Listener.create(self, func(args: EventArgs):
 		var seed = args.specific.harvest_args.seed.copy()
 		seed.yld += strength
-		args.specific.tile.plant_seed(seed)
+		await args.specific.tile.plant_seed(seed)
 	)
 	owner.register(listener)
 

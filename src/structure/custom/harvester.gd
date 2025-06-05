@@ -1,14 +1,11 @@
 extends Effect2
 class_name Harvester
 
-var event_type = EventManager.EventType.BeforeTurnStart
-var effect_type = Enums.EffectType.Harvest
 var tile = null
 var listener: Listener
 
 func _init():
-	super()
-	name = "Harvester"
+	super(EventManager.EventType.BeforeTurnStart, false, Enums.EffectType.Harvest, "Harvested")
 
 func copy():
 	var copy = Harvester.new()

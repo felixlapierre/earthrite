@@ -5,8 +5,8 @@ class_name StrEffect
 @export var base_strength: float = 1.0
 @export var strength_increment: float = 1.0
 
-func _init(p_timing = EventManager.EventType.AfterCardPlayed, p_seed = false, p_strength: float = 1.0, p_base_strength = 1.0, p_strength_increment = 1.0):
-	super(p_timing, p_seed)
+func _init(event_type, seed, effect_type, name, p_strength: float = 1.0, p_base_strength = 1.0, p_strength_increment = 1.0):
+	super(event_type, seed, effect_type, name)
 	strength = p_strength
 	base_strength = p_base_strength
 	strength_increment = p_strength_increment

@@ -23,7 +23,7 @@ func register_events(event_manager: EventManager, tile: Tile):
 				adjacent_tiles.append(t)
 		adjacent_tiles.shuffle()
 		for i in range(3 if adjacent_tiles.size() > 3 else adjacent_tiles.size()):
-			adjacent_tiles[i].grow_one_week()
+			await adjacent_tiles[i].grow_one_week()
 		tile.play_effect_particles()
 	event_manager.register_listener(event_type, callback)
 

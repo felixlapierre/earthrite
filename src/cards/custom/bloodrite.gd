@@ -21,7 +21,7 @@ func register_events(event_manager: EventManager, p_tile: Tile):
 		eligible_blightroot.shuffle()
 		var i = 0
 		while i < eligible_blightroot.size() and i < 1:#args.turn_manager.blight_damage:
-			eligible_blightroot[i].plant_seed_animate(blighroot_seed)
+			await eligible_blightroot[i].plant_seed_animate(blighroot_seed)
 			i += 1
 		
 	event_manager.register_listener(event_type, callback)

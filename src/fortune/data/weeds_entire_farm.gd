@@ -23,7 +23,7 @@ func plant_weeds(args: EventArgs):
 	tiles.shuffle()
 	for tile in tiles:
 		if tile.not_destroyed() and !tile.is_protected() and tile.state == Enums.TileState.Empty:
-			tile.plant_seed(weeds.copy())
+			await tile.plant_seed(weeds.copy())
 			args.farm.do_animation(spriteframes, tile.grid_location)
 			await args.farm.get_tree().create_timer(0.01).timeout
 	popup_callback.call(false)

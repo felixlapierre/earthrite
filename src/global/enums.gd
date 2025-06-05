@@ -46,7 +46,9 @@ enum EffectType {
 	Water,
 	Burn,
 	Plant,
-	Regrow
+	Regrow,
+	GainEnergy,
+	Fleeting
 }
 
 enum MultiplayerGameType {

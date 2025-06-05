@@ -349,6 +349,7 @@ func has_enhance_type(type: Enhance.Type):
 		return enh.type == type)
 		
 func register(listener: Listener):
+	listener.id = name + listener.id
 	card_listeners.append(listener)
 
 func notify(event_manager: EventManager, type: EventManager.EventType, specific_args: EventArgs.SpecificArgs = null):

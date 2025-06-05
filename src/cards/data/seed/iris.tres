@@ -10,12 +10,10 @@ timing2 = 8
 count = -1
 pick_from = 0
 and_then = 0
-skippable = null
+skippable = false
 strength = 1.0
 base_strength = 1.0
 strength_increment = 1.0
-timing = 13
-is_seed = true
 
 [resource]
 script = ExtResource("2_0ie4y")

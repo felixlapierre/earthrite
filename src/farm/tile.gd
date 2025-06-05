@@ -135,26 +135,22 @@ func on_other_clicked():
 	if Settings.CLICK_MODE:
 		tile_hovered.emit(null)
 
-func plant_seed_animate(planted_seed) -> Array[Effect]:
+func plant_seed_animate(planted_seed):
 	var copy = planted_seed.copy()
-	var effects = plant_seed(copy)
+	await plant_seed(copy)
 	var tween = get_tree().create_tween()
 	tween.tween_property($PlantSprite, "scale", $PlantSprite.scale, 0.1);
 	$PlantSprite.scale = Vector2(0, 0)
-	return effects
 
 # MUST COPY SEED PROVIDED TO NOT BREAK EFFECTS
-func plant_seed(planted_seed) -> Array[Effect]:
-	var effects: Array[Effect] = []
+func plant_seed(planted_seed):
 	if seed != null:
 		remove_seed()
 	if card_can_target(planted_seed):
 		set_seed(planted_seed)
-		effects.append_array(get_effects("plant"))
 		var specific_args = EventArgs.SpecificArgs.new(self)
-		planted_seed.notify(event_manager, EventManager.EventType.OnPlantPlanted, specific_args)
-		event_manager.notify_specific_args(EventManager.EventType.OnPlantPlanted, specific_args)
-	return effects
+		await planted_seed.notify(event_manager, EventManager.EventType.OnPlantPlanted, specific_args)
+		await event_manager.notify_specific_args(EventManager.EventType.OnPlantPlanted, specific_args)
 
 # Doesn't trigger on-plant stuff
 func set_seed(planted_seed):
@@ -177,10 +173,9 @@ func set_seed(planted_seed):
 	update_plant_sprite()
 	
 	
-func grow_one_week() -> Array[Effect]:
+func grow_one_week():
 	var effects: Array[Effect] = []
 	if state == Enums.TileState.Growing:
-		effects.append_array(get_effects("grow"))
 		current_grow_progress += 1.0
 		var multiplier = 1.0
 		if is_watered():
@@ -193,9 +188,8 @@ func grow_one_week() -> Array[Effect]:
 		grow_animation()
 		if current_grow_progress == seed_grow_time:
 			state = Enums.TileState.Mature
-	seed.notify(event_manager, EventManager.EventType.OnPlantGrow, EventArgs.SpecificArgs.new(self))
-	event_manager.notify_specific_args(EventManager.EventType.OnPlantGrow, EventArgs.SpecificArgs.new(self))
-	return effects
+	await seed.notify(event_manager, EventManager.EventType.OnPlantGrow, EventArgs.SpecificArgs.new(self))
+	await event_manager.notify_specific_args(EventManager.EventType.OnPlantGrow, EventArgs.SpecificArgs.new(self))
 
 func grow_animation():
 	var tween = get_tree().create_tween()
@@ -244,8 +238,8 @@ func harvest(delay) -> Array[Effect]:
 	remove_seed()
 	$HarvestParticles.emitting = true
 	
-	seed_copy.notify(event_manager, EventManager.EventType.OnPlantHarvest, specific_args)
-	event_manager.notify_specific_args(EventManager.EventType.OnPlantHarvest, specific_args)
+	await seed_copy.notify(event_manager, EventManager.EventType.OnPlantHarvest, specific_args)
+	await event_manager.notify_specific_args(EventManager.EventType.OnPlantHarvest, specific_args)
 
 	return []
 
@@ -320,48 +314,6 @@ func add_yield(strength):
 	current_yield += strength
 	on_yield_added.emit(self, strength)
 
-func get_turn_start_effects() -> Array[Effect]: 
-	return get_effects("turn_start")
-
-func get_before_grow_effects() -> Array[Effect]:
-	return get_effects("before_grow")
-
-func get_after_grow_effects() -> Array[Effect]:
-	return get_effects("after_grow")
-
-func get_effects(time) -> Array[Effect]:
-	var effects_generated: Array[Effect] = []
-	#TODO: Fix this unholy indentation
-	if structure != null:
-		for effect in structure.effects:
-			if effect.on == time:
-				var shape
-				if effect.range == "adjacent":
-					shape = Helper.get_tile_shape_rotated(structure.size, Enums.CursorShape.Elbow, structure_rotate)
-				elif effect.range == "nearby":
-					shape = Helper.get_tile_shape_rotated(structure.size, Enums.CursorShape.Elbow, structure_rotate)
-				if shape != null:
-					effects_generated.append_array(get_effects_in_shape(effect, shape))
-	
-	if seed != null:
-		for effect in seed.effects:
-			if effect.on == time:
-				if effect.range == "adjacent":
-					var shape = Helper.get_tile_shape_rotated(9, Enums.CursorShape.Square, 0)
-					effects_generated.append_array(get_effects_in_shape(effect, shape))
-				else:
-					effects_generated.append(effect.copy().set_location(grid_location).set_card(seed if effect.name != "draw" else null))
-
-	return effects_generated
-
-func get_effects_in_shape(effect: Effect, shape):
-	var effects: Array[Effect] = []
-	for s in shape:
-		var target = s + grid_location
-		if Helper.in_bounds(target):
-			effects.append(effect.copy().set_location(target).set_card(seed))
-	return effects
-	
 func set_blight_targeted(value):
 	blight_targeted = value
 	$BlightTargetOverlay.visible = value

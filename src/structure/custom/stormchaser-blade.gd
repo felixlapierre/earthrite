@@ -3,8 +3,11 @@ class_name StormchaserBlade
 
 var listener: Listener
 
+func _init():
+	super(EventManager.EventType.AfterCardPlayed, false, Enums.EffectType.GainEnergy)
+
 func register(event_manager: EventManager, tile: Tile):
-	listener = Listener.new(timing, func(args: EventArgs):
+	listener = Listener.create(self, func(args: EventArgs):
 		var card = args.specific.play_args.card
 		if card.cost >= 3 and !args.specific.play_args.external_source:
 			args.turn_manager.energy += 2

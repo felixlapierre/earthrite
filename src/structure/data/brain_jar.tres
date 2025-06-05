@@ -6,8 +6,6 @@
 
 [sub_resource type="Resource" id="Resource_b5r30"]
 script = ExtResource("1_7t4a6")
-timing = 0
-is_seed = false
 
 [resource]
 script = ExtResource("1_4s2g0")

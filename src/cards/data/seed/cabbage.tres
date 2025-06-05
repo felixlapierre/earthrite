@@ -9,8 +9,6 @@ script = ExtResource("1_v3ma0")
 strength = 1.0
 base_strength = 1.0
 strength_increment = 1.0
-timing = 8
-is_seed = true
 
 [resource]
 script = ExtResource("1_f6yle")

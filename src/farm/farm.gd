@@ -330,7 +330,7 @@ func process_one_week(week: int):
 				growing_tiles.append(tile)
 		growing_tiles.shuffle()
 		for tile in growing_tiles:
-			effect_queue.append_array(tile.grow_one_week())
+			await tile.grow_one_week()
 			await get_tree().create_timer(0.01).timeout
 		process_effect_queue()
 	for tile: Tile in $Tiles.get_children():
@@ -364,14 +364,14 @@ func process_effect_queue():
 func perform_effect(effect, tile: Tile):
 	match effect.name:
 		"harvest":
-			effect_queue.append_array(tile.harvest(false))
+			await tile.harvest(false)
 		"harvest_delay":
-			effect_queue.append_array(tile.harvest(true))
+			await tile.harvest(true)
 		"irrigate":
 			tile.irrigate()
 		"grow":
 			for i in range(effect.strength):
-				effect_queue.append_array(tile.grow_one_week())
+				await tile.grow_one_week()
 		"increase_yield":
 			tile.multiply_yield(1.0 + effect.strength)
 		"add_yield":
@@ -380,7 +380,7 @@ func perform_effect(effect, tile: Tile):
 			var card = effect.card.copy()
 			if effect.strength > 0:
 				card.yld += effect.strength
-			effect_queue.append_array(tile.plant_seed(card))
+			await tile.plant_seed(card)
 		"spread":
 			var i = effect.strength
 			while i >= 1.0:

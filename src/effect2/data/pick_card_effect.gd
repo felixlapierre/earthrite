@@ -22,6 +22,8 @@ enum AndThen {
 	Strengthen
 }
 
+@export var timing: EventManager.EventType
+@export var seed: bool
 @export var timing2: EventManager.EventType
 @export var count: int
 @export var pick_from: PickFrom
@@ -54,7 +56,8 @@ var listener_andthen: Listener
 func _init(p_timing = EventManager.EventType.AfterCardPlayed, p_seed = false, p_strength = 1.0,
 	p_base_strength = 1.0, p_strength_increment = 1.0, p_timing_2 = EventManager.EventType.AfterCardPlayed, p_count = -1, p_pick_from = PickFrom.Hand,
 	p_and_then = AndThen.Draw, p_skippable = false):
-	super(p_timing, p_seed, p_strength, p_base_strength, p_strength_increment)
+	super(p_timing, p_seed, Enums.EffectType.Other, "PickCardEffect", p_strength, p_base_strength, p_strength_increment)
+	
 	timing2 = p_timing_2
 	count = p_count
 	pick_from = p_pick_from

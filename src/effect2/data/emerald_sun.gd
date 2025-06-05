@@ -8,6 +8,12 @@ var banned = ["Iris", "Fire Flower", "Morel", "Lotus", "Cactus", "Rainbow Cactus
 var number_of_seeds = 3
 
 var options = []
+
+var listener: Listener
+
+func _init():
+	super(EventManager.EventType.OnActionCardUsed, false, Enums.EffectType.Plant, "EmeraldSun")
+
 # To be overridden
 func register(event_manager: EventManager, tile: Tile):
 	anim = AnimatedSprite2D.new()
@@ -29,15 +35,13 @@ func register(event_manager: EventManager, tile: Tile):
 		while card.type != "SEED" or banned.has(card.name) or card.rarity == "legendary":
 			card = DataFetcher.get_random_card()
 		options.append(card)
-	
-	callback = func(args: EventArgs):
+		
+	listener.create(self, func(args: EventArgs):
 		var target = args.specific.tile
 		if target.state == Enums.TileState.Empty and !target.is_destroyed():
 			var card = options.pick_random()
 			# Plant it on the farm
-			var effects = target.plant_seed_animate(card)
-			args.farm.effect_queue.append_array(effects)
-			args.farm.process_effect_queue()
+			await target.plant_seed_animate(card)
 
 			# Draw a line for animation
 			var line = DrawLine.new()
@@ -46,12 +50,13 @@ func register(event_manager: EventManager, tile: Tile):
 			event_manager.shake_screen(10.0)
 			await args.farm.get_tree().create_timer(0.025).timeout
 			args.farm.remove_child(line)
+	)
 			
-	event_manager.register_listener(timing, callback)
+	event_manager.register(listener)
 
 # To be overridden
 func unregister(event_manager: EventManager):
-	event_manager.unregister_listener(timing, callback)
+	listener.disable()
 	event_manager.farm.remove_child(anim)
 
 # To be overridden

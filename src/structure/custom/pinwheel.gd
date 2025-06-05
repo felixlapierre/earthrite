@@ -3,8 +3,11 @@ class_name Pinwheel
 
 var listener: Listener
 
+func _init():
+	super(EventManager.EventType.AfterCardPlayed, false, Enums.EffectType.Draw)
+
 func register(event_manager: EventManager, tile: Tile):
-	listener = Listener.new(timing, func(args: EventArgs):
+	listener = Listener.create(self, func(args: EventArgs):
 		var card = args.specific.play_args.card
 		var is_harvest = card.get_effect("harvest") != null or card.get_effect("harvest_delay") != null\
 			or card.has_effect(Enums.EffectType.Harvest)

@@ -2,21 +2,29 @@ extends Effect2
 class_name HarvestReplant
 
 var sf = preload("res://src/animation/frames/windrite.tres")
+
+@export var timing: EventManager.EventType
+var listener: Listener
+
+func _init(p_timing = EventManager.EventType.AfterCardPlayed):
+	super(p_timing, false, Enums.EffectType.Harvest, "Windrite")
+	timing = p_timing
+
 func register(event_manager: EventManager, p_tile: Tile):
-	callback = func(args: EventArgs):
+	listener = Listener.create(self, func(args: EventArgs):
 		args.farm.do_animation(sf, null)
 		await args.farm.get_tree().create_timer(0.2).timeout
 		for tile in args.farm.get_all_tiles():
 			if tile.state == Enums.TileState.Mature:
-				var seed = tile.seed
-				args.farm.effect_queue.append_array(tile.harvest(false))
-				if seed.get_effect("plant") == null and seed.yld != 0 and seed.get_effect("corrupted") == null:
-					args.farm.effect_queue.append_array(tile.plant_seed_animate(seed))
-		args.farm.process_effect_queue()
-	event_manager.register_listener(timing, callback)
+				var seed = tile.seed.copy()
+				await tile.harvest(false)
+				if tile.state == Enums.TileState.Empty:
+					await args.specific.tile.plant_seed(seed)
+	)
+	event_manager.register(listener)
 
 func unregister(event_manager: EventManager):
-	event_manager.unregister_listener(timing, callback)
+	listener.disable()
 
 func get_description(size: int):
 	var size_descr = "all" if size == -1 else str(size)
@@ -26,6 +34,3 @@ func copy():
 	var copy = HarvestReplant.new()
 	copy.assign(self)
 	return copy
-
-func get_type():
-	return Enums.EffectType.Harvest

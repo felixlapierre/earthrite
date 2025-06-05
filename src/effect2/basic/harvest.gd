@@ -3,8 +3,11 @@ class_name HarvestEffect
 
 var listener: Listener
 
+func _init():
+	super(EventManager.EventType.OnActionCardUsed, false, Enums.EffectType.Harvest, "Harvest")
+
 func register(event_manager: EventManager, tile: Tile):
-	listener = Listener.new(timing, func(args: EventArgs):
+	listener = Listener.create(self, func(args: EventArgs):
 		args.specific.tile.harvest(false)
 	)
 	owner.register(listener)

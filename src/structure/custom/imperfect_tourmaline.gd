@@ -22,7 +22,7 @@ func register_events(event_manager: EventManager, tile: Tile):
 				and t.state == Enums.TileState.Growing:
 				adjacent_tiles.append(t)
 		for atile in adjacent_tiles:
-			atile.grow_one_week()
+			await atile.grow_one_week()
 		tile.play_effect_particles()
 	event_manager.register_listener(event_type, callback)
 

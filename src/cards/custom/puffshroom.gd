@@ -8,8 +8,7 @@ func register_seed_events(event_manager: EventManager, p_tile: Tile):
 	listener = Listener.new(EventManager.EventType.OnPlantGrow, func(args: EventArgs):
 		var t = args.specific.tile
 		if t.state == Enums.TileState.Mature:
-			args.farm.effect_queue.append_array(p_tile.harvest(false))
-			args.farm.process_effect_queue()
+			await p_tile.harvest(false)
 		)
 	
 	register(listener)

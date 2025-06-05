@@ -3,8 +3,11 @@ class_name Implosion
 
 var listener: Listener
 
+func _init():
+	super(EventManager.EventType.OnActionCardUsed, false, Enums.EffectType.DestroyPlant, "Implosion")
+
 func register(event_manager: EventManager, tile: Tile):
-	listener = Listener.new(timing, func(args: EventArgs):
+	listener = Listener.create(self, func(args: EventArgs):
 		var center = args.specific.tile
 		var ring = Helper.get_adjacent_active_tiles(center.grid_location, args.farm)
 		var mana = 0.0
@@ -20,9 +23,6 @@ func register(event_manager: EventManager, tile: Tile):
 func get_description(_size):
 	var str_text = highlight(str((1.0 + strength) * 100) + "% of ") if strength != base_strength else ""
 	return "Target plant [color=gold]Destroys[/color] all adjacent plants and gains " + str_text + "their {MANA}"
-
-func get_type():
-	return Enums.EffectType.DestroyPlant
 
 func unregister(event_manager: EventManager):
 	pass

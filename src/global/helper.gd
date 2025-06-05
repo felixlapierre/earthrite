@@ -185,6 +185,13 @@ static func get_long_description_type(type: Enums.EffectType, strength: float = 
 		_:
 			return ""
 
+static func get_long_description_type_list(types: Array[Enums.EffectType], strength: Array[float] = []):
+	var descriptions = []
+	for i in range(types.size()):
+		var str = strength[i] if i < strength.size() else 0.0
+		descriptions.append(get_long_description_type(types[i], str))
+	return "\n".join(descriptions)
+
 static func get_long_description(effect_name: String, strength: float = 0.0):
 	match effect_name:
 		"regrow":

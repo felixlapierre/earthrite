@@ -21,8 +21,7 @@ func register_fortune(event_manager: EventManager):
 					longest_tiles.append(tile)
 		longest_tiles.shuffle()
 		if longest_tiles.size() > 0:
-			args.farm.effect_queue.append_array(longest_tiles[0].grow_one_week())
-			args.farm.process_effect_queue()
+			await longest_tiles[0].grow_one_week()
 	event_manager.register_listener(event_type, callback)
 
 func unregister_fortune(event_manager: EventManager):

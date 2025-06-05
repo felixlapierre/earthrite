@@ -11,7 +11,7 @@ func register_events(event_manager: EventManager, p_tile: Tile):
 			args.farm.do_animation(load("res://src/animation/frames/flow_sf.tres"), tile.grid_location))
 		await args.farm.get_tree().create_timer(delay).timeout
 		do_watered(args, func(tile):
-			args.farm.effect_queue.append_array(tile.grow_one_week()))
+			await tile.grow_one_week())
 					
 	event_manager.register_listener(event_type, callback)
 

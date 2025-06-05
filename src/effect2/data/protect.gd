@@ -5,8 +5,13 @@ var listener: Listener
 
 var my_tile: Tile
 
+@export var timing: EventManager.EventType
+
+func _init():
+	super(timing, false, Enums.EffectType.Protect, "Protect")
+
 func register(event_manager: EventManager, tile: Tile):
-	listener = Listener.new(timing, func(args: EventArgs):
+	listener = Listener.create(self, func(args: EventArgs):
 		args.specific.tile.protected = true
 		args.specific.tile.update_display())
 	owner.register(listener)

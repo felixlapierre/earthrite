@@ -4,8 +4,11 @@ class_name FireflyLantern
 var listener
 var strength = 3
 
+func _init():
+	super(EventManager.EventType.BeforeTurnStart, false, Enums.EffectType.Protect)
+
 func register(event_manager: EventManager, tile: Tile):
-	listener = Listener.new(timing, func(args: EventArgs):
+	listener = Listener.create(self, func(args: EventArgs):
 		var candidates = []
 		for t in Helper.get_adjacent_active_tiles(tile.grid_location, args.farm):
 			if t.seed != null:
@@ -26,6 +29,3 @@ func copy():
 
 func get_description(size):
 	return get_timing_text() + "[color=gold]Protect[/color] " + str(strength) + " random adjacent plant"
-
-func get_type():
-	return Enums.EffectType.Protect

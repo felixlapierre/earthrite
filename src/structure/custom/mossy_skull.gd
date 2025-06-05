@@ -4,8 +4,11 @@ class_name MossySkull
 var listener: Listener
 var effects = []
 
+func _init():
+	super(EventManager.EventType.OnPlantDestroyed, false, Enums.EffectType.Regrow, "MossySkull")
+
 func register(event_manager: EventManager, p_tile: Tile):
-	listener = Listener.new(timing, func(args: EventArgs):
+	listener = Listener.create(self, func(args: EventArgs):
 		var tile = args.specific.tile
 		var seed = tile.seed
 		if seed != null and seed.yld > 0 and seed.get_effect("corrupted") == null:
