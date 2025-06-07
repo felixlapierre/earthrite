@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="RegrowEffect" load_steps=2 format=3 uid="uid://dj6nt62nkr28j"]
+
+[ext_resource type="Script" path="res://src/effect2/basic/regrow.gd" id="1_8suia"]
+
+[resource]
+script = ExtResource("1_8suia")
+strength = 0.0
+base_strength = 0.0
+strength_increment = 0.0

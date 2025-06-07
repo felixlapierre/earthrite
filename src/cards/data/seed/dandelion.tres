@@ -1,10 +1,11 @@
-[gd_resource type="Resource" script_class="Puffshroom" load_steps=3 format=3 uid="uid://dy2mct3tpjc52"]
+[gd_resource type="Resource" script_class="CardData" load_steps=4 format=3 uid="uid://dy2mct3tpjc52"]
 
-[ext_resource type="Script" path="res://src/cards/custom/puffshroom.gd" id="1_hyio6"]
+[ext_resource type="Resource" uid="uid://cqupikg2qafuq" path="res://src/cards/custom/dandelion_effect.tres" id="1_entce"]
+[ext_resource type="Script" path="res://src/cards/card_data.gd" id="1_se0ay"]
 [ext_resource type="Texture2D" uid="uid://4oqam3eaxcpq" path="res://assets/seed/dandelion.png" id="2_xtjyp"]
 
 [resource]
-script = ExtResource("1_hyio6")
+script = ExtResource("1_se0ay")
 type = "SEED"
 name = "Dandelion"
 rarity = "uncommon"
@@ -12,7 +13,7 @@ cost = 1
 yld = 4
 time = 2
 size = 6
-text = "Harvests itself when fully grown"
+text = ""
 strength_increment = 1.0
 size_increment = 3
 texture = ExtResource("2_xtjyp")
@@ -24,4 +25,4 @@ enhances = Array[Dictionary]([])
 strength = 1.0
 delay = 0.0
 anim_on = 0
-effects2 = Array[Resource("res://src/effect2/effect2.gd")]([])
+effects2 = Array[Resource("res://src/effect2/effect2.gd")]([ExtResource("1_entce")])

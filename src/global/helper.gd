@@ -155,8 +155,8 @@ static func pick_random(array):
 	var index = randi_range(0, array.size() - 1)
 	return array[index]
 
-static func get_adjacent_active_tiles(loc: Vector2, farm: Farm):
-	var tiles = []
+static func get_adjacent_active_tiles(loc: Vector2, farm: Farm) -> Array[Tile]:
+	var tiles: Array[Tile] = []
 	var shape = get_tile_shape(8, Enums.CursorShape.Elbow)
 	for s in shape:
 		var adj = s + loc
@@ -235,3 +235,5 @@ static func get_long_description(effect_name: String, strength: float = 0.0):
 		_:
 			return ""
 
+static func get_size_text(size: int):
+	return str(size) if size > 0 else "all"

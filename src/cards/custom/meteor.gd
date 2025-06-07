@@ -6,6 +6,12 @@ var listener2: Listener
 
 var total = 0
 
+@export var timing: EventManager.EventType:
+	set(value): event_type = value
+
+func _init():
+	super(timing, false, Enums.EffectType.DestroyTile, "Meteor")
+
 func register(event_manager: EventManager, _tile: Tile):
 	listener = Listener.new(timing, func(args: EventArgs):
 		var tile = args.specific.tile
@@ -27,6 +33,10 @@ func register(event_manager: EventManager, _tile: Tile):
 
 func unregister(event_manager: EventManager):
 	listener.disable()
+	
+func assign(other):
+	super(other)
+	timing = other.timing
 
 func copy():
 	return MeteorEffect.new().assign(self)

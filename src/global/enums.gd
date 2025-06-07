@@ -48,7 +48,8 @@ enum EffectType {
 	Plant,
 	Regrow,
 	GainEnergy,
-	Fleeting
+	Fleeting,
+	Echo
 }
 
 enum MultiplayerGameType {

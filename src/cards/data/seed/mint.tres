@@ -1,8 +1,16 @@
-[gd_resource type="Resource" script_class="CardData" load_steps=4 format=3 uid="uid://crj6d2rurd7hy"]
+[gd_resource type="Resource" script_class="CardData" load_steps=5 format=3 uid="uid://crj6d2rurd7hy"]
 
-[ext_resource type="Resource" uid="uid://nmfijsi8ae8a" path="res://src/effect/data/spread_on_grow_always.tres" id="1_kxehu"]
+[ext_resource type="Script" path="res://src/effect2/basic/spread_effect.gd" id="1_udlhb"]
 [ext_resource type="Script" path="res://src/cards/card_data.gd" id="2_p7hwa"]
 [ext_resource type="Texture2D" uid="uid://c1bbwyo4yxpyt" path="res://assets/seed/mint.png" id="3_hng3y"]
+
+[sub_resource type="Resource" id="Resource_183j5"]
+script = ExtResource("1_udlhb")
+timing = 7
+seed = true
+strength = 3.0
+base_strength = 3.0
+strength_increment = 3.0
 
 [resource]
 script = ExtResource("2_p7hwa")
@@ -20,9 +28,9 @@ texture = ExtResource("3_hng3y")
 seed_texture = 2
 texture_icon_offset = 11
 targets = Array[String]([])
-effects = Array[Resource("res://src/effect/effect.gd")]([ExtResource("1_kxehu")])
-enhances = Array[String]([])
+effects = Array[Resource("res://src/effect/effect.gd")]([])
+enhances = Array[Dictionary]([])
 strength = 0.0
 delay = 0.0
 anim_on = 0
-effects2 = Array[Resource("res://src/effect2/effect2.gd")]([])
+effects2 = Array[Resource("res://src/effect2/effect2.gd")]([SubResource("Resource_183j5")])

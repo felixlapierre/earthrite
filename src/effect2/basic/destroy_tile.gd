@@ -1,5 +1,5 @@
-extends StrEffect
-class_name DrawCardEffect
+extends Effect2
+class_name DestroyTileEffect
 
 var listener: Listener
 
@@ -9,12 +9,11 @@ var listener: Listener
 	set(value): is_seed = value
 
 func _init():
-	super(timing, seed, Enums.EffectType.Draw, "DrawEffect")
+	super(timing, seed, Enums.EffectType.DestroyPlant, "DestroyTileEffect")
 
 func register(event_manager: EventManager, tile: Tile):
 	listener = Listener.create(self, func(args: EventArgs):
-		for i in range(strength):
-			args.cards.drawcard()
+		args.specific.tile.destroy()
 	)
 	
 	owner.register(listener)
@@ -23,7 +22,7 @@ func unregister(event_manager: EventManager):
 	listener.disable()
 
 func get_description(size: int):
-	return "Draw " + highlight(str(strength)) + " card(s)"
+	return get_timing_text() + "[color=gold]Destroy[/color] tile(s)"
 
 func copy():
-	return DrawCardEffect.new().assign(self)
+	return DestroyTileEffect.new().assign(self)

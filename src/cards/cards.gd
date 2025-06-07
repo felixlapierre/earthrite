@@ -128,37 +128,26 @@ func play_card():
 	if Global.LOCK:
 		return
 	# Find the card in our hand
+	var played_card_info = Global.selected_card
 	var playedcard
 	for card in $Hand.get_children():
 		if card.state == Enums.CardState.InMouse:
 			playedcard = card
 	
 	# Have to draw before discarding or we could draw the card we just discarded
-	var draw = playedcard.card_info.get_effect("draw")
+	var draw = played_card_info.get_effect("draw")
 	if draw != null and draw.on == "play":
 		for i in range(draw.strength):
 			drawcard()
 	
 	# If Obliviate, delete instead of discarding
-	if playedcard.card_info.get_effect("burn") != null:
-		remove_hand_card(playedcard)
-		notify_card_burned(playedcard.card_info)
-	elif playedcard.card_info.get_effect("fleeting") != null:
-		remove_hand_card(playedcard)
-		notify_card_burned(playedcard.card_info)
-	else:
-		discard_card(playedcard)
-	
-	if playedcard.card_info.get_effect("echo") != null:
-		var copy: CardData = playedcard.card_info.copy()
-		if copy.cost == 0:
-			copy.cost = 1
-		if copy.get_effect("fleeting") == null:
-			copy.effects.append(load("res://src/effect/data/fleeting.tres"))
-			var burn = copy.effects.filter(func(eff): return eff.name == "burn")
-			if burn.size() > 0:
-				copy.effects.erase(burn[0])
-		draw_specific_card_from(copy, get_global_mouse_position())
+	if playedcard != null:
+		if played_card_info.get_effect("fleeting") != null:
+			remove_hand_card(playedcard)
+			notify_card_burned(playedcard.card_info)
+		else:
+			discard_card(playedcard)
+
 	
 	# Remove it from selected_card global var
 	Global.selected_card = null
@@ -317,3 +306,17 @@ func _input(event: InputEvent):
 		if i < HAND_CARDS.get_child_count():
 			var card = HAND_CARDS.get_child(i)
 			card.on_card_clicked()
+
+func burn_card(card_data: CardData):
+	# Find the card in our hand
+	var playedcard
+	for card in $Hand.get_children():
+		if card_data == Global.selected_card:
+			if card.state == Enums.CardState.InMouse:
+				playedcard = card
+		else:
+			if card.card_info == card_data:
+				playedcard = card
+	if playedcard != null:
+		remove_hand_card(playedcard)
+		notify_card_burned(playedcard.card_info)

@@ -6,11 +6,11 @@
 
 [sub_resource type="Resource" id="Resource_o1t7x"]
 script = ExtResource("1_j6260")
+timing = 2
+seed = false
 strength = 1.0
 base_strength = 1.0
 strength_increment = 1.0
-timing = 2
-is_seed = true
 
 [resource]
 script = ExtResource("1_gfnd2")
@@ -29,7 +29,7 @@ seed_texture = 0
 texture_icon_offset = 5
 targets = Array[String]([])
 effects = Array[Resource("res://src/effect/effect.gd")]([])
-enhances = Array[String]([])
+enhances = Array[Dictionary]([])
 strength = 1.0
 delay = 0.0
 anim_on = 0

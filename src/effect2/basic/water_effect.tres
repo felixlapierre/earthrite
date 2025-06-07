@@ -1,0 +1,6 @@
+[gd_resource type="Resource" script_class="WaterEffect" load_steps=2 format=3 uid="uid://byio0c67yvk0g"]
+
+[ext_resource type="Script" path="res://src/effect2/basic/water_effect.gd" id="1_t0cr7"]
+
+[resource]
+script = ExtResource("1_t0cr7")

@@ -36,7 +36,10 @@ func assign(other: Effect2):
 	return self
 
 func get_description_interp(child_description: String) -> String:
-	return child_description.replace("{STRENGTH}", highlight(str(strength)))
+	var str_descr = str(strength)
+	if strength < 0:
+		str_descr = str(abs(strength)) + Helper.energy_icon()
+	return child_description.replace("{STRENGTH}", highlight(str_descr))
 
 func highlight(text: String):
 	if strength > base_strength:

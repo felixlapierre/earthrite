@@ -82,10 +82,11 @@ func use_card(grid_position, external_source: bool = false):
 	var card = Global.selected_card.copy()
 	# Handle X cost cards
 	if card.cost == -1:
-		for effect in card.effects:
-			if effect.strength < 0:
-				effect.strength = (effect.strength * -1) * energy
-				card.cost = energy
+		for effect: Effect2 in card.effects2:
+			if effect is StrEffect:
+				if effect.strength < 0:
+					effect.strength = (effect.strength * -1) * energy
+					card.cost = energy
 	var targets = []
 	if selection.size() > 0:
 		targets.assign(selection)
@@ -105,7 +106,7 @@ func use_card(grid_position, external_source: bool = false):
 	if card.animation != null:
 		spriteframes = card.animation
 		on = card.anim_on
-	elif card.get_effect("harvest") != null:
+	elif card.has_effect(Enums.EffectType.Harvest):
 		spriteframes = load("res://src/animation/scythe_frames.tres")
 		delay = 0.2
 	var animation_position = Vector2.ZERO
@@ -319,10 +320,6 @@ func clear_overlay():
 	$ConfirmButton.visible = false
 
 func process_one_week(week: int):
-	for tile in $Tiles.get_children():
-		effect_queue.append_array(tile.get_before_grow_effects())
-	process_effect_queue()
-
 	if week < Global.WINTER_WEEK and !Global.BLOCK_GROW:
 		var growing_tiles = []
 		for tile: Tile in $Tiles.get_children():
@@ -332,16 +329,6 @@ func process_one_week(week: int):
 		for tile in growing_tiles:
 			await tile.grow_one_week()
 			await get_tree().create_timer(0.01).timeout
-		process_effect_queue()
-	for tile: Tile in $Tiles.get_children():
-		effect_queue.append_array(tile.get_after_grow_effects())
-	process_effect_queue()
-	for tile in $Tiles.get_children():
-		effect_queue.append_array(tile.get_turn_start_effects())
-	process_effect_queue()
-	effect_queue.append_array(next_turn_effects)
-	next_turn_effects.clear()
-	process_effect_queue()
 
 func use_action_card(card, grid_location):
 	var args = EventArgs.SpecificArgs.new(tiles[grid_location.x][grid_location.y])
@@ -362,6 +349,7 @@ func process_effect_queue():
 		perform_effect(next, tile)
 
 func perform_effect(effect, tile: Tile):
+	return
 	match effect.name:
 		"harvest":
 			await tile.harvest(false)
@@ -467,7 +455,7 @@ func use_card_on_targets(card, targets, only_first, delay: float = 0.0):
 		if not target_tile.card_can_target(card):
 			continue
 		if card.type == "SEED":
-			effect_queue.append_array(target_tile.plant_seed_animate(card))
+			await target_tile.plant_seed_animate(card)
 			if target_tile.seed != null:
 				var args = EventArgs.SpecificArgs.new(target_tile)
 				args.play_args = EventArgs.PlayArgs.new(card)

@@ -22,8 +22,10 @@ enum AndThen {
 	Strengthen
 }
 
-@export var timing: EventManager.EventType
-@export var seed: bool
+@export var timing: EventManager.EventType:
+	set(value): event_type = value
+@export var seed: bool:
+	set(value): is_seed = value
 @export var timing2: EventManager.EventType
 @export var count: int
 @export var pick_from: PickFrom

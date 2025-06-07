@@ -1,16 +1,16 @@
-[gd_resource type="Resource" script_class="CardData" load_steps=6 format=3 uid="uid://b32fjn545cp2p"]
+[gd_resource type="Resource" script_class="CardData" load_steps=5 format=3 uid="uid://b32fjn545cp2p"]
 
-[ext_resource type="Script" path="res://src/effect/effect.gd" id="1_3bvmo"]
+[ext_resource type="Script" path="res://src/effect2/basic/spread_effect.gd" id="1_fd3vs"]
 [ext_resource type="Script" path="res://src/cards/card_data.gd" id="2_8j5j0"]
-[ext_resource type="Resource" uid="uid://cijtg3ddxitn3" path="res://src/effect/data/obliviate.tres" id="2_x5j14"]
 [ext_resource type="Texture2D" uid="uid://btmlwdknoe6uf" path="res://assets/seed/bamboo2.png" id="4_fxcle"]
 
-[sub_resource type="Resource" id="Resource_3irjb"]
-script = ExtResource("1_3bvmo")
-name = "spread"
+[sub_resource type="Resource" id="Resource_x5bhk"]
+script = ExtResource("1_fd3vs")
+timing = 7
+seed = true
 strength = 4.0
-on = "grow"
-range = "self"
+base_strength = 4.0
+strength_increment = 4.0
 
 [resource]
 script = ExtResource("2_8j5j0")
@@ -28,9 +28,9 @@ texture = ExtResource("4_fxcle")
 seed_texture = 2
 texture_icon_offset = 3
 targets = Array[String]([])
-effects = Array[ExtResource("1_3bvmo")]([SubResource("Resource_3irjb"), ExtResource("2_x5j14")])
-enhances = Array[String]([])
+effects = Array[Resource("res://src/effect/effect.gd")]([])
+enhances = Array[Dictionary]([])
 strength = 0.0
 delay = 0.0
 anim_on = 0
-effects2 = Array[Resource("res://src/effect2/effect2.gd")]([])
+effects2 = Array[Resource("res://src/effect2/effect2.gd")]([SubResource("Resource_x5bhk")])

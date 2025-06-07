@@ -1,20 +1,16 @@
 extends StrEffect
-class_name DrawCardEffect
+class_name DrawTargetEffect
 
 var listener: Listener
 
-@export var timing: EventManager.EventType:
-	set(value): event_type = value
-@export var seed: bool:
-	set(value): is_seed = value
-
 func _init():
-	super(timing, seed, Enums.EffectType.Draw, "DrawEffect")
+	super(EventManager.EventType.OnActionCardUsed, false, Enums.EffectType.Draw, "DrawEffect")
 
 func register(event_manager: EventManager, tile: Tile):
 	listener = Listener.create(self, func(args: EventArgs):
+		var target = args.specific.tile
 		for i in range(strength):
-			args.cards.drawcard()
+			args.cards.drawcard_specific_card_from(target.seed.copy(), target.position)
 	)
 	
 	owner.register(listener)
@@ -24,6 +20,9 @@ func unregister(event_manager: EventManager):
 
 func get_description(size: int):
 	return "Draw " + highlight(str(strength)) + " card(s)"
+
+func get_type():
+	return Enums.EffectType.Draw
 
 func copy():
 	return DrawCardEffect.new().assign(self)

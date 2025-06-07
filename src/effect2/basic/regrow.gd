@@ -23,8 +23,5 @@ func get_description(size: int):
 func get_long_description():
 	return Helper.get_long_description_type(Enums.EffectType.Regrow, strength)
 
-func get_type():
-	return Enums.EffectType.Plant
-
 func copy():
 	return RegrowEffect.new().assign(self)

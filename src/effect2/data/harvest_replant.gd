@@ -3,7 +3,9 @@ class_name HarvestReplant
 
 var sf = preload("res://src/animation/frames/windrite.tres")
 
-@export var timing: EventManager.EventType
+@export var timing: EventManager.EventType:
+	set(value): event_type = value
+
 var listener: Listener
 
 func _init(p_timing = EventManager.EventType.AfterCardPlayed):

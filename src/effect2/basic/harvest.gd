@@ -3,12 +3,14 @@ class_name HarvestEffect
 
 var listener: Listener
 
-func _init():
+@export var delay: bool
+
+func _init(p_delay = false):
 	super(EventManager.EventType.OnActionCardUsed, false, Enums.EffectType.Harvest, "Harvest")
 
 func register(event_manager: EventManager, tile: Tile):
 	listener = Listener.create(self, func(args: EventArgs):
-		args.specific.tile.harvest(false)
+		args.specific.tile.harvest(delay)
 	)
 	owner.register(listener)
 
@@ -20,6 +22,11 @@ func get_description(size: int):
 
 func get_type():
 	return Enums.EffectType.Harvest
+	
+func assign(other):
+	super.assign(other)
+	delay = other.delay
+	return self
 
 func copy():
 	var copy = HarvestEffect.new()

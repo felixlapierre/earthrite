@@ -5,7 +5,10 @@ var listener: Listener
 
 var my_tile: Tile
 
-@export var timing: EventManager.EventType
+@export var timing: EventManager.EventType:
+	set(value): event_type = value
+@export var seed: bool:
+	set(value): is_seed = value
 
 func _init():
 	super(timing, false, Enums.EffectType.Protect, "Protect")

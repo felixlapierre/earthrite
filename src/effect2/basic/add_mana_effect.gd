@@ -1,5 +1,5 @@
 extends StrEffect
-class_name DrawCardEffect
+class_name AddManaEffect
 
 var listener: Listener
 
@@ -9,12 +9,11 @@ var listener: Listener
 	set(value): is_seed = value
 
 func _init():
-	super(timing, seed, Enums.EffectType.Draw, "DrawEffect")
+	super(timing, seed, Enums.EffectType.AddMana, "AddManaEffect")
 
 func register(event_manager: EventManager, tile: Tile):
 	listener = Listener.create(self, func(args: EventArgs):
-		for i in range(strength):
-			args.cards.drawcard()
+		args.specific.tile.add_yield(strength)
 	)
 	
 	owner.register(listener)
@@ -23,7 +22,8 @@ func unregister(event_manager: EventManager):
 	listener.disable()
 
 func get_description(size: int):
-	return "Draw " + highlight(str(strength)) + " card(s)"
+	var descr = get_timing_text() + "Add {STRENGTH}%s to %s plants" % [Helper.mana_icon(), Helper.get_size_text(size)]
+	return get_description_interp(descr)
 
 func copy():
-	return DrawCardEffect.new().assign(self)
+	return AddManaEffect.new().assign(self)
