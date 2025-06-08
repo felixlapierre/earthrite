@@ -2,15 +2,16 @@
 
 [ext_resource type="Script" path="res://src/cards/card_data.gd" id="1_blsu2"]
 [ext_resource type="SpriteFrames" uid="uid://dib513iwhpegv" path="res://src/animation/frames/abundance_sf.tres" id="1_uqnd3"]
-[ext_resource type="Script" path="res://src/effect/effect.gd" id="1_wow6b"]
+[ext_resource type="Script" path="res://src/effect2/basic/mult_mana_effect.gd" id="2_ddu7f"]
 [ext_resource type="Texture2D" uid="uid://vxpf2uldpbug" path="res://assets/custom/Abundance.png" id="2_prrlo"]
 
-[sub_resource type="Resource" id="Resource_0np7m"]
-script = ExtResource("1_wow6b")
-name = "increase_yield"
+[sub_resource type="Resource" id="Resource_h2n5u"]
+script = ExtResource("2_ddu7f")
+timing = 13
+seed = false
 strength = 0.5
-on = ""
-range = "self"
+base_strength = 0.5
+strength_increment = 0.4
 
 [resource]
 script = ExtResource("1_blsu2")
@@ -28,10 +29,10 @@ texture = ExtResource("2_prrlo")
 seed_texture = 0
 texture_icon_offset = 16
 targets = Array[String](["Mature", "Growing"])
-effects = Array[ExtResource("1_wow6b")]([SubResource("Resource_0np7m")])
+effects = Array[Resource("res://src/effect/effect.gd")]([])
 enhances = Array[Dictionary]([])
 strength = 0.0
 animation = ExtResource("1_uqnd3")
 delay = 0.0
 anim_on = 0
-effects2 = Array[Resource("res://src/effect2/effect2.gd")]([])
+effects2 = Array[Resource("res://src/effect2/effect2.gd")]([SubResource("Resource_h2n5u")])

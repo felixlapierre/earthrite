@@ -14,8 +14,13 @@ func _init(p_timing = EventManager.EventType.AfterCardPlayed):
 
 func register(event_manager: EventManager, p_tile: Tile):
 	listener = Listener.create(self, func(args: EventArgs):
-		args.farm.do_animation(sf, null)
-		await args.farm.get_tree().create_timer(0.2).timeout
+		var targets = []
+		if args.specific.tile != null:
+			targets.append(args.specific.tile)
+		else:
+			targets.append(args.farm.get_all_tiles())
+			args.farm.do_animation(sf, null)
+			await args.farm.get_tree().create_timer(0.2).timeout
 		for tile in args.farm.get_all_tiles():
 			if tile.state == Enums.TileState.Mature:
 				var seed = tile.seed.copy()

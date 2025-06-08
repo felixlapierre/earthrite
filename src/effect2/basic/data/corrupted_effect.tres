@@ -1,0 +1,6 @@
+[gd_resource type="Resource" script_class="CorruptedEffect" load_steps=2 format=3 uid="uid://bydei0akwkoub"]
+
+[ext_resource type="Script" path="res://src/effect2/basic/corrupted_effect.gd" id="1_4wleq"]
+
+[resource]
+script = ExtResource("1_4wleq")

@@ -142,11 +142,7 @@ func play_card():
 	
 	# If Obliviate, delete instead of discarding
 	if playedcard != null:
-		if played_card_info.get_effect("fleeting") != null:
-			remove_hand_card(playedcard)
-			notify_card_burned(playedcard.card_info)
-		else:
-			discard_card(playedcard)
+		discard_card(playedcard)
 
 	
 	# Remove it from selected_card global var
@@ -176,10 +172,10 @@ func reorganize_hand():
 
 func discard_hand():
 	for card in $Hand.get_children():
-		if card.card_info.get_effect("fleeting") != null:
+		if card.card_info.has_effect(Enums.EffectType.Fleeting):
 			remove_hand_card(card)
 			notify_card_burned(card.card_info)
-		elif card.card_info.get_effect("frozen") == null and !card.frozen:
+		elif !card.card_info.has_effect(Enums.EffectType.Frozen) and !card.frozen:
 			discard_card(card)
 	reorganize_hand()
 
@@ -307,15 +303,11 @@ func _input(event: InputEvent):
 			var card = HAND_CARDS.get_child(i)
 			card.on_card_clicked()
 
-func burn_card(card_data: CardData):
+func burn_played_card():
 	# Find the card in our hand
 	var playedcard
 	for card in $Hand.get_children():
-		if card_data == Global.selected_card:
-			if card.state == Enums.CardState.InMouse:
-				playedcard = card
-		else:
-			if card.card_info == card_data:
+		if card.state == Enums.CardState.InMouse:
 				playedcard = card
 	if playedcard != null:
 		remove_hand_card(playedcard)

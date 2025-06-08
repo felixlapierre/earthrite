@@ -1,17 +1,15 @@
-[gd_resource type="Resource" script_class="CardData" load_steps=7 format=3 uid="uid://baox23pk108hv"]
+[gd_resource type="Resource" script_class="CardData" load_steps=6 format=3 uid="uid://baox23pk108hv"]
 
 [ext_resource type="Script" path="res://src/cards/card_data.gd" id="1_gkxr6"]
-[ext_resource type="Script" path="res://src/effect/effect.gd" id="1_ha7sq"]
 [ext_resource type="SpriteFrames" uid="uid://c6jqxl5myv5km" path="res://src/animation/frames/fertilize_sf.tres" id="1_vaao4"]
-[ext_resource type="Resource" uid="uid://7ub3vx6mrqk5" path="res://src/effect/data/echo.tres" id="2_idl46"]
+[ext_resource type="Script" path="res://src/effect2/basic/grow_effect.gd" id="2_ugybp"]
 [ext_resource type="Texture2D" uid="uid://beyon6wyf8jfu" path="res://assets/card/chronoweave.png" id="5_gmecl"]
 
-[sub_resource type="Resource" id="Resource_5h283"]
-script = ExtResource("1_ha7sq")
-name = "grow"
+[sub_resource type="Resource" id="Resource_x30xd"]
+script = ExtResource("2_ugybp")
 strength = 1.0
-on = ""
-range = "self"
+base_strength = 1.0
+strength_increment = 1.0
 
 [resource]
 script = ExtResource("1_gkxr6")
@@ -29,9 +27,10 @@ texture = ExtResource("5_gmecl")
 seed_texture = 0
 texture_icon_offset = 16
 targets = Array[String](["Growing"])
-effects = Array[ExtResource("1_ha7sq")]([SubResource("Resource_5h283"), ExtResource("2_idl46")])
-enhances = Array[String]([])
+effects = Array[Resource("res://src/effect/effect.gd")]([])
+enhances = Array[Dictionary]([])
 strength = 0.0
 animation = ExtResource("1_vaao4")
 delay = 0.0
 anim_on = 0
+effects2 = Array[Resource("res://src/effect2/effect2.gd")]([SubResource("Resource_x30xd")])

@@ -1,7 +1,6 @@
-[gd_resource type="Resource" script_class="CardData" load_steps=4 format=3 uid="uid://duh1a4p2ijalw"]
+[gd_resource type="Resource" script_class="CardData" load_steps=3 format=3 uid="uid://duh1a4p2ijalw"]
 
 [ext_resource type="Script" path="res://src/cards/card_data.gd" id="1_blbwp"]
-[ext_resource type="Resource" uid="uid://cki4kkibw1qbq" path="res://src/effect/data/corrupted.tres" id="1_ylkn0"]
 [ext_resource type="Texture2D" uid="uid://dt0qmfqs0smgu" path="res://assets/seed/deathcap.png" id="3_nfear"]
 
 [resource]
@@ -20,9 +19,9 @@ texture = ExtResource("3_nfear")
 seed_texture = 0
 texture_icon_offset = 16
 targets = Array[String]([])
-effects = Array[Resource("res://src/effect/effect.gd")]([ExtResource("1_ylkn0")])
+effects = Array[Resource("res://src/effect/effect.gd")]([])
 enhances = Array[Dictionary]([])
 strength = 0.0
 delay = 0.0
 anim_on = 0
-effects2 = Array[Resource("res://src/effect2/effect2.gd")]([])
+effects2 = Array[Resource("res://src/effect2/effect2.gd")]([null])

@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="CardData" load_steps=3 format=3 uid="uid://di21ibw5gox4a"]
 
-[ext_resource type="Resource" uid="uid://7ub3vx6mrqk5" path="res://src/effect/data/echo.tres" id="1_1e8he"]
+[ext_resource type="Resource" uid="uid://dg70700mif6x5" path="res://src/effect2/basic/data/echo_effect.tres" id="1_cmfny"]
 [ext_resource type="Script" path="res://src/cards/card_data.gd" id="1_uq4us"]
 
 [resource]
@@ -18,9 +18,9 @@ size_increment = 1
 seed_texture = 7
 texture_icon_offset = 16
 targets = Array[String]([])
-effects = Array[Resource("res://src/effect/effect.gd")]([ExtResource("1_1e8he")])
-enhances = Array[String]([])
+effects = Array[Resource("res://src/effect/effect.gd")]([])
+enhances = Array[Dictionary]([])
 strength = 0.0
 delay = 0.0
 anim_on = 0
-effects2 = Array[Resource("res://src/effect2/effect2.gd")]([])
+effects2 = Array[Resource("res://src/effect2/effect2.gd")]([ExtResource("1_cmfny")])

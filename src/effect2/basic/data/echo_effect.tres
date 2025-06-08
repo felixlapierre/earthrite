@@ -1,0 +1,6 @@
+[gd_resource type="Resource" script_class="EchoEffect" load_steps=2 format=3 uid="uid://dg70700mif6x5"]
+
+[ext_resource type="Script" path="res://src/effect2/basic/echo_effect.gd" id="1_cm7mt"]
+
+[resource]
+script = ExtResource("1_cm7mt")

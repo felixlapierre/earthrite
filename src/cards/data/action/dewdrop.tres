@@ -1,9 +1,11 @@
-[gd_resource type="Resource" script_class="CardData" load_steps=7 format=3 uid="uid://d0i45bofwwslo"]
+[gd_resource type="Resource" script_class="CardData" load_steps=11 format=3 uid="uid://d0i45bofwwslo"]
 
 [ext_resource type="Script" path="res://src/effect/effect.gd" id="1_185qn"]
 [ext_resource type="Script" path="res://src/cards/card_data.gd" id="1_j4kyt"]
 [ext_resource type="SpriteFrames" uid="uid://jiri6b2ydiou" path="res://src/animation/frames/flow_sf.tres" id="1_r5pxj"]
+[ext_resource type="Script" path="res://src/effect2/basic/water_effect.gd" id="3_pmak0"]
 [ext_resource type="Texture2D" uid="uid://cgxk6msi4whq5" path="res://assets/card/dewdrop.png" id="4_insm1"]
+[ext_resource type="Script" path="res://src/effect2/basic/draw.gd" id="4_sud5k"]
 
 [sub_resource type="Resource" id="Resource_46jf2"]
 script = ExtResource("1_185qn")
@@ -18,6 +20,17 @@ name = "draw"
 strength = 1.0
 on = "play"
 range = "self"
+
+[sub_resource type="Resource" id="Resource_e5qdo"]
+script = ExtResource("3_pmak0")
+
+[sub_resource type="Resource" id="Resource_8cyca"]
+script = ExtResource("4_sud5k")
+timing = 11
+seed = false
+strength = 1.0
+base_strength = 1.0
+strength_increment = 1.0
 
 [resource]
 script = ExtResource("1_j4kyt")
@@ -36,9 +49,9 @@ seed_texture = 0
 texture_icon_offset = 16
 targets = Array[String](["Empty", "Growing", "Mature", "Rock"])
 effects = Array[ExtResource("1_185qn")]([SubResource("Resource_46jf2"), SubResource("Resource_n0jlx")])
-enhances = Array[String]([])
+enhances = Array[Dictionary]([])
 strength = 0.0
 animation = ExtResource("1_r5pxj")
 delay = 0.4
 anim_on = 1
-effects2 = Array[Resource("res://src/effect2/effect2.gd")]([])
+effects2 = Array[Resource("res://src/effect2/effect2.gd")]([SubResource("Resource_e5qdo"), SubResource("Resource_8cyca")])

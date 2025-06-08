@@ -1,17 +1,18 @@
 [gd_resource type="Resource" script_class="CardData" load_steps=7 format=3 uid="uid://bp0hgq1xut4gn"]
 
-[ext_resource type="Script" path="res://src/effect/effect.gd" id="1_dhx3u"]
 [ext_resource type="SpriteFrames" uid="uid://ersut7mm7xtb" path="res://src/animation/frames/draw_spark_sf.tres" id="1_rld1k"]
 [ext_resource type="Script" path="res://src/cards/card_data.gd" id="1_sqjt2"]
-[ext_resource type="Resource" uid="uid://cijtg3ddxitn3" path="res://src/effect/data/obliviate.tres" id="2_ch62j"]
+[ext_resource type="Script" path="res://src/effect2/basic/draw.gd" id="2_qsv25"]
+[ext_resource type="Resource" uid="uid://43hxl7pkbfp2" path="res://src/effect2/basic/data/burn_effect.tres" id="3_oijfn"]
 [ext_resource type="Texture2D" uid="uid://df4aih8443lqt" path="res://assets/card/inspiration.png" id="4_hvor5"]
 
-[sub_resource type="Resource" id="Resource_agk17"]
-script = ExtResource("1_dhx3u")
-name = "draw"
+[sub_resource type="Resource" id="Resource_t56hv"]
+script = ExtResource("2_qsv25")
+timing = 11
+seed = false
 strength = 3.0
-on = "play"
-range = "self"
+base_strength = 3.0
+strength_increment = 1.0
 
 [resource]
 script = ExtResource("1_sqjt2")
@@ -29,10 +30,10 @@ texture = ExtResource("4_hvor5")
 seed_texture = 3
 texture_icon_offset = 16
 targets = Array[String]([])
-effects = Array[ExtResource("1_dhx3u")]([SubResource("Resource_agk17"), ExtResource("2_ch62j")])
-enhances = Array[String]([])
+effects = Array[Resource("res://src/effect/effect.gd")]([])
+enhances = Array[Dictionary]([])
 strength = 0.0
 animation = ExtResource("1_rld1k")
 delay = 0.0
 anim_on = 2
-effects2 = Array[Resource("res://src/effect2/effect2.gd")]([])
+effects2 = Array[Resource("res://src/effect2/effect2.gd")]([SubResource("Resource_t56hv"), ExtResource("3_oijfn")])

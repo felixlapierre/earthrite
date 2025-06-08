@@ -1,10 +1,10 @@
 extends Effect2
-class_name BurnEffect
+class_name FleetingEffect
 
 var listener: Listener
 
 func _init():
-	super(EventManager.EventType.BeforeCardPlayed, false, Enums.EffectType.Burn, "BurnEffect")
+	super(EventManager.EventType.BeforeCardPlayed, false, Enums.EffectType.Fleeting, "FleetingEffect")
 
 func register(event_manager: EventManager, tile: Tile):
 	listener = Listener.create(self, func(args: EventArgs):
@@ -15,7 +15,7 @@ func unregister(event_manager: EventManager):
 	listener.disable()
 
 func get_description(size):
-	return "[color=gold]Burn[/color]"
+	return "[color=gold]Fleeting[/color]"
 
 func copy():
-	return BurnEffect.new().assign(self)
+	return FleetingEffect.new().assign(self)

@@ -1,18 +1,28 @@
-[gd_resource type="Resource" script_class="CardData" load_steps=8 format=3 uid="uid://uynxilpsmb2c"]
+[gd_resource type="Resource" script_class="CardData" load_steps=10 format=3 uid="uid://uynxilpsmb2c"]
 
 [ext_resource type="SpriteFrames" uid="uid://bu4diu3rsggq1" path="res://src/animation/earthrite.tres" id="1_23rf6"]
 [ext_resource type="Script" path="res://src/cards/card_data.gd" id="1_holry"]
-[ext_resource type="Script" path="res://src/effect/effect.gd" id="1_sy7m2"]
-[ext_resource type="Resource" uid="uid://cqfvdr8thdmfu" path="res://src/effect/data/harvest.tres" id="2_laiyt"]
-[ext_resource type="Resource" uid="uid://bhqfoxamlgo2g" path="res://src/effect/data/destroy.tres" id="3_nq72m"]
+[ext_resource type="Script" path="res://src/effect2/basic/mult_mana_effect.gd" id="2_3e8eo"]
+[ext_resource type="Script" path="res://src/effect2/basic/harvest.gd" id="3_tr8xp"]
+[ext_resource type="Script" path="res://src/effect2/basic/destroy_tile.gd" id="4_i1rw5"]
 [ext_resource type="Texture2D" uid="uid://d0wew22tfsk6x" path="res://assets/card/abundance.png" id="5_sotox"]
 
-[sub_resource type="Resource" id="Resource_j36iy"]
-script = ExtResource("1_sy7m2")
-name = "increase_yield"
+[sub_resource type="Resource" id="Resource_oppk3"]
+script = ExtResource("2_3e8eo")
+timing = 13
+seed = false
 strength = 1.0
-on = ""
-range = "self"
+base_strength = 1.0
+strength_increment = 1.0
+
+[sub_resource type="Resource" id="Resource_pmlxd"]
+script = ExtResource("3_tr8xp")
+delay = false
+
+[sub_resource type="Resource" id="Resource_5a4nr"]
+script = ExtResource("4_i1rw5")
+timing = 13
+seed = false
 
 [resource]
 script = ExtResource("1_holry")
@@ -30,10 +40,10 @@ texture = ExtResource("5_sotox")
 seed_texture = 0
 texture_icon_offset = 16
 targets = Array[String](["Mature"])
-effects = Array[ExtResource("1_sy7m2")]([SubResource("Resource_j36iy"), ExtResource("2_laiyt"), ExtResource("3_nq72m")])
-enhances = Array[String]([])
+effects = Array[Resource("res://src/effect/effect.gd")]([])
+enhances = Array[Dictionary]([])
 strength = 0.0
 animation = ExtResource("1_23rf6")
 delay = 0.4
 anim_on = 0
-effects2 = Array[Resource("res://src/effect2/effect2.gd")]([])
+effects2 = Array[Resource("res://src/effect2/effect2.gd")]([SubResource("Resource_oppk3"), SubResource("Resource_pmlxd"), SubResource("Resource_5a4nr")])

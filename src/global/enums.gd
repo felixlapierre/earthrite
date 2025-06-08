@@ -49,7 +49,8 @@ enum EffectType {
 	Regrow,
 	GainEnergy,
 	Fleeting,
-	Echo
+	Echo,
+	Frozen
 }
 
 enum MultiplayerGameType {
