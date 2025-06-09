@@ -50,7 +50,8 @@ enum EffectType {
 	GainEnergy,
 	Fleeting,
 	Echo,
-	Frozen
+	Frozen,
+	Corrupted
 }
 
 enum MultiplayerGameType {

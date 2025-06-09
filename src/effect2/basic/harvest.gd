@@ -24,6 +24,15 @@ func preview_yield(tile: Tile, args: EventArgs.HarvestArgs):
 	var args2 = tile.seed.get_yield(tile)
 	args.yld += args2.yld
 	args.delay = delay or args.delay
+
+func save_data():
+	var data = super.save_data()
+	data.delay = delay
+	return data
+
+func load_data(data):
+	super.load_data(data)
+	delay = data.delay
 	
 func assign(other):
 	super.assign(other)

@@ -1,25 +1,31 @@
-[gd_resource type="Resource" script_class="Hyacinth" load_steps=2 format=3 uid="uid://ch2ktqbeolpwb"]
+[gd_resource type="Resource" script_class="CardData" load_steps=4 format=3 uid="uid://162w41taveds"]
 
-[ext_resource type="Script" path="res://src/cards/custom/hyacinth.gd" id="1_72x0k"]
+[ext_resource type="Script" path="res://src/cards/custom/defer_purple.gd" id="1_3h7vl"]
+[ext_resource type="Script" path="res://src/cards/card_data.gd" id="1_y8nel"]
+
+[sub_resource type="Resource" id="Resource_bdoxg"]
+script = ExtResource("1_3h7vl")
+timing = 8
+seed = true
 
 [resource]
-script = ExtResource("1_72x0k")
+script = ExtResource("1_y8nel")
 type = "SEED"
-name = "Tiger Lily"
-rarity = "uncommon"
+name = "Hyacinth"
+rarity = "common"
 cost = 1
-yld = 4
-time = 2
-size = 2
-text = "[color=gold]On Harvest:[/color] Set the [color=gold]Cost[/color] {ENERGY} of a random card in your hand to 0"
+yld = 5
+time = 1
+size = 1
+text = "[color=gold]On Harvest[/color]: {BLUE_MANA} will not be lost at the end of this turn."
 strength_increment = 1.0
 size_increment = 1
-seed_texture = 1
+seed_texture = 4
 texture_icon_offset = 16
 targets = Array[String]([])
 effects = Array[Resource("res://src/effect/effect.gd")]([])
-enhances = Array[String]([])
-strength = 1.0
+enhances = Array[Dictionary]([])
+strength = 0.0
 delay = 0.0
 anim_on = 0
-effects2 = Array[Resource("res://src/effect2/effect2.gd")]([])
+effects2 = Array[Resource("res://src/effect2/effect2.gd")]([SubResource("Resource_bdoxg")])

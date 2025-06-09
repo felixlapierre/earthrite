@@ -317,7 +317,8 @@ static func get_element_cards(text: String):
 			load("res://src/cards/data/action/raincloud.tres"),
 			load("res://src/cards/data/action/water_rite.tres"),
 			load("res://src/cards/data/action/water_ward.tres"),
-			load("res://src/cards/data/seed/watermelon.tres")
+			load("res://src/cards/data/seed/watermelon.tres"),
+			load("res://src/cards/data/action/dewdrop.tres")
 		]
 	elif text.contains("Earth"):
 		return [
@@ -354,9 +355,10 @@ static func get_element_cards(text: String):
 			load("res://src/cards/data/action/echo_scythe.tres"),
 			load("res://src/cards/data/action/little_friend.tres"),
 			load("res://src/cards/data/action/warding.tres"),
-			load("res://src/cards/data/action/dear_future.tres"),
+			load("res://src/cards/data/action/temporal_rift.tres"),
 			load("res://src/cards/data/action/frostcut.tres"),
-			load("res://src/cards/data/action/gather.tres")
+			load("res://src/cards/data/action/gather.tres"),
+			load("res://src/cards/data/action/windrite.tres")
 		]
 	elif text.contains("Time"):
 		return [
@@ -364,21 +366,25 @@ static func get_element_cards(text: String):
 			load("res://src/cards/data/action/chronoweave.tres"),
 			load("res://src/cards/data/action/time_bubble.tres"),
 			load("res://src/cards/data/action/flow.tres"),
-			load("res://src/cards/data/action/focus.tres")
+			load("res://src/cards/data/action/focus.tres"),
+			load("res://src/cards/data/action/epochrite.tres")
 		]
 	elif text.contains("Fire"):
 		return [
 			load("res://src/cards/data/action/flamerite.tres"),
 			load("res://src/cards/data/action/flame_ward.tres"),
-			load("res://src/cards/data/seed/cranberry.tres"),
-			load("res://src/cards/data/seed/corn.tres")
+			load("res://src/cards/data/action/inspiration.tres"),
+			load("res://src/cards/data/seed/corn.tres"),
+			load("res://src/cards/data/seed/fire_flower.tres")
 		]
 	elif text.contains("Lightning"):
 		return [
 			load("res://src/cards/data/seed/coffee.tres"),
 			load("res://src/cards/data/action/catalyze.tres"),
 			load("res://src/cards/data/action/infuse.tres"),
-			load("res://src/cards/data/seed/monstera.tres")
+			load("res://src/cards/data/seed/monstera.tres"),
+			load("res://src/cards/data/seed/tiger_lily.tres"),
+			
 		]
 
 static func apply_random_enhance(card: CardData):

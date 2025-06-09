@@ -15,23 +15,27 @@ func _init(p_timing = EventManager.EventType.AfterCardPlayed):
 func register(event_manager: EventManager, p_tile: Tile):
 	listener = Listener.create(self, func(args: EventArgs):
 		var targets = []
-		if args.specific.tile != null:
+		if event_type == EventManager.EventType.OnActionCardUsed:
 			targets.append(args.specific.tile)
 		else:
-			targets.append(args.farm.get_all_tiles())
+			targets.append_array(args.farm.get_all_tiles())
 			args.farm.do_animation(sf, null)
 			await args.farm.get_tree().create_timer(0.2).timeout
-		for tile in args.farm.get_all_tiles():
+		for tile in targets:
 			if tile.state == Enums.TileState.Mature:
 				var seed = tile.seed.copy()
 				await tile.harvest(false)
-				if tile.state == Enums.TileState.Empty:
-					await args.specific.tile.plant_seed(seed)
+				if tile.state == Enums.TileState.Empty and seed.yld > 0 and !seed.has_effect(Enums.EffectType.Corrupted):
+					await tile.plant_seed(seed)
 	)
 	event_manager.register(listener)
 
 func unregister(event_manager: EventManager):
 	listener.disable()
+
+func preview_yield(tile: Tile, args: EventArgs.HarvestArgs):
+	var pre = tile.preview_harvest()
+	args.yld += pre.yld
 
 func get_description(size: int):
 	var size_descr = "all" if size == -1 else str(size)

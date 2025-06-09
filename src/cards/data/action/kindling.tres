@@ -1,19 +1,18 @@
-[gd_resource type="Resource" script_class="Kindling" load_steps=6 format=3 uid="uid://b53lyyfilrqui"]
+[gd_resource type="Resource" script_class="CardData" load_steps=6 format=3 uid="uid://b53lyyfilrqui"]
 
 [ext_resource type="Script" path="res://src/cards/custom/kindling.gd" id="1_qiqsw"]
 [ext_resource type="SpriteFrames" uid="uid://byiyhm2ya4qhp" path="res://src/animation/frames/catalyze_sf.tres" id="1_vbdi8"]
-[ext_resource type="Script" path="res://src/effect/effect.gd" id="2_6fs53"]
+[ext_resource type="Script" path="res://src/cards/card_data.gd" id="3_iket8"]
 [ext_resource type="Texture2D" uid="uid://bk0uxvcikciun" path="res://assets/card/catalyze.png" id="4_rjijf"]
 
-[sub_resource type="Resource" id="Resource_lsdsn"]
-script = ExtResource("2_6fs53")
-name = "destroy_plant"
+[sub_resource type="Resource" id="Resource_yo8pl"]
+script = ExtResource("1_qiqsw")
 strength = 0.0
-on = ""
-range = "self"
+base_strength = 0.0
+strength_increment = 1.0
 
 [resource]
-script = ExtResource("1_qiqsw")
+script = ExtResource("3_iket8")
 type = "ACTION"
 name = "Catalyze"
 rarity = "common"
@@ -21,17 +20,17 @@ cost = 0
 yld = 0
 time = 0
 size = 3
-text = "Gain 1{ENERGY} for every plant destroyed"
+text = ""
 strength_increment = 1.0
 size_increment = 1
 texture = ExtResource("4_rjijf")
 seed_texture = 0
 texture_icon_offset = 16
 targets = Array[String](["Growing", "Mature"])
-effects = Array[ExtResource("2_6fs53")]([SubResource("Resource_lsdsn")])
-enhances = Array[String]([])
+effects = Array[Resource("res://src/effect/effect.gd")]([])
+enhances = Array[Dictionary]([])
 strength = 0.0
 animation = ExtResource("1_vbdi8")
 delay = 0.0
 anim_on = 1
-effects2 = Array[Resource("res://src/effect2/effect2.gd")]([])
+effects2 = Array[Resource("res://src/effect2/effect2.gd")]([SubResource("Resource_yo8pl")])

@@ -4,7 +4,7 @@ class_name CorruptedEffect
 var listener: Listener
 
 func _init():
-	super(EventManager.EventType.OnPlantHarvest, true, Enums.EffectType.Other, "CorruptedEffect")
+	super(EventManager.EventType.OnPlantHarvest, true, Enums.EffectType.Corrupted, "CorruptedEffect")
 
 func register(event_manager: EventManager, tile: Tile):
 	listener = Listener.create(self, func(args: EventArgs):

@@ -36,7 +36,7 @@ func register(event_manager: EventManager, tile: Tile):
 			card = DataFetcher.get_random_card()
 		options.append(card)
 		
-	listener.create(self, func(args: EventArgs):
+	listener = Listener.create(self, func(args: EventArgs):
 		var target = args.specific.tile
 		if target.state == Enums.TileState.Empty and !target.is_destroyed():
 			var card = options.pick_random()
@@ -52,7 +52,7 @@ func register(event_manager: EventManager, tile: Tile):
 			args.farm.remove_child(line)
 	)
 			
-	event_manager.register(listener)
+	owner.register(listener)
 
 # To be overridden
 func unregister(event_manager: EventManager):

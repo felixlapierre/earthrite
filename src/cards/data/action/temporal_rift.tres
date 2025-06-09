@@ -1,13 +1,19 @@
-[gd_resource type="Resource" script_class="CardData" load_steps=6 format=3 uid="uid://dkinjn6160y71"]
+[gd_resource type="Resource" script_class="CardData" load_steps=8 format=3 uid="uid://dkinjn6160y71"]
 
 [ext_resource type="Script" path="res://src/cards/card_data.gd" id="1_2yp6d"]
 [ext_resource type="SpriteFrames" uid="uid://mbwvjneumrqv" path="res://src/animation/frames/temporal_rift_sf.tres" id="1_32x16"]
 [ext_resource type="Script" path="res://src/effect2/basic/harvest.gd" id="2_rwvxi"]
+[ext_resource type="Script" path="res://src/cards/custom/defer_purple.gd" id="3_esdou"]
 [ext_resource type="Texture2D" uid="uid://dwb71kp62mh6" path="res://assets/card/temporal_rift.png" id="3_hndts"]
 
 [sub_resource type="Resource" id="Resource_ywbsq"]
 script = ExtResource("2_rwvxi")
 delay = true
+
+[sub_resource type="Resource" id="Resource_8map3"]
+script = ExtResource("3_esdou")
+timing = 8
+seed = false
 
 [resource]
 script = ExtResource("1_2yp6d")
@@ -31,4 +37,4 @@ strength = 0.0
 animation = ExtResource("1_32x16")
 delay = 0.4
 anim_on = 0
-effects2 = Array[Resource("res://src/effect2/effect2.gd")]([SubResource("Resource_ywbsq")])
+effects2 = Array[Resource("res://src/effect2/effect2.gd")]([SubResource("Resource_ywbsq"), SubResource("Resource_8map3")])

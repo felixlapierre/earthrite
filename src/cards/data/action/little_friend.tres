@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="CardData" load_steps=4 format=3 uid="uid://c6wv4htau83wc"]
 
 [ext_resource type="Script" path="res://src/cards/card_data.gd" id="1_8nevo"]
-[ext_resource type="Resource" uid="uid://cqfvdr8thdmfu" path="res://src/effect/data/harvest.tres" id="1_knp2j"]
+[ext_resource type="Resource" uid="uid://d21lr1dwl86yw" path="res://src/effect2/basic/data/simple_harvest_effect.tres" id="1_722cm"]
 [ext_resource type="Texture2D" uid="uid://b8tvb5d6vokpr" path="res://assets/custom/LittleHelper.png" id="2_xj2t8"]
 
 [resource]
@@ -20,8 +20,9 @@ texture = ExtResource("2_xj2t8")
 seed_texture = 3
 texture_icon_offset = 16
 targets = Array[String](["Mature"])
-effects = Array[Resource("res://src/effect/effect.gd")]([ExtResource("1_knp2j")])
-enhances = Array[String]([])
+effects = Array[Resource("res://src/effect/effect.gd")]([])
+enhances = Array[Dictionary]([])
 strength = 0.0
 delay = 0.0
 anim_on = 0
+effects2 = Array[Resource("res://src/effect2/effect2.gd")]([ExtResource("1_722cm")])

@@ -1,19 +1,18 @@
-[gd_resource type="Resource" script_class="Inscribe" load_steps=6 format=3 uid="uid://dwcjvqh17w6x0"]
+[gd_resource type="Resource" script_class="CardData" load_steps=6 format=3 uid="uid://dwcjvqh17w6x0"]
 
 [ext_resource type="Script" path="res://src/cards/custom/inscribe.gd" id="1_04rdl"]
+[ext_resource type="Script" path="res://src/cards/card_data.gd" id="1_ch2fa"]
 [ext_resource type="SpriteFrames" uid="uid://cigt6n1vr7otk" path="res://src/animation/frames/inscribe_sf.tres" id="1_jqyop"]
-[ext_resource type="Script" path="res://src/effect/effect.gd" id="1_wd1yo"]
 [ext_resource type="Texture2D" uid="uid://cvct3ak02uwin" path="res://assets/card/inscribe.png" id="3_km15a"]
 
-[sub_resource type="Resource" id="Resource_clgxc"]
-script = ExtResource("1_wd1yo")
-name = "destroy_plant"
+[sub_resource type="Resource" id="Resource_5qlnf"]
+script = ExtResource("1_04rdl")
 strength = 0.0
-on = ""
-range = "self"
+base_strength = 0.0
+strength_increment = 1.0
 
 [resource]
-script = ExtResource("1_04rdl")
+script = ExtResource("1_ch2fa")
 type = "ACTION"
 name = "Inscribe"
 rarity = "common"
@@ -21,16 +20,17 @@ cost = 0
 yld = 0
 time = 0
 size = 3
-text = "Draw a card for each plant destroyed"
+text = ""
 strength_increment = 1.0
 size_increment = 1
 texture = ExtResource("3_km15a")
 seed_texture = 0
 texture_icon_offset = 16
 targets = Array[String](["Growing", "Mature"])
-effects = Array[ExtResource("1_wd1yo")]([SubResource("Resource_clgxc")])
-enhances = Array[String]([])
+effects = Array[Resource("res://src/effect/effect.gd")]([])
+enhances = Array[Dictionary]([])
 strength = 0.0
 animation = ExtResource("1_jqyop")
 delay = 0.4
 anim_on = 1
+effects2 = Array[Resource("res://src/effect2/effect2.gd")]([SubResource("Resource_5qlnf")])

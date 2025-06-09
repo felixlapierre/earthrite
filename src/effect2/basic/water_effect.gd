@@ -16,10 +16,7 @@ func unregister(event_manager: EventManager):
 	listener.disable()
 
 func get_description(size: int):
-	return get_timing_text() + "Water " + str(size) + " tiles"
-
-func get_long_description():
-	return Helper.get_long_description_type(Enums.EffectType.Water)
+	return get_timing_text() + "[color=gold]Water[/color] " + str(size) + " tiles"
 
 func copy():
 	return WaterEffect.new().assign(self)

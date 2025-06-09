@@ -576,7 +576,6 @@ func load_data(save_json: Dictionary):
 		if GameEventDialog.current_event == null:
 			GameEventDialog.generate_random_event()
 		GameEventDialog.update_interface()
-		$Shop.load_data(save_json.winter.shop)
 		tutorial2.set_dialogue_ext("winter1", "center")
 	var attack: AttackPattern = load(save_json.attack.path).new()
 	attack.load_data(save_json.attack)

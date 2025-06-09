@@ -27,8 +27,20 @@ func _init():
 	var option5 = CustomEvent.Option.new("Consume the Emerald gemstone",\
 		OptionPreview.instantiate().text_preview("Add a 'Nature' spell to your deck. Nature spells are cards that manipulate seeds by planting them, spreading them, or adding mana to them."), \
 		pick_element_cards_function("Nature"))
+
+	var option6 = CustomEvent.Option.new("Consume the Ruby gemstone",\
+		OptionPreview.instantiate().text_preview("Add a 'Fire' spell to your deck. Fire spells relate to Burning cards from your hand and deck."), \
+		pick_element_cards_function("Fire"))
+
+	var option7 = CustomEvent.Option.new("Consume the Topaz gemstone.",\
+		OptionPreview.instantiate().text_preview("Add a 'Lightning' spell to your deck. Lightning spells relate to gaining and spending Energy."), \
+		pick_element_cards_function("Lightning"))
+		
+	var option8 = CustomEvent.Option.new("Consume the Onyx gemstone.",\
+		OptionPreview.instantiate().text_preview("Add an 'Earth' spell to your deck. Earth spells relate to empty or destroyed tiles."), \
+		pick_element_cards_function("Earth"))
 	
-	var opts = [option1, option2, option3, option4, option5]
+	var opts = [option1, option2, option3, option4, option5, option6, option7, option8]
 	opts.shuffle()
 	options = opts.slice(0, 3)
 
