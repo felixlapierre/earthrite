@@ -448,3 +448,7 @@ func set_current_event(event: CustomEvent):
 
 func has_explores_remaining():
 	return explores + bonus_explores > 0
+
+func set_explores_remaining(value: int):
+	explores = value
+	$CenterContainer/PanelContainer/VBox/HBox/Label.text = "Explorations Remaining: " + str(explores)

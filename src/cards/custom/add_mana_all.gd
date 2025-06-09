@@ -15,7 +15,7 @@ func _init():
 func register(event_manager: EventManager, p_tile: Tile):
 	listener = Listener.create(self, func(args: EventArgs):
 		for tile in args.farm.get_all_tiles():
-			if tile.seed != null and tile.get_effects("corrupted") != null:
+			if tile.seed != null and tile.seed.get_effects("corrupted") == null:
 				tile.add_yield(strength)
 	)
 	event_manager.register(listener)

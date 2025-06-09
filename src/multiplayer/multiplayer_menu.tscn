@@ -151,6 +151,50 @@ popup/item_0/id = 0
 popup/item_1/text = "Cooperative"
 popup/item_1/id = 1
 
+[node name="StartExploresCont" type="HBoxContainer" parent="VBox/HBox2/HostGameStuff"]
+layout_mode = 2
+
+[node name="StartExploresLabel" type="Label" parent="VBox/HBox2/HostGameStuff/StartExploresCont"]
+layout_mode = 2
+text = "Year 0 Explores"
+
+[node name="StartExploresOptions" type="OptionButton" parent="VBox/HBox2/HostGameStuff/StartExploresCont"]
+layout_mode = 2
+size_flags_horizontal = 3
+item_count = 4
+selected = 0
+popup/item_0/text = "3"
+popup/item_0/id = 0
+popup/item_1/text = "6"
+popup/item_1/id = 1
+popup/item_2/text = "9"
+popup/item_2/id = 2
+popup/item_3/text = "12"
+popup/item_3/id = 3
+
+[node name="LivesCont" type="HBoxContainer" parent="VBox/HBox2/HostGameStuff"]
+layout_mode = 2
+
+[node name="LivesLabel" type="Label" parent="VBox/HBox2/HostGameStuff/LivesCont"]
+layout_mode = 2
+text = "Lives"
+
+[node name="LivesOptions" type="OptionButton" parent="VBox/HBox2/HostGameStuff/LivesCont"]
+layout_mode = 2
+size_flags_horizontal = 3
+item_count = 5
+selected = 0
+popup/item_0/text = "1"
+popup/item_0/id = 0
+popup/item_1/text = "2"
+popup/item_1/id = 1
+popup/item_2/text = "3"
+popup/item_2/id = 2
+popup/item_3/text = "4"
+popup/item_3/id = 3
+popup/item_4/text = "5"
+popup/item_4/id = 4
+
 [node name="DifficultyCont" type="HBoxContainer" parent="VBox/HBox2/HostGameStuff"]
 visible = false
 layout_mode = 2
@@ -219,6 +263,8 @@ text = "Back"
 [connection signal="item_selected" from="VBox/HBox2/Common/CharacterMargin/Character/CharacterOption" to="." method="_on_character_option_item_selected"]
 [connection signal="pressed" from="VBox/HBox2/JoinGameStuff/JoinGameButton" to="." method="_on_join_game_button_pressed"]
 [connection signal="item_selected" from="VBox/HBox2/HostGameStuff/GameTypeCont/GameTypeOption" to="." method="_on_game_type_option_item_selected"]
+[connection signal="item_selected" from="VBox/HBox2/HostGameStuff/StartExploresCont/StartExploresOptions" to="." method="_on_start_explores_options_item_selected"]
+[connection signal="item_selected" from="VBox/HBox2/HostGameStuff/LivesCont/LivesOptions" to="." method="_on_lives_options_item_selected"]
 [connection signal="item_selected" from="VBox/HBox2/HostGameStuff/DifficultyCont/DifficultyOption" to="." method="_on_difficulty_option_item_selected"]
 [connection signal="pressed" from="VBox/HBox2/HostGameStuff/StartGameButton" to="." method="_on_start_game_button_pressed"]
 [connection signal="pressed" from="VBox/BackButton" to="." method="_on_back_button_pressed"]

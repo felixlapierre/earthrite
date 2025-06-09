@@ -34,13 +34,19 @@ var mage_fortune_list: Array[MageAbility] = [
 
 var mages_map: Dictionary = {}
 
-var game_type: Enums.MultiplayerGameType = Enums.MultiplayerGameType.Versus
-
 var users_map = {}
 
-var difficulty = 0
 var farm = "FOREST"
+var starting_explores = 3
+var starting_lives = 1
 var mage_fortune: MageAbility = load("res://src/fortune/characters/novice.gd").new();
+
+var game_parameters = {
+	"difficulty": 0,
+	"starting_explores": 3,
+	"starting_lives": 1,
+	"type": Enums.MultiplayerGameType.Versus
+}
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -105,17 +111,17 @@ func _on_join_game_button_pressed():
 func _on_game_type_option_item_selected(index):
 	match index:
 		0:
-			game_type = Enums.MultiplayerGameType.Versus
+			game_parameters.type = Enums.MultiplayerGameType.Versus
 			DifficultyCont.visible = false
 		1:
-			game_type = Enums.MultiplayerGameType.Cooperative
+			game_parameters.type = Enums.MultiplayerGameType.Cooperative
 			DifficultyCont.visible = true
 
 func _on_difficulty_option_item_selected(index):
-	difficulty = index
+	game_parameters.difficulty = index
 
 func _on_start_game_button_pressed():
-	Lobby.load_game.rpc({"difficulty": difficulty, "type": game_type})
+	Lobby.load_game.rpc(game_parameters)
 
 func update_users_list_display():
 	for child in UsersListVbox.get_children():
@@ -136,6 +142,17 @@ func _on_display_name_input_text_changed(new_text):
 
 
 func _on_lobby_start_game(game_info):
-	Global.DIFFICULTY = difficulty
+	Global.DIFFICULTY = game_info.difficulty
 	Global.FARM_TYPE = farm
 	start_multiplayer_game.emit(mage_fortune, game_info)
+
+
+func _on_start_explores_options_item_selected(index):
+	var text = $VBox/HBox2/HostGameStuff/StartExploresCont/StartExploresOptions.get_item_text(index)
+	game_parameters.starting_explores = int(text)
+
+
+func _on_lives_options_item_selected(index):
+	var text = $VBox/HBox2/HostGameStuff/LivesCont/LivesOptions.get_item_text(index)
+	game_parameters.starting_lives = int(text)
+	

@@ -459,4 +459,4 @@ func _on_multiplayer_menu_start_multiplayer_game(mage, game_info):
 	var winter = game_info.type == Enums.MultiplayerGameType.Versus
 	start_new_game(winter)
 	playspace.turn_manager.multiplayer_turn.setup(MultiplayerMenu.Lobby, game_info.type)
-	
+	playspace.user_interface.explore.set_explores_remaining(game_info.starting_explores)
