@@ -86,3 +86,7 @@ func get_type() -> Enums.EffectType:
 
 func get_long_description() -> String:
 	return Helper.get_long_description_type(get_type())
+
+# Modify args in-place
+func preview_yield(tile: Tile, args: EventArgs.HarvestArgs):
+	pass

@@ -182,6 +182,12 @@ static func get_long_description_type(type: Enums.EffectType, strength: float = 
 			return get_long_description("destroy_plant", strength)
 		Enums.EffectType.Harvest:
 			return get_long_description("harvest", strength)
+		Enums.EffectType.Regrow:
+			return get_long_description("regrow", strength) if strength == 0 else get_long_description("regrow_strength", strength)
+		Enums.EffectType.Burn:
+			return "[color=gold]Burn[/color]: Card is removed from your deck when played, instead of being discarded. (Your deck will be restored at the end of the year)"
+		Enums.EffectType.Echo:
+			return "[color=gold]Echo[/color]: When played, add a [color=gold]Fleeting[/color] copy of this card to your hand. The copy costs at least 1 energy."
 		_:
 			return ""
 

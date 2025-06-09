@@ -293,29 +293,14 @@ func can_strengthen_custom_effect():
 	return false
 
 func preview_yield(tile: Tile):
-	var defer = get_effect("harvest_delay") != null
-	if (get_effect("harvest") != null\
-		or get_effect("harvest_delay") != null or has_effect(Enums.EffectType.Harvest))\
-		and tile.card_can_target(self):
-		var harvest: EventArgs.HarvestArgs = tile.preview_harvest()
-		harvest.delay = defer or harvest.delay
-		var increase_yield = get_effect("increase_yield")
-		if increase_yield != null:
-			harvest.yld *= 1.0 + increase_yield.strength
-			harvest.green = tile.current_yield * (increase_yield.strength)
-		harvest.yld = round(harvest.yld)
-		harvest.green = round(harvest.green)
-		return harvest
-	else:
-		var args = EventArgs.HarvestArgs.new(0, tile.purple, defer);
-		var add_yield = get_effect("add_yield")
-		if add_yield != null:
-			args.green += add_yield.strength
-		var increase_yield = get_effect("increase_yield")
-		if increase_yield != null:
-			args.green += tile.current_yield * (increase_yield.strength)
-		args.green = round(args.green)
+	var args = EventArgs.HarvestArgs.new(0, tile.purple, false);
+	if !tile.card_can_target(self):
 		return args
+	for eff in effects2:
+		eff.preview_yield(tile, args)
+	args.yld = round(args.yld)
+	args.green = round(args.green)
+	return args
 
 func get_long_description():
 	var description_tooltip = ""

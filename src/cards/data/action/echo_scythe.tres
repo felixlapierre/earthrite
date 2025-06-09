@@ -1,9 +1,8 @@
-[gd_resource type="Resource" script_class="CardData" load_steps=6 format=3 uid="uid://q14conqpha5g"]
+[gd_resource type="Resource" script_class="CardData" load_steps=5 format=3 uid="uid://q14conqpha5g"]
 
 [ext_resource type="SpriteFrames" uid="uid://dxy88xtax3njv" path="res://src/animation/frames/echo_slash_sf.tres" id="1_6v17a"]
-[ext_resource type="Resource" uid="uid://7ub3vx6mrqk5" path="res://src/effect/data/echo.tres" id="1_768fr"]
 [ext_resource type="Script" path="res://src/cards/card_data.gd" id="1_hpx44"]
-[ext_resource type="Resource" uid="uid://cqfvdr8thdmfu" path="res://src/effect/data/harvest.tres" id="2_qjfvv"]
+[ext_resource type="Resource" uid="uid://dg70700mif6x5" path="res://src/effect2/basic/data/echo_effect.tres" id="2_mewox"]
 [ext_resource type="Texture2D" uid="uid://bqkbsilvly7qq" path="res://assets/card/echo_slash.png" id="4_slduj"]
 
 [resource]
@@ -22,9 +21,10 @@ texture = ExtResource("4_slduj")
 seed_texture = 0
 texture_icon_offset = 16
 targets = Array[String](["Mature"])
-effects = Array[Resource("res://src/effect/effect.gd")]([ExtResource("1_768fr"), ExtResource("2_qjfvv")])
-enhances = Array[String]([])
+effects = Array[Resource("res://src/effect/effect.gd")]([])
+enhances = Array[Dictionary]([])
 strength = 0.0
 animation = ExtResource("1_6v17a")
 delay = 0.2
 anim_on = 0
+effects2 = Array[Resource("res://src/effect2/effect2.gd")]([ExtResource("2_mewox")])

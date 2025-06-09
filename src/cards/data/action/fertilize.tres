@@ -2,15 +2,16 @@
 
 [ext_resource type="Script" path="res://src/cards/card_data.gd" id="1_1h43a"]
 [ext_resource type="SpriteFrames" uid="uid://c6jqxl5myv5km" path="res://src/animation/frames/fertilize_sf.tres" id="1_mgmlk"]
-[ext_resource type="Script" path="res://src/effect/effect.gd" id="1_uqk2r"]
 [ext_resource type="Texture2D" uid="uid://50b3nba81k40" path="res://assets/card/fertilize.png" id="3_7flb7"]
+[ext_resource type="Script" path="res://src/effect2/basic/add_mana_effect.gd" id="3_s0vfg"]
 
-[sub_resource type="Resource" id="Resource_5kvxs"]
-script = ExtResource("1_uqk2r")
-name = "add_yield"
+[sub_resource type="Resource" id="Resource_bddpx"]
+script = ExtResource("3_s0vfg")
+timing = 13
+seed = false
 strength = 1.0
-on = ""
-range = "self"
+base_strength = 1.0
+strength_increment = 1.0
 
 [resource]
 script = ExtResource("1_1h43a")
@@ -28,9 +29,10 @@ texture = ExtResource("3_7flb7")
 seed_texture = 0
 texture_icon_offset = 16
 targets = Array[String](["Growing", "Mature"])
-effects = Array[ExtResource("1_uqk2r")]([SubResource("Resource_5kvxs")])
-enhances = Array[String]([])
+effects = Array[Resource("res://src/effect/effect.gd")]([])
+enhances = Array[Dictionary]([])
 strength = 0.0
 animation = ExtResource("1_mgmlk")
 delay = 0.2
 anim_on = 0
+effects2 = Array[Resource("res://src/effect2/effect2.gd")]([SubResource("Resource_bddpx")])

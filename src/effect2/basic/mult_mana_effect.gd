@@ -14,7 +14,7 @@ func _init():
 func register(event_manager: EventManager, tile: Tile):
 	listener = Listener.create(self, func(args: EventArgs):
 		var mana = args.specific.tile.current_yield
-		args.specific.tile.add_yield(mana * (1 + strength))
+		args.specific.tile.add_yield(mana * strength)
 	)
 	
 	owner.register(listener)
@@ -23,7 +23,14 @@ func unregister(event_manager: EventManager):
 	listener.disable()
 
 func get_description(size: int):
-	return get_timing_text() + "Add %s% mana to %s plants" % [highlight(str(strength * 100)), Helper.get_size_text(size)]
+	var timing_text = get_timing_text()
+	var strength_text = highlight(str(strength * 100) + "%")
+	var size_text = Helper.get_size_text(size)
+	return timing_text + "Increase the " + Helper.mana_icon() + " of " + size_text + " target plants by " + strength_text
 
 func copy():
 	return MultiplyManaEffect.new().assign(self)
+
+func preview_yield(tile: Tile, args: EventArgs.HarvestArgs):
+	args.green += tile.current_yield * strength
+	args.yld *= (1 + strength)

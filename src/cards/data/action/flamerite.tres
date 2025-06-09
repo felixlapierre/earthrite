@@ -2,8 +2,8 @@
 
 [ext_resource type="SpriteFrames" uid="uid://dfm0u4ub3seyl" path="res://src/animation/frames/flamerite_sf.tres" id="1_bvjko"]
 [ext_resource type="Script" path="res://src/cards/custom/flamerite.gd" id="1_ccr50"]
-[ext_resource type="Resource" uid="uid://cijtg3ddxitn3" path="res://src/effect/data/obliviate.tres" id="1_gmvym"]
 [ext_resource type="Texture2D" uid="uid://c3etvybbpn1e3" path="res://assets/card/flamerite.png" id="2_1rlqn"]
+[ext_resource type="Resource" uid="uid://43hxl7pkbfp2" path="res://src/effect2/basic/data/burn_effect.tres" id="2_oasgt"]
 
 [resource]
 script = ExtResource("1_ccr50")
@@ -21,10 +21,10 @@ texture = ExtResource("2_1rlqn")
 seed_texture = 0
 texture_icon_offset = 16
 targets = Array[String](["Growing", "Mature"])
-effects = Array[Resource("res://src/effect/effect.gd")]([ExtResource("1_gmvym")])
-enhances = Array[String]([])
+effects = Array[Resource("res://src/effect/effect.gd")]([])
+enhances = Array[Dictionary]([])
 strength = 1.0
 animation = ExtResource("1_bvjko")
 delay = 0.0
 anim_on = 0
-effects2 = Array[Resource("res://src/effect2/effect2.gd")]([])
+effects2 = Array[Resource("res://src/effect2/effect2.gd")]([ExtResource("2_oasgt")])

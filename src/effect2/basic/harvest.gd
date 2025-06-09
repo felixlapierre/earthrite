@@ -20,8 +20,10 @@ func unregister(event_manager: EventManager):
 func get_description(size: int):
 	return "Harvest " + str(size) + " tile(s)"
 
-func get_type():
-	return Enums.EffectType.Harvest
+func preview_yield(tile: Tile, args: EventArgs.HarvestArgs):
+	var args2 = tile.seed.get_yield(tile)
+	args.yld += args2.yld
+	args.delay = delay or args.delay
 	
 func assign(other):
 	super.assign(other)

@@ -21,6 +21,9 @@ func register(event_manager: EventManager, tile: Tile):
 func unregister(event_manager: EventManager):
 	listener.disable()
 
+func preview_yield(tile: Tile, args: EventArgs.HarvestArgs):
+	args.green += strength
+
 func get_description(size: int):
 	var descr = get_timing_text() + "Add {STRENGTH}%s to %s plants" % [Helper.mana_icon(), Helper.get_size_text(size)]
 	return get_description_interp(descr)

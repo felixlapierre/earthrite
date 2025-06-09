@@ -1,8 +1,9 @@
-[gd_resource type="Resource" script_class="CardData" load_steps=6 format=3 uid="uid://baox23pk108hv"]
+[gd_resource type="Resource" script_class="CardData" load_steps=7 format=3 uid="uid://baox23pk108hv"]
 
 [ext_resource type="Script" path="res://src/cards/card_data.gd" id="1_gkxr6"]
 [ext_resource type="SpriteFrames" uid="uid://c6jqxl5myv5km" path="res://src/animation/frames/fertilize_sf.tres" id="1_vaao4"]
 [ext_resource type="Script" path="res://src/effect2/basic/grow_effect.gd" id="2_ugybp"]
+[ext_resource type="Resource" uid="uid://dg70700mif6x5" path="res://src/effect2/basic/data/echo_effect.tres" id="3_cyvyh"]
 [ext_resource type="Texture2D" uid="uid://beyon6wyf8jfu" path="res://assets/card/chronoweave.png" id="5_gmecl"]
 
 [sub_resource type="Resource" id="Resource_x30xd"]
@@ -33,4 +34,4 @@ strength = 0.0
 animation = ExtResource("1_vaao4")
 delay = 0.0
 anim_on = 0
-effects2 = Array[Resource("res://src/effect2/effect2.gd")]([SubResource("Resource_x30xd")])
+effects2 = Array[Resource("res://src/effect2/effect2.gd")]([SubResource("Resource_x30xd"), ExtResource("3_cyvyh")])
