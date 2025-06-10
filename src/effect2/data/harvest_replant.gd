@@ -13,7 +13,7 @@ func _init(p_timing = EventManager.EventType.AfterCardPlayed):
 	timing = p_timing
 
 func register(event_manager: EventManager, p_tile: Tile):
-	listener = Listener.create(self, func(args: EventArgs):
+	listener = Listener.new(event_type, func(args: EventArgs):
 		var targets = []
 		if event_type == EventManager.EventType.OnActionCardUsed:
 			targets.append(args.specific.tile)
@@ -28,6 +28,7 @@ func register(event_manager: EventManager, p_tile: Tile):
 				if tile.state == Enums.TileState.Empty and seed.yld > 0 and !seed.has_effect(Enums.EffectType.Corrupted):
 					await tile.plant_seed(seed)
 	)
+	listener.effect_type = Enums.EffectType.Harvest
 	event_manager.register(listener)
 
 func unregister(event_manager: EventManager):

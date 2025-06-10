@@ -4,7 +4,7 @@ class_name WaterEffect
 var listener: Listener
 
 func _init():
-	super(EventManager.EventType.OnActionCardUsed, true, Enums.EffectType.Water, "WaterEffect")
+	super(EventManager.EventType.OnActionCardUsed, false, Enums.EffectType.Water, "WaterEffect")
 
 func register(event_manager: EventManager, tile: Tile):
 	listener = Listener.create(self, func(args: EventArgs):

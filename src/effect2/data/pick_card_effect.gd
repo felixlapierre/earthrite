@@ -55,10 +55,9 @@ var listener_andthen: Listener
 # Should pretty much either be OnPlantHarvest (for seed effect like iris)
 # or AfterCardPlayed for immediate effect (burn, add card to hand)
 
-func _init(p_timing = EventManager.EventType.AfterCardPlayed, p_seed = false, p_strength = 1.0,
-	p_base_strength = 1.0, p_strength_increment = 1.0, p_timing_2 = EventManager.EventType.AfterCardPlayed, p_count = -1, p_pick_from = PickFrom.Hand,
+func _init(p_timing_2 = EventManager.EventType.AfterCardPlayed, p_count = -1, p_pick_from = PickFrom.Hand,
 	p_and_then = AndThen.Draw, p_skippable = false):
-	super(p_timing, p_seed, Enums.EffectType.Other, "PickCardEffect", p_strength, p_base_strength, p_strength_increment)
+	super(timing, seed, Enums.EffectType.Other, "PickCardEffect")
 	
 	timing2 = p_timing_2
 	count = p_count
@@ -67,7 +66,7 @@ func _init(p_timing = EventManager.EventType.AfterCardPlayed, p_seed = false, p_
 
 func register(event_manager: EventManager, p_tile: Tile):
 	tile = p_tile
-	listener_play = Listener.new(timing, func(args: EventArgs):
+	listener_play = Listener.create(self, func(args: EventArgs):
 		await pick_card_event(args))
 	
 	listener_andthen = Listener.new(timing2, func(args: EventArgs):
@@ -114,7 +113,7 @@ func pick_card_event(args: EventArgs):
 	await display_options(args, options, func(card_data):
 		Global.LOCK = false
 		card = card_data
-		if timing == EventManager.EventType.OnActionCardUsed:
+		if event_type == EventManager.EventType.OnActionCardUsed:
 			args.specific.tile.play_effect_particles()
 		if timing2 == EventManager.EventType.AfterCardPlayed:
 			do_followup_action(args))
@@ -138,7 +137,7 @@ func display_options(args: EventArgs, options: Array, set_card: Callable):
 	else:
 		var pick_option_ui = PickOption.instantiate()
 		args.user_interface.add_child(pick_option_ui)
-		var prompt = "Pick a card"
+		var prompt = "Pick a card (%s)" % owner.name
 		var cancel_callback = null if !skippable else func():
 			args.user_interface.remove_child(pick_option_ui)
 			set_card.call(null)
@@ -176,7 +175,7 @@ func unregister(event_manager: EventManager):
 func get_description(size: int):
 	var descr = ""
 	if card == null:
-		descr += get_timing_text(timing) + get_pick_from_description() + get_and_then_description()
+		descr += get_timing_text(event_type) + get_pick_from_description() + get_and_then_description()
 	else:
 		descr += get_and_then_description()
 	return get_description_interp(descr)

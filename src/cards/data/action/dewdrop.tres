@@ -36,4 +36,4 @@ strength = 0.0
 animation = ExtResource("1_r5pxj")
 delay = 0.4
 anim_on = 1
-effects2 = Array[Resource("res://src/effect2/effect2.gd")]([SubResource("Resource_8cyca"), ExtResource("3_y2yc7")])
+effects2 = Array[Resource("res://src/effect2/effect2.gd")]([ExtResource("3_y2yc7"), SubResource("Resource_8cyca")])

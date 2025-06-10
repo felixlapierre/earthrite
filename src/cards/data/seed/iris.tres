@@ -6,6 +6,8 @@
 
 [sub_resource type="Resource" id="Resource_dk7qq"]
 script = ExtResource("1_aypy1")
+timing = 13
+seed = true
 timing2 = 8
 count = -1
 pick_from = 0

@@ -6,6 +6,8 @@
 
 [sub_resource type="Resource" id="Resource_1mrdn"]
 script = ExtResource("1_gfmyt")
+timing = 11
+seed = false
 timing2 = 11
 count = 3
 pick_from = 3

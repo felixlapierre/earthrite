@@ -106,7 +106,7 @@ func use_card(grid_position, external_source: bool = false):
 	if card.animation != null:
 		spriteframes = card.animation
 		on = card.anim_on
-	elif card.has_effect(Enums.EffectType.Harvest):
+	elif card.has_effect(Enums.EffectType.Harvest) and card.type == "ACTION":
 		spriteframes = load("res://src/animation/scythe_frames.tres")
 		delay = 0.2
 	var animation_position = Vector2.ZERO
@@ -451,7 +451,7 @@ func use_card_on_targets(card, targets, only_first, delay: float = 0.0):
 	for target in targets:
 		if not Helper.in_bounds(target):
 			continue
-		var target_tile = tiles[target.x][target.y]
+		var target_tile: Tile = tiles[target.x][target.y]
 		if not target_tile.card_can_target(card):
 			continue
 		if card.type == "SEED":

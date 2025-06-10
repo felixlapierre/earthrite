@@ -5,6 +5,8 @@
 
 [sub_resource type="Resource" id="Resource_rwd36"]
 script = ExtResource("1_1d53c")
+timing = 13
+seed = true
 timing2 = 11
 count = -1
 pick_from = 0
@@ -13,8 +15,6 @@ skippable = false
 strength = 0.0
 base_strength = 1.0
 strength_increment = 1.0
-timing = 13
-is_seed = true
 
 [resource]
 script = ExtResource("2_cvwwy")

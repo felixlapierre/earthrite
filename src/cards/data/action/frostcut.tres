@@ -1,6 +1,7 @@
-[gd_resource type="Resource" script_class="CardData" load_steps=5 format=3 uid="uid://r2riwcbmww0s"]
+[gd_resource type="Resource" script_class="CardData" load_steps=6 format=3 uid="uid://r2riwcbmww0s"]
 
 [ext_resource type="SpriteFrames" uid="uid://byaqutjmx7of1" path="res://src/animation/frames/frostcut_sf.tres" id="1_mjmx5"]
+[ext_resource type="Resource" uid="uid://d21lr1dwl86yw" path="res://src/effect2/basic/data/simple_harvest_effect.tres" id="2_ijqg1"]
 [ext_resource type="Resource" uid="uid://mxr07jmep3th" path="res://src/effect2/basic/data/frozen_effect.tres" id="2_ub6vk"]
 [ext_resource type="Script" path="res://src/cards/card_data.gd" id="3_fouvi"]
 [ext_resource type="Texture2D" uid="uid://g31m48bel7pe" path="res://assets/card/frostcut.png" id="4_nl43f"]
@@ -27,4 +28,4 @@ strength = 0.0
 animation = ExtResource("1_mjmx5")
 delay = 0.2
 anim_on = 0
-effects2 = Array[Resource("res://src/effect2/effect2.gd")]([ExtResource("2_ub6vk")])
+effects2 = Array[Resource("res://src/effect2/effect2.gd")]([ExtResource("2_ijqg1"), ExtResource("2_ub6vk")])

@@ -1,16 +1,9 @@
-[gd_resource type="Resource" script_class="CardData" load_steps=6 format=3 uid="uid://ce4nrc1td87bv"]
+[gd_resource type="Resource" script_class="CardData" load_steps=5 format=3 uid="uid://ce4nrc1td87bv"]
 
 [ext_resource type="SpriteFrames" uid="uid://dx0io3vl5nc5k" path="res://src/animation/frames/downpour_sf.tres" id="1_0m17b"]
-[ext_resource type="Script" path="res://src/effect/effect.gd" id="1_ker15"]
 [ext_resource type="Script" path="res://src/cards/card_data.gd" id="1_ujlgw"]
 [ext_resource type="Texture2D" uid="uid://bn7pl6ij46nfp" path="res://assets/custom/Raincloud.png" id="2_0j7c6"]
-
-[sub_resource type="Resource" id="Resource_opdn5"]
-script = ExtResource("1_ker15")
-name = "irrigate"
-strength = 0.0
-on = ""
-range = "self"
+[ext_resource type="Resource" uid="uid://byio0c67yvk0g" path="res://src/effect2/basic/water_effect.tres" id="2_vqtcm"]
 
 [resource]
 script = ExtResource("1_ujlgw")
@@ -28,9 +21,10 @@ texture = ExtResource("2_0j7c6")
 seed_texture = 3
 texture_icon_offset = 16
 targets = Array[String](["Empty", "Mature", "Growing", "Rock"])
-effects = Array[ExtResource("1_ker15")]([SubResource("Resource_opdn5")])
-enhances = Array[String]([])
+effects = Array[Resource("res://src/effect/effect.gd")]([])
+enhances = Array[Dictionary]([])
 strength = 0.0
 animation = ExtResource("1_0m17b")
 delay = 0.0
 anim_on = 1
+effects2 = Array[Resource("res://src/effect2/effect2.gd")]([ExtResource("2_vqtcm")])

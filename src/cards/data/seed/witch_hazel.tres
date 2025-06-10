@@ -6,16 +6,16 @@
 
 [sub_resource type="Resource" id="Resource_tiaiq"]
 script = ExtResource("1_lptli")
+timing = 13
+seed = true
 timing2 = 2
 count = -1
 pick_from = 5
 and_then = 2
 skippable = null
 strength = 1.0
-base_strength = null
-strength_increment = null
-timing = 13
-is_seed = true
+base_strength = 1.0
+strength_increment = 1.0
 
 [resource]
 script = ExtResource("1_1st1n")

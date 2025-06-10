@@ -15,21 +15,21 @@ var listeners2: Dictionary = {}
 
 enum EventType {
 	# Time-based triggers
-	BeforeYearStart,
-	AfterYearStart,
-	BeforeTurnStart,
-	BeforeGrow,
-	AfterGrow,
-	OnTurnEnd,
+	BeforeYearStart, #0
+	AfterYearStart, #1
+	BeforeTurnStart, #2
+	BeforeGrow, #3
+	AfterGrow, #4
+	OnTurnEnd, #5
 	# Game action triggers
-	OnPlantPlanted,
-	OnPlantGrow,
-	OnPlantHarvest,
-	OnPlantDestroyed,
-	BeforeCardPlayed,
-	AfterCardPlayed,
-	OnTileDestroyed,
-	OnActionCardUsed,
+	OnPlantPlanted, #6
+	OnPlantGrow, #7
+	OnPlantHarvest, #8
+	OnPlantDestroyed, #9
+	BeforeCardPlayed, #10
+	AfterCardPlayed, #11
+	OnTileDestroyed, #12
+	OnActionCardUsed, #13
 	OnYieldPreview,
 	OnPickCard,
 	OnCardBurned,

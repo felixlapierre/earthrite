@@ -14,7 +14,7 @@ func _init():
 # To be overridden by specific code seeds
 func register(event_manager: EventManager, p_tile: Tile):
 	listener = Listener.create(self, func(args: EventArgs):
-		args.specific.harvest_args.purple = true
+		args.turn_manager.flag_defer_excess = true
 	)
 	owner.register(listener)
 

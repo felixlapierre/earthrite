@@ -272,7 +272,7 @@ func update_hand_display():
 		card.set_card_info(card.card_info)
 
 func _input(event: InputEvent):
-	if event is InputEventKey and event.pressed:
+	if event is InputEventKey and event.pressed and !Global.LOCK:
 		var i = 0
 		match event.keycode:
 			KEY_0, KEY_T:

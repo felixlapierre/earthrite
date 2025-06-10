@@ -23,7 +23,7 @@ func register_events(event_manager: EventManager, tile: Tile):
 			card.frozen = false
 	callback2 = func(args: EventArgs):
 		for card: CardBase in args.cards.HAND_CARDS.get_children():
-			if card.card_info.get_effect("frozen") == null and !card.frozen:
+			if !card.card_info.has_effect(Enums.EffectType.Frozen) and !card.frozen:
 				card.frozen = true
 				tile.play_effect_particles()
 				return
