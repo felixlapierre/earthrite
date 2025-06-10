@@ -18,7 +18,8 @@ func unregister(event_manager: EventManager):
 	listener.disable()
 
 func get_description(size: int):
-	return get_timing_text() + "Grow %s plants by %s week(s)" % [str(size), highlight(str(strength))]
+	var size_text = str(size) if size != -1 else "ALL"
+	return get_timing_text() + "Grow %s plants by %s week(s)" % [size_text, highlight(str(strength))]
 
 func copy():
 	return GrowEffect.new().assign(self)

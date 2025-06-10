@@ -1,15 +1,14 @@
 [gd_resource type="Resource" script_class="CardData" load_steps=5 format=3 uid="uid://c4g62lgvuqw8e"]
 
-[ext_resource type="Script" path="res://src/effect/effect.gd" id="1_48b7n"]
 [ext_resource type="Script" path="res://src/cards/card_data.gd" id="1_grwbu"]
+[ext_resource type="Script" path="res://src/effect2/basic/regrow.gd" id="1_r5o3k"]
 [ext_resource type="Texture2D" uid="uid://cmcwwq72wehss" path="res://assets/seed/cranberry.png" id="4_762lh"]
 
-[sub_resource type="Resource" id="Resource_tp0nd"]
-script = ExtResource("1_48b7n")
-name = "plant"
+[sub_resource type="Resource" id="Resource_i6boa"]
+script = ExtResource("1_r5o3k")
 strength = 5.0
-on = "harvest"
-range = "self"
+base_strength = 5.0
+strength_increment = 3.0
 
 [resource]
 script = ExtResource("1_grwbu")
@@ -27,9 +26,9 @@ texture = ExtResource("4_762lh")
 seed_texture = 0
 texture_icon_offset = 16
 targets = Array[String]([])
-effects = Array[ExtResource("1_48b7n")]([SubResource("Resource_tp0nd")])
-enhances = Array[String]([])
+effects = Array[Resource("res://src/effect/effect.gd")]([])
+enhances = Array[Dictionary]([])
 strength = 0.0
 delay = 0.0
 anim_on = 0
-effects2 = Array[Resource("res://src/effect2/effect2.gd")]([])
+effects2 = Array[Resource("res://src/effect2/effect2.gd")]([SubResource("Resource_i6boa")])

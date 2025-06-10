@@ -7,11 +7,11 @@
 
 [sub_resource type="Resource" id="Resource_rai2b"]
 script = ExtResource("2_xw5c5")
+timing = 10
+seed = false
 strength = 3.0
 base_strength = 3.0
 strength_increment = 1.0
-timing = 10
-is_seed = false
 
 [resource]
 script = ExtResource("2_wr84k")

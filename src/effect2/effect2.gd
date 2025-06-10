@@ -49,6 +49,8 @@ func get_timing_text(p_timing: EventManager.EventType = event_type) -> String:
 			return "[color=gold]Turn Start[/color]: "
 		EventManager.EventType.OnPlantHarvest:
 			return "[color=gold]On Harvest[/color]: "
+		EventManager.EventType.OnPlantPlanted:
+			return "[color=gold]When Planted[/color]: "
 		EventManager.EventType.BeforeCardPlayed, EventManager.EventType.AfterCardPlayed, EventManager.EventType.OnActionCardUsed:
 			return ""
 		_:

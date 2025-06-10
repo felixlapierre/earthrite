@@ -18,7 +18,8 @@ func unregister(event_manager: EventManager):
 	listener.disable()
 
 func get_description(size: int):
-	return "Harvest " + str(size) + " tile(s)"
+	var size_text = str(size) if size != -1 else "ALL"
+	return "Harvest " + size_text + " tile(s)"
 
 func preview_yield(tile: Tile, args: EventArgs.HarvestArgs):
 	var args2 = tile.seed.get_yield(tile)

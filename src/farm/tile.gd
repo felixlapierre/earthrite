@@ -491,3 +491,30 @@ func push_animate(vector: Vector2):
 
 func get_id():
 	return str(grid_location.x) + "-" + str(grid_location.y)
+
+func save_data():
+	var data = {}
+	data.state = state
+	data.current_yield = current_yield
+	data.current_grow_progress = current_grow_progress
+	data.seed_base_yield = seed_base_yield
+	data.seed_grow_time = seed_grow_time
+	if seed != null:
+		data.seed = seed.save_data()
+	data.irrigated = irrigated
+	data.destroyed = destroyed
+	data.rock = rock
+
+func load_data(data: Dictionary):
+	state = data.state
+	current_yield = data.current_yield
+	current_grow_progress = data.current_grow_progress
+	seed_base_yield = data.seed_base_yield
+	seed_grow_time = data.seed_grow_time
+	if data.has("seed"):
+		var s = load(data.seed.path).new()
+		s.load_data(data.seed)
+		seed = s
+	irrigated = data.irrigated
+	destroyed = data.destroyed
+	rock = data.rock

@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="CardData" load_steps=3 format=3 uid="uid://f4eqpgonodph"]
 
-[ext_resource type="Resource" uid="uid://cijtg3ddxitn3" path="res://src/effect/data/obliviate.tres" id="1_i44eu"]
+[ext_resource type="Resource" uid="uid://43hxl7pkbfp2" path="res://src/effect2/basic/data/burn_effect.tres" id="1_rqouy"]
 [ext_resource type="Script" path="res://src/cards/card_data.gd" id="1_uln3e"]
 
 [resource]
@@ -18,8 +18,9 @@ size_increment = 1
 seed_texture = 5
 texture_icon_offset = 16
 targets = Array[String]([])
-effects = Array[Resource("res://src/effect/effect.gd")]([ExtResource("1_i44eu")])
-enhances = Array[String]([])
+effects = Array[Resource("res://src/effect/effect.gd")]([])
+enhances = Array[Dictionary]([])
 strength = 0.0
 delay = 0.0
 anim_on = 0
+effects2 = Array[Resource("res://src/effect2/effect2.gd")]([ExtResource("1_rqouy")])
