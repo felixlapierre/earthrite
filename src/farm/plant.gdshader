@@ -1,43 +1,64 @@
-// original wind shader from https://github.com/Maujoe/godot-simple-wind-shader-2d/tree/master/assets/maujoe.simple_wind_shader_2d
-// original script modified by HungryProton so that the assets are moving differently : https://pastebin.com/VL3AfV8D
-//
-// speed - The speed of the wind movement.
-// minStrength - The minimal strength of the wind movement.
-// maxStrength - The maximal strength of the wind movement.
-// strengthScale - Scalefactor for the wind strength.
-// interval - The time between minimal and maximal strength changes.
-// detail - The detail (number of waves) of the wind movement.
-// distortion - The strength of geometry distortion.
-// heightOffset - The height where the wind begins to move. By default 0.0.
-
+// ───────────────────────────────────────────────────────────────────────────
+//  Genius‑level simple‑wind shader – 2‑D CanvasItem
+//  Author: ChatGPT 2025   (CC‑0; use freely)
+// ───────────────────────────────────────────────────────────────────────────
 shader_type canvas_item;
 render_mode blend_mix;
 
-// Wind settings.
-uniform float speed = 1.0;
-uniform float minStrength : hint_range(0.0, 1.0) = 0.05;
-uniform float maxStrength : hint_range(0.0, 1.0) = 0.01;
-uniform float strengthScale = 100.0;
-uniform float interval = 3.5;
-uniform float detail = 1.0;
-uniform float distortion : hint_range(0.0, 1.0);
-uniform float heightOffset : hint_range(0.0, 1.0);
+// ─────────────── General wind parameters ───────────────
+uniform vec2  wind_dir        = vec2(1.0, 0.0);      // normalised in code
+uniform float wind_speed      = 1.0;                 // multiplies TIME
+uniform float min_strength    : hint_range(0.0, 1.0) = 0.01;
+uniform float max_strength    : hint_range(0.0, 1.0) = 0.06;
+uniform float strength_scale  = 100.0;
 
-// With the offset value, you can if you want different moves for each asset. Just put a random value (1, 2, 3) in the editor. Don't forget to mark the material as unique if you use this
-uniform float offset = 0; 
+// ─────────────── Gust behaviour ───────────────
+uniform float gust_interval   = 3.5;                 // seconds per cycle
+uniform float gust_turbulence = 0.4;                 // 0 = smooth, 1 = wild
 
+// ─────────────── Wave detail ───────────────
+uniform float large_wave_freq = 1.0;                 // gentle sway
+uniform float ripple_freq     = 8.0;                 // leaf flutter
+uniform float distortion      : hint_range(0.0, 1.0) = 0.25;
 
-float getWind(vec2 vertex, vec2 uv, float time){
-    float diff = pow(maxStrength - minStrength, 2.0);
-    float strength = clamp(minStrength + diff + sin(time / interval) * diff, minStrength, maxStrength) * strengthScale;
-    float wind = (sin(time) + cos(time * detail)) * strength * max(0.0, (1.0-uv.y) - heightOffset);
-    
-    return wind; 
+// ─────────────── Geometry envelope ───────────────
+uniform float height_offset   : hint_range(0.0, 1.0) = 0.0;
+
+// ─────────────── Per‑sprite randomness ───────────────
+uniform float instance_offset : hint_range(0.0, 100.0) = 0.0;
+
+// ───────────────────────────────────────────────────────
+//  Helper hash – tiny, fast, good enough for turbulence
+// ───────────────────────────────────────────────────────
+float hash(vec2 p) {
+    return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453);
+}
+
+// Strength varies sinusoidally between min & max, plus a little hash noise
+float compute_strength(float t) {
+    float phase = (sin(t / gust_interval * 6.28318) * 0.5 + 0.5); // 0‥1
+    float base  = mix(min_strength, max_strength, phase);
+    float noise = (hash(vec2(t, phase)) - 0.5) * gust_turbulence;
+    return (base + noise) * strength_scale;
 }
 
 void vertex() {
-    vec4 pos = MODEL_MATRIX * vec4(0.0, 0.0, 0.0, 1.0);
-    float time = TIME * speed + offset;
-    //float time = TIME * speed + pos.x * pos.y  ; not working when moving...
-    VERTEX.x += getWind(VERTEX.xy, UV, time);
+    // Time phase (unique per instance)
+    float t = TIME * wind_speed + instance_offset;
+
+    // Pre‑normalise direction once per vertex
+    vec2  dir  = normalize(wind_dir);
+    vec2  perp = vec2(-dir.y, dir.x);               // 90° for flutter offset
+
+    // Compute composite wave
+    float strength   = compute_strength(t);
+    float large_wave = sin(t * large_wave_freq);
+    float ripple     = sin(t * ripple_freq + UV.y * 6.28318);
+    float sway       = (large_wave + ripple * distortion) * strength;
+
+    // Fade effect based on sprite height (UV.y == 0 at top in Godot)
+    float height_mask = clamp((1.0 - UV.y) - height_offset, 0.0, 1.0);
+
+    // Apply distortion
+    VERTEX += (dir * sway) * height_mask;
 }
