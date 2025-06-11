@@ -9,6 +9,7 @@ var gain_card_legendary = preload("res://assets/ui/explore/explore-legendary.png
 var enhance = preload("res://assets/enhance/strength.png")
 var rare_enhance = preload("res://assets/enhance/strength2.png")
 var structure = preload("res://assets/structure/beehive.png")
+var bonus_structure = preload("res://assets/structure/frost-totem.png")
 var rare_structure = preload("res://assets/structure/petrified_tree.png")
 
 var expand = preload("res://assets/ui/explore/expand-farm.png")
@@ -53,8 +54,10 @@ func setup(name: String, current_event: CustomEvent = null):
 			texture = rare_enhance
 		"Rare Structure":
 			texture = rare_structure
-		"Structure": 
+		"Structure":
 			texture = structure
+		"Bonus Structure":
+			texture = bonus_structure
 		"Enhance Card":
 			texture = enhance
 		"Legendary Card":

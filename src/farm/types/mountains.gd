@@ -5,7 +5,7 @@ static var ID = 1
 static var NAME = "MOUNTAINS"
 static var START_STRUCTURE: Structure = null
 var ICON = preload("res://assets/fortune/mountains.png")
-static var DESCR = "Start with a Structure on your farm.\n\nSome farm tiles contain rocks that can hold structures, but not plants."
+static var DESCR = "Some farm tiles contain rocks that can hold structures, but not plants.\n\nStart with a [color=gold]Structure[/color] on your farm. Every other year, find 1 extra Structure when exploring."
 var listener: Listener
 
 var PickOptionsScene = preload("res://src/ui/pick_option.tscn")

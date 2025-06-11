@@ -59,6 +59,9 @@ func create_explore(p_explores, turn_manager: TurnManager):
 		fixed_explores.append("Rare Structure" if !scrapyard() else "Rare Bag of Tricks")
 	elif turn_manager.year == 8:
 		fixed_explores.append("Rare Enhance" if !scrapyard() else "Rare Bag of Tricks")
+	if Global.FARM_TYPE == "MOUNTAINS" and turn_manager.year % 2 == 0:
+		fixed_explores.append("Bonus Structure")
+		explores += 1
 	#else:
 	#	fixed_explores.append("Gain Card")
 	create_binary_explore()
@@ -84,6 +87,12 @@ func create_point_from_name(name, location):
 				select_enhance("common"))
 		"Structure":
 			create_point("Structure", location, func(pt):
+				show_tutorial.call("structure", "farleft")
+				use_explore(pt)
+				structures += 1
+				add_structure("common"))
+		"Bonus Structure":
+			create_point("Bonus Structure", location, func(pt):
 				show_tutorial.call("structure", "farleft")
 				use_explore(pt)
 				structures += 1
@@ -311,7 +320,7 @@ func select_card_to_enhance(enhance: Enhance, pick_enhance_ui: Node = null):
 		if pick_enhance_ui != null:
 			pick_enhance_ui.visible = true)
 	select_card.do_enhance_pick(player_deck, enhance, "Select a card to enhance")
-	
+
 func add_structure(rarity: String):
 	var count = 3 - Mastery.less_options()
 	var get_structures_fn = func(rerolls: int = 0):
