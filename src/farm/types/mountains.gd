@@ -8,6 +8,8 @@ var ICON = preload("res://assets/fortune/mountains.png")
 static var DESCR = "Start with a Structure on your farm.\n\nSome farm tiles contain rocks that can hold structures, but not plants."
 var listener: Listener
 
+var PickOptionsScene = preload("res://src/ui/pick_option.tscn")
+
 func _init():
 	super(ID, NAME, ICON, DESCR)
 
@@ -56,3 +58,12 @@ func get_starter_deck():
 		"count": 4
 	}
 ]
+
+func do_setup_dialogue(node: Node):
+	var pick_options = PickOptionsScene.instantiate()
+	var structures = DataFetcher.get_structures_names(["Harvester", "Beehive", "Sigil of Water", "Rooted Core", "Geode", "Crucible", "Frost Totem", "Toolshed", "Brain in a Jar", "Firefly Lantern", "Rock Coral"])
+	node.add_child(pick_options)
+	pick_options.setup("Pick a starting Structure", structures, func(selected):
+		node.remove_child(pick_options)
+		MountainsFarm.START_STRUCTURE = selected)
+	await pick_options.pick_finished

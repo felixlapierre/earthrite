@@ -149,37 +149,9 @@ func _on_start_button_pressed():
 func start_new_game(winter: bool = false):
 	menu_root.visible = false
 	Global.reset()
-	
-	# Wilderness farm: Pick wilderness plant
-	if Global.FARM_TYPE == "WILDERNESS" and WildernessFarm.WILDERNESS_PLANT == null:
-		var select_card = SelectCardScene.instantiate()
-		select_card.size = Constants.VIEWPORT_SIZE
-		select_card.z_index = 2
-		select_card.theme = load("res://assets/theme_large.tres")
-		var options = StartupHelper.get_wilderness_seed_options()
-		add_child(select_card)
-		select_card.set_close_button_text("Pick Random Plant")
-		select_card.do_card_pick(options, "Select the native plant on the Wilderness Farm")
-		select_card.select_cancelled.connect(func():
-			remove_child(select_card)
-			WildernessFarm.WILDERNESS_PLANT = Helper.pick_random(options)
-			_on_start_button_pressed())
-		select_card.select_callback = func(card: CardData):
-			remove_child(select_card)
-			WildernessFarm.WILDERNESS_PLANT = card
-			_on_start_button_pressed()
-		return
-	
-	# Mountains farm: Start with structure
-	if Global.FARM_TYPE == "MOUNTAINS" and MountainsFarm.START_STRUCTURE == null:
-		var pick_options = PickOptionsScene.instantiate()
-		var structures = DataFetcher.get_structures_names(["Harvester", "Beehive", "Sigil of Water", "Rooted Core", "Geode", "Crucible", "Frost Totem", "Toolshed", "Brain in a Jar", "Firefly Lantern", "Rock Coral"])
-		add_child(pick_options)
-		pick_options.setup("Pick a starting Structure", structures, func(selected):
-			remove_child(pick_options)
-			MountainsFarm.START_STRUCTURE = selected
-			_on_start_button_pressed())
-		return
+
+	await FarmType.farms[Global.FARM_TYPE].do_setup_dialogue(self)
+	await mage_fortune.do_setup_dialogue(self)
 
 	# Create the game scene and add it to the tree
 	playspace = PLAYSPACE.instantiate()

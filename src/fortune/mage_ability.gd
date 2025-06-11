@@ -20,3 +20,6 @@ func upgrade_power():
 
 func update_text():
 	pass
+
+func do_setup_dialogue(node: Node):
+	pass

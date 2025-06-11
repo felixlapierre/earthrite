@@ -25,6 +25,7 @@ var ShopDisplay = preload("res://src/shop/shop_display.tscn")
 var FortuneDisplay = preload("res://src/fortune/fortune.tscn")
 
 var selected
+signal select_finished
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -86,7 +87,8 @@ func _on_confirm_button_pressed() -> void:
 		$SelectContainer/Scroll/CardContainer.remove_child(child)
 		
 	var card = selected
-	select_callback.call(card)
+	await select_callback.call(card)
+	select_finished.emit()
 	for child in $ConfirmContainer/ConfirmVbox/ConfirmCards.get_children():
 		$ConfirmContainer/ConfirmVbox/ConfirmCards.remove_child(child)
 	enhance = null

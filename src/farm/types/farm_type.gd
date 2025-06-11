@@ -63,3 +63,6 @@ func get_starter_deck():
 			"count": 1
 		}
 	]
+
+func do_setup_dialogue(node: Node):
+	pass

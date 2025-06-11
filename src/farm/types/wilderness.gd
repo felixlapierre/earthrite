@@ -1,6 +1,8 @@
 extends FarmType
 class_name WildernessFarm
 
+var SelectCardScene = preload("res://src/cards/select_card.tscn")
+
 static var ID = 2
 static var NAME = "WILDERNESS"
 var ICON = preload("res://assets/mage/wilderness.png")
@@ -61,3 +63,20 @@ func get_starter_deck():
 		"count": 4
 	}
 ]
+
+func do_setup_dialogue(node: Node):
+	var select_card = SelectCardScene.instantiate()
+	select_card.size = Constants.VIEWPORT_SIZE
+	select_card.z_index = 2
+	select_card.theme = load("res://assets/theme_large.tres")
+	var options = StartupHelper.get_wilderness_seed_options()
+	node.add_child(select_card)
+	select_card.set_close_button_text("Pick Random Plant")
+	select_card.do_card_pick(options, "Select the native plant on the Wilderness Farm")
+	select_card.select_cancelled.connect(func():
+		node.remove_child(select_card)
+		WildernessFarm.WILDERNESS_PLANT = Helper.pick_random(options))
+	select_card.select_callback = func(card: CardData):
+		node.remove_child(select_card)
+		WildernessFarm.WILDERNESS_PLANT = card
+	await select_card.select_finished

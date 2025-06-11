@@ -38,6 +38,12 @@ func get_effect(effect_name):
 			return effect
 	return null
 
+func has_effect(effect_type: Enums.EffectType):
+	for effect in effects2:
+		if effect.type == effect_type:
+			return true
+	return false
+
 func copy():
 	var n_targets = []
 	var n_effects = []
