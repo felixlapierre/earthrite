@@ -323,7 +323,7 @@ func process_one_week(week: int):
 	if week < Global.WINTER_WEEK and !Global.BLOCK_GROW:
 		var growing_tiles = []
 		for tile: Tile in $Tiles.get_children():
-			if tile.state == Enums.TileState.Growing and (Global.FARM_TYPE != "RIVERLANDS" or tile.is_watered()):
+			if tile.state == Enums.TileState.Growing:# and (Global.FARM_TYPE != "RIVERLANDS" or tile.is_watered()):
 				growing_tiles.append(tile)
 		growing_tiles.shuffle()
 		for tile in growing_tiles:
@@ -567,7 +567,7 @@ func remove_blight_from_all_tiles():
 		if tile.blighted:
 			tile.remove_blight()
 
-func blight_bubble_animation(tile, args: EventArgs.HarvestArgs, destination: Vector2, color_override: Color = Color.BLACK):
+func blight_bubble_animation(tile, args: EventArgs.HarvestArgs, destination: Vector2, color_override: Color = Color.BLACK, minimum_bubbles: int = 3):
 	var mana_amount = args.yld
 	var color = Color8(166, 252, 219) if args.purple else Color8(255, 252, 64)
 	if color_override != Color.BLACK:
@@ -579,7 +579,7 @@ func blight_bubble_animation(tile, args: EventArgs.HarvestArgs, destination: Vec
 		return
 	var mana_particles: ManaParticles = ManaParticles.instantiate()
 	mana_particles.color = color
-	mana_particles.amount = min(max(int(mana_amount / 5), 3), 10)
+	mana_particles.amount = min(max(int(mana_amount / 5), minimum_bubbles), 10)
 	mana_particles.max_scale = min(1.3 + mana_amount / 15, 4.0)
 	mana_particles.size = 100
 	mana_particles.position = tile.position + TILE_SIZE / 2

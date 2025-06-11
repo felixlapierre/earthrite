@@ -219,9 +219,9 @@ static func get_long_description(effect_name: String, strength: float = 0.0):
 		"harvest", "harvest_delay":
 			return "[color=gold]Harvest[/color]: If a plant is Mature, remove it from the farm and gain [img]res://assets/custom/YellowMana16.png[/img]"
 		"water":
-			return "[color=gold]Watered[/color]: Plants growing on Watered tiles gain 40% more " + Helper.mana_icon()
+			return "[color=gold]Watered[/color]: Whenever a plant Grows on a Watered tile, it gains +1" + Helper.mana_icon() 
 		"watered":
-			return "[color=gold]Watered[/color]: Some card effects can Water tiles. Plants growing on Watered tiles gain 40% more " + Helper.mana_icon()
+			return "[color=gold]Watered[/color]: Some card effects can Water tiles. Whenever a plant Grows on a Watered tile, it gains +1" + Helper.mana_icon()
 		"fleeting", "draw_target":
 			return "[color=gold]Fleeting[/color]: Card is removed from your deck when played or discarded. (Your deck will be resored at the end of the year)"
 		"corrupted":

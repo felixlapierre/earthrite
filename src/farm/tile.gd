@@ -178,12 +178,15 @@ func grow_one_week():
 	if state == Enums.TileState.Growing:
 		current_grow_progress += 1.0
 		var multiplier = 1.0
+		var water_bonus = 0.0
 		if is_watered():
 			multiplier += Global.WATERED_MULTIPLIER
 			var absorb = seed.get_effect("absorb")
 			if absorb != null:
 				multiplier += Global.WATERED_MULTIPLIER * absorb.strength
-		current_yield += seed_base_yield / seed_grow_time * multiplier
+			water_bonus = 1.0
+			$"../../".blight_bubble_animation(self, EventArgs.HarvestArgs.new(1 if Global.WATERED_MULTIPLIER == 0 else 2), Vector2.ZERO, Color.ROYAL_BLUE, 1)
+		current_yield += (seed_base_yield / seed_grow_time + water_bonus) * multiplier
 		update_plant_sprite()
 		grow_animation()
 		if current_grow_progress == seed_grow_time:
@@ -405,14 +408,13 @@ func show_peek(weeks: int = 0):
 	var panel = $PeekCont
 	
 	var projected_mana = current_yield
+	var water_bonus = 0.0
 	var multiplier = 1.0
 	if is_watered():
 		multiplier += Global.WATERED_MULTIPLIER
-		var absorb = seed.get_effect("absorb")
-		if absorb != null:
-			multiplier += Global.WATERED_MULTIPLIER * absorb.strength
+		water_bonus = 1.0
 	if seed_grow_time > 0:
-		projected_mana += seed_base_yield / seed_grow_time * multiplier * min(weeks, seed_grow_time - current_grow_progress)
+		projected_mana += (seed_base_yield / seed_grow_time + water_bonus) * multiplier * min(weeks, seed_grow_time - current_grow_progress)
 
 	var projected_state = Enums.TileState.Growing if current_grow_progress + weeks < seed_grow_time else Enums.TileState.Mature
 
