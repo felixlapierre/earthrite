@@ -20,5 +20,5 @@ func do_setup_dialogue(node: Node):
 	node.add_child(pick_options)
 	pick_options.setup("Pick a Legendary Card", options, func(selected):
 		node.remove_child(pick_options)
-		MountainsFarm.START_STRUCTURE = selected)
+		selected_card = selected)
 	await pick_options.pick_finished

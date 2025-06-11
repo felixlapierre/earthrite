@@ -137,7 +137,7 @@ func apply_enhance(enhance: Enhance):
 						"type": enhance.type
 						})
 					return n_card
-			n_card.effects.append(load("res://src/effect/data/regrow_0.tres"))
+			n_card.effects2.append(load("res://src/effect2/basic/regrow_0.tres"))
 			if enhance.strength == 1:
 				n_card.time += 1
 	if !n_card.has_enhance_type(enhance.type):

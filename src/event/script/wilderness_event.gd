@@ -52,7 +52,7 @@ func get_options():
 			# Get list of relevant enhances
 			var enhances: Array[Enhance] = [load("res://src/enhance/data/plus1yield.tres")]
 			if native_seed.can_strengthen_custom_effect():
-				enhances.append(load("res://assets/enhance/strength.png"))
+				enhances.append(load("res://src/enhance/data/strength.tres"))
 			if native_seed.time > 1:
 				enhances.append(load("res://src/enhance/data/growspeed.tres"))
 			if native_seed.get_effect("plant") == null and native_seed.name != "Dark Rose":
