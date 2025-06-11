@@ -29,6 +29,8 @@ func unregister(event_manager: EventManager):
 	listener.disable()
 
 func get_description(size: int):
+	if is_seed:
+		return get_timing_text() + highlight(str(strength * 100)) + "% chance to [color=gold]Spread[/color]"
 	return get_timing_text() + "Spread %s plants %s times" % [Helper.get_size_text(size), highlight(str(strength))]
 
 func copy():

@@ -55,20 +55,22 @@ func is_card_eligible(card: CardData):
 			return card.size < 9 and card.size > 0
 		Type.Discount:
 			return card.cost > 0
-		Type.GrowSpeed, Type.Mana, Type.Regrow:
+		Type.GrowSpeed:
+			return card.type == "SEED" and card.time > 1
+		Type.Mana, Type.Regrow:
 			return card.type == "SEED"
 		Type.Spread:
-			return card.get_effect("spread") == null and card.type == "SEED"
+			return !card.has_effect(Enums.EffectType.Spread)and card.type == "SEED"
 		Type.Frozen:
-			return card.get_effect("frozen") == null
+			return !card.has_effect(Enums.EffectType.Frozen)
 		Type.Springbound:
-			return card.get_effect("springbound") == null
+			return !card.has_effect(Enums.EffectType.Springbound)
 		Type.Burn:
-			return card.get_effect("burn") == null
+			return !card.has_effect(Enums.EffectType.Burn)
 		Type.Echo:
-			return card.get_effect("echo") == null
+			return !card.has_effect(Enums.EffectType.Echo)
 		Type.RemoveBurn:
-			return card.get_effect("burn") != null
+			return card.has_effect(Enums.EffectType.Burn)
 		Type.Strength:
 			if card.can_strengthen_custom_effect():
 				return true

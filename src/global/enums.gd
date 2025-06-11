@@ -51,7 +51,8 @@ enum EffectType {
 	Fleeting,
 	Echo,
 	Frozen,
-	Corrupted
+	Corrupted,
+	Springbound
 }
 
 enum MultiplayerGameType {

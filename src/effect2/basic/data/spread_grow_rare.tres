@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="SpreadEffect" load_steps=2 format=3 uid="uid://clji5hktrfkoq"]
+
+[ext_resource type="Script" path="res://src/effect2/basic/spread_effect.gd" id="1_26008"]
+
+[resource]
+script = ExtResource("1_26008")
+timing = 7
+seed = true
+strength = 0.5
+base_strength = 0.5
+strength_increment = 0.5

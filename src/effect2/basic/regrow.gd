@@ -18,7 +18,7 @@ func unregister(event_manager: EventManager):
 	listener.disable()
 
 func get_description(size: int):
-	return "Regrow " + str(strength)
+	return "Regrow" + (highlight(" " + str(strength)) if strength != 0 else "")
 
 func get_long_description():
 	return Helper.get_long_description_type(Enums.EffectType.Regrow, strength)

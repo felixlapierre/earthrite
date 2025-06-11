@@ -19,7 +19,8 @@ func unregister(event_manager: EventManager):
 	listener.disable()
 
 func get_description(size: int):
-	return "Draw " + highlight(str(strength)) + " card(s)"
+	var copy = " copy" if strength == 1 else " copies"
+	return "Add " + highlight(str(strength)) + copy + " of target plant's seed to your hand"
 
 func get_type():
 	return Enums.EffectType.Draw

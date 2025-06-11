@@ -216,7 +216,7 @@ func get_pick_from_description():
 			return "card"
 
 func get_and_then_description():
-	if PickFrom.Wish:
+	if pick_from == PickFrom.Wish:
 		return ""
 	var count_text = ""
 	if count == -1 and strength > 1:

@@ -40,7 +40,7 @@ func get_effect(effect_name):
 
 func has_effect(effect_type: Enums.EffectType):
 	for effect in effects2:
-		if effect.type == effect_type:
+		if effect.effect_type == effect_type:
 			return true
 	return false
 

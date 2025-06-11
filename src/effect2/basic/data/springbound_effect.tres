@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="SimpleEffect" load_steps=2 format=3 uid="uid://bmgnw0knamxcp"]
+
+[ext_resource type="Script" path="res://src/effect2/simple_effect.gd" id="1_gj6a4"]
+
+[resource]
+script = ExtResource("1_gj6a4")
+timing = 0
+seed = false
+eff_type = 19

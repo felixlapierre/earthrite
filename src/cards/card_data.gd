@@ -111,15 +111,15 @@ func apply_enhance(enhance: Enhance):
 		Enhance.Type.Mana:
 			n_card.yld += int(enhance.strength)
 		Enhance.Type.Spread:
-			n_card.effects.append(load("res://src/effect/data/spread_on_grow.tres"))
+			n_card.effects2.append(load("res://src/effect2/basic/data/spread_grow_rare.tres"))
 		Enhance.Type.Burn:
-			n_card.effects.append(load("res://src/effect/data/obliviate.tres"))
+			n_card.effects2.append(load("res://src/effect2/basic/data/burn_effect.tres"))
 		Enhance.Type.Frozen:
-			n_card.effects.append(load("res://src/effect/data/remembrance.tres"))
+			n_card.effects2.append(load("res://src/effect2/basic/data/frozen_effect.tres"))
 		Enhance.Type.Echo:
-			n_card.effects.append(load("res://src/effect/data/echo.tres"))
+			n_card.effects2.append(load("res://src/effect2/basic/data/echo_effect.tres"))
 		Enhance.Type.Burn:
-			n_card.effects.erase(load("res://src/effect/data/obliviate.tres"))
+			n_card.effects2.erase(load("res://src/effect2/basic/data/burn_effect.tres"))
 		Enhance.Type.Strength:
 			n_card.apply_strength(enhance)
 		Enhance.Type.Size:
@@ -127,10 +127,10 @@ func apply_enhance(enhance: Enhance):
 			if n_card.size > 9:
 				n_card.size = 9
 		Enhance.Type.Springbound:
-			n_card.effects.append(load("res://src/effect/data/springbound.tres"))
+			n_card.effects2.append(load("res://src/effect2/basic/data/springbound_effect.tres"))
 		Enhance.Type.Regrow:
-			for effect in n_card.effects:
-				if effect.name == "plant":
+			for effect in n_card.effects2:
+				if effect.effect_type == Enums.EffectType.Regrow:
 					effect.strength += enhance.strength
 					n_card.enhances.append({
 						"name": enhance.name,
@@ -174,22 +174,14 @@ func apply_strength(enhance: Enhance):
 
 func get_description() -> String:
 	var descr: String = text
-	for effect in effects:
-		var highlight = highlight_effect(effect)
-		var effect_text = effect.get_short_description(self, highlight)
-		if effect_text.length() > 0:
-			if effect.name == "destroy_plant":
-				var t = descr
-				descr = effect_text
-				effect_text = t
-			if descr.length() > 0:
-				descr += ". "
-			descr += effect_text
 	for effect in effects2:
+		var highlight = highlight_effect(effect)
 		var effect_text = effect.get_description(size)
 		if effect_text.length() > 0:
 			if descr.length() > 0:
 				descr += ". "
+			if highlight:
+				effect_text = "[color=aqua]" + effect_text.replace("[color=gold]", "").replace("[/color]", "") + "[/color]"
 			descr += effect_text
 	
 	if has_enhance_type(Enhance.Type.Strength):
@@ -200,7 +192,8 @@ func get_description() -> String:
 		descr = descr.replace("{STR_PER}", str(self.strength * 100))
 	return descr.replace("{MANA}", Helper.mana_icon())\
 		.replace("{BLUE_MANA}", Helper.blue_mana())\
-		.replace("{ENERGY}", Helper.energy_icon())
+		.replace("{ENERGY}", Helper.energy_icon())\
+		.replace("{TIME}", Helper.time_icon())
 
 # To be overridden by specific code seeds
 func register_events(event_manager: EventManager, tile: Tile):
@@ -319,14 +312,13 @@ func get_long_description():
 func on_card_drawn(args: EventArgs):
 	pass
 	
-func highlight_effect(effect: Effect):
-	return has_enhance_type(Enhance.Type.Regrow) and effect.name == "plant"\
-		or has_enhance_type(Enhance.Type.Echo) and effect.name == "echo"\
-		or has_enhance_type(Enhance.Type.Spread) and effect.name == "spread"\
-		or has_enhance_type(Enhance.Type.Frozen) and effect.name == "frozen"\
-		or has_enhance_type(Enhance.Type.Burn) and effect.name == "burn"\
-		or has_enhance_type(Enhance.Type.Springbound) and effect.name == "springbound"\
-		or has_enhance_type(Enhance.Type.Strength) and !can_strengthen_custom_effect() and effect.strength > 1
+func highlight_effect(effect: Effect2):
+	return has_enhance_type(Enhance.Type.Regrow) and effect.effect_type == Enums.EffectType.Regrow\
+		or has_enhance_type(Enhance.Type.Echo) and effect.effect_type == Enums.EffectType.Echo\
+		or has_enhance_type(Enhance.Type.Spread) and effect.effect_type == Enums.EffectType.Spread\
+		or has_enhance_type(Enhance.Type.Frozen) and effect.effect_type == Enums.EffectType.Frozen\
+		or has_enhance_type(Enhance.Type.Burn) and effect.effect_type == Enums.EffectType.Burn\
+		or has_enhance_type(Enhance.Type.Springbound) and effect.effect_type == Enums.EffectType.Springbound
 
 func has_enhance_type(type: Enhance.Type):
 	return enhances.any(func(enh):

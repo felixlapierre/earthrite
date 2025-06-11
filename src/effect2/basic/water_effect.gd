@@ -3,6 +3,11 @@ class_name WaterEffect
 
 var listener: Listener
 
+@export var timing: EventManager.EventType:
+	set(value): event_type = value
+@export var seed: bool:
+	set(value): is_seed = value
+
 func _init():
 	super(EventManager.EventType.OnActionCardUsed, false, Enums.EffectType.Water, "WaterEffect")
 

@@ -1,9 +1,11 @@
-[gd_resource type="Resource" script_class="CardData" load_steps=7 format=3 uid="uid://cffoxkimhv5wq"]
+[gd_resource type="Resource" script_class="CardData" load_steps=11 format=3 uid="uid://cffoxkimhv5wq"]
 
 [ext_resource type="SpriteFrames" uid="uid://cbd2baubwt2jg" path="res://src/animation/frames/synthesize_sf.tres" id="1_3dwup"]
 [ext_resource type="Script" path="res://src/effect/effect.gd" id="1_aymji"]
 [ext_resource type="Script" path="res://src/cards/card_data.gd" id="1_wfpb1"]
 [ext_resource type="Texture2D" uid="uid://w15hqy0w34a3" path="res://assets/card/synthesize.png" id="3_is3vc"]
+[ext_resource type="Script" path="res://src/effect2/basic/destroy_plant.gd" id="3_ysaa7"]
+[ext_resource type="Script" path="res://src/effect2/basic/draw_target_effect.gd" id="4_ak3ic"]
 
 [sub_resource type="Resource" id="Resource_ca8o8"]
 script = ExtResource("1_aymji")
@@ -18,6 +20,17 @@ name = "destroy_plant"
 strength = 0.0
 on = ""
 range = "self"
+
+[sub_resource type="Resource" id="Resource_a8ihy"]
+script = ExtResource("3_ysaa7")
+timing = 13
+seed = false
+
+[sub_resource type="Resource" id="Resource_hxpsy"]
+script = ExtResource("4_ak3ic")
+strength = 1.0
+base_strength = 1.0
+strength_increment = 1.0
 
 [resource]
 script = ExtResource("1_wfpb1")
@@ -36,9 +49,9 @@ seed_texture = 0
 texture_icon_offset = 16
 targets = Array[String](["Mature", "Growing"])
 effects = Array[ExtResource("1_aymji")]([SubResource("Resource_ca8o8"), SubResource("Resource_gtpo7")])
-enhances = Array[String]([])
+enhances = Array[Dictionary]([])
 strength = 0.0
 animation = ExtResource("1_3dwup")
 delay = 0.8
 anim_on = 0
-effects2 = Array[Resource("res://src/effect2/effect2.gd")]([])
+effects2 = Array[Resource("res://src/effect2/effect2.gd")]([SubResource("Resource_a8ihy"), SubResource("Resource_hxpsy")])

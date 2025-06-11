@@ -4,3 +4,5 @@
 
 [resource]
 script = ExtResource("1_t0cr7")
+timing = 13
+seed = false

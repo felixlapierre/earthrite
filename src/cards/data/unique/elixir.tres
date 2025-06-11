@@ -1,29 +1,29 @@
-[gd_resource type="Resource" script_class="CardData" load_steps=8 format=3 uid="uid://8nhacap1gojg"]
+[gd_resource type="Resource" script_class="CardData" load_steps=9 format=3 uid="uid://8nhacap1gojg"]
 
-[ext_resource type="Resource" uid="uid://b71hdqvt7x0ao" path="res://src/effect/data/remembrance.tres" id="1_7a1l1"]
-[ext_resource type="Resource" uid="uid://cijtg3ddxitn3" path="res://src/effect/data/obliviate.tres" id="2_okorl"]
-[ext_resource type="Script" path="res://src/effect/effect.gd" id="3_02hne"]
+[ext_resource type="Resource" uid="uid://mxr07jmep3th" path="res://src/effect2/basic/data/frozen_effect.tres" id="1_rg2ib"]
+[ext_resource type="Resource" uid="uid://43hxl7pkbfp2" path="res://src/effect2/basic/data/burn_effect.tres" id="2_wns0r"]
+[ext_resource type="Script" path="res://src/effect2/basic/add_mana_effect.gd" id="3_14ilf"]
+[ext_resource type="Script" path="res://src/effect2/data/protect.gd" id="4_13o2a"]
 [ext_resource type="Script" path="res://src/cards/card_data.gd" id="4_n1v0j"]
 [ext_resource type="Texture2D" uid="uid://bjoifde3lnnce" path="res://assets/card/alchemist-elixir.png" id="5_ncoix"]
 
-[sub_resource type="Resource" id="Resource_xxab3"]
-script = ExtResource("3_02hne")
-name = "protect"
-strength = 0.0
-on = ""
-range = "self"
-
-[sub_resource type="Resource" id="Resource_ab7g5"]
-script = ExtResource("3_02hne")
-name = "add_yield"
+[sub_resource type="Resource" id="Resource_3mrav"]
+script = ExtResource("3_14ilf")
+timing = 13
+seed = false
 strength = 5.0
-on = ""
-range = "self"
+base_strength = 5.0
+strength_increment = 5.0
+
+[sub_resource type="Resource" id="Resource_f8cfg"]
+script = ExtResource("4_13o2a")
+timing = 13
+seed = false
 
 [resource]
 script = ExtResource("4_n1v0j")
 type = "ACTION"
-name = "Potion"
+name = "Elixir"
 rarity = "unique"
 cost = 0
 yld = 0
@@ -36,9 +36,9 @@ texture = ExtResource("5_ncoix")
 seed_texture = 0
 texture_icon_offset = 16
 targets = Array[String](["Growing", "Mature"])
-effects = Array[ExtResource("3_02hne")]([ExtResource("1_7a1l1"), ExtResource("2_okorl"), SubResource("Resource_xxab3"), SubResource("Resource_ab7g5")])
+effects = Array[Resource("res://src/effect/effect.gd")]([])
 enhances = Array[Dictionary]([])
 strength = 5.0
 delay = 0.0
 anim_on = 0
-effects2 = Array[Resource("res://src/effect2/effect2.gd")]([])
+effects2 = Array[Resource("res://src/effect2/effect2.gd")]([ExtResource("1_rg2ib"), ExtResource("2_wns0r"), SubResource("Resource_3mrav"), SubResource("Resource_f8cfg")])
