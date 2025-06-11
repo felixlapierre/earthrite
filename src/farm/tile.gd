@@ -98,7 +98,7 @@ func update_display():
 func _process(delta: float) -> void:
 	$PlantSprite.material.set_shader_parameter("push", push_vector)
 	if seed != null:
-		$PlantSprite.material.set_shader_parameter("corrupted", seed.get_effect("corrupted") != null)
+		$PlantSprite.material.set_shader_parameter("corrupted", seed.has_effect(Enums.EffectType.Corrupted))
 
 func _on_tile_button_mouse_entered() -> void:
 	if !Settings.CLICK_MODE:
@@ -419,7 +419,7 @@ func show_peek(weeks: int = 0):
 	projected_mana = round(projected_mana)
 	$PeekCont/CenterCont/PeekLabel.text = str(projected_mana)
 	var corrupted = false
-	if seed != null and seed.get_effect("corrupted") != null:
+	if seed != null and seed.has_effect(Enums.EffectType.Corrupted):
 		corrupted = true
 		var stylebox: StyleBoxFlat = panel.get_theme_stylebox("panel").duplicate()
 		stylebox.set("bg_color", Color(Color.RED, 0.5))

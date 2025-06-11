@@ -22,7 +22,7 @@ func register(event_manager: EventManager, p_tile: Tile):
 			args.farm.do_animation(sf, null)
 			await args.farm.get_tree().create_timer(0.2).timeout
 		for tile in targets:
-			if tile.state == Enums.TileState.Mature:
+			if tile.state == Enums.TileState.Mature and !tile.seed.has_effect(Enums.EffectType.Corrupted):
 				var seed = tile.seed.copy()
 				await tile.harvest(false)
 				if tile.state == Enums.TileState.Empty and seed.yld > 0 and !seed.has_effect(Enums.EffectType.Corrupted):

@@ -29,7 +29,7 @@ const CLASS_NAME = "CardData"
 
 var card_listeners: Array[Listener]
 
-func _init(p_type = "CARD", p_name = "PlaceholderCardName", p_rarity = "common", p_cost = 1, p_yld = 1,\
+func _init(p_type = "ACTION", p_name = "PlaceholderCardName", p_rarity = "common", p_cost = 1, p_yld = 1,\
 	p_time = 1, p_size = 1, p_text = "", p_texture = null, p_seed_texture = 1, p_targets = [], p_effects = [],\
 	p_strength_increment = 1.0, p_size_increment = 1, p_text_icon_offset = 16, p_enhances = [], p_strength = 0, p_animation = null, p_delay = 0.0, p_anim_on = Enums.AnimOn.Mouse, p_effects_2 = []):
 		type = p_type
@@ -222,7 +222,7 @@ func unregister_seed_events(event_manager: EventManager):
 		eff.unregister_seed_events(event_manager)
 
 func get_yield(tile: Tile) -> EventArgs.HarvestArgs:
-	var yld = tile.current_yield if get_effect("corrupted") == null else -tile.current_yield
+	var yld = tile.current_yield
 	yld = round(yld)
 	return EventArgs.HarvestArgs.new(yld, tile.purple, false, 0, self)
 
@@ -309,9 +309,11 @@ func get_long_description():
 			description_tooltip += "\n"
 		description_tooltip += effect.get_long_description()
 	for effect: Effect2 in effects2:
-		if description_tooltip.length() > 0:
-			description_tooltip += "\n"
-		description_tooltip += effect.get_long_description()
+		var descr = effect.get_long_description()
+		if description_tooltip != descr:
+			if description_tooltip.length() > 0:
+				description_tooltip += "\n"
+			description_tooltip += descr
 	return description_tooltip
 
 func on_card_drawn(args: EventArgs):
@@ -337,5 +339,5 @@ func register(listener: Listener):
 func notify(event_manager: EventManager, type: EventManager.EventType, specific_args: EventArgs.SpecificArgs = null):
 	var args = event_manager.get_event_args(specific_args)
 	for listener in card_listeners:
-		if listener.type == type:
+		if listener.type == type and !event_manager.turn_manager.is_ritual_complete():
 			await listener.invoke(args)

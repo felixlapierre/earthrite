@@ -99,10 +99,13 @@ func set_card_info(card_data):
 			$HBoxContainer/VBoxContainer/BottomBar/TimeLabel.visible = card_info.time != 99
 			$HBoxContainer/VBoxContainer/BottomBar/TimeTexture.visible = card_info.time != 99
 			$HBoxContainer/VBoxContainer/BottomBar/TimeLabel.visible = card_info.time != 99
+			var total_yield_text = " (" + negative + str(card_info.yld * card_info.size) + ")" if card_info.size != -1 else ""
 			var yield_text = negative + str(card_info.yld)\
-				+ " (" + negative + str(card_info.yld * card_info.size) + ")"
+				+ total_yield_text
 			if card_info.has_enhance_type(Enhance.Type.Mana):
 				yield_text = "[color=aqua]" + yield_text
+			elif card_info.has_effect(Enums.EffectType.Corrupted):
+				yield_text = "[color=red]" + yield_text
 			$HBoxContainer/VBoxContainer/BottomBar/YieldLabel.text = yield_text
 			var time_text = str(card_info.time)
 
@@ -128,6 +131,8 @@ func set_card_info(card_data):
 	$HBoxContainer/VBoxContainer/BottomBar/TypeLabel.text = card_info.type
 	$HBoxContainer/VBoxContainer/TopBar/CardNameLabel.text = card_info.name
 	var cost_label = str(card_info.cost if card_info.cost >= 0 else "X")
+	cost_label = ("" if card_info.cost == 99 else cost_label)
+	$HBoxContainer/VBoxContainer/TopBar/TextureRect.visible = card_info.cost != 99
 	if card_data.type != "STRUCTURE" and card_data.has_enhance_type(Enhance.Type.Discount):
 		cost_label = "[color=aqua]" + cost_label + "[/color]"
 	$HBoxContainer/VBoxContainer/TopBar/CardCostLabel.text = cost_label

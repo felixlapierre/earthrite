@@ -12,7 +12,8 @@ enum PickFrom {
 	RandomSeed,
 	Blight,
 	HandCost1,
-	HandCanStrengthen
+	HandCanStrengthen,
+	Wish
 }
 
 enum AndThen {
@@ -38,6 +39,9 @@ var tile: Tile = null
 
 var listener_play: Listener
 var listener_andthen: Listener
+
+static var wish_index = 0
+static var wish_options_list = []
 
 # An effect involving picking cards
 # Pick 
@@ -107,6 +111,8 @@ func pick_card_event(args: EventArgs):
 					if effect.strength != 0:
 						return true
 				return false))
+		PickFrom.Wish:
+			options.assign(get_wish_options())
 	if count != -1:
 		options.shuffle()
 	Global.LOCK = true
@@ -116,7 +122,7 @@ func pick_card_event(args: EventArgs):
 		if event_type == EventManager.EventType.OnActionCardUsed:
 			args.specific.tile.play_effect_particles()
 		if timing2 == EventManager.EventType.AfterCardPlayed:
-			do_followup_action(args))
+			await do_followup_action(args))
 
 func pick_from_random_seed():
 	var cards = DataFetcher.get_all_cards()
@@ -143,7 +149,7 @@ func display_options(args: EventArgs, options: Array, set_card: Callable):
 			set_card.call(null)
 
 		pick_option_ui.setup(prompt, options, func(selected):
-			set_card.call(selected)
+			await set_card.call(selected)
 			args.user_interface.remove_child(pick_option_ui), cancel_callback)
 		await pick_option_ui.pick_finished
 
@@ -159,7 +165,7 @@ func do_followup_action(args: EventArgs):
 			args.cards.draw_specific_card_from(card, args.user_interface.get_global_mouse_position())
 	elif and_then == AndThen.Use:
 		Global.selected_card = card
-		args.farm.use_card(tile.grid_location, true)
+		await args.farm.use_card(tile.grid_location, true)
 		Global.selected_card = null
 	elif and_then == AndThen.Strengthen:
 		var str_enhance = Enhance.new("strength", "common", strength)
@@ -204,10 +210,14 @@ func get_pick_from_description():
 			return ("Pick" + count_text).replace("cards", "random Seed cards")
 		PickFrom.Blight:
 			return "Pick" + count_text + "Blight cards"
+		PickFrom.Wish:
+			return ""
 		_:
 			return "card"
 
 func get_and_then_description():
+	if PickFrom.Wish:
+		return ""
 	var count_text = ""
 	if count == -1 and strength > 1:
 		count_text = " [color=aqua]" + str(strength) + " copies[/color] "
@@ -269,4 +279,69 @@ func can_strengthen():
 func get_long_description():
 	if and_then == AndThen.Burn:
 		return Helper.get_long_description("burn")
+	elif pick_from == PickFrom.Wish:
+		return "[color=gold]Wish[/color]: One of 9 powerful effects."
 	return ""
+
+func get_wish_options():
+	if wish_options_list.size() == 0:
+		var timehop: CardData = load("res://src/cards/data/action/time_hop.tres").copy()
+		timehop.effects2[0].strength = 2
+		timehop.name = "Time"
+		wish_options_list.append(timehop)
+		var windrite: CardData = load("res://src/cards/data/action/windrite.tres").copy()
+		windrite.name = "Wind"
+		wish_options_list.append(windrite)
+		var invigorate: CardData = load("res://src/cards/data/action/invigorate.tres").copy()
+		invigorate.name = "Nature"
+		invigorate.effects2[0].strength = 3
+		wish_options_list.append(invigorate)
+		var wildflowers: CardData = load("res://src/fortune/unique/wildflower.tres").copy()
+		wildflowers.name = "Life"
+		wildflowers.size = -1
+		wildflowers.text = "Fill your farm with Wildflowers"
+		wish_options_list.append(wildflowers)
+		var protect: CardData = load("res://src/cards/data/action/shelter.tres").copy()
+		protect.size = -1
+		protect.name = "Abjuration"
+		wish_options_list.append(protect)
+		var draw: CardData = CardData.new()
+		draw.texture = load("res://assets/card/inspiration.png")
+		draw.name = "Knowledge"
+		draw.effects2.append(DrawCardEffect.new())
+		draw.effects2[0].strength = 10
+		draw.effects2[0].event_type = EventManager.EventType.AfterCardPlayed
+		wish_options_list.append(draw)
+		var energy: CardData = CardData.new()
+		energy.texture = load("res://assets/card/catalyze.png")
+		energy.name = "Lightning"
+		energy.effects2.append(GainEnergyEffect.new())
+		energy.effects2[0].event_type = EventManager.EventType.AfterCardPlayed
+		energy.effects2[0].strength = 5
+		wish_options_list.append(energy)
+		var yellow_mana: CardData = CardData.new()
+		yellow_mana.texture = load("res://assets/custom/YellowMana.png")
+		yellow_mana.name = "Sun"
+		yellow_mana.effects2.append(GainManaEffect.new())
+		yellow_mana.effects2[0].strength = 150
+		wish_options_list.append(yellow_mana)
+		var purple_mana: CardData = CardData.new()
+		purple_mana.texture = load("res://assets/custom/PurpleMana.png")
+		purple_mana.name = "Moon"
+		purple_mana.effects2.append(GainManaEffect.new())
+		purple_mana.effects2[0].strength = 200
+		purple_mana.effects2[0].purple = true
+		wish_options_list.append(purple_mana)
+		for opt in wish_options_list:
+			opt.cost = 99
+			if opt.size != -1:
+				opt.size = 0
+			if opt.effects2.size() > 0 and opt.effects2[0] is StrEffect:
+				opt.effects2[0].base_strength = opt.effects2[0].strength
+		wish_options_list.shuffle()
+	if wish_index >= 9:
+		wish_index = 0
+		wish_options_list.shuffle()
+	var result = wish_options_list.slice(wish_index, wish_index + 3)
+	wish_index += 3
+	return result

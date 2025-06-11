@@ -76,7 +76,7 @@ func use_card(grid_position, external_source: bool = false):
 			clear_overlay()
 			card_played.emit(Global.selected_structure)
 		return
-	if Global.selected_card == null or Global.selected_card.cost > energy:
+	if Global.selected_card == null or (Global.selected_card.cost > energy and !external_source):
 		no_energy.emit()
 		return
 	var card = Global.selected_card.copy()
@@ -93,7 +93,7 @@ func use_card(grid_position, external_source: bool = false):
 	else:
 		targets = get_targeted_tiles(grid_position, Global.selected_card, Global.selected_card.size, Global.shape, Global.rotate)
 	targets.shuffle()
-	card.register_events(event_manager, null)
+	card.register_events(event_manager, tiles[grid_position.x][grid_position.y])
 	var args = EventArgs.SpecificArgs.new(tiles[grid_position.x][grid_position.y])
 	args.play_args = EventArgs.PlayArgs.new(card, external_source)
 	await card.notify(event_manager, EventManager.EventType.BeforeCardPlayed, args)
@@ -408,7 +408,7 @@ func gain_yield(tile: Tile, args: EventArgs.HarvestArgs):
 	var destination = Global.MANA_TARGET_LOCATION_PURPLE if args.purple else Global.MANA_TARGET_LOCATION_YELLOW
 	var specific = EventArgs.SpecificArgs.new(tile)
 	specific.harvest_args = args
-	event_manager.notify_specific_args(EventManager.EventType.OnManaGained, specific)
+	await event_manager.notify_specific_args(EventManager.EventType.OnManaGained, specific)
 	blight_bubble_animation(tile, args, destination)
 	on_yield_gained.emit(args)
 

@@ -15,7 +15,7 @@ func register_fortune(event_manager: EventManager):
 			if tile.state == Enums.TileState.Mature:
 				var seed = tile.seed
 				await tile.harvest(false)
-				if !seed.has_effect(Enums.EffectType.Regrow) and seed.yld != 0 and seed.get_effect("corrupted") == null:
+				if !seed.has_effect(Enums.EffectType.Regrow) and seed.yld != 0 and !seed.has_effect(Enums.EffectType.Corrupted):
 					await tile.plant_seed_animate(seed)
 		args.farm.process_effect_queue()
 	event_manager.register_listener(event_type, callback)

@@ -44,7 +44,7 @@ func setup_items(items: Array):
 	for item in items:
 		var acorn = false
 		var callback = func(option):
-			pick_callback.call(option)
+			await pick_callback.call(option)
 			pick_finished.emit()
 		var bonus = Global.ACORN_BONUS
 		if reroll_enabled and randi_range(0, 100) < 15 * (1.0 + bonus):

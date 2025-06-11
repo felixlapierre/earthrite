@@ -11,7 +11,7 @@ func register(event_manager: EventManager, p_tile: Tile):
 	listener = Listener.create(self, func(args: EventArgs):
 		var tile = args.specific.tile
 		var seed = tile.seed
-		if seed != null and seed.yld > 0 and seed.get_effect("corrupted") == null:
+		if seed != null and seed.yld > 0 and !seed.has_effect(Enums.EffectType.Corrupted):
 			var effect = Effect.new("plant", 0.0, "", "", tile.grid_location, seed)
 			effects.append(effect)
 		)

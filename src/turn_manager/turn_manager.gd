@@ -52,7 +52,7 @@ func gain_yellow_mana(amount, delay = false):
 	ritual_counter -= amount
 	if ritual_counter > total_ritual:
 		ritual_counter = total_ritual
-	if ritual_counter <= 0 and !multiplayer_enabled():
+	if is_ritual_complete():
 		ritual_counter = 0
 		return true
 	return false
@@ -261,3 +261,6 @@ func wait_next_year():
 
 func multiplayer_enabled():
 	return multiplayer_turn.enabled
+
+func is_ritual_complete():
+	return ritual_counter <= 0 and !multiplayer_enabled()

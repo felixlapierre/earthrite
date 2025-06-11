@@ -20,7 +20,7 @@ func register_fortune(event_manager: EventManager):
 		var targeted_tiles = []
 		for tile in args.farm.get_all_tiles():
 			if tile.state != Enums.TileState.Inactive and tile.state != Enums.TileState.Structure and !tile.is_protected()\
-				and (tile.seed == null or tile.seed.get_effect("corrupted") == null)\
+				and (tile.seed == null or !tile.seed.has_effect(Enums.EffectType.Corrupted))\
 				and tile.grid_location.x == index:
 				targeted_tiles.append(tile)
 		for i in range(targeted_tiles.size()):

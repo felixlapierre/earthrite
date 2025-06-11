@@ -31,7 +31,8 @@ func get_type():
 	return Enums.EffectType.Protect
 
 func get_description(size: int):
-	return "[color=gold]Protect[/color] " + str(size) + " tile(s) until the end of the turn"
+	var size_text = str(size) if size != -1 else "ALL"
+	return "[color=gold]Protect[/color] " + size_text + " tile(s) until the end of the turn"
 
 func get_long_description():
 	return Helper.get_long_description("protect")

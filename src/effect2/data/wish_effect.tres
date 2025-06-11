@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="PickCardEffect" load_steps=2 format=3 uid="uid://cefplioenl46u"]
+
+[ext_resource type="Script" path="res://src/effect2/data/pick_card_effect.gd" id="1_cyuun"]
+
+[resource]
+script = ExtResource("1_cyuun")
+timing = 11
+seed = false
+timing2 = 11
+count = 0
+pick_from = 7
+and_then = 2
+skippable = false
+strength = 0.0
+base_strength = 0.0
+strength_increment = 0.0

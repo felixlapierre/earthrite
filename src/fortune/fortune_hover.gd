@@ -87,6 +87,8 @@ func on_other_clicked():
 	fortune_display.visible = false
 
 func popup_fortune(visible: bool):
+	if fortune_display.fortune == null:
+		return
 	fortune_display.visible = true
 
 	var base_position = global_position
