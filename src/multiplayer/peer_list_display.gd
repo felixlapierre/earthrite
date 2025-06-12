@@ -3,6 +3,7 @@ extends PanelContainer
 var PeerDisplayScene = preload("res://src/multiplayer/peer_display.tscn")
 
 @onready var Peers = $Margin/VBox/Peers
+@onready var Title = $Margin/VBox/Label
 # For each player I need
 # Name
 # Mage and farm images
@@ -14,8 +15,7 @@ var multiplayer_turn: MultiplayerTurn
 
 func setup(p_multiplayer_turn: MultiplayerTurn):
 	multiplayer_turn = p_multiplayer_turn
-	multiplayer_turn.on_end_turn_results_received.connect(func(results): update())
-	multiplayer_turn.on_end_explore_results_received.connect(func(results): update())
+	multiplayer_turn.player_state_updated.connect(func(): update())
 	visible = multiplayer_turn.enabled
 
 func update():
@@ -32,4 +32,5 @@ func update():
 			var peer_display: PeerDisplay = PeerDisplayScene.instantiate()
 			Peers.add_child(peer_display)
 			peer_display.update(opponent, false, multiplayer_turn.game_type)
+	Title.text = "Allies" if multiplayer_turn.is_coop() else "Opponents"
 

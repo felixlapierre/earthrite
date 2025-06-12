@@ -9,6 +9,7 @@ signal start_multiplayer_game(mage: MageAbility, game_info)
 @onready var DifficultyCont = $VBox/HBox2/Margin/VBox/HostGameStuff/DifficultyCont
 @onready var StartExploresCont = $VBox/HBox2/Margin/VBox/HostGameStuff/StartExploresCont
 @onready var LivesCont = $VBox/HBox2/Margin/VBox/HostGameStuff/LivesCont
+@onready var FarmSwapCont = $VBox/HBox2/Margin/VBox/HostGameStuff/FarmSwapCont
 
 @onready var LobbyCont = $VBox/HBox2/LobbyCont
 @onready var UsersLabel = $VBox/HBox2/LobbyCont/UsersLabel
@@ -59,7 +60,8 @@ var game_parameters = {
 	"difficulty": 0,
 	"starting_explores": 3,
 	"starting_lives": 1,
-	"type": Enums.MultiplayerGameType.Versus
+	"type": Enums.MultiplayerGameType.Versus,
+	"farm_swap": true
 }
 
 # Called when the node enters the scene tree for the first time.
@@ -153,6 +155,7 @@ func _on_game_type_option_item_selected(index):
 		1:
 			game_parameters.type = Enums.MultiplayerGameType.Cooperative
 	DifficultyCont.visible = !versus
+	FarmSwapCont.visible = !versus
 	LivesCont.visible = versus
 	StartExploresCont.visible = versus
 
@@ -160,6 +163,9 @@ func _on_difficulty_option_item_selected(index):
 	game_parameters.difficulty = index
 
 func _on_start_game_button_pressed():
+	if game_parameters.type == Enums.MultiplayerGameType.Cooperative:
+		game_parameters.starting_lives = 1
+		game_parameters.starting_explores = 3
 	Lobby.load_game.rpc(game_parameters)
 
 func update_users_list_display():
@@ -231,4 +237,6 @@ func set_mode(join_mode: bool):
 	JoinGameButton.theme = highlight_theme
 	JoinGameButton.text = "Join Game"
 	Title.text = "Join Game" if join_mode else "Host Game"
-	
+
+func _on_farm_swap_button_toggled(toggled_on):
+	game_parameters.farm_swap = toggled_on

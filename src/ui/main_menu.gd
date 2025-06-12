@@ -317,6 +317,7 @@ func connect_main_menu_signal(playspace):
 		NewGamePanel.visible = false
 		update_prompt("", null, "")
 		$Root/HBox/StatisticsPanel/StatisticsDisplay.create_stats_display(mage_fortune_list)
+		MultiplayerMenu.disconnect_game()
 		)
 
 
@@ -427,6 +428,7 @@ func _on_view_multiplayer_pressed():
 	MultiplayerMenu.visible = true
 
 func _on_multiplayer_menu_start_multiplayer_game(mage, game_info):
+	MultiplayerMenu.visible = false
 	mage_fortune = mage
 	var winter = game_info.type == Enums.MultiplayerGameType.Versus
 	await start_new_game(winter)

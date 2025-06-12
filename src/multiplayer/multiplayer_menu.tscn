@@ -145,7 +145,6 @@ theme = ExtResource("4_iggub")
 text = "Join Game"
 
 [node name="HostGameStuff" type="VBoxContainer" parent="VBox/HBox2/Margin/VBox"]
-visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 
@@ -255,6 +254,16 @@ popup/item_7/text = "Mastery 5"
 popup/item_7/icon = ExtResource("10_66en7")
 popup/item_7/id = 7
 
+[node name="FarmSwapCont" type="HBoxContainer" parent="VBox/HBox2/Margin/VBox/HostGameStuff"]
+visible = false
+layout_mode = 2
+
+[node name="FarmSwapButton" type="CheckButton" parent="VBox/HBox2/Margin/VBox/HostGameStuff/FarmSwapCont"]
+layout_mode = 2
+size_flags_horizontal = 3
+button_pressed = true
+text = "Farm Swap"
+
 [node name="Control" type="Control" parent="VBox/HBox2/Margin/VBox/HostGameStuff"]
 custom_minimum_size = Vector2(0, 30)
 layout_mode = 2
@@ -302,6 +311,7 @@ text = "Back"
 [connection signal="item_selected" from="VBox/HBox2/Margin/VBox/HostGameStuff/StartExploresCont/StartExploresOptions" to="." method="_on_start_explores_options_item_selected"]
 [connection signal="item_selected" from="VBox/HBox2/Margin/VBox/HostGameStuff/LivesCont/LivesOptions" to="." method="_on_lives_options_item_selected"]
 [connection signal="item_selected" from="VBox/HBox2/Margin/VBox/HostGameStuff/DifficultyCont/DifficultyOption" to="." method="_on_difficulty_option_item_selected"]
+[connection signal="toggled" from="VBox/HBox2/Margin/VBox/HostGameStuff/FarmSwapCont/FarmSwapButton" to="." method="_on_farm_swap_button_toggled"]
 [connection signal="pressed" from="VBox/HBox2/Margin/VBox/HostGameStuff/StartGameButton" to="." method="_on_start_game_button_pressed"]
 [connection signal="pressed" from="VBox/BackButton" to="." method="_on_back_button_pressed"]
 [connection signal="start_game" from="Lobby" to="." method="_on_lobby_start_game"]

@@ -3,9 +3,11 @@ class_name MultiplayerTurn
 
 signal on_end_turn_results_received
 signal on_end_explore_results_received
+signal player_state_updated
 
 var enabled = false
 var multiplayer_ui: MultiplayerUi
+var turn_manager: TurnManager
 
 var example_end_turn = {
 	"ritual_counter": 10,
@@ -39,6 +41,7 @@ var game_type: Enums.MultiplayerGameType
 var player_count = 0
 var living_player_count = 0
 var active_player_count = 0
+var farm_swap = true
 
 var end_turn_states: Dictionary = {}
 var end_explore_states: Dictionary = {}
@@ -76,6 +79,7 @@ func setup(p_lobby: Lobby, p_game_info: Dictionary):
 	living_player_count = player_count
 	active_player_count = player_count
 	game_type = p_game_info.type
+	farm_swap = p_game_info.farm_swap
 	for key in lobby.players.keys():
 		var player_info = lobby.players[key]
 		var name = player_info.name
@@ -84,13 +88,17 @@ func setup(p_lobby: Lobby, p_game_info: Dictionary):
 		player_states[key] = state
 	enabled = true
 	print("Start multiplayer game. " + str(player_count) + " players.")
+	if is_coop():
+		start_new_year_coop()
 
 # A function on the server that peers call when they finish the turn
 @rpc("any_peer", "call_local", "reliable")
 func notify_turn_ended(data: Dictionary):
 	var state = PlayerState.decode(data)
 	var peer_id = multiplayer.get_remote_sender_id()
+	state.is_ready = true
 	player_states[peer_id] = state
+	player_state_updated.emit()
 	if multiplayer.is_server():
 		end_turn_states[peer_id] = state
 		print("Server: Peer " + str(peer_id) + " is done turn")
@@ -101,6 +109,9 @@ func notify_turn_ended(data: Dictionary):
 
 func do_end_turn():
 	print("Server: Processing end turn")
+	if is_coop():
+		do_end_turn_coop()
+		return
 	for group in groups:
 		var damage_pool = {}
 		var group_active = []
@@ -208,6 +219,9 @@ func notify_done_exploring():
 	pass
 
 func start_new_year():
+	if is_coop():
+		start_new_year_coop()
+		return
 	var alive = []
 	for key in player_states:
 		if player_states[key].alive:
@@ -233,8 +247,10 @@ func start_new_year():
 func notify_client_end_turn_results(response):
 	print("Client: Received notification that turn is done (ID " + str(multiplayer.get_unique_id()) + ")")
 	latest_end_turn_response = response
+	latest_explore_response = null
 	for key in response:
 		player_states[key] = PlayerState.decode(response[key])
+	player_state_updated.emit()
 	on_end_turn_results_received.emit(response)
 
 # Server notifying peers that exploring is done
@@ -245,6 +261,7 @@ func notify_exploring_results(p_groups, states):
 	groups = p_groups
 	for key in states:
 		player_states[key] = PlayerState.decode(states[key])
+	player_state_updated.emit()
 	on_end_explore_results_received.emit(p_groups)
 
 # If the server ends turn last, it synchronously executes the end turn code, and
@@ -273,3 +290,70 @@ func wait_for_explore_results():
 
 func get_my_state():
 	return player_states[multiplayer.get_unique_id()]
+
+func is_coop():
+	return game_type == Enums.MultiplayerGameType.Cooperative
+
+func start_new_year_coop():
+	var group = []
+	var states = {}
+	for id in player_states.keys():
+		group.append(id)
+		states[id] = player_states[id].encode()
+	group.shuffle()
+	groups = [group]
+	print("Notifying players of new year (coop)")
+	notify_exploring_results.rpc(groups, states)
+
+func do_end_turn_coop():
+	var group = groups[0]
+	var extra_yellow = 0.0
+	var extra_blue = 0.0
+	# Share excess mana (need 2 passes so last player can share with the one before them)
+	for i in range(2):
+		for id in group:
+			var state: PlayerState = player_states[id]
+			if state.ritual_counter < 0:
+				extra_yellow -= state.ritual_counter
+				state.ritual_counter = 0
+			elif extra_yellow > 0.0:
+				var use = min(extra_yellow, state.ritual_counter)
+				state.ritual_counter -= use
+				extra_yellow -= use
+			if state.blue_mana < state.blight_attack:
+				if extra_blue > 0.0:
+					var use = min(extra_blue, state.blight_attack - state.blue_mana)
+					extra_blue -= use
+					state.blue_mana += use
+			elif state.blue_mana > state.blight_attack:
+				extra_blue += state.blue_mana - state.blight_attack
+				state.blue_mana = state.blight_attack
+	# Check for win
+	var win = true
+	var defeat = false
+	for id in group:
+		var state: PlayerState = player_states[id]
+		if state.ritual_counter > 0.0:
+			win = false
+	if win:
+		for id in group:
+			if turn_manager.year == Global.FINAL_YEAR:
+				player_states[id].winner = true
+			else:
+				player_states[id].victory = true
+	else:
+		# Damage after sharing
+		for id in group:
+			var state: PlayerState = player_states[id]
+			if state.blue_mana < state.blight_attack:
+				state.damage += state.blight_attack - state.blue_mana
+				if state.damage >= 100:
+					defeat = true
+		if defeat:
+			for id in group:
+				player_states[id].defeat = true
+	var results = {}
+	for id in group:
+		results[id] = player_states[id].encode()
+	print("Notifying players of turn results (coop)")
+	notify_client_end_turn_results.rpc(results)

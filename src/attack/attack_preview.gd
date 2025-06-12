@@ -52,6 +52,7 @@ func update():
 		PromptLabel.text = "Excess: " + str(ceil((turn_manager.purple_mana - turn_manager.target_blight) * 0.7)) + Helper.mana_icon()
 	else:
 		PromptLabel.text = "Safe!"
+	$NextTurns.visible = $NextTurns/List.get_child_count() > 0
 
 func yield_preview(args):
 	var yellow = args.yellow
@@ -73,14 +74,15 @@ func set_attack(p_attack: AttackPattern):
 	var fortunes = attack.get_fortunes()
 	for child in $NextTurns/List.get_children():
 		$NextTurns/List.remove_child(child)
-	for i in range(1, Global.FINAL_WEEK):
-		var preview = FutureTurnPreview.instantiate()
-		preview.setup(i, pattern[i], fortunes[i])
-		preview.selected.connect(func(week):
-			on_peek_week.emit(week))
-		$NextTurns/List.add_child(preview)
-		if i > 3:
-			preview.visible = false
+	if !turn_manager.multiplayer_enabled() or turn_manager.multiplayer_turn.is_coop():
+		for i in range(1, Global.FINAL_WEEK):
+			var preview = FutureTurnPreview.instantiate()
+			preview.setup(i, pattern[i], fortunes[i])
+			preview.selected.connect(func(week):
+				on_peek_week.emit(week))
+			$NextTurns/List.add_child(preview)
+			if i > 3:
+				preview.visible = false
 	update_fortunes(fortunes[0])
 
 func next_week():

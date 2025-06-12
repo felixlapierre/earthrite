@@ -18,6 +18,7 @@ var active: bool = false
 var victory: bool = false
 var defeat: bool = false
 var winner: bool = false
+var is_ready: bool = false
 var lives: int = 0
 
 static var property_list = ["id", "name", "farm_icon", "mage_icon", "ritual_counter", "ritual_target", "blue_mana", "blight_attack", "damage", "target", "alive", "active", "lives", "victory", "defeat", "winner"]

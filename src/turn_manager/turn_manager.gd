@@ -45,6 +45,7 @@ func setup(p_event_manager: EventManager):
 	blight_charts.append(load("res://src/attack/charts/blight_tier2.tres"))
 	blight_charts.append(load("res://src/attack/charts/blight_tier3.tres"))
 	blight_charts.append(load("res://src/attack/charts/blight_tier4.tres"))
+	multiplayer_turn.turn_manager = self
 
 # Return bool indicating if the ritual is complete
 func gain_yellow_mana(amount, delay = false):
@@ -102,11 +103,16 @@ func end_turn():
 			purple_mana = 0
 		damage = my_state.damage - blight_damage
 		blight_damage = my_state.damage
-		target_blight = my_state.blight_attack
 		ritual_counter = my_state.ritual_counter
 		week += 1
 		if my_state.victory == true:
 			$'../'.victory = true
+		if multiplayer_turn.is_coop():
+			target_blight = next_turn_blight
+			next_turn_blight = get_blight_requirements(week + 1, year)
+		else:
+			target_blight = my_state.blight_attack
+
 	else:
 		if blight_remaining > 0:
 			damage = blight_remaining
@@ -134,7 +140,10 @@ func end_turn():
 	return damage
 
 func register_attack_pattern(p_attack_pattern: AttackPattern):
-	attack_pattern = p_attack_pattern
+	if multiplayer_enabled() and !multiplayer_turn.is_coop():
+		attack_pattern = EmptyAttackPattern.new()
+	else:
+		attack_pattern = p_attack_pattern
 	var chart: Chart = get_chart(blight_charts)
 	attack_pattern.compute_blight_pattern(chart, year)
 	attack_pattern.compute_fortunes(year+1)

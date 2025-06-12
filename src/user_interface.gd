@@ -152,7 +152,7 @@ func start_year():
 	if mage_fortune.name == "Spawn of Chaos":
 		ChaosMageFortune.randomize_deck(deck)
 	turn_manager.register_attack_pattern($FortuneTeller.attack_pattern)
-	$UI/AttackPreview.set_attack($FortuneTeller.attack_pattern)
+	$UI/AttackPreview.set_attack(turn_manager.attack_pattern)
 	$UI.visible = true
 	$Winter.visible = false
 	AlertDisplay.clear(end_year_alert_text)
