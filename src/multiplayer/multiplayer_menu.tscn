@@ -1,8 +1,9 @@
-[gd_scene load_steps=12 format=3 uid="uid://nqgeqxuxwif6"]
+[gd_scene load_steps=13 format=3 uid="uid://nqgeqxuxwif6"]
 
 [ext_resource type="Theme" uid="uid://c21dhy264y6ty" path="res://assets/theme_large.tres" id="1_3b5tf"]
 [ext_resource type="Script" path="res://src/multiplayer/multiplayer_menu.gd" id="2_pbjo7"]
 [ext_resource type="Texture2D" uid="uid://djfe248r85tuq" path="res://assets/ui/Easy.png" id="3_048eb"]
+[ext_resource type="Theme" uid="uid://bdodinwpnjkw8" path="res://assets/theme_huge.tres" id="3_c20g8"]
 [ext_resource type="PackedScene" uid="uid://473mflrxdlk8" path="res://src/multiplayer/lobby.tscn" id="3_tjd1d"]
 [ext_resource type="Texture2D" uid="uid://k0j5u0imo8k3" path="res://assets/ui/Normal.png" id="4_hfowr"]
 [ext_resource type="Texture2D" uid="uid://c227lgcxce4ol" path="res://assets/ui/Hard.png" id="5_qgiy4"]
@@ -37,6 +38,12 @@ text = "Join"
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Host"
+
+[node name="Title" type="Label" parent="VBox"]
+layout_mode = 2
+theme = ExtResource("3_c20g8")
+text = "Join Game"
+horizontal_alignment = 1
 
 [node name="HBox2" type="HBoxContainer" parent="VBox"]
 layout_mode = 2
@@ -238,19 +245,28 @@ layout_mode = 2
 size_flags_vertical = 10
 text = "Start Game"
 
-[node name="LobbyCont" type="VBoxContainer" parent="VBox/HBox2"]
+[node name="LobbyCont" type="VBoxContainer" parent="VBox"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="UsersLabel" type="Label" parent="VBox/HBox2/LobbyCont"]
+[node name="Title" type="RichTextLabel" parent="VBox/LobbyCont"]
 layout_mode = 2
-text = "Not Connected"
+size_flags_horizontal = 4
+theme_override_font_sizes/normal_font_size = 70
+bbcode_enabled = true
+text = "[color=lightgray]Not Connected[/color]"
+fit_content = true
+autowrap_mode = 0
 
-[node name="UsersList" type="VBoxContainer" parent="VBox/HBox2/LobbyCont"]
+[node name="UsersLabel" type="Label" parent="VBox/LobbyCont"]
+layout_mode = 2
+text = "Connected Users:"
+
+[node name="UsersList" type="VBoxContainer" parent="VBox/LobbyCont"]
 layout_mode = 2
 
-[node name="RichTextLabel" type="RichTextLabel" parent="VBox/HBox2/LobbyCont/UsersList"]
+[node name="RichTextLabel" type="RichTextLabel" parent="VBox/LobbyCont/UsersList"]
 layout_mode = 2
 bbcode_enabled = true
 fit_content = true

@@ -7,18 +7,23 @@ signal start_multiplayer_game(mage: MageAbility, game_info)
 @onready var JoinGameStuff = $VBox/HBox2/JoinGameStuff
 @onready var HostGameStuff = $VBox/HBox2/HostGameStuff
 @onready var DifficultyCont = $VBox/HBox2/HostGameStuff/DifficultyCont
-@onready var LobbyCont = $VBox/HBox2/LobbyCont
-@onready var UsersLabel = $VBox/HBox2/LobbyCont/UsersLabel
+@onready var LobbyCont = $VBox/LobbyCont
+@onready var UsersLabel = $VBox/LobbyCont/UsersLabel
 
 @onready var IpAddressInput = $VBox/HBox2/JoinGameStuff/IpAddressContainer/VBox/IpAddressInput
 @onready var DisplayNameInput = $VBox/HBox2/Common/DisplayNameCont/VBox/DisplayNameInput
-@onready var UsersListVbox = $VBox/HBox2/LobbyCont/UsersList
+@onready var UsersListVbox = $VBox/LobbyCont/UsersList
 @onready var StartGameButton = $VBox/HBox2/HostGameStuff/StartGameButton
 
 @onready var FarmTypeOption: OptionButton = $VBox/HBox2/Common/FarmMargin/FarmType/FarmTypeOption
 @onready var CharacterOption: OptionButton = $VBox/HBox2/Common/CharacterMargin/Character/CharacterOption
 
 @onready var Lobby: Lobby = $Lobby
+
+@onready var JoinGameButton = $VBox/HBox/JoinButton
+@onready var HostGameButton = $VBox/HBox/HostButton
+@onready var Title = $VBox/Title
+@onready var LobbyTitle = $VBox/LobbyCont/Title
 
 var mage_fortune_list: Array[MageAbility] = [
 	load("res://src/fortune/characters/novice.gd").new(),
@@ -59,7 +64,7 @@ func _ready():
 		pass)
 	$Lobby.server_disconnected.connect(func():
 		update_users_list_display()
-		UsersLabel.text = "Not Connected")
+		LobbyTitle.text = "[center][color=lightgray]Server Disconnected[/color][/center]")
 		
 	for i in range(mage_fortune_list.size()):
 		var fortune = mage_fortune_list[i]
@@ -75,26 +80,30 @@ func _ready():
 		var data = FarmType.farms_id_map[i]
 		if !data.name in ["VILLAGE"]:
 			FarmTypeOption.add_icon_item(data.icon, data.display_name, data.id)
-
+			
+	JoinGameButton.disabled = true
 	Settings.load_settings()
 	DisplayNameInput.text = Settings.DISPLAY_NAME
+	IpAddressInput.text = Settings.JOIN_IP_ADDRESS
 
 func _process(_delta):
 	StartGameButton.disabled = Lobby.players.keys().size() <= 1
+	UsersLabel.visible = Lobby.players.keys().size() > 0
 
 func _on_join_button_pressed():
-	JoinGameStuff.visible = true
-	HostGameStuff.visible = false
+	disconnect_game()
+	set_mode(true)
 	Lobby.remove_multiplayer_peer()
-	
-	UsersLabel.text = "Not Connected"
+	LobbyTitle.text = "[center][color=lightgray]Not Connected[/color][/center]"
 
 func _on_host_button_pressed():
-	JoinGameStuff.visible = false
-	HostGameStuff.visible = true
+	disconnect_game()
 	var error = Lobby.create_game(get_my_player_info())
 	if error:
+		LobbyTitle.text = "[color=gold][center]Hosting Failed (Error " + str(error) + ")[/center][/color]"
 		return
+	set_mode(false)
+	LobbyTitle.text = "[color=gold][center]Server Online[/center][/color]"
 	UsersLabel.text = "Connected Users: "
 
 func _on_farm_type_option_item_selected(index):
@@ -109,8 +118,11 @@ func _on_character_option_item_selected(index):
 func _on_join_game_button_pressed():
 	var error = Lobby.join_game(IpAddressInput.text, get_my_player_info())
 	if error:
+		LobbyTitle.text = "[color=gold][center]Connection Failed (Error " + str(error) + ")[/center][/color]"
 		return
-	UsersLabel.text = "Connected Users: "
+	LobbyTitle.text = "[color=gold][center]Connected[/center][/color]"
+	Settings.JOIN_IP_ADDRESS = IpAddressInput.text
+	Settings.save_settings()
 
 func _on_game_type_option_item_selected(index):
 	match index:
@@ -142,6 +154,11 @@ func update_users_list_display():
 		label.add_text(player_info.name)
 
 func _on_back_button_pressed():
+	disconnect_game()
+	JoinGameStuff.visible = true
+	HostGameStuff.visible = false
+	JoinGameButton.disabled = true
+	HostGameButton.disabled = false
 	back_pressed.emit()
 
 func _on_display_name_input_text_changed(new_text):
@@ -174,4 +191,16 @@ func _on_start_explores_options_item_selected(index):
 func _on_lives_options_item_selected(index):
 	var text = $VBox/HBox2/HostGameStuff/LivesCont/LivesOptions.get_item_text(index)
 	game_parameters.starting_lives = int(text)
+	
+func disconnect_game():
+	Lobby.remove_multiplayer_peer()
+	update_users_list_display()
+	LobbyTitle.text = "[center][color=lightgray]Not Connected[/color][/center]"
+
+func set_mode(join_mode: bool):
+	JoinGameStuff.visible = join_mode
+	HostGameStuff.visible = !join_mode
+	JoinGameButton.disabled = join_mode
+	HostGameButton.disabled = !join_mode
+	Title.text = "Join Game" if join_mode else "Host Game"
 	
