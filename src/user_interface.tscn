@@ -1,4 +1,4 @@
-[gd_scene load_steps=47 format=3 uid="uid://cswinrop881oo"]
+[gd_scene load_steps=48 format=3 uid="uid://cswinrop881oo"]
 
 [ext_resource type="Script" path="res://src/user_interface.gd" id="1_j28fq"]
 [ext_resource type="Texture2D" uid="uid://0p1tevlogry8" path="res://assets/ui/obelisk-decaying.png" id="2_e2cij"]
@@ -27,6 +27,7 @@
 [ext_resource type="PackedScene" uid="uid://b7luloyqjcwjb" path="res://src/ui/energy_display.tscn" id="20_i330f"]
 [ext_resource type="Texture2D" uid="uid://r85h2ey4h5ks" path="res://assets/custom/PreviewButton.png" id="21_tlcd4"]
 [ext_resource type="Texture2D" uid="uid://b1x8as1ltlxj0" path="res://assets/custom/PreviewButtonHover.png" id="22_oyub8"]
+[ext_resource type="PackedScene" uid="uid://upgvpgrxxgp1" path="res://src/multiplayer/peer_list_display.tscn" id="22_tv2tn"]
 [ext_resource type="PackedScene" uid="uid://28om5nbxx6qk" path="res://src/ui/display/weather_display.tscn" id="22_xo87j"]
 [ext_resource type="PackedScene" uid="uid://bks8p1urlqgax" path="res://src/attack/attack_preview.tscn" id="24_5346t"]
 [ext_resource type="Theme" uid="uid://bdodinwpnjkw8" path="res://assets/theme_huge.tres" id="24_jal2o"]
@@ -442,6 +443,13 @@ text = "End Turn"
 
 [node name="WeatherDisplay" parent="UI" instance=ExtResource("22_xo87j")]
 position = Vector2(1389, 140)
+
+[node name="PeerListDisplay" parent="UI" instance=ExtResource("22_tv2tn")]
+layout_mode = 1
+offset_left = 1644.0
+offset_top = 4.0
+offset_right = 1911.0
+offset_bottom = 236.0
 
 [node name="AlertContainer" parent="." instance=ExtResource("18_ih37u")]
 visible = false

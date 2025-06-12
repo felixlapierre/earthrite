@@ -92,7 +92,8 @@ func end_year(endless: bool):
 	
 	await get_tree().create_timer(Constants.MANA_MOVE_TIME).timeout
 	
-	if turn_manager.year == Global.FINAL_YEAR and !endless:
+	if (turn_manager.year == Global.FINAL_YEAR and !endless and !turn_manager.multiplayer_enabled())\
+		or (turn_manager.multiplayer_enabled() and turn_manager.multiplayer_turn.get_my_state().winner):
 		await on_win()
 		return
 
@@ -164,7 +165,7 @@ func on_lose():
 	
 	await get_tree().create_timer(1.5).timeout
 
-	if turn_manager.multiplayer_turn.enabled and turn_manager.multiplayer_turn.my_lives > 0:
+	if turn_manager.multiplayer_turn.enabled and turn_manager.multiplayer_turn.get_my_state().lives > 0:
 		start_winter()
 	else:
 		$UserInterface/EndScreen.visible = true

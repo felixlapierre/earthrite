@@ -37,6 +37,7 @@ var mages_map: Dictionary = {}
 var users_map = {}
 
 var farm = "FOREST"
+var farm_icon = "res://assets/mage/forest.png"
 var starting_explores = 3
 var starting_lives = 1
 var mage_fortune: MageAbility = load("res://src/fortune/characters/novice.gd").new();
@@ -72,7 +73,7 @@ func _ready():
 	var farm_names = FarmType.farms.keys()
 	for i in range(farm_names.size()):
 		var data = FarmType.farms_id_map[i]
-		if !data.name in ["LUNARTEMPLE", "VILLAGE"]:
+		if !data.name in ["VILLAGE"]:
 			FarmTypeOption.add_icon_item(data.icon, data.display_name, data.id)
 
 	Settings.load_settings()
@@ -91,19 +92,22 @@ func _on_join_button_pressed():
 func _on_host_button_pressed():
 	JoinGameStuff.visible = false
 	HostGameStuff.visible = true
-	var error = Lobby.create_game()
+	var error = Lobby.create_game(get_my_player_info())
 	if error:
 		return
 	UsersLabel.text = "Connected Users: "
 
 func _on_farm_type_option_item_selected(index):
 	farm = FarmType.farms_id_map[index].name
+	farm_icon = FarmType.farms_id_map[index].icon.resource_path
+	reregister_player()
 
 func _on_character_option_item_selected(index):
 	mage_fortune = mages_map[index]
+	reregister_player()
 
 func _on_join_game_button_pressed():
-	var error = Lobby.join_game(IpAddressInput.text)
+	var error = Lobby.join_game(IpAddressInput.text, get_my_player_info())
 	if error:
 		return
 	UsersLabel.text = "Connected Users: "
@@ -128,9 +132,14 @@ func update_users_list_display():
 		UsersListVbox.remove_child(child)
 	for peer_id in Lobby.players.keys():
 		var player_info = Lobby.players[peer_id]
-		var label = Label.new()
-		label.text = player_info.name
+		var label = RichTextLabel.new()
 		UsersListVbox.add_child(label)
+		label.bbcode_enabled = true
+		label.fit_content = true
+		label.autowrap_mode = TextServer.AUTOWRAP_OFF
+		label.add_image(load(player_info.farm_icon))
+		label.add_image(load(player_info.mage_icon))
+		label.add_text(player_info.name)
 
 func _on_back_button_pressed():
 	back_pressed.emit()
@@ -138,7 +147,17 @@ func _on_back_button_pressed():
 func _on_display_name_input_text_changed(new_text):
 	Settings.DISPLAY_NAME = new_text
 	Settings.save_settings()
-	Lobby._register_player({"name": Settings.DISPLAY_NAME})
+	reregister_player()
+
+func reregister_player():
+	Lobby._register_player.rpc(get_my_player_info())
+
+func get_my_player_info():
+	return {
+		"name": Settings.DISPLAY_NAME,
+		"farm_icon": farm_icon,
+		"mage_icon": mage_fortune.icon.resource_path
+	}
 
 
 func _on_lobby_start_game(game_info):

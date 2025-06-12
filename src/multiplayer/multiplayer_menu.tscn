@@ -13,6 +13,7 @@
 [ext_resource type="Texture2D" uid="uid://1ieyrs8dbhl4" path="res://assets/ui/Mastery5.png" id="10_66en7"]
 
 [node name="MultiplayerMenu" type="PanelContainer"]
+custom_minimum_size = Vector2(1000, 700)
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -248,6 +249,12 @@ text = "Not Connected"
 
 [node name="UsersList" type="VBoxContainer" parent="VBox/HBox2/LobbyCont"]
 layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="VBox/HBox2/LobbyCont/UsersList"]
+layout_mode = 2
+bbcode_enabled = true
+fit_content = true
+autowrap_mode = 0
 
 [node name="BackButton" type="Button" parent="VBox"]
 custom_minimum_size = Vector2(0, 70)

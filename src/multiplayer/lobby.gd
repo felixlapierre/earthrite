@@ -32,8 +32,8 @@ func _ready():
 	multiplayer.server_disconnected.connect(_on_server_disconnected)
 
 # Call from outside when a player wants to join a game
-func join_game(address = ""):
-	player_info = {"name": Settings.DISPLAY_NAME}
+func join_game(address = "", new_player_info: Dictionary = {}):
+	player_info = new_player_info
 	if address.is_empty():
 		address = DEFAULT_SERVER_IP
 	var peer = ENetMultiplayerPeer.new()
@@ -44,8 +44,8 @@ func join_game(address = ""):
 	multiplayer.multiplayer_peer = peer
 
 # Host: Call to create game and become a server
-func create_game():
-	player_info = {"name": Settings.DISPLAY_NAME}
+func create_game(my_player_info):
+	player_info = my_player_info
 	var peer = ENetMultiplayerPeer.new()
 	var error = peer.create_server(PORT, MAX_CONNECTIONS)
 	print(error)
@@ -53,8 +53,7 @@ func create_game():
 		return error
 	multiplayer.multiplayer_peer = peer
 
-	players[1] = player_info
-	player_connected.emit(1, player_info)
+	_register_player.rpc(player_info)
 
 # Host: Call to close the server
 func remove_multiplayer_peer():
@@ -79,7 +78,7 @@ func load_game(game_info):
 func _on_player_connected(id):
 	_register_player.rpc_id(id, player_info)
 
-@rpc("any_peer", "reliable")
+@rpc("any_peer", "reliable", "call_local")
 func _register_player(new_player_info):
 	var new_player_id = multiplayer.get_remote_sender_id()
 	players[new_player_id] = new_player_info

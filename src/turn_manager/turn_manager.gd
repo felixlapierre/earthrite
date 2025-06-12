@@ -81,28 +81,31 @@ func end_turn():
 	
 	if multiplayer_turn.enabled:
 		# Multiplayer
-		var data = {
-			"ritual_counter": ritual_counter,
-			"ritual_target": total_ritual,
-			"blight_attack": target_blight,
-			"purple_mana": purple_mana,
-			"target": -1, #-1 for no specific target, otherwise ID of the peer under attack
-			"damage": blight_damage
-		}
+		var my_id = multiplayer.get_unique_id()
+		var my_state: PlayerState = multiplayer_turn.get_my_state()
+		my_state.ritual_counter = ritual_counter
+		my_state.ritual_target = total_ritual
+		my_state.blight_attack = target_blight
+		my_state.blue_mana = purple_mana
+		my_state.target = -1
+		my_state.damage = blight_damage
 		if flag_defer_excess and purple_mana > target_blight:
-			purple_mana -= target_blight
-			data.purple_mana = target_blight
-		else:
-			purple_mana = 0
-		multiplayer_turn.notify_turn_ended.rpc(data)
+			my_state.blue_mana = target_blight
+
+		multiplayer_turn.notify_turn_ended.rpc(my_state.encode())
 		print("Waiting for other players (turn end)")
 		var result = await multiplayer_turn.wait_for_end_turn_results()
-		damage = result.damage - blight_damage
-		blight_damage = result.damage
-		target_blight = result.blight_attack
-		ritual_counter = result.ritual_counter
+		my_state = PlayerState.decode(result[my_id])
+		if flag_defer_excess and purple_mana > target_blight:
+			purple_mana -= target_blight
+		else:
+			purple_mana = 0
+		damage = my_state.damage - blight_damage
+		blight_damage = my_state.damage
+		target_blight = my_state.blight_attack
+		ritual_counter = my_state.ritual_counter
 		week += 1
-		if result.victory == true:
+		if my_state.victory == true:
 			$'../'.victory = true
 	else:
 		if blight_remaining > 0:
@@ -257,7 +260,8 @@ func wait_next_year():
 	if multiplayer_turn.enabled:
 		multiplayer_turn.notify_done_exploring.rpc()
 		print("Waiting for other players (explore)")
-		await multiplayer_turn.wait_for_explore_results()
+		var groups = await multiplayer_turn.wait_for_explore_results()
+		print(groups)
 
 func multiplayer_enabled():
 	return multiplayer_turn.enabled
