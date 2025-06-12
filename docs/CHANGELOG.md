@@ -1,5 +1,16 @@
 # Changelog
 
+## Version 0.1.2 - June 12th
+
+- Added multiplayer (Co-op and Versus)
+- Added new card (Wish)
+- Reworked Water mechanic. Watered plants now gain +1 mana whenever they grow instead of +50%.
+- Archmage now picks the legendary card
+- Epochrite no longer destroys plants
+- Mountain farm gains more extra structures
+- Riverland farm now has the old +50% water bonus in addition to the new watering mechanics
+- Rewrote a bunch of code related to effects
+
 ## Version 0.1.1 - May 25th
 
 - Added 5 new cards (Implosion, Shelter, Epochrite, Meteor, Emperor's Crown)
