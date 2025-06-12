@@ -4,6 +4,7 @@ class_name Lobby
 signal player_connected(peer_id, player_info)
 signal player_disconnected(peer_id)
 signal server_disconnected
+signal connected_to_server
 
 signal start_game
 
@@ -37,7 +38,7 @@ func join_game(address = "", new_player_info: Dictionary = {}):
 	if address.is_empty():
 		address = DEFAULT_SERVER_IP
 	var peer = ENetMultiplayerPeer.new()
-	var error = peer.create_client(address, PORT)
+	var error: Error = peer.create_client(address, PORT)
 	print(error)
 	if error > 0:
 		return error
@@ -90,6 +91,7 @@ func _on_player_disconnected(id):
 	player_disconnected.emit(id)
 
 func _on_connected_ok():
+	connected_to_server.emit()
 	var peer_id = multiplayer.get_unique_id()
 	players[peer_id] = player_info
 	player_connected.emit(peer_id, player_info)
