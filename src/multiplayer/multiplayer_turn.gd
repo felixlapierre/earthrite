@@ -73,6 +73,8 @@ var lobby: Lobby
 var latest_end_turn_response
 var latest_explore_response
 
+var my_id
+
 func setup(p_lobby: Lobby, p_game_info: Dictionary):
 	lobby = p_lobby
 	player_count = lobby.players.keys().size()
@@ -208,7 +210,7 @@ func notify_done_exploring():
 	if multiplayer.is_server():
 		print("Server: " + str(multiplayer.get_remote_sender_id()) + " is done exploring")
 		finish_explore_ready += 1
-		if finish_explore_ready == player_count:
+		if finish_explore_ready == living_player_count:
 			start_new_year()
 			finish_explore_ready = 0
 		else:
@@ -235,15 +237,16 @@ func start_new_year():
 	var i = 0
 	while i < alive.size():
 		if alive.size() - i == 3:
-			groups.append([alive[0].id, alive[1].id, alive[2].id])
+			groups.append([alive[i+0].id, alive[i+1].id, alive[i+2].id])
 			i += 3
 		else:
-			groups.append([alive[0].id, alive[1].id])
+			groups.append([alive[i+0].id, alive[i+1].id])
 			i += 2
 	print("Notifying players that exploring is done")
 	var states = {}
 	for key in player_states:
 		states[key] = player_states[key].encode()
+	active_player_count = living_player_count
 	notify_exploring_results.rpc(groups, states)
 
 # Server notifying peers that they can do the next turn
@@ -261,6 +264,7 @@ func notify_client_end_turn_results(response):
 @rpc("authority", "call_local", "reliable")
 func notify_exploring_results(p_groups, states):
 	print("Client: Received notification that exploring is done")
+	my_id = multiplayer.get_unique_id()
 	latest_explore_response = p_groups
 	groups = p_groups
 	for key in states:
@@ -293,7 +297,7 @@ func wait_for_explore_results():
 	return results
 
 func get_my_state():
-	return player_states[multiplayer.get_unique_id()]
+	return player_states[my_id]
 
 func is_coop():
 	return game_type == Enums.MultiplayerGameType.Cooperative

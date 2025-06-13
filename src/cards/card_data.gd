@@ -55,9 +55,9 @@ func _init(p_type = "ACTION", p_name = "PlaceholderCardName", p_rarity = "common
 		effects2.assign(p_effects_2)
 		card_listeners = []
 
-func get_effect(effect_name):
-	for effect in effects:
-		if effect.name == effect_name:
+func get_effect(type: Enums.EffectType) -> Effect2:
+	for effect: Effect2 in effects2:
+		if effect.effect_type == type:
 			return effect
 	return null
 

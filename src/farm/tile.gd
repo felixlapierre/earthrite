@@ -181,9 +181,6 @@ func grow_one_week():
 		var water_bonus = 0.0
 		if is_watered():
 			multiplier += Global.WATERED_MULTIPLIER
-			var absorb = seed.get_effect("absorb")
-			if absorb != null:
-				multiplier += Global.WATERED_MULTIPLIER * absorb.strength
 			water_bonus = 1.0
 			$"../../".blight_bubble_animation(self, EventArgs.HarvestArgs.new(1 if Global.WATERED_MULTIPLIER == 0 else 2), Vector2.ZERO, Color.ROYAL_BLUE, 1)
 		current_yield += (seed_base_yield / seed_grow_time + water_bonus) * multiplier

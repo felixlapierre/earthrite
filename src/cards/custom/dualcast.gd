@@ -11,7 +11,7 @@ func register_seed_events(event_manager: EventManager, p_tile: Tile):
 
 	# On card played
 	callback = func(args: EventArgs):
-		if tile.seed.get_effect("draw") == null:
+		if !tile.seed.has_effect(Enums.EffectType.Draw):
 			var card = args.specific.play_args.card
 			tile.seed.effects.append(Effect.new("draw", strength, "harvest", "self", Vector2.ZERO, card.copy()))
 			tile.seed.text = ""

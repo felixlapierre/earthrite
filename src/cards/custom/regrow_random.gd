@@ -4,14 +4,14 @@ class_name RegrowRandom
 var callback: Callable
 var event_type = EventManager.EventType.BeforeCardPlayed
 
-var regrow = preload("res://src/effect/data/regrow_0.tres")
+var regrow = preload("res://src/effect2/basic/regrow_0.tres")
 
 # To be overridden by specific code seeds
 func register_events(event_manager: EventManager, p_tile: Tile):
 	callback = func(args: EventArgs):
 		var eligible: Array[Tile] = []
 		for tile: Tile in args.farm.get_all_tiles():
-			if tile.seed != null and tile.seed.get_effect("plant") == null:
+			if tile.seed != null and !tile.seed.has_effect(Enums.EffectType.Regrow):
 				eligible.append(tile)
 		eligible.shuffle()
 		var i = 0

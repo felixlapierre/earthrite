@@ -55,7 +55,7 @@ func get_options():
 				enhances.append(load("res://src/enhance/data/strength.tres"))
 			if native_seed.time > 1:
 				enhances.append(load("res://src/enhance/data/growspeed.tres"))
-			if native_seed.get_effect("plant") == null and native_seed.name != "Dark Rose":
+			if !native_seed.has_effect(Enums.EffectType.Regrow) and native_seed.name != "Dark Rose":
 				enhances.append(load("res://src/enhance/data/regrow.tres"))
 			if native_seed.size < 9:
 				enhances.append(load("res://src/enhance/data/size.tres"))

@@ -16,9 +16,10 @@ script = ExtResource("2_jtcyw")
 layout_mode = 2
 
 [node name="NameLabel" type="RichTextLabel" parent="HBox"]
+custom_minimum_size = Vector2(250, 0)
 layout_mode = 2
 bbcode_enabled = true
-fit_content = true
+text = "MAximilian the longest name in the "
 autowrap_mode = 0
 
 [node name="Status" type="RichTextLabel" parent="HBox"]

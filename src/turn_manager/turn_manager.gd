@@ -92,7 +92,8 @@ func end_turn():
 		my_state.damage = blight_damage
 		if flag_defer_excess and purple_mana > target_blight:
 			my_state.blue_mana = target_blight
-
+		if Global.FARM_TYPE == LunarTemple.NAME:
+			my_state.blue_mana = target_blight
 		multiplayer_turn.notify_turn_ended.rpc(my_state.encode())
 		print("Waiting for other players (turn end)")
 		var result = await multiplayer_turn.wait_for_end_turn_results()

@@ -61,7 +61,7 @@ func blightattack_text(blightdiff: int, args: EventArgs):
 			path=PURPLE_MANA_IMG
 		}))
 	elif args.cards.get_hand_info().all(func(card_data: CardData):
-			card_data.get_effect("harvest") == null):
+			!card_data.has_effect(Enums.EffectType.Harvest)):
 		add_text(tr("TUTORIAL_NOSCYTHE").format({
 			path=PURPLE_MANA_IMG
 		}))

@@ -34,11 +34,13 @@ func unregister_fortune(event_manager: EventManager):
 
 func apply_time(card: CardData):
 	if card.type == "SEED":
-		var regrow = card.get_effect("plant")
-		if regrow == null:
-			card.effects.append(Effect.new("plant", int(strength), "harvest"))
+		var regrow = card.has_effect(Enums.EffectType.Regrow)
+		if !regrow:
+			card.effects2.append(load("res://src/effect2/basic/regrow_3.tres"))
 		else:
-			regrow.strength += int(strength)
+			var eff = card.get_effect(Enums.EffectType.Regrow)
+			eff.strength += int(strength)
+			eff.base_strength += int(strength)
 		card.time += 1
 
 func upgrade_power():

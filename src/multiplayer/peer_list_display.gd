@@ -4,6 +4,7 @@ var PeerDisplayScene = preload("res://src/multiplayer/peer_display.tscn")
 
 @onready var Peers = $Margin/VBox/Peers
 @onready var Title = $Margin/VBox/Label
+@onready var LivesLabel = $Margin/VBox/LivesLabel
 # For each player I need
 # Name
 # Mage and farm images
@@ -20,6 +21,9 @@ func setup(p_multiplayer_turn: MultiplayerTurn):
 
 func update():
 	visible = true
+	var my_id = multiplayer.get_unique_id()
+	LivesLabel.visible = multiplayer_turn.game_type == Enums.MultiplayerGameType.Versus
+	LivesLabel.text = "Lives: " + str(multiplayer_turn.player_states[my_id].lives)
 	for child in Peers.get_children():
 		Peers.remove_child(child)
 	var my_group = []

@@ -115,7 +115,7 @@ func draw_specific_card_from(card_data: CardData, from: Vector2):
 func draw_springbound_cards(count: int):
 	var springbound_cards = []
 	for card in deck_cards:
-		if card.get_effect("springbound") != null:
+		if card.has_effect(Enums.EffectType.Springbound):
 			springbound_cards.append(card)
 	springbound_cards.shuffle()
 	while springbound_cards.size() > 0 and number_of_cards_in_hand < count:
@@ -133,12 +133,6 @@ func play_card():
 	for card in $Hand.get_children():
 		if card.state == Enums.CardState.InMouse:
 			playedcard = card
-	
-	# Have to draw before discarding or we could draw the card we just discarded
-	var draw = played_card_info.get_effect("draw")
-	if draw != null and draw.on == "play":
-		for i in range(draw.strength):
-			drawcard()
 	
 	# If Obliviate, delete instead of discarding
 	if playedcard != null:
@@ -253,7 +247,7 @@ func unselect_current_card():
 
 func remove_fleeting():
 	for card in $Hand.get_children():
-		if card.card_info.get_effect("fleeting") != null:
+		if card.card_info.has_effect(Enums.EffectType.Fleeting):
 			remove_hand_card(card)
 			notify_card_burned(card.card_info)
 	reorganize_hand()

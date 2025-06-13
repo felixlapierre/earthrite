@@ -385,19 +385,6 @@ func perform_effect(effect, tile: Tile):
 			tile.destroy()
 		"destroy_plant":
 			tile.destroy_plant()
-		"replant":
-			if tile.seed.get_effect("plant") == null:
-				effect_queue.append(Effect.new("plant", 0, "", "self", tile.grid_location, tile.seed.copy()))
-		"add_recurring":
-			if tile.seed.get_effect("plant") == null:
-				var new_seed = tile.seed.copy()
-				new_seed.effects.append(Effect.new("plant", 0, "harvest", "self", Vector2.ZERO, null))
-				tile.seed = new_seed
-				tile.play_effect_particles()
-		"draw_target":
-			var new_seed = tile.seed.copy()
-			new_seed.effects.append(load("res://src/effect/data/fleeting.tres"))
-			on_card_draw.emit(effect.strength, new_seed.copy())
 		"add_blight_yield":
 			tile.seed_base_yield += effect.strength * (event_manager.turn_manager.get_blight_strength())
 		"protect":
@@ -470,34 +457,6 @@ func use_card_on_targets(card, targets, only_first, delay: float = 0.0):
 
 func gain_energy(amount):
 	on_energy_gained.emit(amount)
-
-# Unused, moved to CardData
-func preview_yield(card, targeted_tile: Tile):
-	var yld_purple = 0.0
-	var yld_yellow = 0.0
-	var defer = card.get_effect("harvest_delay") != null
-	if (card.get_effect("harvest") != null\
-		or card.get_effect("harvest_delay") != null or card.has_effect(Enums.EffectType.Harvest))\
-		and targeted_tile.card_can_target(card):
-		var harvest: EventArgs.HarvestArgs = targeted_tile.preview_harvest()
-		harvest.yld = round(harvest.yld)
-		var specific = EventArgs.SpecificArgs.new(targeted_tile)
-		specific.harvest_args = harvest
-		event_manager.notify_specific_args(EventManager.EventType.OnYieldPreview, specific)
-		if harvest.purple:
-			yld_purple += harvest.yld
-		else:
-			yld_yellow += harvest.yld
-		defer = defer or harvest.delay
-	var increase_yield = card.get_effect("increase_yield")
-	if increase_yield != null:
-		yld_purple *= 1.0 + increase_yield.strength
-		yld_yellow *= 1.0 + increase_yield.strength
-	return {
-		"purple": round(yld_purple),
-		"yellow": round(yld_yellow),
-		"defer": defer
-	}
 
 func on_expand_farm():
 	for tile in $Tiles.get_children():

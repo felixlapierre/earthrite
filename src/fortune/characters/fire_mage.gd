@@ -17,7 +17,7 @@ func register_fortune(event_manager: EventManager):
 	super.register_fortune(event_manager)
 	var burn_effect = load("res://src/effect/data/obliviate.tres")
 	event_callable = func(args: EventArgs):
-		if Global.selected_card.name != "Scythe" and Global.selected_card.get_effect("Fleeting") == null:
+		if Global.selected_card.name != "Scythe" and !Global.selected_card.has_effect(Enums.EffectType.Fleeting):
 			Global.selected_card.effects.append(burn_effect)
 			args.specific.play_args.card.effects.append(burn_effect)
 	

@@ -9,8 +9,7 @@ func _init():
 func register(event_manager: EventManager, tile: Tile):
 	listener = Listener.create(self, func(args: EventArgs):
 		var card = args.specific.play_args.card
-		var is_harvest = card.get_effect("harvest") != null or card.get_effect("harvest_delay") != null\
-			or card.has_effect(Enums.EffectType.Harvest)
+		var is_harvest = card.has_effect(Enums.EffectType.Harvest)
 		if is_harvest:
 			if randi_range(0, 100) > 50:
 				args.turn_manager.energy += 1

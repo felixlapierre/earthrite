@@ -46,7 +46,7 @@ static func randomize_deck(deck: Array[CardData]):
 	for card in DataFetcher.get_all_cards():
 		if card.type == "SEED":
 			seeds.append(card)
-		elif card.get_effect("harvest") != null or card.get_effect("harvest_delay") != null:
+		elif card.has_effect(Enums.EffectType.Harvest):
 			scythes.append(card)
 		else:
 			actions.append(card)
@@ -57,7 +57,7 @@ static func randomize_deck(deck: Array[CardData]):
 			replacement_card = card
 		elif card.type == "SEED":
 			replacement_card = seeds[randi_range(0, seeds.size() - 1)]
-		elif card.get_effect("harvest") != null or card.get_effect("harvest_delay") != null:
+		elif card.has_effect(Enums.EffectType.Harvest):
 			replacement_card = scythes[randi_range(0, scythes.size() - 1)]
 		else:
 			replacement_card = actions[randi_range(0, actions.size() - 1)]

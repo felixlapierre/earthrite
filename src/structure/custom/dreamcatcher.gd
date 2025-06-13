@@ -9,7 +9,7 @@ func _init():
 func register_events(event_manager: EventManager, tile: Tile):
 	listener = Listener.create(self, func(args: EventArgs):
 		var card = args.specific.play_args.card
-		if card.get_effect("burn") != null or card.get_effect("fleeting") != null:
+		if card.has_effect(Enums.EffectType.Burn) or card.has_effect(Enums.EffectType.Fleeting):
 			args.cards.drawcard())
 	event_manager.register(listener)
 

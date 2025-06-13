@@ -11,7 +11,7 @@ func update(state: PlayerState, ready: bool, game_type: Enums.MultiplayerGameTyp
 	name_label.add_image(load(state.mage_icon))
 	name_label.add_text(state.name)
 	status_rtl.clear()
-	status_rtl.append_text(" - Ready - " if state.is_ready else " - Thinking - ")
+	status_rtl.append_text(" (Ready) " if state.is_ready else " (Thinking)")
 	balance_rtl.clear()
 	
 	balance_rtl.append_text(str(100 - state.damage) + " HP")
@@ -21,3 +21,4 @@ func update(state: PlayerState, ready: bool, game_type: Enums.MultiplayerGameTyp
 			balance_rtl.append_text(", [color=orangered]" + str(0+diff) + Helper.blight_attack_icon())
 		elif diff > 0:
 			balance_rtl.append_text(", " + str(diff) + Helper.blue_mana())
+

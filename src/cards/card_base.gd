@@ -89,7 +89,7 @@ func set_card_info(card_data):
 				texture.atlas = load("res://assets/1616tinygarden/objects.png")
 				texture.set_region(Rect2(Vector2(card_data.seed_texture * 16, 0), Vector2(16, 16)))
 			CARD_ICON.texture = texture
-			var corrupted = card_data.get_effect("corrupted") != null
+			var corrupted = card_data.has_effect(Enums.EffectType.Corrupted)
 			var negative = "-" if corrupted else ""
 
 			$HBoxContainer/VBoxContainer/TopBar/CardCostLabel.visible = card_info.cost != 99
