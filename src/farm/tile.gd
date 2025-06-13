@@ -237,13 +237,12 @@ func harvest(delay) -> Array[Effect]:
 	var seed_copy = seed
 
 	state = Enums.TileState.Empty
-	on_yield_gained.emit(self, harvest_args)
 	remove_seed()
 	$HarvestParticles.emitting = true
 	
 	await seed_copy.notify(event_manager, EventManager.EventType.OnPlantHarvest, specific_args)
 	await event_manager.notify_specific_args(EventManager.EventType.OnPlantHarvest, specific_args)
-
+	on_yield_gained.emit(self, harvest_args)
 	return []
 
 func remove_seed():

@@ -23,7 +23,7 @@ func unregister(event_manager: EventManager):
 	listener.disable()
 
 func get_description(size: int):
-	return "Draw " + highlight(str(strength)) + " card(s)"
+	return get_timing_text() + "Draw " + highlight(str(strength)) + " card(s)"
 
 func copy():
 	return DrawCardEffect.new().assign(self)

@@ -217,7 +217,10 @@ func unregister_seed_events(event_manager: EventManager):
 func get_yield(tile: Tile) -> EventArgs.HarvestArgs:
 	var yld = tile.current_yield
 	yld = round(yld)
-	return EventArgs.HarvestArgs.new(yld, tile.purple, false, 0, self)
+	var args = EventArgs.HarvestArgs.new(yld, tile.purple, false, 0, self)
+	for effect: Effect2 in effects2:
+		effect.preview_yield(tile, args)
+	return args
 
 func save_data() -> Dictionary:
 	var save_dict = {

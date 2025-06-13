@@ -7,7 +7,7 @@
 [sub_resource type="Resource" id="Resource_o1t7x"]
 script = ExtResource("1_j6260")
 timing = 2
-seed = false
+seed = true
 strength = 1.0
 base_strength = 1.0
 strength_increment = 1.0

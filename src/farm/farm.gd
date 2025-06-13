@@ -719,3 +719,17 @@ func toggle_tile_selection(grid_location: Vector2):
 		while selection.size() > Global.selected_card.size:
 			selection.pop_front()
 	show_select_overlay()
+
+func encode_farm_data():
+	var data = {}
+	for i in range(tiles.size()):
+		data[i] = {}
+		for j in range(tiles[i].size()):
+			var encoded_tile = tiles[i][j].save_data()
+			data[i][j] = encoded_tile
+	return data
+
+func decode_farm_data(data):
+	for i in range(tiles.size()):
+		for j in range(tiles[i].size()):
+			pass

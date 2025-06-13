@@ -8,15 +8,18 @@ func _init():
 
 func register(event_manager: EventManager, tile: Tile):
 	listener = Listener.create(self, func(args: EventArgs):
-		var harvest: EventArgs.HarvestArgs = args.specific.harvest_args
-		harvest.yld *= -1
+		args.specific.harvest_args.yld = args.specific.harvest_args.yld * -1
 		)
+	#owner.register(listener)
 
 func unregister(event_manager: EventManager):
-	pass
+	listener.disable()
 
 func get_description(size):
-	return "[color=red]Corrupted[/color]"
+	return "[color=red]Corrupted[/color] ([color=gold]On Harvest[/color], mana is Lost instead of Gained)"
+	
+func preview_yield(tile: Tile, args: EventArgs.HarvestArgs):
+	args.yld *= -1
 
 func copy():
 	return CorruptedEffect.new().assign(self)
