@@ -112,6 +112,7 @@ func do_end_turn():
 	if is_coop():
 		do_end_turn_coop()
 		return
+	var response = {}
 	for group in groups:
 		var damage_pool = {}
 		var group_active = []
@@ -196,12 +197,10 @@ func do_end_turn():
 					if map[key] > 0:
 						total_damage += map[key]
 				player_states[id].blight_attack = total_damage
-
-		var response = {}
 		for id in group_active:
 			response[id] = player_states[id].encode()
-		print("Notifying players of turn results")
-		notify_client_end_turn_results.rpc(response)
+	print("Notifying players of turn results")
+	notify_client_end_turn_results.rpc(response)
 
 # Functon to call when we're done exploring
 @rpc("any_peer", "call_local", "reliable")
@@ -219,6 +218,11 @@ func notify_done_exploring():
 	pass
 
 func start_new_year():
+	for key in player_states:
+		var state: PlayerState = player_states[key]
+		state.victory = false
+		state.defeat = false
+		state.active = true
 	if is_coop():
 		start_new_year_coop()
 		return
