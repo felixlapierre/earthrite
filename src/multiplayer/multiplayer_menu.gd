@@ -171,7 +171,9 @@ func _on_start_game_button_pressed():
 func update_users_list_display():
 	for child in UsersListVbox.get_children():
 		UsersListVbox.remove_child(child)
-	for peer_id in Lobby.players.keys():
+	var peers = Lobby.players.keys()
+	peers.sort()
+	for peer_id in peers:
 		var player_info = Lobby.players[peer_id]
 		var label = RichTextLabel.new()
 		UsersListVbox.add_child(label)
@@ -196,7 +198,9 @@ func _on_display_name_input_text_changed(new_text):
 	reregister_player()
 
 func reregister_player():
-	Lobby._register_player.rpc(get_my_player_info())
+	if Lobby.players.keys().size() > 0:
+		Lobby.player_info = get_my_player_info()
+		Lobby._register_player.rpc(get_my_player_info())
 
 func get_my_player_info():
 	return {
