@@ -335,4 +335,4 @@ func notify(event_manager: EventManager, type: EventManager.EventType, specific_
 	var args = event_manager.get_event_args(specific_args)
 	for listener in card_listeners:
 		if listener.type == type and !event_manager.turn_manager.is_ritual_complete():
-			await listener.invoke(args)
+			await listener.force_invoke(args)

@@ -26,7 +26,11 @@ func register_fortune(event_manager: EventManager):
 		if WildernessFarm.WILDERNESS_PLANT != null:
 			for tile: Tile in args.farm.get_all_tiles():
 				if tile.seed != null and tile.seed.name == WildernessFarm.WILDERNESS_PLANT.name:
-					apply_time(tile.seed)
+					var effect: Effect2 = apply_time(tile.seed)
+					tile.seed_grow_time += 1
+					effect.owner = tile.seed
+					effect.register(event_manager, tile)
+					
 	event_manager.register_listener(event_type, event_callable)
 
 func unregister_fortune(event_manager: EventManager):
@@ -34,14 +38,17 @@ func unregister_fortune(event_manager: EventManager):
 
 func apply_time(card: CardData):
 	if card.type == "SEED":
+		card.time += 1
 		var regrow = card.has_effect(Enums.EffectType.Regrow)
 		if !regrow:
-			card.effects2.append(load("res://src/effect2/basic/regrow_3.tres"))
+			var effect = load("res://src/effect2/basic/regrow_3.tres")
+			card.effects2.append(effect)
+			return effect
 		else:
 			var eff = card.get_effect(Enums.EffectType.Regrow)
 			eff.strength += int(strength)
 			eff.base_strength += int(strength)
-		card.time += 1
+
 
 func upgrade_power():
 	strength += str_inc

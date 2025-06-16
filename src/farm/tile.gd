@@ -243,8 +243,8 @@ func harvest(delay) -> Array[Effect]:
 	return []
 
 func remove_seed():
-	#if seed != null:
-	#	seed.unregister_seed_events(event_manager)
+	if seed != null:
+		seed.unregister_seed_events(event_manager)
 	seed_base_yield = 0
 	seed_grow_time = 0
 	current_grow_progress = 0.0

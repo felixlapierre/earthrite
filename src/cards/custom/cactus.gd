@@ -10,7 +10,7 @@ func _init():
 	super(EventManager.EventType.OnPlantPlanted, true, Enums.EffectType.DestroyPlant, "Cactus")
 
 # To be overridden by specific code seeds
-func register_seed_events(event_manager: EventManager, p_tile: Tile):
+func register(event_manager: EventManager, p_tile: Tile):
 	tile = p_tile
 
 	listener_other_plant_played = Listener.create(self, func(args: EventArgs):
@@ -30,7 +30,7 @@ func register_seed_events(event_manager: EventManager, p_tile: Tile):
 	event_manager.register(listener_other_plant_played)
 	owner.register(listener_cactus_played)
 
-func unregister_seed_events(event_manager: EventManager):
+func unregister(event_manager: EventManager):
 	listener_other_plant_played.disable()
 	listener_cactus_played.disable()
 

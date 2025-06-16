@@ -38,6 +38,9 @@ func invoke(args: EventArgs):
 	if !disabled:
 		await callback.call(args)
 
+func force_invoke(args: EventArgs):
+	await callback.call(args)
+
 func disable():
 	disabled = true
 
