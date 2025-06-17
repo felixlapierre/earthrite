@@ -44,12 +44,13 @@ func update_display():
 	$Icon.position.y /= 2
 	$Icon.position.y += 25
 
-func set_labels(name, cost, descr, type, texture):
+func set_labels(name, cost, descr, type, texture: Texture2D):
 		Name.text = name
 		Cost.text = cost
 		Description.text = descr
 		Type.text = type
 		$Icon.texture = texture
+		$Icon.scale = Vector2(3.227, 3.227) * Vector2(16, 16) / texture.get_size()
 
 func set_data(data):
 	if data.CLASS_NAME == "Structure":

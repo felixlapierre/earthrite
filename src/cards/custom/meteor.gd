@@ -13,7 +13,7 @@ func _init():
 	super(timing, false, Enums.EffectType.DestroyTile, "Meteor")
 
 func register(event_manager: EventManager, _tile: Tile):
-	listener = Listener.new(timing, func(args: EventArgs):
+	listener = Listener.create(self, func(args: EventArgs):
 		var tile = args.specific.tile
 		if !tile.is_destroyed():
 			tile.destroy()
@@ -33,10 +33,7 @@ func register(event_manager: EventManager, _tile: Tile):
 
 func unregister(event_manager: EventManager):
 	listener.disable()
-	
-func assign(other):
-	super(other)
-	timing = other.timing
+	listener2.disable()
 
 func copy():
 	return MeteorEffect.new().assign(self)

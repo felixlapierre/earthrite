@@ -4,6 +4,8 @@ class_name Tile
 @onready var TILE_BUTTON: TextureButton = $TileButton
 @onready var SELECT_PROMPT: AnimatedSprite2D = $SelectPrompt
 
+static var grow_card = preload("res://src/cards/data/action/time_bubble.tres")
+
 var state = Enums.TileState.Empty # Store the state of the farm tile
 var grid_location: Vector2
 var TILE_SIZE = Vector2(56, 56);
@@ -66,14 +68,13 @@ func do_active_check():
 	update_display()
 
 func update_display():
-	update_purple_overlay()
 	$Rock.visible = rock
 	if state == Enums.TileState.Inactive:
 		$PurpleOverlay.visible = false
 		$Farmland.visible = false
 		$TileButton.visible = false
 		return
-	$PurpleOverlay.visible = purple
+	update_purple_overlay()
 	if is_protected():
 		$ProtectOverlay.visible = true
 	else:
@@ -175,7 +176,7 @@ func set_seed(planted_seed):
 	
 func grow_one_week():
 	var effects: Array[Effect] = []
-	if state == Enums.TileState.Growing:
+	if can_grow():
 		current_grow_progress += 1.0
 		var multiplier = 1.0
 		var water_bonus = 0.0
@@ -190,6 +191,9 @@ func grow_one_week():
 			state = Enums.TileState.Mature
 	await seed.notify(event_manager, EventManager.EventType.OnPlantGrow, EventArgs.SpecificArgs.new(self))
 	await event_manager.notify_specific_args(EventManager.EventType.OnPlantGrow, EventArgs.SpecificArgs.new(self))
+
+func can_grow() -> bool:
+	return grow_card.can_target_tile(self)
 
 func grow_animation():
 	var tween = get_tree().create_tween()
@@ -211,7 +215,7 @@ func update_plant_sprite():
 			2:
 				y = 64
 				h = 32
-			3:
+			_:
 				y = 96
 				h = 32
 			
@@ -222,7 +226,7 @@ func update_plant_sprite():
 		var resolution = seed.texture.get_height() / 2
 		var max_stage: int = seed.texture.get_width() / resolution - 1
 		var current_stage = int(current_grow_progress / seed_grow_time * max_stage)
-		var x = resolution * current_stage
+		var x = resolution * min(current_stage, max_stage)
 		$PlantSprite.set_region_rect(Rect2(x, 0, resolution, resolution*2))
 		$PlantSprite.offset = Vector2(0, -resolution)
 		$PlantSprite.scale = Vector2(91.0 / resolution, 91.0 / resolution)
@@ -410,7 +414,9 @@ func show_peek(weeks: int = 0):
 		multiplier += Global.WATERED_MULTIPLIER
 		water_bonus = 1.0
 	if seed_grow_time > 0:
-		projected_mana += (seed_base_yield / seed_grow_time + water_bonus) * multiplier * min(weeks, seed_grow_time - current_grow_progress)
+		var infinite_grow = seed.effects2.any(func(eff: Effect2): return eff.card_can_target(grow_card))
+		var upcoming_grow_weeks = weeks if infinite_grow else min(weeks, seed_grow_time - current_grow_progress)
+		projected_mana += (seed_base_yield / seed_grow_time + water_bonus) * multiplier * upcoming_grow_weeks
 
 	var projected_state = Enums.TileState.Growing if current_grow_progress + weeks < seed_grow_time else Enums.TileState.Mature
 
@@ -464,7 +470,7 @@ func card_can_target(card: CardData):
 		targets.append("Empty");
 	if state == Enums.TileState.Empty and (targets.has("Destroyed") or targets.has("Blighted")):
 		return is_destroyed() or targets.has("Empty") or (RockCoral.ACTIVE and is_watered())
-	return (targets.has(Enums.TileState.keys()[state]))\
+	return (card.can_target_tile(self) or (seed != null and seed.card_can_target(card)))\
 		and (!destroyed or state != Enums.TileState.Empty or targets.has("Destroyed"))\
 		and (!blighted or state != Enums.TileState.Empty or targets.has("Blighted"))
 

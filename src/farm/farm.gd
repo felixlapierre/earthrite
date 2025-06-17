@@ -323,7 +323,7 @@ func process_one_week(week: int):
 	if week < Global.WINTER_WEEK and !Global.BLOCK_GROW:
 		var growing_tiles = []
 		for tile: Tile in $Tiles.get_children():
-			if tile.state == Enums.TileState.Growing and (Global.FARM_TYPE != "RIVERLANDS" or tile.is_watered()):
+			if tile.can_grow() and (Global.FARM_TYPE != "RIVERLANDS" or tile.is_watered()):
 				growing_tiles.append(tile)
 		growing_tiles.shuffle()
 		for tile in growing_tiles:
@@ -401,7 +401,7 @@ func gain_yield(tile: Tile, args: EventArgs.HarvestArgs):
 
 func do_winter_clear():
 	var blighted_tiles: Array[Tile] = []
-	var reset_colors = $Tiles.get_children().any(func(tile): return !tile.purple)
+	var reset_colors = false#$Tiles.get_children().any(func(tile): return !tile.purple)
 	for tile: Tile in $Tiles.get_children():
 		tile.do_winter_clear()
 		tile.set_blight_targeted(false)

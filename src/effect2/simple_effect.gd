@@ -10,3 +10,6 @@ class_name SimpleEffect
 	
 func _init():
 	super(timing, seed, eff_type, "SimpleEffect")
+
+func get_description(size):
+	return "[color=gold]" + Enums.EffectType.keys()[eff_type] + "[/color]"

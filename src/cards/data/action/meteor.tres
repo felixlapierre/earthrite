@@ -7,11 +7,10 @@
 
 [sub_resource type="Resource" id="Resource_1hqw8"]
 script = ExtResource("2_npcor")
+timing = 13
 strength = 0.0
 base_strength = 0.0
 strength_increment = 1.0
-timing = 13
-is_seed = false
 
 [resource]
 script = ExtResource("1_413bo")

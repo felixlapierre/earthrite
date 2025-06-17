@@ -326,7 +326,7 @@ func highlight_effect(effect: Effect2):
 func has_enhance_type(type: Enhance.Type):
 	return enhances.any(func(enh):
 		return enh.type == type)
-		
+
 func register(listener: Listener):
 	listener.id = name + listener.id
 	card_listeners.append(listener)
@@ -334,5 +334,15 @@ func register(listener: Listener):
 func notify(event_manager: EventManager, type: EventManager.EventType, specific_args: EventArgs.SpecificArgs = null):
 	var args = event_manager.get_event_args(specific_args)
 	for listener in card_listeners:
-		if listener.type == type and !event_manager.turn_manager.is_ritual_complete():
+		if listener.type == type and (!event_manager.turn_manager.is_ritual_complete() or listener.effect_type != Enums.EffectType.Other):
 			await listener.force_invoke(args)
+
+func can_target_tile(tile: Tile):
+	if targets.size() == 0 and type == "SEED":
+		targets.append("Empty")
+	return targets.has(Enums.TileState.keys()[tile.state])\
+		or (tile.seed != null and tile.seed.card_can_target(self))\
+		or effects2.any(func(eff: Effect2): return eff.can_target_tile(tile))
+
+func card_can_target(card: CardData):
+	return effects2.any(func(eff: Effect2): return eff.card_can_target(card))

@@ -94,3 +94,13 @@ func get_long_description() -> String:
 # Modify args in-place
 func preview_yield(tile: Tile, args: EventArgs.HarvestArgs):
 	pass
+
+# Used to indicate that a card with this effect can target the passed tile,
+# even if the tile state wouldn't otherwise allow
+func can_target_tile(tile: Tile):
+	return false
+
+# Used to indicate that if a seed has this effect, the passed card
+# is able to target it even if the tile state wouldn't otherwise allow
+func card_can_target(card: CardData):
+	return false
