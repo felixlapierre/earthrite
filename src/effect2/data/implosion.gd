@@ -21,7 +21,7 @@ func register(event_manager: EventManager, tile: Tile):
 	owner.register(listener)
 
 func get_description(_size):
-	var str_text = highlight(str((1.0 + strength) * 100) + "% of ") if strength != base_strength else ""
+	var str_text = highlight(str((1.0 + strength) * 100) + "% of ") if strength > 0 else ""
 	return "Target plant [color=gold]Destroys[/color] all adjacent plants and gains " + str_text + "their {MANA}"
 
 func unregister(event_manager: EventManager):

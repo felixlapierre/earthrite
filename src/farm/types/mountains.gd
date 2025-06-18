@@ -61,7 +61,7 @@ func get_starter_deck():
 
 func do_setup_dialogue(node: Node):
 	var pick_options = PickOptionsScene.instantiate()
-	var structures = DataFetcher.get_structures_names(["Harvester", "Beehive", "Sigil of Water", "Rooted Core", "Geode", "Crucible", "Frost Totem", "Toolshed", "Brain in a Jar", "Firefly Lantern", "Rock Coral"])
+	var structures = DataFetcher.get_structures_names(["Harvester", "Beehive", "Sigil of Water", "Rooted Core", "Geode", "Crucible", "Frost Totem", "Toolshed", "Brain in a Jar", "Firefly Lantern", "Rock Coral", "Lantern"])
 	node.add_child(pick_options)
 	pick_options.setup("Pick a starting Structure", structures, func(selected):
 		node.remove_child(pick_options)
