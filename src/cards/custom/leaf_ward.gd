@@ -1,21 +1,21 @@
 extends CardData
 class_name LeafWard
 
-var callback: Callable
-var event_type = EventManager.EventType.BeforeCardPlayed
+var listener: Listener
 
 # To be overridden by specific code seeds
 func register_events(event_manager: EventManager, p_tile: Tile):
-	callback = func(args: EventArgs):
+	listener = Listener.new(EventManager.EventType.BeforeCardPlayed, func(args: EventArgs):
 		await args.farm.get_tree().create_timer(delay).timeout
 		for tile in args.farm.get_all_tiles():
 			if tile.state == Enums.TileState.Growing:
 				var harvest_args = EventArgs.HarvestArgs.new(self.strength, true, false)
 				args.farm.gain_yield(tile, harvest_args)
-	event_manager.register_listener(event_type, callback)
+	)
+	event_manager.register(listener)
 
 func unregister_events(event_manager: EventManager):
-	event_manager.unregister_listener(event_type, callback)
+	listener.disable()
 
 func copy():
 	var new = LeafWard.new()
