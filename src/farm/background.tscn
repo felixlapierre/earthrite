@@ -851,3 +851,5 @@ modulate = Color(1, 0.988235, 0.25098, 1)
 z_index = 2
 position = Vector2(-50, 0)
 amount = 10000
+
+[node name="River" type="Node2D" parent="."]
