@@ -1,8 +1,8 @@
 extends Node2D
 
-var spring1 = Color8(199, 183, 101)
-var spring2 = Color8(161, 199, 101)
-var summer = Color8(67, 163, 84)
+var spring1 = Color8(50, 132, 100)#Color8(199, 183, 101)
+var spring2 = Color8(50, 132, 100)#Color8(161, 199, 101)
+var summer = Color8(50, 132, 100)
 var fall = Color8(186, 199, 101)
 var winter = Color8(226, 226, 226)
 
@@ -32,7 +32,7 @@ func _ready() -> void:
 	$Ground.modulate = spring1
 	$Ground.visible = true
 	$Blightroots.play("none")
-	trees = [$Tree, $Tree2, $Tree3]
+	trees = $Trees.get_children()
 	snows = [$Snow1, $Snow2, $Snow3, $Snow4, $Snow5]
 	$RitualComplete.play("hidden")
 

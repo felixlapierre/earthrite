@@ -1,9 +1,9 @@
-[gd_scene load_steps=48 format=3 uid="uid://cswinrop881oo"]
+[gd_scene load_steps=47 format=3 uid="uid://cswinrop881oo"]
 
 [ext_resource type="Script" path="res://src/user_interface.gd" id="1_j28fq"]
-[ext_resource type="Texture2D" uid="uid://0p1tevlogry8" path="res://assets/ui/obelisk-decaying.png" id="2_e2cij"]
 [ext_resource type="Theme" uid="uid://c21dhy264y6ty" path="res://assets/theme_large.tres" id="2_s7754"]
-[ext_resource type="Texture2D" uid="uid://cmgbh34cvhoxv" path="res://assets/ui/obelisk-runes.png" id="3_e5hu5"]
+[ext_resource type="Texture2D" uid="uid://bnwwnqttarp6d" path="res://assets/farm/obelisk_empty_2.png" id="2_tryb5"]
+[ext_resource type="Texture2D" uid="uid://btbwfjgpa6ijv" path="res://assets/farm/obelisk_full_2.png" id="3_3w5t5"]
 [ext_resource type="Texture2D" uid="uid://b5gtwrgnirbxg" path="res://assets/custom/YellowMana.png" id="3_x0b3x"]
 [ext_resource type="Texture2D" uid="uid://c0mxwj13dwpml" path="res://assets/custom/PurpleMana.png" id="4_o6t76"]
 [ext_resource type="Texture2D" uid="uid://ykuefae3vde0" path="res://assets/custom/Energy.png" id="5_hqwjq"]
@@ -38,10 +38,6 @@
 [ext_resource type="PackedScene" uid="uid://k57mhgtv2uhb" path="res://src/ui/menus/tutorial2.tscn" id="36_jqnmk"]
 [ext_resource type="PackedScene" uid="uid://b4so7jrf5f1qb" path="res://src/ui/visuals/visuals_blight_ritual.tscn" id="36_p2py6"]
 [ext_resource type="PackedScene" uid="uid://o6mwwrsgp4kj" path="res://src/ui/multiplayer/multiplayer_ui.tscn" id="37_y7syp"]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_tstwt"]
-atlas = ExtResource("2_e2cij")
-region = Rect2(0, 0, 32, 0)
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_1tbmd"]
 particles_animation = true
@@ -93,15 +89,15 @@ script = ExtResource("1_j28fq")
 
 [node name="Obelisk" type="TextureProgressBar" parent="."]
 texture_filter = 1
-offset_left = 510.0
-offset_top = 168.0
-offset_right = 542.0
-offset_bottom = 260.0
-scale = Vector2(2.7, 2.7)
+offset_left = 481.0
+offset_top = 98.0
+offset_right = 505.0
+offset_bottom = 162.0
+scale = Vector2(4.627, 4.7)
 value = 50.0
 fill_mode = 3
-texture_under = SubResource("AtlasTexture_tstwt")
-texture_progress = ExtResource("3_e5hu5")
+texture_under = ExtResource("2_tryb5")
+texture_progress = ExtResource("3_3w5t5")
 
 [node name="UI" type="Control" parent="."]
 layout_mode = 3
@@ -109,10 +105,10 @@ anchors_preset = 0
 
 [node name="RitualPanel" type="PanelContainer" parent="UI"]
 layout_mode = 0
-offset_left = 457.0
-offset_top = 414.0
-offset_right = 643.0
-offset_bottom = 446.0
+offset_left = 439.0
+offset_top = 45.0
+offset_right = 653.0
+offset_bottom = 86.0
 
 [node name="RitualCounter" type="HBoxContainer" parent="UI/RitualPanel"]
 layout_mode = 2
@@ -342,9 +338,9 @@ fit_content = true
 
 [node name="SkipButton" type="Button" parent="UI"]
 layout_mode = 0
-offset_left = 1750.0
+offset_left = 1450.0
 offset_top = 20.0
-offset_right = 1910.0
+offset_right = 1610.0
 offset_bottom = 69.0
 theme = ExtResource("2_s7754")
 text = "Skip Year"
@@ -417,7 +413,7 @@ texture_hover = ExtResource("22_oyub8")
 stretch_mode = 0
 
 [node name="AttackPreview" parent="UI" instance=ExtResource("24_5346t")]
-position = Vector2(1400, 300)
+position = Vector2(1642, 247)
 
 [node name="HelpButton" type="Button" parent="UI"]
 custom_minimum_size = Vector2(340, 0)
@@ -447,9 +443,26 @@ position = Vector2(1389, 140)
 [node name="PeerListDisplay" parent="UI" instance=ExtResource("22_tv2tn")]
 layout_mode = 1
 offset_left = 1644.0
-offset_top = 4.0
+offset_top = 8.0
 offset_right = 1911.0
-offset_bottom = 236.0
+offset_bottom = 240.0
+
+[node name="CenterCont" type="CenterContainer" parent="UI"]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 0
+offset_left = 390.0
+offset_top = 440.0
+offset_right = 690.0
+offset_bottom = 493.0
+
+[node name="CurrentRitualLabel" type="RichTextLabel" parent="UI/CenterCont"]
+layout_mode = 2
+theme = ExtResource("24_jal2o")
+bbcode_enabled = true
+text = "50[img]res://assets/custom/YellowMana.png[/img]"
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
 
 [node name="AlertContainer" parent="." instance=ExtResource("18_ih37u")]
 visible = false
@@ -524,10 +537,10 @@ text = "Add Card"
 
 [node name="AnyCardButton" type="Button" parent="Winter"]
 layout_mode = 0
-offset_left = 1675.0
-offset_top = 11.0
-offset_right = 1905.0
-offset_bottom = 60.0
+offset_left = 1381.0
+offset_top = 10.0
+offset_right = 1611.0
+offset_bottom = 59.0
 text = "Debug Menu"
 
 [node name="EventPanel" type="PanelContainer" parent="Winter"]

@@ -1,14 +1,18 @@
-[gd_scene load_steps=79 format=3 uid="uid://c0hbi7fqujvbn"]
+[gd_scene load_steps=83 format=3 uid="uid://c0hbi7fqujvbn"]
 
 [ext_resource type="Script" path="res://src/farm/background.gd" id="1_gbnjo"]
 [ext_resource type="Texture2D" uid="uid://cvtymdsmvlt5c" path="res://assets/farm/ground.png" id="2_6aw4d"]
 [ext_resource type="Texture2D" uid="uid://dejmbtpxa2rtc" path="res://assets/1616tinygarden/tileset.png" id="2_ff0ec"]
-[ext_resource type="SpriteFrames" uid="uid://kq0oilxeu05b" path="res://src/animation/frames_bg/tree_sf.tres" id="4_i4prq"]
 [ext_resource type="Texture2D" uid="uid://fkkebykg1n4c" path="res://assets/farm/blightroots.png" id="4_smcf2"]
 [ext_resource type="Texture2D" uid="uid://h2kf4qgrofsd" path="res://assets/farm/snowpoff2.png" id="5_2teuv"]
+[ext_resource type="SpriteFrames" uid="uid://b4najiwfr1svq" path="res://src/animation/frames_bg/tree_sf_2.tres" id="5_nbw4o"]
 [ext_resource type="Texture2D" uid="uid://hqbvii1kv3il" path="res://assets/farm/snowpoff.png" id="6_33alu"]
 [ext_resource type="Texture2D" uid="uid://bpuagaautrtsc" path="res://assets/farm/ritual-complete.png" id="8_yajlm"]
 [ext_resource type="PackedScene" uid="uid://ceywhh4lric4i" path="res://src/animation/glow.tscn" id="9_uq747"]
+[ext_resource type="Texture2D" uid="uid://bt53kq4p2410p" path="res://assets/farm/pine1.png" id="11_4h00k"]
+[ext_resource type="Texture2D" uid="uid://hexcs2lpdrao" path="res://assets/farm/runes.png" id="12_coach"]
+[ext_resource type="Texture2D" uid="uid://bfomi8syn2brj" path="res://assets/farm/house.png" id="12_s56d0"]
+[ext_resource type="Texture2D" uid="uid://dugl1eitjqayr" path="res://assets/farm/bridge.png" id="13_4221s"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_n4x4v"]
 texture = ExtResource("2_ff0ec")
@@ -735,6 +739,7 @@ sub_emitter_frequency = 100.0
 sub_emitter_keep_velocity = true
 
 [node name="Background" type="Node2D"]
+texture_filter = 1
 script = ExtResource("1_gbnjo")
 
 [node name="Ground" type="Sprite2D" parent="."]
@@ -751,11 +756,22 @@ scale = Vector2(5.71384, 5.62504)
 tile_set = SubResource("TileSet_djvk5")
 format = 2
 layer_0/name = "Ground"
-layer_0/tile_data = PackedInt32Array(589836, 589824, 1, 655365, 589824, 1, 655366, 655360, 1, 524302, 589824, 1, 589838, 786432, 4, 458767, 589824, 1, 524303, 786432, 4, 262160, 589824, 0, 327696, 589824, 2, 393232, 851968, 2, 458768, 786432, 4, 196625, 851968, 2, 262161, 786432, 2, 327697, 786432, 4, 589837, 720896, 1, 17, 851968, 1, 131089, 851968, 1, 65553, 851968, 2, 655372, 786432, 4, 655371, 720896, 1, 655370, 655360, 1, 655369, 655360, 1, 655368, 720896, 1, 655367, 655360, 1, 720901, 786432, 3, 720900, 589824, 1)
 layer_1/name = "Props"
-layer_1/tile_data = PackedInt32Array(655370, 917504, 2, 720906, 1048576, 1, 327697, 983040, 0, 327696, 983040, 0, 327698, 983040, 1, 327699, 983040, 1, 327700, 983040, 1, 327694, 1048576, 1, 327695, 983040, 1, 589826, 851968, 5, 65537, 917504, 5, 131074, 1114112, 3, 524301, 983040, 1, 655378, 0, 5, 65555, 131072, 5, 131087, 589824, 5, 65551, 720896, 5, 589830, 327680, 5, 720896, 131072, 5, 131075, 1179648, 3, 196611, 1179648, 4, 262147, 1179648, 5, 131076, 1245184, 3, 196612, 1245184, 4, 262148, 1245184, 5, 458765, 1048576, 1, 524300, 983040, 1, 524299, 983040, 1, 524298, 983040, 1, 524297, 983040, 1, 524296, 1048576, 1, 524295, 983040, 1, 524294, 983040, 1, 524293, 1048576, 1, 589834, 983040, 1, 458757, 983040, 1, 11, 1048576, 1, 65547, 1048576, 1, 65548, 983040, 1, 65549, 1048576, 1, 131085, 1048576, 1, 131086, 1048576, 1, 196622, 983040, 1, 262158, 1048576, 1, 393230, 983040, 1, 393229, 983040, 1, 196610, 1114112, 4, 262146, 1114112, 5, 458756, 1048576, 1, 458755, 1048576, 1, 393219, 1048576, 1, 327683, 1048576, 1, 393220, 458752, 5, 8, 655360, 5, 4, 393216, 5)
+layer_1/tile_data = PackedInt32Array(65537, 917504, 5, 65555, 131072, 5, 131087, 589824, 5, 65551, 720896, 5, 589830, 327680, 5, 720896, 131072, 5, 393220, 458752, 5, 8, 655360, 5, 4, 393216, 5, 720910, 0, 5, 589826, 851968, 5)
 layer_2/name = "Props 2"
-layer_2/tile_data = PackedInt32Array(720906, 917504, 3, 589834, 917504, 1, 327695, 917504, 0, 327698, 1048576, 0)
+layer_2/tile_data = PackedInt32Array(720906, 917504, 3, 589834, 917504, 1)
+
+[node name="MoonRune" type="Sprite2D" parent="."]
+position = Vector2(1385, 450)
+scale = Vector2(5.7, 5.7)
+texture = ExtResource("12_coach")
+region_enabled = true
+region_rect = Rect2(64, 0, 32, 32)
+
+[node name="River2" type="Sprite2D" parent="."]
+position = Vector2(1555, 537)
+scale = Vector2(4.85, 4.85)
+texture = ExtResource("13_4221s")
 
 [node name="Blightroots" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
@@ -763,27 +779,6 @@ position = Vector2(1553, 484)
 scale = Vector2(5.7, 5.7)
 sprite_frames = SubResource("SpriteFrames_l0y7c")
 animation = &"none"
-
-[node name="Tree" type="AnimatedSprite2D" parent="."]
-texture_filter = 1
-position = Vector2(92, 499)
-scale = Vector2(5.7, 5.7)
-sprite_frames = ExtResource("4_i4prq")
-animation = &"spring1"
-
-[node name="Tree2" type="AnimatedSprite2D" parent="."]
-texture_filter = 1
-position = Vector2(1735, 307)
-scale = Vector2(5.7, 5.7)
-sprite_frames = ExtResource("4_i4prq")
-animation = &"spring1"
-
-[node name="Tree3" type="AnimatedSprite2D" parent="."]
-texture_filter = 1
-position = Vector2(1457, 850)
-scale = Vector2(5.7, 5.7)
-sprite_frames = ExtResource("4_i4prq")
-animation = &"spring1"
 
 [node name="Snow1" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
@@ -815,7 +810,7 @@ animation = &"spring1"
 
 [node name="Snow5" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
-position = Vector2(1644, 854)
+position = Vector2(1753, 906)
 scale = Vector2(5.7, 5.7)
 sprite_frames = SubResource("SpriteFrames_tby74")
 animation = &"spring1"
@@ -853,3 +848,100 @@ position = Vector2(-50, 0)
 amount = 10000
 
 [node name="River" type="Node2D" parent="."]
+
+[node name="Pines" type="Node2D" parent="."]
+
+[node name="Pine2" type="Sprite2D" parent="Pines"]
+position = Vector2(446, 128)
+scale = Vector2(5.7, 5.7)
+texture = ExtResource("11_4h00k")
+
+[node name="Pine3" type="Sprite2D" parent="Pines"]
+position = Vector2(1190, 920)
+scale = Vector2(5.7, 5.7)
+texture = ExtResource("11_4h00k")
+
+[node name="Pine4" type="Sprite2D" parent="Pines"]
+position = Vector2(922, 878)
+scale = Vector2(5.7, 5.7)
+texture = ExtResource("11_4h00k")
+
+[node name="Pine5" type="Sprite2D" parent="Pines"]
+position = Vector2(676, 939)
+scale = Vector2(5.7, 5.7)
+texture = ExtResource("11_4h00k")
+
+[node name="Trees" type="Node2D" parent="."]
+
+[node name="Tree7" type="AnimatedSprite2D" parent="Trees"]
+texture_filter = 1
+position = Vector2(1720, 70)
+scale = Vector2(5.7, 5.7)
+sprite_frames = ExtResource("5_nbw4o")
+animation = &"fall"
+
+[node name="Tree6" type="AnimatedSprite2D" parent="Trees"]
+texture_filter = 1
+position = Vector2(194, 62)
+scale = Vector2(5.7, 5.7)
+sprite_frames = ExtResource("5_nbw4o")
+animation = &"skip-summer"
+
+[node name="Tree" type="AnimatedSprite2D" parent="Trees"]
+texture_filter = 1
+position = Vector2(87, 123)
+scale = Vector2(5.7, 5.7)
+sprite_frames = ExtResource("5_nbw4o")
+animation = &"skip-summer"
+
+[node name="Tree2" type="AnimatedSprite2D" parent="Trees"]
+texture_filter = 1
+position = Vector2(1766, 235)
+scale = Vector2(5.7, 5.7)
+sprite_frames = ExtResource("5_nbw4o")
+animation = &"fall"
+
+[node name="Tree5" type="AnimatedSprite2D" parent="Trees"]
+texture_filter = 1
+position = Vector2(931, 1042)
+scale = Vector2(5.7, 5.7)
+sprite_frames = ExtResource("5_nbw4o")
+animation = &"fall"
+flip_h = true
+
+[node name="Tree3" type="AnimatedSprite2D" parent="Trees"]
+texture_filter = 1
+position = Vector2(1060, 965)
+scale = Vector2(5.7, 5.7)
+sprite_frames = ExtResource("5_nbw4o")
+animation = &"fall"
+flip_h = true
+
+[node name="Tree4" type="AnimatedSprite2D" parent="Trees"]
+texture_filter = 1
+position = Vector2(791, 926)
+scale = Vector2(5.7, 5.7)
+sprite_frames = ExtResource("5_nbw4o")
+animation = &"fall"
+
+[node name="Pine6" type="Sprite2D" parent="."]
+position = Vector2(780, 1156)
+scale = Vector2(5.7, 5.7)
+texture = ExtResource("11_4h00k")
+
+[node name="Pine" type="Sprite2D" parent="."]
+position = Vector2(1916, 95)
+scale = Vector2(5.7, 5.7)
+texture = ExtResource("11_4h00k")
+
+[node name="House" type="Sprite2D" parent="."]
+position = Vector2(310, 321)
+scale = Vector2(5.7, 5.7)
+texture = ExtResource("12_s56d0")
+
+[node name="SunRune" type="Sprite2D" parent="."]
+position = Vector2(535, 466)
+scale = Vector2(5.7, 5.7)
+texture = ExtResource("12_coach")
+region_enabled = true
+region_rect = Rect2(96, 0, 32, 32)

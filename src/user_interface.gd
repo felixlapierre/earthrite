@@ -62,6 +62,7 @@ var theme_large = preload("res://assets/theme_large.tres")
 @onready var Obelisk = $Obelisk
 @onready var MultiplayerUi = $MultiplayerUi
 @onready var PeerListDisplay = $UI/PeerListDisplay
+@onready var CurrentRitualLabel = $UI/CenterCont/CurrentRitualLabel
 
 var end_year_alert_text = "Ritual Complete! Time to rest and prepare for the next year"
 var structure_place_text = "Click on the farm tile where you'd like to place the structure"
@@ -95,7 +96,8 @@ func _process(delta: float) -> void:
 		if t >= 1.0:
 			t = 0.0
 			ritual_current_amount = turn_manager.get_current_ritual()
-		$UI/RitualPanel/RitualCounter/Label.text = "[right]" + str(ritual_current_amount) + " /" + str(turn_manager.total_ritual)
+		CurrentRitualLabel.text = str(ritual_current_amount)
+		$UI/RitualPanel/RitualCounter/Label.text = "Target: " + str(turn_manager.total_ritual)
 	$Obelisk.value = ritual_current_amount
 	
 	var explores_left = explore.explores + explore.bonus_explores
@@ -198,6 +200,7 @@ func update():
 	$UI/Deck/DeckCount.text = "Deck: " + str(cards.get_deck_info().size())
 	$UI/Deck/DiscardCount.text = "Discard: " + str(cards.get_discard_info().size())
 	$Obelisk.max_value = turn_manager.total_ritual
+	$UI/RitualPanel/RitualCounter/Label.text = "Target: " + str(turn_manager.total_ritual)
 	$UpgradeShop.update()
 	weather_display.update()
 	var highlight_end_turn = cards.get_hand_info().all(func(card_data: CardData):
@@ -347,9 +350,11 @@ func _on_farm_tiles_on_preview_yield(args) -> void:
 			AlertDisplay.set_text(warning_waste_purple_text)
 
 	if yellow != 0:
-		$UI/RitualPanel/RitualCounter/Label.text = "[right][color=e5e831]"+str(turn_manager.get_current_ritual() + yellow) + " /" + str(turn_manager.total_ritual) + "[/color][/right]"
+		CurrentRitualLabel.text = "[color=e5e831]" + str(turn_manager.get_current_ritual() + yellow)
+		#$UI/RitualPanel/RitualCounter/Label.text = "[right][color=e5e831]"+str(turn_manager.get_current_ritual() + yellow) + " /" + str(turn_manager.total_ritual) + "[/color][/right]"
 	else:
-		$UI/RitualPanel/RitualCounter/Label.text = "[right]" + str(turn_manager.get_current_ritual()) + " /" + str(turn_manager.total_ritual)
+		CurrentRitualLabel.text = str(turn_manager.get_current_ritual())
+		#$UI/RitualPanel/RitualCounter/Label.text = "[right]" + str(turn_manager.get_current_ritual()) + " /" + str(turn_manager.total_ritual)
 # Winter
 func set_winter_visible(visible):
 	$Winter.visible = visible

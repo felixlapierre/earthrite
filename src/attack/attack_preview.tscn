@@ -43,11 +43,12 @@ theme = ExtResource("1_nispc")
 layout_mode = 2
 
 [node name="PromptLabel" type="RichTextLabel" parent="CurrentTurn/VBox"]
-custom_minimum_size = Vector2(230, 0)
+custom_minimum_size = Vector2(230, 45)
 layout_mode = 2
+size_flags_horizontal = 4
 bbcode_enabled = true
 text = "Blight Attack!"
-fit_content = true
+autowrap_mode = 0
 
 [node name="HBox" type="HBoxContainer" parent="CurrentTurn/VBox"]
 layout_mode = 2
@@ -116,9 +117,10 @@ lifetime = 0.5
 explosiveness = 0.3
 
 [node name="NextTurns" type="PanelContainer" parent="."]
-offset_left = 272.0
-offset_right = 312.0
-offset_bottom = 40.0
+offset_left = 1.0
+offset_top = 189.0
+offset_right = 41.0
+offset_bottom = 229.0
 
 [node name="List" type="VBoxContainer" parent="NextTurns"]
 layout_mode = 2

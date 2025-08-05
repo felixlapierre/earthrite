@@ -50,6 +50,8 @@ func update():
 		PromptLabel.text = "Wasted"
 	elif turn_manager.purple_mana > turn_manager.target_blight and Global.FARM_TYPE == "LUNARTEMPLE":
 		PromptLabel.text = "Excess: " + str(ceil((turn_manager.purple_mana - turn_manager.target_blight) * 0.7)) + Helper.mana_icon()
+	elif turn_manager.target_blight == 0:
+		PromptLabel.text = "No Attack"
 	else:
 		PromptLabel.text = "Safe!"
 	$NextTurns.visible = $NextTurns/List.get_child_count() > 0
