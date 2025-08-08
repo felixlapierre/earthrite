@@ -40,9 +40,9 @@ static func load_cards():
 			all_cards.append(card)
 			cards_rarity[card.rarity].append(card)
 		
-	if Global.MAGE == "Blight-Touched":
+	if Global.MAGE == BlightMageFortune.MAGE_NAME:
 		var blight_cards = get_element_cards("Blight")
-		all_cards.append(blight_cards)
+		all_cards.append_array(blight_cards)
 		cards_rarity["common"].append(blight_cards)
 	
 	print("Common Cards: " + str(cards_rarity["common"].size()))

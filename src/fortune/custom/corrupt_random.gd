@@ -6,7 +6,7 @@ var listener
 var callback_after_grow: Callable
 var type_after_grow = EventManager.EventType.AfterGrow
 
-var corrupt_effect = preload("res://src/effect/data/corrupted.tres")
+var corrupt_effect = preload("res://src/effect2/basic/data/corrupted_effect.tres")
 var fortune_texture = preload("res://assets/random/void.png")
 var spark_sf = preload("res://src/animation/blight/blight_spark.tres")
 
@@ -23,7 +23,9 @@ func register_fortune(event_manager: EventManager):
 			await popup_callback.call(true)
 			candidates.shuffle()
 			for tile in candidates.slice(0, strength):
-				tile.seed.effects.append(corrupt_effect)
+				tile.seed.effects2.append(corrupt_effect)
+				corrupt_effect.owner = tile.seed
+				corrupt_effect.register(event_manager, tile)
 				args.farm.do_animation(spark_sf, tile.grid_location)
 			popup_callback.call(false)
 		)
