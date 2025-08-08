@@ -40,7 +40,7 @@ static func load_cards():
 			all_cards.append(card)
 			cards_rarity[card.rarity].append(card)
 		
-	if Global.MAGE == "Blight Druid":
+	if Global.MAGE == "Blight-Touched":
 		var blight_cards = get_element_cards("Blight")
 		all_cards.append(blight_cards)
 		cards_rarity["common"].append(blight_cards)

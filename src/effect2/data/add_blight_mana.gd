@@ -13,7 +13,7 @@ func _init():
 
 func register(event_manager: EventManager, tile: Tile):
 	listener = Listener.create(self, func(args: EventArgs):
-		args.specific.tile.add_yield(args.turn_manager.get_blight_strength() * strength)
+		args.specific.tile.add_yield(args.turn_manager.get_dark_power() * strength)
 	)
 	owner.register(listener)
 

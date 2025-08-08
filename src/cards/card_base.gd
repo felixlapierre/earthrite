@@ -43,7 +43,7 @@ var frozen = false
 @onready var COST_LABEL = $HBoxContainer/VBoxContainer/TopBar/CardCostLabel
 @onready var COST_TEXTURE = $HBoxContainer/VBoxContainer/TopBar/TextureRect
 @onready var SIZE_CONTAINER = $HBoxContainer/VBoxContainer/ImageMargin/ImageCont/SizeCont
-@onready var DESCRIPTION_LABEL = $HBoxContainer/VBoxContainer/DescriptionLabel
+@onready var DESCRIPTION_LABEL = $HBoxContainer/VBoxContainer/DescriptionLabel #also hardcoded
 @onready var YIELD_TEXTURE = $HBoxContainer/VBoxContainer/BottomBar/YieldTexture
 @onready var YIELD_LABEL = $HBoxContainer/VBoxContainer/BottomBar/YieldLabel
 @onready var TIME_LABEL = $HBoxContainer/VBoxContainer/BottomBar/TimeLabel
@@ -137,6 +137,15 @@ func set_card_info(card_data):
 		cost_label = "[color=aqua]" + cost_label + "[/color]"
 	$HBoxContainer/VBoxContainer/TopBar/CardCostLabel.text = cost_label
 	$HBoxContainer/VBoxContainer/DescriptionLabel.text = card_info.get_description()
+	card_info.updated.connect(func():
+		$HBoxContainer/VBoxContainer/DescriptionLabel.text = card_info.get_description()
+		var description_tooltip = card_info.get_long_description()
+		if description_tooltip.length() > 0 and tooltip != null and DESCRIPTION_LABEL != null:
+			tooltip.register_tooltip(DESCRIPTION_LABEL, description_tooltip)
+			if state != Enums.CardState.InMouse:
+				tooltip.register_tooltip($Focus, description_tooltip)
+	)
+	
 	if card_info.size == 0:
 		$HBoxContainer/VBoxContainer/ImageMargin/ImageCont/SizeCont.visible = false
 	else:

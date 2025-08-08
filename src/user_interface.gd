@@ -426,17 +426,17 @@ func update_damage(damage: int = 0):
 	var damage_display = $UI/DamagePanel/VBox/BlightDamage
 	$UI/DamagePanel.visible = turn_manager.blight_damage != 0
 	damage_text.text = "[center]" + str(turn_manager.blight_damage) + " /" + str(Global.MAX_HEALTH)
-	if damage_display.get_child_count() != Global.MAX_HEALTH / 20:
+	if damage_display.get_child_count() != turn_manager.get_dark_power():
 		for child in damage_display.get_children():
 			damage_display.remove_child(child)
-		for i in Global.MAX_HEALTH / 20:
+		for i in turn_manager.get_dark_power():
 			var sprite = TextureRect.new()
 			sprite.texture = load("res://assets/custom/BlightEmpty.png")
 			sprite.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 			damage_display.add_child(sprite)
 	for i in damage_display.get_child_count():
 		var img = damage_display.get_child(i)
-		if turn_manager.blight_damage > i * 20:
+		if turn_manager.get_dark_power() > i:
 			img.texture = load("res://assets/custom/Blight.png")
 		else:
 			img.texture = load("res://assets/custom/BlightEmpty.png")

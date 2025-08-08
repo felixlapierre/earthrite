@@ -196,3 +196,6 @@ func load_data(data) -> Effect:
 	on = data.on
 	range = data.range
 	return self
+
+func update(args: EventArgs):
+	pass

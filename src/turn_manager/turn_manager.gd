@@ -122,6 +122,7 @@ func end_turn():
 			else:
 				blight_damage = 100
 				damage = 100
+			event_manager.notify(EventManager.EventType.OnHealthChanged)
 		elif next_turn_blight > 0:
 			animate_blightroot.emit("attack")
 		elif get_blight_requirements(week + 2, year) > 0:
@@ -243,8 +244,8 @@ func destroy_blighted_tiles(farm: Farm):
 func get_current_ritual():
 	return total_ritual - ritual_counter
 
-func get_blight_strength():
-	return ceil(float(blight_damage + 1) / 20)
+func get_dark_power():
+	return floor(float(blight_damage + 10) / 20)
 
 func get_chart(list):
 	var chart: Chart = null

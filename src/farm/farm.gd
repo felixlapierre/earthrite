@@ -386,7 +386,7 @@ func perform_effect(effect, tile: Tile):
 		"destroy_plant":
 			tile.destroy_plant()
 		"add_blight_yield":
-			tile.seed_base_yield += effect.strength * (event_manager.turn_manager.get_blight_strength())
+			tile.seed_base_yield += effect.strength * (event_manager.turn_manager.get_dark_power())
 		"protect":
 			tile.protected = true
 			tile.update_display()

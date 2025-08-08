@@ -29,6 +29,8 @@ const CLASS_NAME = "CardData"
 
 var card_listeners: Array[Listener]
 
+signal updated
+
 func _init(p_type = "ACTION", p_name = "PlaceholderCardName", p_rarity = "common", p_cost = 1, p_yld = 1,\
 	p_time = 1, p_size = 1, p_text = "", p_texture = null, p_seed_texture = 1, p_targets = [], p_effects = [],\
 	p_strength_increment = 1.0, p_size_increment = 1, p_text_icon_offset = 16, p_enhances = [], p_strength = 0, p_animation = null, p_delay = 0.0, p_anim_on = Enums.AnimOn.Mouse, p_effects_2 = []):

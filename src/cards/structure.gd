@@ -18,6 +18,8 @@ var grid_location: Vector2
 var type = "STRUCTURE"
 var rotate: int = 0
 
+signal updated
+
 func _init(p_name = "PlaceholderCardName", p_rarity = "common", p_cost = 1,\
 	p_size = 1, p_text = "", p_texture = null, p_effects = [],\
 	p_tooltip = "", p_grid_location = Vector2.ZERO, p_effects_2 = []):
