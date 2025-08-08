@@ -84,16 +84,16 @@ func update_display():
 	if grid_location.x == Global.FARM_TOPLEFT.x:
 		$Farmland.region_rect.position.x = 0
 	elif grid_location.x == Global.FARM_BOTRIGHT.x:
-		$Farmland.region_rect.position.x = 48
+		$Farmland.region_rect.position.x = 80
 	else:
-		$Farmland.region_rect.position.x = 16
+		$Farmland.region_rect.position.x = [16, 32, 48, 64].pick_random()
 
 	if grid_location.y == Global.FARM_TOPLEFT.y:
 		$Farmland.region_rect.position.y = 0
 	elif grid_location.y == Global.FARM_BOTRIGHT.y:
-		$Farmland.region_rect.position.y = 48
+		$Farmland.region_rect.position.y = 80
 	else:
-		$Farmland.region_rect.position.y = 16
+		$Farmland.region_rect.position.y = [16, 32, 48, 64].pick_random()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
@@ -257,7 +257,7 @@ func remove_seed():
 	seed = null
 	state = Enums.TileState.Empty
 
-func irrigate():
+func te():
 	if !irrigated:
 		irrigated = true
 		if not_destroyed():

@@ -13,6 +13,7 @@ var anim
 
 # To be overridden by specific code seeds
 func register_events(event_manager: EventManager, p_tile: Tile):
+	super.register_events(event_manager, p_tile)
 	anim = AnimatedSprite2D.new()
 	anim.sprite_frames = spriteframes
 	anim.position = Vector2(963, 450)

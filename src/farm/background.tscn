@@ -1,4 +1,4 @@
-[gd_scene load_steps=83 format=3 uid="uid://c0hbi7fqujvbn"]
+[gd_scene load_steps=85 format=3 uid="uid://c0hbi7fqujvbn"]
 
 [ext_resource type="Script" path="res://src/farm/background.gd" id="1_gbnjo"]
 [ext_resource type="Texture2D" uid="uid://cvtymdsmvlt5c" path="res://assets/farm/ground.png" id="2_6aw4d"]
@@ -7,129 +7,13 @@
 [ext_resource type="Texture2D" uid="uid://h2kf4qgrofsd" path="res://assets/farm/snowpoff2.png" id="5_2teuv"]
 [ext_resource type="SpriteFrames" uid="uid://b4najiwfr1svq" path="res://src/animation/frames_bg/tree_sf_2.tres" id="5_nbw4o"]
 [ext_resource type="Texture2D" uid="uid://hqbvii1kv3il" path="res://assets/farm/snowpoff.png" id="6_33alu"]
+[ext_resource type="Texture2D" uid="uid://bs1u5mtetop2x" path="res://assets/farm/mytileset.png" id="6_muk34"]
 [ext_resource type="Texture2D" uid="uid://bpuagaautrtsc" path="res://assets/farm/ritual-complete.png" id="8_yajlm"]
 [ext_resource type="PackedScene" uid="uid://ceywhh4lric4i" path="res://src/animation/glow.tscn" id="9_uq747"]
 [ext_resource type="Texture2D" uid="uid://bt53kq4p2410p" path="res://assets/farm/pine1.png" id="11_4h00k"]
 [ext_resource type="Texture2D" uid="uid://hexcs2lpdrao" path="res://assets/farm/runes.png" id="12_coach"]
 [ext_resource type="Texture2D" uid="uid://bfomi8syn2brj" path="res://assets/farm/house.png" id="12_s56d0"]
 [ext_resource type="Texture2D" uid="uid://dugl1eitjqayr" path="res://assets/farm/bridge.png" id="13_4221s"]
-
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_n4x4v"]
-texture = ExtResource("2_ff0ec")
-0:0/0 = 0
-2:0/0 = 0
-3:0/0 = 0
-4:0/0 = 0
-5:0/0 = 0
-6:0/0 = 0
-7:0/0 = 0
-9:0/0 = 0
-10:0/0 = 0
-11:0/0 = 0
-12:0/0 = 0
-13:0/0 = 0
-14:0/0 = 0
-15:0/0 = 0
-16:0/0 = 0
-17:0/0 = 0
-18:0/0 = 0
-0:1/0 = 0
-1:1/0 = 0
-2:1/0 = 0
-3:1/0 = 0
-4:1/0 = 0
-5:1/0 = 0
-6:1/0 = 0
-7:1/0 = 0
-8:1/0 = 0
-9:1/0 = 0
-10:1/0 = 0
-11:1/0 = 0
-12:1/0 = 0
-13:1/0 = 0
-14:1/0 = 0
-15:1/0 = 0
-16:1/0 = 0
-17:1/0 = 0
-18:1/0 = 0
-0:2/0 = 0
-1:2/0 = 0
-2:2/0 = 0
-3:2/0 = 0
-4:2/0 = 0
-5:2/0 = 0
-6:2/0 = 0
-7:2/0 = 0
-8:2/0 = 0
-9:2/0 = 0
-10:2/0 = 0
-11:2/0 = 0
-12:2/0 = 0
-13:2/0 = 0
-14:2/0 = 0
-17:2/0 = 0
-18:2/0 = 0
-19:2/0 = 0
-20:2/0 = 0
-2:3/0 = 0
-3:3/0 = 0
-4:3/0 = 0
-5:3/0 = 0
-6:3/0 = 0
-9:3/0 = 0
-10:3/0 = 0
-11:3/0 = 0
-12:3/0 = 0
-13:3/0 = 0
-14:3/0 = 0
-17:3/0 = 0
-18:3/0 = 0
-19:3/0 = 0
-2:4/0 = 0
-3:4/0 = 0
-4:4/0 = 0
-5:4/0 = 0
-9:4/0 = 0
-10:4/0 = 0
-11:4/0 = 0
-12:4/0 = 0
-17:4/0 = 0
-18:4/0 = 0
-19:4/0 = 0
-0:5/0 = 0
-1:5/0 = 0
-2:5/0 = 0
-3:5/0 = 0
-4:5/0 = 0
-5:5/0 = 0
-6:5/0 = 0
-7:5/0 = 0
-8:5/0 = 0
-9:5/0 = 0
-10:5/0 = 0
-11:5/0 = 0
-12:5/0 = 0
-13:5/0 = 0
-14:5/0 = 0
-15:5/0 = 0
-16:5/0 = 0
-17:5/0 = 0
-18:5/0 = 0
-19:5/0 = 0
-20:5/0 = 0
-21:5/0 = 0
-22:5/0 = 0
-6:4/0 = 0
-15:2/0 = 0
-15:3/0 = 0
-15:4/0 = 0
-16:3/0 = 0
-16:2/0 = 0
-14:4/0 = 0
-16:4/0 = 0
-
-[sub_resource type="TileSet" id="TileSet_djvk5"]
-sources/0 = SubResource("TileSetAtlasSource_n4x4v")
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_tg0hf"]
 atlas = ExtResource("4_smcf2")
@@ -421,6 +305,147 @@ animations = [{
 "name": &"threat_to_none",
 "speed": 10.0
 }]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_n4x4v"]
+texture = ExtResource("2_ff0ec")
+0:0/0 = 0
+2:0/0 = 0
+3:0/0 = 0
+4:0/0 = 0
+5:0/0 = 0
+6:0/0 = 0
+7:0/0 = 0
+9:0/0 = 0
+10:0/0 = 0
+11:0/0 = 0
+12:0/0 = 0
+13:0/0 = 0
+14:0/0 = 0
+15:0/0 = 0
+16:0/0 = 0
+17:0/0 = 0
+18:0/0 = 0
+0:1/0 = 0
+1:1/0 = 0
+2:1/0 = 0
+3:1/0 = 0
+4:1/0 = 0
+5:1/0 = 0
+6:1/0 = 0
+7:1/0 = 0
+8:1/0 = 0
+9:1/0 = 0
+10:1/0 = 0
+11:1/0 = 0
+12:1/0 = 0
+13:1/0 = 0
+14:1/0 = 0
+15:1/0 = 0
+16:1/0 = 0
+17:1/0 = 0
+18:1/0 = 0
+0:2/0 = 0
+1:2/0 = 0
+2:2/0 = 0
+3:2/0 = 0
+4:2/0 = 0
+5:2/0 = 0
+6:2/0 = 0
+7:2/0 = 0
+8:2/0 = 0
+9:2/0 = 0
+10:2/0 = 0
+11:2/0 = 0
+12:2/0 = 0
+13:2/0 = 0
+14:2/0 = 0
+17:2/0 = 0
+18:2/0 = 0
+19:2/0 = 0
+20:2/0 = 0
+2:3/0 = 0
+3:3/0 = 0
+4:3/0 = 0
+5:3/0 = 0
+6:3/0 = 0
+9:3/0 = 0
+10:3/0 = 0
+11:3/0 = 0
+12:3/0 = 0
+13:3/0 = 0
+14:3/0 = 0
+17:3/0 = 0
+18:3/0 = 0
+19:3/0 = 0
+2:4/0 = 0
+3:4/0 = 0
+4:4/0 = 0
+5:4/0 = 0
+9:4/0 = 0
+10:4/0 = 0
+11:4/0 = 0
+12:4/0 = 0
+17:4/0 = 0
+18:4/0 = 0
+19:4/0 = 0
+0:5/0 = 0
+1:5/0 = 0
+2:5/0 = 0
+3:5/0 = 0
+4:5/0 = 0
+5:5/0 = 0
+6:5/0 = 0
+7:5/0 = 0
+8:5/0 = 0
+9:5/0 = 0
+10:5/0 = 0
+11:5/0 = 0
+12:5/0 = 0
+13:5/0 = 0
+14:5/0 = 0
+15:5/0 = 0
+16:5/0 = 0
+17:5/0 = 0
+18:5/0 = 0
+19:5/0 = 0
+20:5/0 = 0
+21:5/0 = 0
+22:5/0 = 0
+6:4/0 = 0
+15:2/0 = 0
+15:3/0 = 0
+15:4/0 = 0
+16:3/0 = 0
+16:2/0 = 0
+14:4/0 = 0
+16:4/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_uh5u2"]
+texture = ExtResource("6_muk34")
+0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+3:0/0 = 0
+4:0/0 = 0
+5:0/0 = 0
+0:1/0 = 0
+1:1/0 = 0
+2:1/0 = 0
+5:1/0 = 0
+0:2/0 = 0
+1:2/0 = 0
+2:2/0 = 0
+3:2/0 = 0
+4:2/0 = 0
+5:2/0 = 0
+0:3/0 = 0
+1:3/0 = 0
+2:3/0 = 0
+5:3/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_djvk5"]
+sources/0 = SubResource("TileSetAtlasSource_n4x4v")
+sources/1 = SubResource("TileSetAtlasSource_uh5u2")
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_6tymq"]
 atlas = ExtResource("5_2teuv")
@@ -750,35 +775,36 @@ texture = ExtResource("2_6aw4d")
 region_enabled = true
 region_rect = Rect2(0, 0, 1920, 1080)
 
-[node name="TileMap" type="TileMap" parent="."]
-texture_filter = 1
-scale = Vector2(5.71384, 5.62504)
-tile_set = SubResource("TileSet_djvk5")
-format = 2
-layer_0/name = "Ground"
-layer_1/name = "Props"
-layer_1/tile_data = PackedInt32Array(65537, 917504, 5, 65555, 131072, 5, 131087, 589824, 5, 65551, 720896, 5, 589830, 327680, 5, 720896, 131072, 5, 393220, 458752, 5, 8, 655360, 5, 4, 393216, 5, 720910, 0, 5, 589826, 851968, 5)
-layer_2/name = "Props 2"
-layer_2/tile_data = PackedInt32Array(720906, 917504, 3, 589834, 917504, 1)
-
-[node name="MoonRune" type="Sprite2D" parent="."]
-position = Vector2(1385, 450)
-scale = Vector2(5.7, 5.7)
-texture = ExtResource("12_coach")
-region_enabled = true
-region_rect = Rect2(64, 0, 32, 32)
-
 [node name="River2" type="Sprite2D" parent="."]
-position = Vector2(1555, 537)
+position = Vector2(1568, 545)
 scale = Vector2(4.85, 4.85)
 texture = ExtResource("13_4221s")
 
 [node name="Blightroots" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
-position = Vector2(1553, 484)
+position = Vector2(1696, 452)
 scale = Vector2(5.7, 5.7)
 sprite_frames = SubResource("SpriteFrames_l0y7c")
-animation = &"none"
+animation = &"safe"
+
+[node name="TileMap" type="TileMap" parent="."]
+texture_filter = 1
+position = Vector2(40, 50)
+scale = Vector2(5.71384, 5.62504)
+tile_set = SubResource("TileSet_djvk5")
+format = 2
+layer_0/name = "Ground"
+layer_1/name = "Props"
+layer_1/tile_data = PackedInt32Array(65537, 917504, 5, 65555, 131072, 5, 4, 393216, 5, 131085, 327681, 3, 458757, 196609, 0, 524298, 1, 1, 524299, 65537, 1, 524300, 131073, 1, -65528, 1, 0, -65527, 65537, 0, -65526, 131073, 0, 131086, 589824, 5, 65550, 720896, 5, 655374, 0, 5, 655360, 131072, 5, 524290, 851968, 5, 458756, 458752, 5, 262144, 65537, 2, 262145, 131073, 2, 262146, 196609, 2, 262147, 262145, 2, 327679, 1, 2, 8, 327681, 1, 11, 327681, 0, 393222, 327681, 3, 458763, 327681, 2, 458764, 327681, 1, 458759, 327681, 2, 393229, 327681, 2)
+layer_2/name = "Props 2"
+layer_2/tile_data = PackedInt32Array(393222, 327681, 1)
+
+[node name="MoonRune" type="Sprite2D" parent="."]
+position = Vector2(1403, 460)
+scale = Vector2(5.7, 5.7)
+texture = ExtResource("12_coach")
+region_enabled = true
+region_rect = Rect2(64, 0, 32, 32)
 
 [node name="Snow1" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
@@ -852,22 +878,32 @@ amount = 10000
 [node name="Pines" type="Node2D" parent="."]
 
 [node name="Pine2" type="Sprite2D" parent="Pines"]
-position = Vector2(446, 128)
+position = Vector2(420, 182)
 scale = Vector2(5.7, 5.7)
 texture = ExtResource("11_4h00k")
 
 [node name="Pine3" type="Sprite2D" parent="Pines"]
-position = Vector2(1190, 920)
+position = Vector2(1193, 978)
 scale = Vector2(5.7, 5.7)
 texture = ExtResource("11_4h00k")
 
 [node name="Pine4" type="Sprite2D" parent="Pines"]
-position = Vector2(922, 878)
+position = Vector2(948, 1003)
 scale = Vector2(5.7, 5.7)
 texture = ExtResource("11_4h00k")
 
 [node name="Pine5" type="Sprite2D" parent="Pines"]
-position = Vector2(676, 939)
+position = Vector2(627, 1010)
+scale = Vector2(5.7, 5.7)
+texture = ExtResource("11_4h00k")
+
+[node name="Pine" type="Sprite2D" parent="Pines"]
+position = Vector2(1916, 95)
+scale = Vector2(5.7, 5.7)
+texture = ExtResource("11_4h00k")
+
+[node name="Pine6" type="Sprite2D" parent="Pines"]
+position = Vector2(1892, 928)
 scale = Vector2(5.7, 5.7)
 texture = ExtResource("11_4h00k")
 
@@ -875,35 +911,35 @@ texture = ExtResource("11_4h00k")
 
 [node name="Tree7" type="AnimatedSprite2D" parent="Trees"]
 texture_filter = 1
-position = Vector2(1720, 70)
+position = Vector2(1724, 141)
 scale = Vector2(5.7, 5.7)
 sprite_frames = ExtResource("5_nbw4o")
 animation = &"fall"
 
 [node name="Tree6" type="AnimatedSprite2D" parent="Trees"]
 texture_filter = 1
-position = Vector2(194, 62)
+position = Vector2(229, 82)
 scale = Vector2(5.7, 5.7)
 sprite_frames = ExtResource("5_nbw4o")
 animation = &"skip-summer"
 
 [node name="Tree" type="AnimatedSprite2D" parent="Trees"]
 texture_filter = 1
-position = Vector2(87, 123)
+position = Vector2(74, 158)
 scale = Vector2(5.7, 5.7)
 sprite_frames = ExtResource("5_nbw4o")
 animation = &"skip-summer"
 
 [node name="Tree2" type="AnimatedSprite2D" parent="Trees"]
 texture_filter = 1
-position = Vector2(1766, 235)
+position = Vector2(1811, 231)
 scale = Vector2(5.7, 5.7)
 sprite_frames = ExtResource("5_nbw4o")
 animation = &"fall"
 
 [node name="Tree5" type="AnimatedSprite2D" parent="Trees"]
 texture_filter = 1
-position = Vector2(931, 1042)
+position = Vector2(917, 1094)
 scale = Vector2(5.7, 5.7)
 sprite_frames = ExtResource("5_nbw4o")
 animation = &"fall"
@@ -911,7 +947,7 @@ flip_h = true
 
 [node name="Tree3" type="AnimatedSprite2D" parent="Trees"]
 texture_filter = 1
-position = Vector2(1060, 965)
+position = Vector2(1080, 1008)
 scale = Vector2(5.7, 5.7)
 sprite_frames = ExtResource("5_nbw4o")
 animation = &"fall"
@@ -919,28 +955,37 @@ flip_h = true
 
 [node name="Tree4" type="AnimatedSprite2D" parent="Trees"]
 texture_filter = 1
-position = Vector2(791, 926)
+position = Vector2(808, 990)
+scale = Vector2(5.7, 5.7)
+sprite_frames = ExtResource("5_nbw4o")
+animation = &"fall"
+
+[node name="Tree8" type="AnimatedSprite2D" parent="Trees"]
+texture_filter = 1
+position = Vector2(397, 1009)
+scale = Vector2(5.7, 5.7)
+sprite_frames = ExtResource("5_nbw4o")
+animation = &"fall"
+
+[node name="Tree9" type="AnimatedSprite2D" parent="Trees"]
+texture_filter = 1
+position = Vector2(51, 757)
 scale = Vector2(5.7, 5.7)
 sprite_frames = ExtResource("5_nbw4o")
 animation = &"fall"
 
 [node name="Pine6" type="Sprite2D" parent="."]
-position = Vector2(780, 1156)
-scale = Vector2(5.7, 5.7)
-texture = ExtResource("11_4h00k")
-
-[node name="Pine" type="Sprite2D" parent="."]
-position = Vector2(1916, 95)
+position = Vector2(744, 1148)
 scale = Vector2(5.7, 5.7)
 texture = ExtResource("11_4h00k")
 
 [node name="House" type="Sprite2D" parent="."]
-position = Vector2(310, 321)
+position = Vector2(259, 301)
 scale = Vector2(5.7, 5.7)
 texture = ExtResource("12_s56d0")
 
 [node name="SunRune" type="Sprite2D" parent="."]
-position = Vector2(535, 466)
+position = Vector2(509, 460)
 scale = Vector2(5.7, 5.7)
 texture = ExtResource("12_coach")
 region_enabled = true

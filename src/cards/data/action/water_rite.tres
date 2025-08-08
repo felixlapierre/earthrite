@@ -1,7 +1,14 @@
-[gd_resource type="Resource" script_class="WaterRite" load_steps=3 format=3 uid="uid://b88enkcaungil"]
+[gd_resource type="Resource" script_class="WaterRite" load_steps=5 format=3 uid="uid://b88enkcaungil"]
 
+[ext_resource type="Script" path="res://src/effect2/basic/splash_effect.gd" id="1_73ipb"]
 [ext_resource type="Script" path="res://src/cards/custom/waterrite.gd" id="1_ttagq"]
 [ext_resource type="Texture2D" uid="uid://dthha6swxbr7j" path="res://assets/card/waterrite.png" id="2_n4p65"]
+
+[sub_resource type="Resource" id="Resource_xoxoa"]
+script = ExtResource("1_73ipb")
+strength = 4.0
+base_strength = 4.0
+strength_increment = 1.0
 
 [resource]
 script = ExtResource("1_ttagq")
@@ -20,7 +27,8 @@ seed_texture = 0
 texture_icon_offset = 16
 targets = Array[String](["Empty"])
 effects = Array[Resource("res://src/effect/effect.gd")]([])
-enhances = Array[String]([])
+enhances = Array[Dictionary]([])
 strength = 0.0
 delay = 0.0
 anim_on = 0
+effects2 = Array[Resource("res://src/effect2/effect2.gd")]([SubResource("Resource_xoxoa")])

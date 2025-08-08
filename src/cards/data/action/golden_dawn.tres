@@ -1,0 +1,30 @@
+[gd_resource type="Resource" script_class="CardData" load_steps=5 format=3 uid="uid://dxs4kmahp8g03"]
+
+[ext_resource type="Script" path="res://src/cards/card_data.gd" id="1_frif5"]
+[ext_resource type="Script" path="res://src/effect2/golden_dawn.gd" id="1_gwy8j"]
+[ext_resource type="Resource" uid="uid://d21lr1dwl86yw" path="res://src/effect2/basic/data/simple_harvest_effect.tres" id="2_l75ju"]
+
+[sub_resource type="Resource" id="Resource_332u2"]
+script = ExtResource("1_gwy8j")
+
+[resource]
+script = ExtResource("1_frif5")
+type = "ACTION"
+name = "Golden Dawn"
+rarity = "uncommon"
+cost = 2
+yld = 0
+time = 0
+size = -1
+text = ""
+strength_increment = 1.0
+size_increment = 1
+seed_texture = 0
+texture_icon_offset = 16
+targets = Array[String](["Mature"])
+effects = Array[Resource("res://src/effect/effect.gd")]([])
+enhances = Array[Dictionary]([])
+strength = 0.0
+delay = 0.0
+anim_on = 0
+effects2 = Array[Resource("res://src/effect2/effect2.gd")]([SubResource("Resource_332u2"), ExtResource("2_l75ju")])

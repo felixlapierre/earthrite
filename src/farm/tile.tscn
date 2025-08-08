@@ -1,7 +1,7 @@
 [gd_scene load_steps=27 format=3 uid="uid://ccnobfjaguoie"]
 
 [ext_resource type="Script" path="res://src/farm/tile.gd" id="1_8vnt4"]
-[ext_resource type="Texture2D" uid="uid://cmitvrjj6os0f" path="res://assets/1616tinygarden/Farm.png" id="2_n75y4"]
+[ext_resource type="Texture2D" uid="uid://ba73mevd2p11r" path="res://assets/farm/farmland.png" id="2_v6n7s"]
 [ext_resource type="Texture2D" uid="uid://kpujc3kdexl3" path="res://assets/custom/PurpleOverlay.png" id="3_jwute"]
 [ext_resource type="Texture2D" uid="uid://bofm5pndld7ww" path="res://assets/custom/FarmTile2.png" id="4_bvg7e"]
 [ext_resource type="Texture2D" uid="uid://bt841vsdlx75b" path="res://assets/custom/mtn-rock.png" id="5_ksptn"]
@@ -130,7 +130,7 @@ script = ExtResource("1_8vnt4")
 [node name="Farmland" type="Sprite2D" parent="."]
 texture_filter = 1
 scale = Vector2(5.7, 5.7)
-texture = ExtResource("2_n75y4")
+texture = ExtResource("2_v6n7s")
 offset = Vector2(8, 8)
 region_enabled = true
 region_rect = Rect2(0, 0, 16, 16)

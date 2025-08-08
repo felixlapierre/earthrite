@@ -62,13 +62,15 @@ var theme_large = preload("res://assets/theme_large.tres")
 @onready var Obelisk = $Obelisk
 @onready var MultiplayerUi = $MultiplayerUi
 @onready var PeerListDisplay = $UI/PeerListDisplay
-@onready var CurrentRitualLabel = $UI/CenterCont/CurrentRitualLabel
+@onready var CurrentRitualLabel = $UI/CenterContYellow/CurrentRitualLabel
+@onready var CurrentBlueLabel = $UI/CenterContBlue/CurrentBlueLabel
 
 var end_year_alert_text = "Ritual Complete! Time to rest and prepare for the next year"
 var structure_place_text = "Click on the farm tile where you'd like to place the structure"
 var no_energy_text = "[color=red]Not Enough Energy![/color]"
 
 var ritual_current_amount: int = 0
+var blue_current_amount: int = 0
 var t = 0.0
 
 # Called when the node enters the scene tree for the first time.
@@ -98,6 +100,16 @@ func _process(delta: float) -> void:
 			ritual_current_amount = turn_manager.get_current_ritual()
 		CurrentRitualLabel.text = str(ritual_current_amount)
 		$UI/RitualPanel/RitualCounter/Label.text = "Target: " + str(turn_manager.total_ritual)
+	if blue_current_amount != turn_manager.purple_mana:
+		if blue_current_amount > turn_manager.purple_mana:
+			blue_current_amount = turn_manager.purple_mana
+		else:
+			t += delta
+			blue_current_amount = ceil(lerp(blue_current_amount, turn_manager.purple_mana, t))
+			if t >= 1.0:
+				t = 0.0
+				blue_current_amount = turn_manager.purple_mana
+		CurrentBlueLabel.text = str(blue_current_amount)
 	$Obelisk.value = ritual_current_amount
 	
 	var explores_left = explore.explores + explore.bonus_explores
@@ -348,9 +360,12 @@ func _on_farm_tiles_on_preview_yield(args) -> void:
 	if purple != 0:
 		if turn_manager.target_blight == 0 and Global.FARM_TYPE != "LUNARTEMPLE" and !args.defer and !turn_manager.flag_defer_excess:
 			AlertDisplay.set_text(warning_waste_purple_text)
+		CurrentBlueLabel.text = "[color=aquamarine]" + str(turn_manager.purple_mana + purple)
+	else:
+		CurrentBlueLabel.text = str(turn_manager.purple_mana)
 
 	if yellow != 0:
-		CurrentRitualLabel.text = "[color=e5e831]" + str(turn_manager.get_current_ritual() + yellow)
+		CurrentRitualLabel.text = "[color=f9a31b]" + str(turn_manager.get_current_ritual() + yellow)
 		#$UI/RitualPanel/RitualCounter/Label.text = "[right][color=e5e831]"+str(turn_manager.get_current_ritual() + yellow) + " /" + str(turn_manager.total_ritual) + "[/color][/right]"
 	else:
 		CurrentRitualLabel.text = str(turn_manager.get_current_ritual())

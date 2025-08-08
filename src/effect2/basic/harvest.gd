@@ -10,7 +10,7 @@ func _init(p_delay = false):
 
 func register(event_manager: EventManager, tile: Tile):
 	listener = Listener.create(self, func(args: EventArgs):
-		args.specific.tile.harvest(delay)
+		await args.specific.tile.harvest(delay)
 	)
 	owner.register(listener)
 

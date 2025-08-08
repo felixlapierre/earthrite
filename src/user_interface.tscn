@@ -89,10 +89,10 @@ script = ExtResource("1_j28fq")
 
 [node name="Obelisk" type="TextureProgressBar" parent="."]
 texture_filter = 1
-offset_left = 481.0
-offset_top = 98.0
-offset_right = 505.0
-offset_bottom = 162.0
+offset_left = 456.0
+offset_top = 95.0
+offset_right = 480.0
+offset_bottom = 159.0
 scale = Vector2(4.627, 4.7)
 value = 50.0
 fill_mode = 3
@@ -105,10 +105,10 @@ anchors_preset = 0
 
 [node name="RitualPanel" type="PanelContainer" parent="UI"]
 layout_mode = 0
-offset_left = 439.0
-offset_top = 45.0
-offset_right = 653.0
-offset_bottom = 86.0
+offset_left = 414.0
+offset_top = 50.0
+offset_right = 628.0
+offset_bottom = 91.0
 
 [node name="RitualCounter" type="HBoxContainer" parent="UI/RitualPanel"]
 layout_mode = 2
@@ -380,10 +380,10 @@ position = Vector2(0, 153)
 
 [node name="DamagePanel" type="PanelContainer" parent="UI"]
 layout_mode = 0
-offset_left = 461.0
-offset_top = 461.0
-offset_right = 641.0
-offset_bottom = 501.0
+offset_left = 420.0
+offset_top = 538.0
+offset_right = 600.0
+offset_bottom = 582.0
 
 [node name="VBox" type="VBoxContainer" parent="UI/DamagePanel"]
 layout_mode = 2
@@ -447,15 +447,32 @@ offset_top = 8.0
 offset_right = 1911.0
 offset_bottom = 240.0
 
-[node name="CenterCont" type="CenterContainer" parent="UI"]
+[node name="CenterContYellow" type="CenterContainer" parent="UI"]
 custom_minimum_size = Vector2(300, 0)
 layout_mode = 0
-offset_left = 390.0
-offset_top = 440.0
-offset_right = 690.0
-offset_bottom = 493.0
+offset_left = 364.0
+offset_top = 433.0
+offset_right = 664.0
+offset_bottom = 486.0
 
-[node name="CurrentRitualLabel" type="RichTextLabel" parent="UI/CenterCont"]
+[node name="CurrentRitualLabel" type="RichTextLabel" parent="UI/CenterContYellow"]
+layout_mode = 2
+theme = ExtResource("24_jal2o")
+bbcode_enabled = true
+text = "50[img]res://assets/custom/YellowMana.png[/img]"
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+
+[node name="CenterContBlue" type="CenterContainer" parent="UI"]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 0
+offset_left = 1254.0
+offset_top = 431.0
+offset_right = 1554.0
+offset_bottom = 484.0
+
+[node name="CurrentBlueLabel" type="RichTextLabel" parent="UI/CenterContBlue"]
 layout_mode = 2
 theme = ExtResource("24_jal2o")
 bbcode_enabled = true
@@ -488,10 +505,10 @@ texture_normal = ExtResource("14_m3jdw")
 
 [node name="NextYearButton" type="Button" parent="Winter"]
 layout_mode = 0
-offset_left = 211.0
-offset_top = 113.0
-offset_right = 423.0
-offset_bottom = 174.0
+offset_left = 159.0
+offset_top = 217.0
+offset_right = 371.0
+offset_bottom = 278.0
 theme = ExtResource("24_jal2o")
 text = "Continue"
 
@@ -516,14 +533,13 @@ text = "Upgrade"
 
 [node name="ExploreButton" type="Button" parent="Winter"]
 layout_mode = 0
-offset_left = 1465.0
-offset_top = 440.0
-offset_right = 1638.0
-offset_bottom = 504.0
+offset_left = 1463.0
+offset_top = 413.0
+offset_right = 1636.0
+offset_bottom = 477.0
 theme = ExtResource("24_jal2o")
 shortcut = SubResource("Shortcut_i83pa")
 text = "Explore"
-metadata/_edit_use_anchors_ = true
 
 [node name="CardButton" type="Button" parent="Winter"]
 visible = false
