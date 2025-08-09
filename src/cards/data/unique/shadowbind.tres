@@ -30,3 +30,4 @@ strength = 0.0
 delay = 0.0
 anim_on = 0
 effects2 = Array[Resource("res://src/effect2/effect2.gd")]([SubResource("Resource_0geeq"), ExtResource("2_e1esh")])
+elements = Array[int]([])

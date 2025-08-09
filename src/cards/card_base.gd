@@ -376,3 +376,11 @@ func set_highlight(value: bool):
 
 func set_disabled(value: bool):
 	FOCUS.disabled = value
+
+func do_passive_effects(event_manager_optional = null):
+	for effect2 in card_info.effects2:
+		if effect2.effect_type == Enums.EffectType.Passive:
+			effect2.owner = card_info
+			if event_manager_optional != null:
+				effect2.register(event_manager_optional, null)
+			effect2.do_passive_effect()

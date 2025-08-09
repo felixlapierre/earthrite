@@ -1,8 +1,8 @@
-[gd_resource type="Resource" script_class="CardData" load_steps=7 format=3 uid="uid://c8nu1ehlp245d"]
+[gd_resource type="Resource" script_class="CardData" load_steps=6 format=3 uid="uid://c8nu1ehlp245d"]
 
 [ext_resource type="Script" path="res://src/cards/card_data.gd" id="1_2qdjs"]
 [ext_resource type="Script" path="res://src/effect2/basic/add_mana_effect.gd" id="1_cat3b"]
-[ext_resource type="Script" path="res://src/effect2/data/dark_power.gd" id="2_58ljh"]
+[ext_resource type="Resource" uid="uid://dn2nhctfb5gxy" path="res://src/effect2/basic/data/dark_power_eff.tres" id="2_g6c2n"]
 [ext_resource type="Texture2D" uid="uid://cl4ai3qh5t03e" path="res://assets/seed/blight_rose.png" id="3_udopj"]
 
 [sub_resource type="Resource" id="Resource_odxgy"]
@@ -12,9 +12,6 @@ seed = true
 strength = 1.0
 base_strength = 1.0
 strength_increment = 1.0
-
-[sub_resource type="Resource" id="Resource_dbmfb"]
-script = ExtResource("2_58ljh")
 
 [resource]
 script = ExtResource("1_2qdjs")
@@ -37,5 +34,5 @@ enhances = Array[Dictionary]([])
 strength = 0.0
 delay = 0.0
 anim_on = 0
-effects2 = Array[Resource("res://src/effect2/effect2.gd")]([SubResource("Resource_odxgy"), SubResource("Resource_dbmfb")])
+effects2 = Array[Resource("res://src/effect2/effect2.gd")]([ExtResource("2_g6c2n"), SubResource("Resource_odxgy")])
 elements = Array[int]([1])

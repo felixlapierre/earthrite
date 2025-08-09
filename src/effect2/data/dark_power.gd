@@ -1,31 +1,36 @@
-extends Effect2
+extends StrEffect
 class_name DarkPower
 
 var listener: Listener
 
 func _init(p_delay = false):
-	super(EventManager.EventType.OnHealthChanged, true, Enums.EffectType.Passive, "Dark Power")
+	super(EventManager.EventType.OnHealthChanged, true, Enums.EffectType.Passive, "Dark Power", 0.0, 0.0, 1.0)
 
 func register(event_manager: EventManager, tile: Tile):
 	var apply_dark_power = func(args: EventArgs):
-		var dark_power_strength = event_manager.turn_manager.get_dark_power()
-		for effect in owner.effects2:
-			if effect.can_strengthen():
-				effect.strength = effect.base_strength + (dark_power_strength - 1) * effect.strength_increment
-				owner.updated.emit()
-				return
-		if owner.can_strengthen_custom_effect():
-			owner.strength = owner.strength_increment * dark_power_strength
-			owner.updated.emit()
+		do_passive_effect()
 	listener = Listener.create(self, apply_dark_power)
 	
 	event_manager.register(listener)
 
 func unregister(event_manager: EventManager):
 	listener.disable()
+
+func do_passive_effect():
+	var dark_power_strength = TurnManager.get_dark_power() + strength
+	for effect in owner.effects2:
+		if effect.can_strengthen() and effect.name != "Dark Power":
+			effect.highlight_color_override = "violet"
+			effect.strength = effect.base_strength + (dark_power_strength - 1) * effect.strength_increment
+			owner.updated.emit()
+			return
+	if owner.can_strengthen_custom_effect():
+		owner.strength = owner.strength_increment * dark_power_strength
+		owner.updated.emit()
 	
 func get_description(size):
-	return "[color=violet]Dark Power[/color]"
+	return ""
+	#return "[color=violet]Dark Power[/color]"
 
 func get_long_description():
 	return "[color=violet]Dark Power[/color]: Effect strength is proportional to blight damage taken"

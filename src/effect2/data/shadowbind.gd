@@ -11,7 +11,8 @@ func register(event_manager: EventManager, tile: Tile):
 	var cb = func(): pass
 
 	listener = Listener.create(self, func(args: EventArgs):
-		var options = args.cards.get_hand_info().filter(func(card): return card.can_strengthen_custom_effect())
+		var options = args.cards.get_hand_info().filter(func(card):
+			return card.can_strengthen_custom_effect() and !card.effects2.any(func(eff): return eff.name == "Dark Power"))
 		if options.size() > 0:
 			var pick_option_ui = PickOption.instantiate()
 			args.user_interface.add_child(pick_option_ui)

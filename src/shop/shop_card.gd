@@ -14,6 +14,7 @@ func _ready() -> void:
 	card_node = CardBase.instantiate()
 	card_node.tooltip = tooltip
 	card_node.set_card_info(card_data)
+	card_node.do_passive_effects()
 	card_node.on_clicked.connect(on_card_clicked)
 	card_node.set_state(Enums.CardState.InShop, null, null, null)
 	$VBox.add_child(card_node)

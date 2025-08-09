@@ -16,6 +16,7 @@ func _process(delta: float) -> void:
 func setup(card_data: CardData):
 	var card = CardBase.instantiate()
 	card.set_card_info(card_data)
+	card.do_passive_effects()
 	card.set_state(Enums.CardState.InShop, null, null, null)
 	$Panel/Center/Panel/Margin/VBox/Label.add_sibling(card)
 	$Panel/Center/Panel/Margin/VBox/Description.clear()

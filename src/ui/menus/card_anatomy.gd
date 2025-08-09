@@ -11,6 +11,7 @@ func _ready() -> void:
 func setup(card_info):
 	var card = CardBase.instantiate()
 	card.set_card_info(card_info)
+	card.do_passive_effects()
 	var scale = Vector2(1.7, 1.7)
 	var card_position = Vector2(1920, 1080) / 2 - (Constants.CARD_SIZE / 2)
 	card.position = card_position

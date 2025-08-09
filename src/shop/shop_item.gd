@@ -30,6 +30,7 @@ func set_item(new_item):
 	card.tooltip = tooltip
 	card.state = Enums.CardState.InShop
 	card.set_card_info(item.data)
+	card.do_passive_effects()
 	$ItemContainer.add_child(card)
 	$ItemContainer.move_child(card, 0)
 	$ItemContainer/ItemPanel.visible = false

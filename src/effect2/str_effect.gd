@@ -5,6 +5,8 @@ class_name StrEffect
 @export var base_strength: float = 1.0
 @export var strength_increment: float = 1.0
 
+var highlight_color_override
+
 func _init(event_type, seed, effect_type, name, p_strength: float = 1.0, p_base_strength = 1.0, p_strength_increment = 1.0):
 	super(event_type, seed, effect_type, name)
 	strength = p_strength
@@ -42,6 +44,8 @@ func get_description_interp(child_description: String) -> String:
 	return child_description.replace("{STRENGTH}", highlight(str_descr))
 
 func highlight(text: String):
+	if highlight_color_override != null:
+		return "[color=" + highlight_color_override + "]" + text + "[/color]"
 	if strength > base_strength:
 		return "[color=aqua]" + text + "[/color]"
 	elif strength < base_strength:

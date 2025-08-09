@@ -98,11 +98,7 @@ func draw_specific_card_from(card_data: CardData, from: Vector2):
 
 	new_card.tooltip = tooltip
 	new_card.set_card_info(card_data)
-	for effect2 in card_data.effects2:
-		if effect2.effect_type == Enums.EffectType.Passive:
-			effect2.owner = card_data
-			effect2.register(event_manager, null)
-			effect2.listener.invoke(event_manager.get_event_args(null))
+	new_card.do_passive_effects(event_manager)
 
 	new_card.position = from - CardSize / 2
 	new_card.target_position = new_card.position

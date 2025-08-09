@@ -104,3 +104,6 @@ func can_target_tile(tile: Tile):
 # is able to target it even if the tile state wouldn't otherwise allow
 func card_can_target(card: CardData):
 	return false
+
+func do_passive_effect():
+	pass
