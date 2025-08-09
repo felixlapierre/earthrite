@@ -1,0 +1,46 @@
+[gd_resource type="SpriteFrames" load_steps=7 format=3 uid="uid://buhbtxvlec5qw"]
+
+[ext_resource type="Texture2D" uid="uid://bx1gebpywep80" path="res://assets/animations/golden_dawn.png" id="1_hdk0f"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qtxx0"]
+atlas = ExtResource("1_hdk0f")
+region = Rect2(0, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b5y12"]
+atlas = ExtResource("1_hdk0f")
+region = Rect2(128, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gtvqn"]
+atlas = ExtResource("1_hdk0f")
+region = Rect2(256, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_64jm8"]
+atlas = ExtResource("1_hdk0f")
+region = Rect2(384, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4gla6"]
+atlas = ExtResource("1_hdk0f")
+region = Rect2(512, 0, 128, 128)
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qtxx0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b5y12")
+}, {
+"duration": 5.0,
+"texture": SubResource("AtlasTexture_gtvqn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_64jm8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4gla6")
+}],
+"loop": false,
+"name": &"default",
+"speed": 10.0
+}]

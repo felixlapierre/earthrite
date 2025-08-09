@@ -7,11 +7,11 @@
 
 [sub_resource type="Resource" id="Resource_hspaw"]
 script = ExtResource("2_3drsi")
+timing = 11
+seed = false
 strength = 1.0
 base_strength = 1.0
 strength_increment = 1.0
-timing = 11
-is_seed = false
 
 [resource]
 script = ExtResource("1_kys65")

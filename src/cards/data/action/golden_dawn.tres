@@ -1,8 +1,10 @@
-[gd_resource type="Resource" script_class="CardData" load_steps=5 format=3 uid="uid://dxs4kmahp8g03"]
+[gd_resource type="Resource" script_class="CardData" load_steps=7 format=3 uid="uid://dxs4kmahp8g03"]
 
+[ext_resource type="SpriteFrames" uid="uid://buhbtxvlec5qw" path="res://src/animation/frames/golden_dawn_sf.tres" id="1_660a8"]
 [ext_resource type="Script" path="res://src/cards/card_data.gd" id="1_frif5"]
 [ext_resource type="Script" path="res://src/effect2/golden_dawn.gd" id="1_gwy8j"]
 [ext_resource type="Resource" uid="uid://d21lr1dwl86yw" path="res://src/effect2/basic/data/simple_harvest_effect.tres" id="2_l75ju"]
+[ext_resource type="Texture2D" uid="uid://chjg61km18u10" path="res://assets/card/golden_dawn.png" id="4_d4pyh"]
 
 [sub_resource type="Resource" id="Resource_332u2"]
 script = ExtResource("1_gwy8j")
@@ -19,12 +21,14 @@ size = -1
 text = ""
 strength_increment = 1.0
 size_increment = 1
+texture = ExtResource("4_d4pyh")
 seed_texture = 0
 texture_icon_offset = 16
 targets = Array[String](["Mature"])
 effects = Array[Resource("res://src/effect/effect.gd")]([])
 enhances = Array[Dictionary]([])
 strength = 0.0
-delay = 0.0
-anim_on = 0
-effects2 = Array[Resource("res://src/effect2/effect2.gd")]([SubResource("Resource_332u2"), ExtResource("2_l75ju")])
+animation = ExtResource("1_660a8")
+delay = 0.7
+anim_on = 2
+effects2 = Array[Resource("res://src/effect2/effect2.gd")]([ExtResource("2_l75ju"), SubResource("Resource_332u2")])

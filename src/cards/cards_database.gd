@@ -39,6 +39,13 @@ static func load_cards():
 		if filter_card(card):
 			all_cards.append(card)
 			cards_rarity[card.rarity].append(card)
+	
+	for path in get_all_file_paths("res://src/cards/inline"):
+		var script = load(path)
+		if script.has_method("get_resource"):
+			var card = script.get_resource()
+			all_cards.append(card)
+			cards_rarity[card.rarity].append(card)
 		
 	if Global.MAGE == BlightMageFortune.MAGE_NAME:
 		var blight_cards = get_element_cards("Blight")
