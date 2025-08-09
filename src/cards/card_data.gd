@@ -348,3 +348,9 @@ func can_target_tile(tile: Tile):
 
 func card_can_target(card: CardData):
 	return effects2.any(func(eff: Effect2): return eff.card_can_target(card))
+
+func equals(other: CardData):
+	if other.name != name or other.yld != yld or other.time != time or other.size != size\
+		or other.strength != strength or other.effects2.size() != effects2.size() or other.cost != cost:
+		return false
+	return true

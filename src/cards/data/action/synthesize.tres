@@ -28,8 +28,8 @@ seed = false
 
 [sub_resource type="Resource" id="Resource_hxpsy"]
 script = ExtResource("4_ak3ic")
-strength = 1.0
-base_strength = 1.0
+strength = 3.0
+base_strength = 3.0
 strength_increment = 1.0
 
 [resource]

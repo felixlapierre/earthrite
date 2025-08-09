@@ -83,7 +83,10 @@ func register(event_manager: EventManager, p_tile: Tile):
 	# As an exception the AfterCardPlayed trigger is done immediately
 	# after timing1 function is executed
 	if timing2 != EventManager.EventType.AfterCardPlayed:
-		event_manager.register(listener_andthen)
+		if timing2 == EventManager.EventType.OnPlantHarvest:
+			owner.register(listener_andthen)
+		else:
+			event_manager.register(listener_andthen)
 
 func pick_card_event(args: EventArgs):
 	if card != null:
@@ -98,7 +101,7 @@ func pick_card_event(args: EventArgs):
 		PickFrom.Discard:
 			options.assign(args.cards.discard_pile_cards)
 		PickFrom.Burned:
-			pass
+			options.assign(args.cards.burned_cards_pile)
 		PickFrom.RandomSeed:
 			options.assign(pick_from_random_seed())
 		PickFrom.Blight:
@@ -134,7 +137,7 @@ func pick_from_random_seed():
 
 func display_options(args: EventArgs, options: Array, set_card: Callable):
 	if options.size() == 0:
-		set_card.call(load("res://src/cards/data/unique/void.tres"))
+		#set_card.call(load("res://src/cards/data/unique/void.tres"))
 		return
 	if count > 0:
 		options = options.slice(0, count + strength)

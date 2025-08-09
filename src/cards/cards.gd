@@ -17,6 +17,7 @@ var cards_burned = 0
 
 var deck_cards: Array[CardData] = []
 var discard_pile_cards: Array[CardData] = []
+var burned_cards_pile: Array[CardData] = []
 var event_manager: EventManager
 
 @onready var tooltip = $Tooltip
@@ -100,7 +101,7 @@ func draw_specific_card_from(card_data: CardData, from: Vector2):
 	for effect2 in card_data.effects2:
 		if effect2.effect_type == Enums.EffectType.Passive:
 			effect2.owner = card_data
-			effect2.register_events(event_manager, null)
+			effect2.register(event_manager, null)
 			effect2.listener.invoke(event_manager.get_event_args(null))
 
 	new_card.position = from - CardSize / 2
@@ -267,6 +268,10 @@ func burn_hand():
 func notify_card_burned(card_data):
 	on_card_burned.emit(card_data)
 	cards_burned += 1
+	for card in burned_cards_pile:
+		if card.equals(card_data):
+			return
+	burned_cards_pile.append(card_data)
 
 func update_hand_display():
 	for card: CardBase in $Hand.get_children():
