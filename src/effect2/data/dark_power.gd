@@ -27,10 +27,10 @@ func do_passive_effect():
 	if owner.can_strengthen_custom_effect():
 		owner.strength = owner.strength_increment * dark_power_strength
 		owner.updated.emit()
-	
+
 func get_description(size):
-	return ""
-	#return "[color=violet]Dark Power[/color]"
+	var str_desc = "" if strength == 0 else " " + str(strength)
+	return "[color=violet]Dark Power" + str_desc + "[/color]"
 
 func get_long_description():
 	return "[color=violet]Dark Power[/color]: Effect strength is proportional to blight damage taken"

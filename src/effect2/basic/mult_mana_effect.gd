@@ -13,11 +13,14 @@ func _init():
 
 func register(event_manager: EventManager, tile: Tile):
 	listener = Listener.create(self, func(args: EventArgs):
-		var mana = args.specific.tile.current_yield
-		args.specific.tile.add_yield(mana * strength)
+		var t = tile if is_seed else args.specific.tile
+		var mana = t.current_yield
+		t.add_yield(mana * strength)
 	)
-	
-	owner.register(listener)
+	if is_seed:
+		event_manager.register(listener)
+	else:
+		owner.register(listener)
 
 func unregister(event_manager: EventManager):
 	listener.disable()
@@ -26,6 +29,8 @@ func get_description(size: int):
 	var timing_text = get_timing_text()
 	var strength_text = highlight(str(strength * 100) + "%")
 	var size_text = Helper.get_size_text(size)
+	if is_seed:
+		return timing_text + "Increases plant's " + Helper.mana_icon() + " by " + strength_text
 	return timing_text + "Increase the " + Helper.mana_icon() + " of " + size_text + " target plants by " + strength_text
 
 func copy():
