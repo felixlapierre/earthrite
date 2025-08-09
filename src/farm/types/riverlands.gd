@@ -4,7 +4,7 @@ class_name RiverlandsFarm
 static var ID = 3
 static var NAME = "RIVERLANDS"
 static var ICON = preload("res://assets/mage/riverlands.png")
-static var DESCR = "[color=red]Plants ONLY grow on watered tiles.[/color].\n\nStart each year with 8 tiles already [color=gold] Watered [/color]on your farm, and 3 [color=gold]Water Lilies[/color] in your deck.\n\nWatered plants additionally gain [color=gold]+50%[/color] mana when growing.\n\n"
+static var DESCR = "[color=tomato]Plants ONLY grow on watered tiles.[/color].\n\nStart each year with 8 tiles already [color=gold] Watered [/color]on your farm, and 3 [color=gold]Water Lilies[/color] in your deck.\n\nWatered plants additionally gain [color=gold]+50%[/color] mana when growing.\n\n"
 func _init():
 	super(ID, NAME, ICON, DESCR)
 

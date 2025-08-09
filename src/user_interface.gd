@@ -67,7 +67,7 @@ var theme_large = preload("res://assets/theme_large.tres")
 
 var end_year_alert_text = "Ritual Complete! Time to rest and prepare for the next year"
 var structure_place_text = "Click on the farm tile where you'd like to place the structure"
-var no_energy_text = "[color=red]Not Enough Energy![/color]"
+var no_energy_text = "[color=tomato]Not Enough Energy![/color]"
 
 var ritual_current_amount: int = 0
 var blue_current_amount: int = 0

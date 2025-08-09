@@ -16,7 +16,7 @@ func unregister(event_manager: EventManager):
 	listener.disable()
 
 func get_description(size):
-	return "[color=red]Corrupted[/color] ([color=gold]On Harvest[/color], Mana is lost, not gained)"
+	return "[color=tomato]Corrupted[/color] ([color=gold]On Harvest[/color], Mana is lost, not gained)"
 	
 func preview_yield(tile: Tile, args: EventArgs.HarvestArgs):
 	args.yld *= -1

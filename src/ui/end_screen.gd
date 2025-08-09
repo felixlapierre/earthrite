@@ -141,7 +141,7 @@ func do_unlocks(turn_manager: TurnManager, deck: Array[CardData]):
 		mages.append(WaterMage.MAGE_NAME)
 	# Blight mage: Win with a blight card in your deck
 	if !Unlocks.MAGES_UNLOCKED[str(BlightMageFortune.MAGE_ID)] and win and deck.any(func(card: CardData):
-			return card.name == "Blightrose" or card.name == "Bloodrite" or card.name == "Dark Visions" or card.name == "Corruption"):
+			return card.has_element(Enums.Element.Blight)):
 		Unlocks.MAGES_UNLOCKED[str(BlightMageFortune.MAGE_ID)] = true
 		mages.append(BlightMageFortune.MAGE_NAME)
 	# Chaos mage: Embrace chaos / Have no basic cards in your final deck

@@ -102,7 +102,7 @@ func year_one_end_year():
 	user_interface.shop.STOCK_TWO.visible = false
 	user_interface.shop.CHOICE_TWO_LABEL.visible = false
 	shop_explanation = ExplanationScene.instantiate()
-	shop_explanation.set_text("[color=aquamarine]Shop[/color]: Choose one of the above cards to add to your deck. You can also skip this choice to get a reroll, which can be used later to refresh your options.\n\n[color=green]Seed cards (Green)[/color]: Plant a seed on your farm that generates " + Helper.mana_icon() + " after some amount of weeks.\n\n[color=red]Action Card (Red)[/color]: Perform special effects that can manipulate your plants or give you other benefits")
+	shop_explanation.set_text("[color=aquamarine]Shop[/color]: Choose one of the above cards to add to your deck. You can also skip this choice to get a reroll, which can be used later to refresh your options.\n\n[color=green]Seed cards (Green)[/color]: Plant a seed on your farm that generates " + Helper.mana_icon() + " after some amount of weeks.\n\n[color=tomato]Action Card (Red)[/color]: Perform special effects that can manipulate your plants or give you other benefits")
 	shop_explanation.set_exp_size(500, 400)
 	shop_explanation.position = Vector2(700, 10)
 	user_interface.explore.add_child(shop_explanation)

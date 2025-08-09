@@ -111,7 +111,7 @@ func create_point_from_name(name, location):
 			create_point("Rare Card", location, func(pt):
 				show_tutorial.call("card", "farleft")
 				use_explore(pt)
-				add_card("rare", 3))
+				add_card("rare", 3 - Mastery.less_options()))
 		"Rare Structure":
 			create_point("Rare Structure", location, func(pt):
 				show_tutorial.call("structure", "farleft")

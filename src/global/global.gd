@@ -99,6 +99,8 @@ static func reset():
 	RockCoral.ACTIVE = false
 	Mastery.BonusOptions = 0
 	ExplorePoint.PEEK_EVENT_NAME = false
+	TurnManager.blight_damage_static = 0
+	TurnManager.bonus_dark_power = 0
 
 static func register_click_callback(obj):
 	click_callbacks.append(obj)

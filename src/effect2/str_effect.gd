@@ -45,5 +45,5 @@ func highlight(text: String):
 	if strength > base_strength:
 		return "[color=aqua]" + text + "[/color]"
 	elif strength < base_strength:
-		return "[color=red]" + text + "[/color]"
+		return "[color=tomato]" + text + "[/color]"
 	return text

@@ -13,6 +13,8 @@ var next_turn_blight: int = 0
 var flag_defer_excess: bool = false
 
 var blight_damage = 0
+static var blight_damage_static = 0
+static var bonus_dark_power = 0
 
 const TWEEN_DURATION = 0.8
 
@@ -122,6 +124,7 @@ func end_turn():
 			else:
 				blight_damage = 100
 				damage = 100
+			blight_damage_static = blight_damage
 			event_manager.notify(EventManager.EventType.OnHealthChanged)
 		elif next_turn_blight > 0:
 			animate_blightroot.emit("attack")
@@ -139,6 +142,7 @@ func end_turn():
 	energy = get_max_energy()
 	flag_defer_excess = false
 	attack_pattern.register_fortunes(event_manager, week)
+	blight_damage_static = blight_damage
 	return damage
 
 func register_attack_pattern(p_attack_pattern: AttackPattern):
@@ -244,8 +248,8 @@ func destroy_blighted_tiles(farm: Farm):
 func get_current_ritual():
 	return total_ritual - ritual_counter
 
-func get_dark_power():
-	return floor(float(blight_damage + 10) / 20)
+static func get_dark_power():
+	return floor(float(blight_damage_static + 10) / 20) + bonus_dark_power
 
 func get_chart(list):
 	var chart: Chart = null

@@ -25,10 +25,10 @@ func unregister(event_manager: EventManager):
 	listener.disable()
 	
 func get_description(size):
-	return "[color=fuchsia]Dark Power[/color]"
+	return "[color=violet]Dark Power[/color]"
 
 func get_long_description():
-	return "[color=fuchsia]Dark Power[/color]: Effect strength is proportional to blight damage taken"
+	return "[color=violet]Dark Power[/color]: Effect strength is proportional to blight damage taken"
 
 func copy():
 	var copy = DarkPower.new()

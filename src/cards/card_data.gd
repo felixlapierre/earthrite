@@ -26,6 +26,7 @@ const CLASS_NAME = "CardData"
 @export var delay: float
 @export var anim_on: Enums.AnimOn
 @export var effects2: Array[Effect2]
+@export var elements: Array[Enums.Element]
 
 var card_listeners: Array[Listener]
 
@@ -33,7 +34,8 @@ signal updated
 
 func _init(p_type = "ACTION", p_name = "PlaceholderCardName", p_rarity = "common", p_cost = 1, p_yld = 1,\
 	p_time = 1, p_size = 1, p_text = "", p_texture = null, p_seed_texture = 1, p_targets = [], p_effects = [],\
-	p_strength_increment = 1.0, p_size_increment = 1, p_text_icon_offset = 16, p_enhances = [], p_strength = 0, p_animation = null, p_delay = 0.0, p_anim_on = Enums.AnimOn.Mouse, p_effects_2 = []):
+	p_strength_increment = 1.0, p_size_increment = 1, p_text_icon_offset = 16, p_enhances = [], p_strength = 0,\
+	p_animation = null, p_delay = 0.0, p_anim_on = Enums.AnimOn.Mouse, p_effects_2 = [], p_elements = []):
 		type = p_type
 		name = p_name
 		rarity = p_rarity
@@ -56,6 +58,7 @@ func _init(p_type = "ACTION", p_name = "PlaceholderCardName", p_rarity = "common
 		anim_on = p_anim_on
 		effects2.assign(p_effects_2)
 		card_listeners = []
+		elements.assign(p_elements)
 
 func get_effect(type: Enums.EffectType) -> Effect2:
 	for effect: Effect2 in effects2:
@@ -354,3 +357,6 @@ func equals(other: CardData):
 		or other.strength != strength or other.effects2.size() != effects2.size() or other.cost != cost:
 		return false
 	return true
+
+func has_element(element: Enums.Element):
+	return elements.has(element)

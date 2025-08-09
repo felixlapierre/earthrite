@@ -60,3 +60,16 @@ enum MultiplayerGameType {
 	Versus,
 	Cooperative
 }
+
+enum Element {
+	Unaligned,
+	Blight,
+	Time,
+	Wind,
+	Fire,
+	Water,
+	Nature,
+	Knowledge,
+	Earth,
+	Lightning
+}

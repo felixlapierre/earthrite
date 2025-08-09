@@ -359,6 +359,7 @@ func load_game():
 	turn_manager.year = int(save_json.state.year)
 	turn_manager.week = int(save_json.state.week)
 	turn_manager.blight_damage = int(save_json.state.blight)
+	turn_manager.blight_damage_static = turn_manager.blight_damage
 	Global.ENERGY_FRAGMENTS = int(save_json.state.energy_fragments)
 	Global.SCROLL_FRAGMENTS = int(save_json.state.draw_fragments)
 	Global.DIFFICULTY = int(save_json.state.difficulty)

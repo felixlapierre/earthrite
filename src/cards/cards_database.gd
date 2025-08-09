@@ -44,13 +44,11 @@ static func load_cards():
 		var script = load(path)
 		if script.has_method("get_resource"):
 			var card = script.get_resource()
-			all_cards.append(card)
-			cards_rarity[card.rarity].append(card)
-		
-	if Global.MAGE == BlightMageFortune.MAGE_NAME:
-		var blight_cards = get_element_cards("Blight")
-		all_cards.append_array(blight_cards)
-		cards_rarity["common"].append(blight_cards)
+			if card == null:
+				print(path)
+			elif filter_card(card):
+				all_cards.append(card)
+				cards_rarity[card.rarity].append(card)
 	
 	print("Common Cards: " + str(cards_rarity["common"].size()))
 	print("Uncommon Cards: " + str(cards_rarity["uncommon"].size()))
@@ -249,6 +247,8 @@ static func get_random_card() -> CardData:
 	return all_cards.pick_random()
 
 static func _filter_seed_cards(choice):
+	if choice is CardData and choice.has_element(Enums.Element.Blight) and TurnManager.get_dark_power() < 2:
+		return false
 	if Global.FARM_TYPE != "WILDERNESS":
 		return true
 	if choice is CardData:
@@ -312,11 +312,7 @@ static func get_structures_names(names: Array[String]):
 
 static func get_element_cards(text: String):
 	if text.contains("Blight"):
-		return [
-			load("res://src/event/unique/blight_rose.tres"),
-			load("res://src/cards/data/unique/bloodrite.tres"),
-			load("res://src/cards/data/unique/dark_visions.tres"),
-		]
+		return all_cards.filter(func(card): return card.has_element(Enums.Element.Blight))
 	elif text.contains("Water"):
 		return [
 			load("res://src/cards/data/action/downpour.tres"),

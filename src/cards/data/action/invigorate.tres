@@ -36,3 +36,4 @@ animation = ExtResource("1_8qwtl")
 delay = 0.2
 anim_on = 2
 effects2 = Array[Resource("res://src/effect2/effect2.gd")]([SubResource("Resource_hspaw")])
+elements = Array[int]([])

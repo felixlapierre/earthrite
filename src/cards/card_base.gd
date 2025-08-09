@@ -105,7 +105,7 @@ func set_card_info(card_data):
 			if card_info.has_enhance_type(Enhance.Type.Mana):
 				yield_text = "[color=aqua]" + yield_text
 			elif card_info.has_effect(Enums.EffectType.Corrupted):
-				yield_text = "[color=red]" + yield_text
+				yield_text = "[color=tomato]" + yield_text
 			$HBoxContainer/VBoxContainer/BottomBar/YieldLabel.text = yield_text
 			var time_text = str(card_info.time)
 

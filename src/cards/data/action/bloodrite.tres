@@ -7,7 +7,7 @@
 script = ExtResource("1_41hk4")
 type = "ACTION"
 name = "Bloodrite"
-rarity = "blight"
+rarity = "unique"
 cost = 1
 yld = 0
 time = 0
@@ -25,3 +25,4 @@ strength = 10.0
 delay = 0.0
 anim_on = 0
 effects2 = Array[Resource("res://src/effect2/effect2.gd")]([])
+elements = Array[int]([1])
