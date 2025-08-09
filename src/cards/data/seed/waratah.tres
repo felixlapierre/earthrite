@@ -1,0 +1,51 @@
+[gd_resource type="Resource" script_class="CardData" load_steps=7 format=3 uid="uid://d3dwn4cwcy2s2"]
+
+[ext_resource type="Script" path="res://src/effect2/basic/draw.gd" id="1_0u8as"]
+[ext_resource type="Script" path="res://src/cards/card_data.gd" id="1_o5vdu"]
+[ext_resource type="Script" path="res://src/effect2/data/pick_card_effect.gd" id="2_bchlp"]
+[ext_resource type="Texture2D" uid="uid://d1gug6a47pwf0" path="res://assets/seed/waratah.png" id="3_xg0ue"]
+
+[sub_resource type="Resource" id="Resource_5ms23"]
+script = ExtResource("1_0u8as")
+timing = 11
+seed = false
+strength = 2.0
+base_strength = 2.0
+strength_increment = 1.0
+
+[sub_resource type="Resource" id="Resource_dxgbi"]
+script = ExtResource("2_bchlp")
+timing = 11
+seed = false
+timing2 = 11
+count = -1
+pick_from = 0
+and_then = 1
+skippable = true
+strength = 1.0
+base_strength = 1.0
+strength_increment = 1.0
+
+[resource]
+script = ExtResource("1_o5vdu")
+type = "SEED"
+name = "Waratah"
+rarity = "uncommon"
+cost = 1
+yld = 10
+time = 3
+size = 1
+text = ""
+strength_increment = 1.0
+size_increment = 1
+texture = ExtResource("3_xg0ue")
+seed_texture = 0
+texture_icon_offset = 12
+targets = Array[String]([])
+effects = Array[Resource("res://src/effect/effect.gd")]([])
+enhances = Array[Dictionary]([])
+strength = 0.0
+delay = 0.0
+anim_on = 0
+effects2 = Array[Resource("res://src/effect2/effect2.gd")]([SubResource("Resource_5ms23"), SubResource("Resource_dxgbi")])
+elements = Array[int]([4, 7])
