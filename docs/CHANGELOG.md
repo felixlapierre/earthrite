@@ -1,5 +1,15 @@
 # Changelog
 
+## Version 0.1.3 - August 9th
+
+- Visual rework, redid many of the sprites that were previously downloaded art
+- Reworked Blight-Touched character and blight cards (Blightrose, Bloodrite, Dark Visions) into new Dark Power mechanic. Added Shadowbind. Blight-touched character is easier to unlock and blight cards are always available once >30 damage is taken
+- New cards (Gemflower, Reprise, Forget-me-not, Waratah, Zinnia, Grape, Hawthorn)
+- New structures (Black Hole, Spring Blossom)
+- New effect (Splash) added to some water cards
+- Reworked Epochrite, Lantern
+- Fixed bugs
+
 ## Version 0.1.2 - June 12th
 
 - Added multiplayer (Co-op and Versus)

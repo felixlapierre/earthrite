@@ -2,7 +2,7 @@
 
 by Felix Lapierre
 
-Version 0.1.2 released on June 12th ([Changelog](docs/CHANGELOG.md))
+Version 0.1.3 released on August 9th ([Changelog](docs/CHANGELOG.md))
 
 [Download](#download)
 
