@@ -257,7 +257,7 @@ func remove_seed():
 	seed = null
 	state = Enums.TileState.Empty
 
-func te():
+func irrigate():
 	if !irrigated:
 		irrigated = true
 		if not_destroyed():

@@ -32,3 +32,4 @@ strength = 2.0
 delay = 0.4
 anim_on = 1
 effects2 = Array[Resource("res://src/effect2/effect2.gd")]([SubResource("Resource_wvvl8")])
+elements = Array[int]([])

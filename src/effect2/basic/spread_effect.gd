@@ -16,14 +16,21 @@ func register(event_manager: EventManager, tile: Tile):
 		var target = args.specific.tile
 		if target == null:
 			target = tile
+		if strength < 1.0:
+			var rand = randf_range(0, 1.0)
+			if rand < strength:
+				spread(args, target)
 		for i in range(strength):
-			var options = Helper.get_adjacent_active_tiles(target.grid_location, args.farm)
-			options = options.filter(func(tile: Tile): return tile.state == Enums.TileState.Empty)
-			if options.size() > 0:
-				options.pick_random().plant_seed_animate(target.seed)
+			spread(args, target)
 	)
 	
 	owner.register(listener)
+
+func spread(args: EventArgs, target: Tile):
+	var options = Helper.get_adjacent_active_tiles(target.grid_location, args.farm)
+	options = options.filter(func(tile: Tile): return tile.state == Enums.TileState.Empty)
+	if options.size() > 0:
+		options.pick_random().plant_seed_animate(target.seed)
 
 func unregister(event_manager: EventManager):
 	listener.disable()

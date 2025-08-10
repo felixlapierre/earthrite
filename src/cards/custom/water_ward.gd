@@ -8,7 +8,6 @@ var event_type = EventManager.EventType.AfterCardPlayed
 func register_events(event_manager: EventManager, p_tile: Tile):
 	super.register_events(event_manager, p_tile)
 	callback = func(args: EventArgs):
-		await args.farm.get_tree().create_timer(delay).timeout
 		for tile in args.farm.get_all_tiles():
 			if tile.is_watered() and tile.state != Enums.TileState.Inactive:
 				var harvest_args = EventArgs.HarvestArgs.new(self.strength, true, false)

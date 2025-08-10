@@ -18,6 +18,8 @@ func _init():
 func update_text():
 	if Global.LUNAR_FARM or Global.FARM_TYPE == "LUNARTEMPLE":
 		text = text.replace("75%", "15%")
+	else:
+		text = text.replace("15%", "75%")
 
 func copy():
 	var copy = PurpleTotem.new()
