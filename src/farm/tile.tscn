@@ -141,19 +141,30 @@ scale = Vector2(5.7, 5.7)
 texture = ExtResource("3_jwute")
 offset = Vector2(8, 8)
 
+[node name="PeekCont" type="PanelContainer" parent="."]
+visible = false
+z_index = 1
+layout_mode = 2
+mouse_filter = 1
+theme_override_styles/panel = SubResource("StyleBoxFlat_1iam7")
+
+[node name="CenterCont" type="CenterContainer" parent="PeekCont"]
+layout_mode = 2
+
+[node name="PeekLabel" type="Label" parent="PeekCont/CenterCont"]
+texture_filter = 1
+custom_minimum_size = Vector2(16, 0)
+layout_mode = 2
+theme = ExtResource("8_ikq5e")
+text = "123"
+horizontal_alignment = 1
+
 [node name="TileButton" type="TextureButton" parent="."]
 texture_filter = 1
 custom_minimum_size = Vector2(91, 91)
 layout_mode = 2
 texture_normal = ExtResource("4_bvg7e")
 stretch_mode = 0
-
-[node name="Rock" type="Sprite2D" parent="."]
-visible = false
-texture_filter = 1
-position = Vector2(47, 46)
-scale = Vector2(5.7, 5.7)
-texture = ExtResource("5_ksptn")
 
 [node name="PlantSprite" type="Sprite2D" parent="."]
 visible = false
@@ -163,6 +174,13 @@ scale = Vector2(5.7, 5.7)
 offset = Vector2(0, -16)
 region_enabled = true
 region_rect = Rect2(0, 32, 32, 32)
+
+[node name="Rock" type="Sprite2D" parent="."]
+visible = false
+texture_filter = 1
+position = Vector2(47, 46)
+scale = Vector2(5.7, 5.7)
+texture = ExtResource("5_ksptn")
 
 [node name="BlightTargetOverlay" type="Sprite2D" parent="."]
 visible = false
@@ -177,23 +195,6 @@ texture_filter = 1
 scale = Vector2(5.7, 5.7)
 texture = ExtResource("7_023dm")
 offset = Vector2(8, 8)
-
-[node name="PeekCont" type="PanelContainer" parent="."]
-visible = false
-z_index = 1
-layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_1iam7")
-
-[node name="CenterCont" type="CenterContainer" parent="PeekCont"]
-layout_mode = 2
-
-[node name="PeekLabel" type="Label" parent="PeekCont/CenterCont"]
-texture_filter = 1
-custom_minimum_size = Vector2(16, 0)
-layout_mode = 2
-theme = ExtResource("8_ikq5e")
-text = "123"
-horizontal_alignment = 1
 
 [node name="HarvestParticles" type="GPUParticles2D" parent="."]
 z_index = 1

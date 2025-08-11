@@ -214,6 +214,7 @@ func show_select_overlay():
 		sprite.scale *= TILE_SIZE / sprite.texture.get_size()
 		sprite.z_index = 1
 		sprite.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+		tiles[grid_position.x][grid_position.y].show_peek()
 		$SelectOverlay.add_child(sprite)
 	
 	var selected = Global.selected_card if Global.selected_card != null else Global.selected_structure
@@ -257,6 +258,10 @@ func show_select_overlay():
 			sprite.modulate = Color8(0, 255, 0)
 		sprite.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 		$SelectOverlay.add_child(sprite)
+		if !error and Global.selected_card != null and (Global.selected_card.has_effect(Enums.EffectType.Harvest)\
+			or Global.selected_card.has_effect(Enums.EffectType.AddMana) or Global.selected_card.has_effect(Enums.EffectType.DestroyPlant)\
+			or Global.selected_card.has_effect(Enums.EffectType.Protect)):
+			tiles[item.x][item.y].show_peek(0)
 		if !precision_mode:
 			selection.append(item)
 	if yld_preview_purple != 0 or yld_preview_yellow != 0 or yld_preview_green != 0:
@@ -308,6 +313,8 @@ func clear_overlay():
 	for node in $SelectOverlay.get_children():
 		$SelectOverlay.remove_child(node)
 		node.queue_free()
+	for loc in selection:
+		tiles[loc.x][loc.y].hide_peek()
 	if !precision_mode:
 		selection.clear()
 	on_preview_yield.emit({
