@@ -75,7 +75,7 @@ var t = 0.0
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	for i in Global.MAX_HEALTH / 20:
+	for i in TurnManager.get_dark_power():
 		var sprite = TextureRect.new()
 		sprite.texture = load("res://assets/custom/BlightEmpty.png")
 		sprite.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
@@ -177,6 +177,8 @@ func start_year():
 	update_damage()
 	update()
 	weather_display.start_year()
+	$UI/DamagePanel/VBox/BlightDamage.visible = deck.any(func(card: CardData):
+		return card.has_element(Enums.Element.Blight))
 
 # Update UI display
 func update():

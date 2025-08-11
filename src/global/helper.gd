@@ -240,6 +240,11 @@ static func get_long_description(effect_name: String, strength: float = 0.0):
 			return "[color=gold]Protect[/color]: Tile cannot be targeted by the Blight until the end of the year."
 		"popcorn":
 			return "[color=gold]Popcorn[/color]: Seed, 10" + Helper.mana_icon() + ", 1" + Helper.time_icon()
+		"dark_power":
+			var str_desc = "" if strength == 0 else " " + str(strength)
+			var arr = "/".join(range(5).map(func(i): return str(i + 1 + strength)))
+			var str_desc_2 = "" if strength == 0 else ", plus " + str(strength)
+			return "[color=violet]Dark Power"+ str_desc + "[/color]: Effect strength is equal to your Dark Power" + str_desc_2 + ". Dark Power increases with damage taken (" + arr + " when you have taken 10/30/50/70/90 damage)\n\nCurrent Dark Power: " + str(TurnManager.get_dark_power()) 
 		_:
 			return ""
 

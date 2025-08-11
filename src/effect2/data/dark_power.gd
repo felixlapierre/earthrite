@@ -30,10 +30,10 @@ func do_passive_effect():
 
 func get_description(size):
 	var str_desc = "" if strength == 0 else " " + str(strength)
-	return "[color=violet]Dark Power" + str_desc + "[/color]"
+	return "[color=violet](Dark Power" + str_desc + ")[/color]"
 
 func get_long_description():
-	return "[color=violet]Dark Power[/color]: Effect strength is proportional to blight damage taken"
+	return Helper.get_long_description("dark_power", strength)
 
 func copy():
 	var copy = DarkPower.new()

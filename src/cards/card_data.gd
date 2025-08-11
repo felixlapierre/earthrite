@@ -103,6 +103,7 @@ func assign(other: CardData) -> void:
 	anim_on = other.anim_on
 	for effect2 in other.effects2:
 		effects2.append(effect2.copy())
+	elements.assign(other.elements)
 
 func apply_enhance(enhance: Enhance):
 	var n_card = copy()
@@ -252,7 +253,8 @@ func save_data() -> Dictionary:
 		"strength": strength,
 		"animation": animation.resource_path if animation != null else null,
 		"delay": delay,
-		"anim_on": anim_on
+		"anim_on": anim_on,
+		"elements": elements
 	}
 	return save_dict
 
@@ -284,6 +286,7 @@ func load_data(data) -> CardData:
 	animation = load(data.animation) if data.animation != null else null
 	delay = data.delay
 	anim_on = data.anim_on
+	elements.assign(data.elements)
 	return self
 
 # Override with true in subclasses that use the strength member variable

@@ -39,7 +39,7 @@ func get_description(size):
 	return "Apply [color=violet]Dark Power[/color] to a card in your hand that can be Strengthened"
 
 func get_long_description():
-	return "[color=violet]Dark Power[/color]: Effect strength is proportional to blight damage taken"
+	return Helper.get_long_description("dark_power")
 
 func copy():
 	var copy = Shadowbind.new()
