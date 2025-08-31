@@ -6,7 +6,7 @@
 [node name="Cards" type="Node2D"]
 script = ExtResource("1_ky803")
 
-[node name="Hand" type="Node" parent="."]
+[node name="Hand" type="Node2D" parent="."]
 
 [node name="Discarding" type="Node" parent="."]
 

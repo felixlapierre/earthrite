@@ -119,8 +119,12 @@ func pick_card_event(args: EventArgs):
 	if count != -1:
 		options.shuffle()
 	Global.LOCK = true
+	var is_hand_pick = [PickFrom.Hand, PickFrom.HandCanStrengthen, PickFrom.HandCost1].has(pick_from)
+	if is_hand_pick:
+		args.cards.set_hand_visible(false)
 	await display_options(args, options, func(card_data):
 		Global.LOCK = false
+		args.cards.set_hand_visible(true)
 		card = card_data
 		if event_type == EventManager.EventType.OnActionCardUsed:
 			args.specific.tile.play_effect_particles()
@@ -176,6 +180,7 @@ func do_followup_action(args: EventArgs):
 		for hand_card: CardBase in args.cards.HAND_CARDS.get_children():
 			if hand_card.card_info == card:
 				hand_card.set_card_info(copy)
+				hand_card.play_effect_particles()
 
 func unregister(event_manager: EventManager):
 	listener_play.disable()

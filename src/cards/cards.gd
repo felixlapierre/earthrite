@@ -215,6 +215,7 @@ func remove_card_with_info(card_info):
 	reorganize_hand()
 
 func remove_hand_card(card):
+	card.play_burn_particles()
 	$Hand.remove_child(card)
 	$Discarding.add_child(card)
 	card.set_state(Enums.CardState.MoveToDiscard, null, null, card.resting_scale * 0.1)
@@ -314,3 +315,9 @@ func burn_played_card():
 	if playedcard != null:
 		remove_hand_card(playedcard)
 		notify_card_burned(playedcard.card_info)
+
+func set_hand_visible(value: bool):
+	if value == false:
+		$Hand.modulate = Color(1, 1, 1, 0.5)
+	else:
+		$Hand.modulate = Color.WHITE

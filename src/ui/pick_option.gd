@@ -3,6 +3,7 @@ extends Node2D
 var ShopCard = preload("res://src/shop/shop_card.tscn")
 var ShopDisplay = preload("res://src/shop/shop_display.tscn")
 var FortuneDisplay = preload("res://src/fortune/fortune.tscn")
+var Confirm = preload("res://src/ui/menus/confirm.tscn")
 
 @onready var options_container = $Center/Panel/VBox/HBox
 @onready var prompt_label = $Center/Panel/VBox/PromptLabel
@@ -19,10 +20,11 @@ var pick_callback: Callable
 
 var rerolls = 0
 var has_acorn = false
+var confirm_enabled: bool = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body.
+	Helper.fade_in(self)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -38,20 +40,35 @@ func setup(prompt: String, items, p_pick_callback: Callable, skip_callback = nul
 	update_reroll_button()
 	setup_items(items)
 
+func on_pick_callback(option, acorn = false):
+	if confirm_enabled:
+		var confirm = Confirm.instantiate()
+		confirm.setup(option)
+		add_child(confirm)
+		confirm.on_yes.connect(func(): 
+			await on_pick_callback_after_confirm(option, acorn)
+			remove_child(confirm))
+		confirm.on_no.connect(func():
+			remove_child(confirm))
+	else:
+		await on_pick_callback_after_confirm(option, acorn)
+
+func on_pick_callback_after_confirm(option, acorn):
+	await pick_callback.call(option)
+	pick_finished.emit()
+	if acorn:
+		Global.ACORNS += 1
+		Global.TOTAL_ACORNS += 1
+
 func setup_items(items: Array):
 	for child in options_container.get_children():
 		options_container.remove_child(child)
 	for item in items:
 		var acorn = false
-		var callback = func(option):
-			await pick_callback.call(option)
-			pick_finished.emit()
+		var callback = on_pick_callback
 		var bonus = Global.ACORN_BONUS
 		if reroll_enabled and randi_range(0, 100) < 15 * (1.0 + bonus):
-			callback = func(option):
-				pick_callback.call(option)
-				Global.ACORNS += 1
-				Global.TOTAL_ACORNS += 1
+			callback = on_pick_callback.bind(true)
 			acorn = true
 			has_acorn = true
 		var new_node = null
@@ -105,7 +122,7 @@ func setup_items(items: Array):
 
 func _on_skip_button_pressed():
 	if on_skip != null:
-		on_skip.call()
+		await on_skip.call()
 		pick_finished.emit()
 
 func _on_reroll_button_pressed():

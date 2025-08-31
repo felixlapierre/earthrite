@@ -250,3 +250,11 @@ static func get_long_description(effect_name: String, strength: float = 0.0):
 
 static func get_size_text(size: int):
 	return str(size) if size > 0 else "all"
+
+static func fade_in(node):
+	node.modulate.a = 0
+	var original_position = node.position
+	node.position.x += 50
+	node.get_tree().create_tween().tween_property(node, "modulate", Color(node.modulate, 1.0), 0.2)
+	node.get_tree().create_tween().tween_property(node, "position", original_position, 0.2)
+

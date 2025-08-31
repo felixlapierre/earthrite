@@ -41,7 +41,11 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	pass
-	
+
+func display():
+	visible = true
+	Helper.fade_in(self)
+
 func setup(deck, p_tooltip, p_tutorial_callback):
 	player_deck = deck
 	tooltip = p_tooltip
@@ -144,17 +148,17 @@ func create_binary_explore():
 	if remaining == 0:
 		return
 	var DIST = 250
+	var option1
 	if fixed_explores.size() > 0:
-		var option = fixed_explores.pop_front()
-		create_point_from_name(option, Vector2(0, 0))
-		return
-		
-	var option1 = pick_binary_explore()
+		option1 = fixed_explores.pop_front()
+		create_point_from_name(option1, Vector2(0, 0))
+	else:
+		option1 = pick_binary_explore()
+		create_point_from_name(option1, Vector2(-DIST, 0))
 	var option2 = pick_binary_explore()
 	while option1 == option2:
 		option2 = pick_binary_explore()
-	
-	create_point_from_name(option1, Vector2(-DIST, 0))
+
 	create_point_from_name(option2, Vector2(DIST, 0))
 	if randi_range(0, 100) <= 15:
 		var option3 = pick_binary_explore()
@@ -236,6 +240,7 @@ func pick_card_from(cards, callback: Callable):
 	pick_option_ui.reroll_callable = callback
 	pick_option_ui.reroll_enabled = true
 	pick_option_ui.tooltip = tooltip
+	pick_option_ui.confirm_enabled = true
 
 	pick_option_ui.setup(prompt, cards, func(selected):
 		player_deck.append(selected)
@@ -415,7 +420,7 @@ func show_window():
 	if explores + bonus_explores == 0:
 		_on_close_pressed()
 	else:
-		visible = true
+		display()
 
 func _on_close_pressed():
 	visible = false

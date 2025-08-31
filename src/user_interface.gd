@@ -742,7 +742,7 @@ func _on_help_button_pressed() -> void:
 
 func _on_explore_button_pressed():
 	tutorial2.set_dialogue_ext("explore", "farleft")
-	$Winter/Explore.visible = true
+	$Winter/Explore.display()
 
 func _on_explore_on_structure_select(selected, callable):
 	_on_shop_on_structure_place(selected, callable)

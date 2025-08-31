@@ -28,6 +28,7 @@ func register_events(event_manager: EventManager, tile: Tile):
 		var chosen = eligible[0]
 		var copy: CardData = chosen.card_info.apply_enhance(strength)
 		chosen.set_card_info(copy)
+		chosen.play_effect_particles()
 		tile.play_effect_particles()
 	event_manager.register_listener(event_type, callback)
 

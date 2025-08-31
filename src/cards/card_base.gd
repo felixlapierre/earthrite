@@ -374,6 +374,10 @@ func set_highlight(value: bool):
 	HIGHLIGHT.visible = value
 	HIGHLIGHT.play("default")
 
+func set_burn_targeted(value: bool):
+	$BurnSelected.visible = value
+	$BurnSelected.play("default")
+
 func set_disabled(value: bool):
 	FOCUS.disabled = value
 
@@ -384,3 +388,9 @@ func do_passive_effects(event_manager_optional = null):
 			if event_manager_optional != null:
 				effect2.register(event_manager_optional, null)
 			effect2.do_passive_effect()
+
+func play_effect_particles():
+	$EffectParticles.emitting = true
+
+func play_burn_particles():
+	$BurnParticles.emitting = true
