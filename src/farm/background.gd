@@ -6,6 +6,9 @@ var summer = Color8(50, 132, 100)
 var fall = Color8(186, 199, 101)
 var winter = Color8(226, 226, 226)
 
+var modulate_night = Color(0.25, 0.25, 0.5)
+var modulate_day = Color.WHITE
+
 var ground_tween_time = 1.0
 
 var trees = []
@@ -41,6 +44,7 @@ func _process(delta: float) -> void:
 	pass
 
 func do_week(week: int):
+	tween_modulate(modulate_day)
 	do_ground(week)
 	do_trees(week)
 	do_snow(week)
@@ -99,6 +103,7 @@ func do_winter(current_week: int):
 
 func load_winter():
 	$Ground.modulate = winter
+	tween_modulate(modulate_day)
 	for tree in trees:
 		tree.play("winter2")
 	set_snow_visible(true)
@@ -206,3 +211,6 @@ func ritual_complete():
 
 func set_snow_visible(value: bool):
 	$SnowParticles.visible = value
+
+func tween_modulate(color: Color):
+	create_tween().tween_property(self, "modulate", color, 1.0)

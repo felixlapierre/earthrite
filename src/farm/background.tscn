@@ -1,4 +1,4 @@
-[gd_scene load_steps=85 format=3 uid="uid://c0hbi7fqujvbn"]
+[gd_scene load_steps=89 format=3 uid="uid://c0hbi7fqujvbn"]
 
 [ext_resource type="Script" path="res://src/farm/background.gd" id="1_gbnjo"]
 [ext_resource type="Texture2D" uid="uid://cvtymdsmvlt5c" path="res://assets/farm/ground.png" id="2_6aw4d"]
@@ -14,6 +14,8 @@
 [ext_resource type="Texture2D" uid="uid://hexcs2lpdrao" path="res://assets/farm/runes.png" id="12_coach"]
 [ext_resource type="Texture2D" uid="uid://bfomi8syn2brj" path="res://assets/farm/house.png" id="12_s56d0"]
 [ext_resource type="Texture2D" uid="uid://dugl1eitjqayr" path="res://assets/farm/bridge.png" id="13_4221s"]
+[ext_resource type="Texture2D" uid="uid://ba73mevd2p11r" path="res://assets/farm/farmland.png" id="15_v8kuv"]
+[ext_resource type="Texture2D" uid="uid://e2dvlyygt4kv" path="res://assets/farm/clouds.png" id="16_vw3fx"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_tg0hf"]
 atlas = ExtResource("4_smcf2")
@@ -763,6 +765,27 @@ sub_emitter_mode = 1
 sub_emitter_frequency = 100.0
 sub_emitter_keep_velocity = true
 
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_5jjfr"]
+particles_animation = true
+particles_anim_h_frames = 3
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_1utqg"]
+particle_flag_disable_z = true
+emission_shape_offset = Vector3(-200, 540, 0)
+emission_shape = 3
+emission_box_extents = Vector3(1, 1080, 1)
+spread = 0.0
+initial_velocity_min = 25.0
+initial_velocity_max = 25.0
+gravity = Vector3(0, 0, 0)
+scale_min = 10.0
+scale_max = 10.0
+anim_speed_min = 0.01
+anim_speed_max = 0.01
+anim_offset_max = 1.0
+
 [node name="Background" type="Node2D"]
 texture_filter = 1
 script = ExtResource("1_gbnjo")
@@ -842,6 +865,7 @@ sprite_frames = SubResource("SpriteFrames_tby74")
 animation = &"spring1"
 
 [node name="SnowParticles" type="GPUParticles2D" parent="."]
+visible = false
 z_index = 2
 material = SubResource("CanvasItemMaterial_odq5m")
 amount = 100
@@ -914,7 +938,7 @@ texture_filter = 1
 position = Vector2(1724, 141)
 scale = Vector2(5.7, 5.7)
 sprite_frames = ExtResource("5_nbw4o")
-animation = &"fall"
+animation = &"skip-summer"
 
 [node name="Tree6" type="AnimatedSprite2D" parent="Trees"]
 texture_filter = 1
@@ -935,14 +959,14 @@ texture_filter = 1
 position = Vector2(1811, 231)
 scale = Vector2(5.7, 5.7)
 sprite_frames = ExtResource("5_nbw4o")
-animation = &"fall"
+animation = &"skip-summer"
 
 [node name="Tree5" type="AnimatedSprite2D" parent="Trees"]
 texture_filter = 1
 position = Vector2(917, 1094)
 scale = Vector2(5.7, 5.7)
 sprite_frames = ExtResource("5_nbw4o")
-animation = &"fall"
+animation = &"skip-summer"
 flip_h = true
 
 [node name="Tree3" type="AnimatedSprite2D" parent="Trees"]
@@ -950,7 +974,7 @@ texture_filter = 1
 position = Vector2(1080, 1008)
 scale = Vector2(5.7, 5.7)
 sprite_frames = ExtResource("5_nbw4o")
-animation = &"fall"
+animation = &"skip-summer"
 flip_h = true
 
 [node name="Tree4" type="AnimatedSprite2D" parent="Trees"]
@@ -958,21 +982,21 @@ texture_filter = 1
 position = Vector2(808, 990)
 scale = Vector2(5.7, 5.7)
 sprite_frames = ExtResource("5_nbw4o")
-animation = &"fall"
+animation = &"skip-summer"
 
 [node name="Tree8" type="AnimatedSprite2D" parent="Trees"]
 texture_filter = 1
 position = Vector2(397, 1009)
 scale = Vector2(5.7, 5.7)
 sprite_frames = ExtResource("5_nbw4o")
-animation = &"fall"
+animation = &"skip-summer"
 
 [node name="Tree9" type="AnimatedSprite2D" parent="Trees"]
 texture_filter = 1
 position = Vector2(51, 757)
 scale = Vector2(5.7, 5.7)
 sprite_frames = ExtResource("5_nbw4o")
-animation = &"fall"
+animation = &"skip-summer"
 
 [node name="Pine6" type="Sprite2D" parent="."]
 position = Vector2(744, 1148)
@@ -990,3 +1014,17 @@ scale = Vector2(5.7, 5.7)
 texture = ExtResource("12_coach")
 region_enabled = true
 region_rect = Rect2(96, 0, 32, 32)
+
+[node name="Farmland" type="Sprite2D" parent="."]
+position = Vector2(960, 410)
+scale = Vector2(5.7, 5.7)
+texture = ExtResource("15_v8kuv")
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+modulate = Color(1, 1, 1, 0.490196)
+material = SubResource("CanvasItemMaterial_5jjfr")
+amount = 3
+process_material = SubResource("ParticleProcessMaterial_1utqg")
+texture = ExtResource("16_vw3fx")
+lifetime = 180.0
+preprocess = 180.0

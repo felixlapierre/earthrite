@@ -1,7 +1,6 @@
-[gd_scene load_steps=9 format=3 uid="uid://xva3qbqb4k5o"]
+[gd_scene load_steps=8 format=3 uid="uid://xva3qbqb4k5o"]
 
 [ext_resource type="Script" path="res://src/playspace.gd" id="1_hjvjc"]
-[ext_resource type="PackedScene" uid="uid://c0hbi7fqujvbn" path="res://src/farm/background.tscn" id="2_2qbwg"]
 [ext_resource type="PackedScene" uid="uid://bbmiskr3ha0we" path="res://src/farm/farm.tscn" id="2_4q20t"]
 [ext_resource type="PackedScene" uid="uid://cswinrop881oo" path="res://src/user_interface.tscn" id="7_xiqpp"]
 [ext_resource type="Script" path="res://src/ui/display/shake_camera.gd" id="8_i0xww"]
@@ -11,8 +10,6 @@
 
 [node name="Playspace" type="Node2D"]
 script = ExtResource("1_hjvjc")
-
-[node name="Background" parent="." instance=ExtResource("2_2qbwg")]
 
 [node name="FarmTiles" parent="." instance=ExtResource("2_4q20t")]
 
@@ -41,7 +38,6 @@ script = ExtResource("8_i0xww")
 [connection signal="on_card_burned" from="Cards" to="." method="_on_cards_on_card_burned"]
 [connection signal="on_card_clicked" from="Cards" to="." method="_on_cards_on_card_clicked"]
 [connection signal="on_card_drawn" from="Cards" to="." method="_on_cards_on_card_drawn"]
-[connection signal="animate_blightroot" from="TurnManager" to="Background" method="animate_blightroots"]
 [connection signal="after_farm_expanded" from="UserInterface" to="FarmTiles" method="on_expand_farm"]
 [connection signal="apply_upgrade" from="UserInterface" to="." method="on_upgrade"]
 [connection signal="end_turn_button_pressed" from="UserInterface" to="." method="on_turn_end"]

@@ -1,7 +1,8 @@
-[gd_scene load_steps=25 format=3 uid="uid://c4gqastokl1qh"]
+[gd_scene load_steps=26 format=3 uid="uid://c4gqastokl1qh"]
 
 [ext_resource type="Script" path="res://src/ui/main_menu.gd" id="1_b0cyn"]
 [ext_resource type="Theme" uid="uid://c21dhy264y6ty" path="res://assets/theme_large.tres" id="1_l63em"]
+[ext_resource type="PackedScene" uid="uid://c0hbi7fqujvbn" path="res://src/farm/background.tscn" id="2_fjuxp"]
 [ext_resource type="Texture2D" uid="uid://br43hj4sf1r1l" path="res://assets/mage/forest.png" id="3_2w0ds"]
 [ext_resource type="StyleBox" uid="uid://dlrsrdqrd6kj3" path="res://assets/panel_tutorial.tres" id="3_t7m8p"]
 [ext_resource type="Texture2D" uid="uid://blyww7sa17sgt" path="res://assets/mage/riverlands.png" id="4_u656s"]
@@ -27,6 +28,9 @@
 
 [node name="MainMenu" type="Node2D"]
 script = ExtResource("1_b0cyn")
+
+[node name="Background" parent="." instance=ExtResource("2_fjuxp")]
+modulate = Color(0.254902, 0.254902, 0.509804, 1)
 
 [node name="Root" type="CenterContainer" parent="."]
 custom_minimum_size = Vector2(1920, 1080)

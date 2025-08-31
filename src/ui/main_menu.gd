@@ -9,6 +9,7 @@ var playspace
 @onready var introduction = $Introduction
 @onready var tutorial_prompt = $TutorialPrompt
 @onready var difficulty_options = $Root/HBox/Panel/Margin/VBox/HBox/Margin/VBox/DifficultyBox/DiffOptions
+@onready var background = $Background
 
 @onready var MainButtonsCont = $Root/HBox/VBox
 @onready var Stats = $Root/HBox/ContPanel/VBox/Margin/VBox/Grid/StatsLabel
@@ -155,6 +156,7 @@ func start_new_game(winter: bool = false):
 
 	# Create the game scene and add it to the tree
 	playspace = PLAYSPACE.instantiate()
+	playspace.background = background
 	connect_main_menu_signal(playspace)
 	add_child(playspace)
 	
@@ -165,6 +167,7 @@ func _on_continue_button_pressed():
 	menu_root.visible = false
 	Global.reset()
 	playspace = PLAYSPACE.instantiate()
+	playspace.background = background
 	connect_main_menu_signal(playspace)
 	add_child(playspace)
 	playspace.load_game()
@@ -294,6 +297,7 @@ func _on_story_start_button_pressed() -> void:
 	Global.reset()
 	playspace = PLAYSPACE.instantiate()
 	playspace.set_script(load("res://src/tutorial/tutorial_game.gd"))
+	playspace.background = background
 	connect_main_menu_signal(playspace)
 	add_child(playspace)
 	playspace.user_interface.set_mage_fortune(load("res://src/fortune/characters/blank_mage.gd").new())

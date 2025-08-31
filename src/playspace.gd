@@ -10,7 +10,7 @@ signal on_main_menu
 
 @onready var turn_manager: TurnManager = $TurnManager
 @onready var user_interface: UserInterface = $UserInterface
-@onready var background = $Background
+var background
 @onready var farm: Farm = $FarmTiles
 @onready var cards: Cards = $Cards
 @onready var event_manager: EventManager = $EventManager
@@ -85,11 +85,11 @@ func end_year(endless: bool):
 	Global.LOCK = false
 
 	if $TurnManager.target_blight > 0 and $TurnManager.purple_mana < $TurnManager.target_blight:
-		$Background.animate_blightroots("attack_to_none")
+		background.animate_blightroots("attack_to_none")
 	elif $TurnManager.next_turn_blight > 0:
-		$Background.animate_blightroots("threat_to_none")
+		background.animate_blightroots("threat_to_none")
 	else:
-		$Background.animate_blightroots("safe_to_none")
+		background.animate_blightroots("safe_to_none")
 	
 	await get_tree().create_timer(Constants.MANA_MOVE_TIME).timeout
 	
@@ -99,13 +99,13 @@ func end_year(endless: bool):
 		return
 
 	shake_camera(30.0)
-	$Background.ritual_complete()
+	background.ritual_complete()
 	
 	await event_manager.notify(EventManager.EventType.EndYear)
 
 	await get_tree().create_timer(0.5 if Settings.DEBUG else 2).timeout
-	$Background.set_background_winter($TurnManager.week)
-	$Background.do_winter($TurnManager.week)
+	background.set_background_winter($TurnManager.week)
+	background.do_winter($TurnManager.week)
 
 	await get_tree().create_timer(0.5 if Settings.DEBUG else 2).timeout
 
@@ -120,8 +120,8 @@ func start_winter():
 	turn_manager.year += 1
 	user_interface.before_end_year()
 	user_interface.end_year()
-	$Background.do_winter(13)
-	$Background.set_background_winter(13)
+	background.do_winter(13)
+	background.set_background_winter(13)
 	$FarmTiles.do_winter_clear()
 	$TurnManager.end_year()
 
@@ -133,8 +133,8 @@ func start_year():
 	save_game()
 	turn_manager.start_new_year();
 	$UserInterface.update()
-	$Background.animate_blightroots("safe")
-	$Background.set_background($TurnManager.week)
+	background.animate_blightroots("safe")
+	background.set_background($TurnManager.week)
 	await $EventManager.notify(EventManager.EventType.BeforeYearStart)
 	$Cards.set_deck_for_year(deck)
 	$Cards.set_cards_visible(true)
@@ -184,7 +184,7 @@ func on_win():
 	await mana_bubble_eruption(2.0, 50, 5.0)
 
 	shake_camera(50.0)
-	$Background.ritual_complete()
+	background.ritual_complete()
 	
 	user_interface.VisualsBlightRitual.flash()
 	await mana_bubble_eruption(1.3, 1, 0.0)
@@ -277,7 +277,7 @@ func on_turn_end():
 		$UserInterface.turn_ending = false)
 	$UserInterface.update()
 	await $Cards.draw_hand($TurnManager.get_cards_drawn(), $TurnManager.week)
-	$Background.set_background($TurnManager.week)
+	background.set_background($TurnManager.week)
 	await $EventManager.notify(EventManager.EventType.BeforeTurnStart)
 	mana_gained_this_action = 0.0
 	if victory == true:
@@ -393,8 +393,8 @@ func start_new_game(winter: bool = false):
 		turn_manager.year += 1
 		user_interface.before_end_year()
 		user_interface.end_year()
-		$Background.do_winter(13)
-		$Background.set_background_winter(13)
+		background.do_winter(13)
+		background.set_background_winter(13)
 	else:
 		start_year()
 

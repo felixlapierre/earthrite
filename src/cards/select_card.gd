@@ -30,6 +30,7 @@ signal select_finished
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	CardBase = preload("res://src/cards/card_base.tscn")
+	Helper.fade_in(self)
 
 func disable_cancel():
 	$SelectContainer/Header/CloseButton.visible = false
