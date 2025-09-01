@@ -1020,7 +1020,7 @@ position = Vector2(960, 410)
 scale = Vector2(5.7, 5.7)
 texture = ExtResource("15_v8kuv")
 
-[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+[node name="CloudParticles" type="GPUParticles2D" parent="."]
 modulate = Color(1, 1, 1, 0.490196)
 material = SubResource("CanvasItemMaterial_5jjfr")
 amount = 3

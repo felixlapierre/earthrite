@@ -36,6 +36,7 @@ func _ready() -> void:
 	$TurnManager.setup($EventManager)
 	camera = $ShakeCamera2D
 	$Cards.event_manager = $EventManager
+	background.farm = $FarmTiles
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:

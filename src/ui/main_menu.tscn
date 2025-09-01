@@ -30,7 +30,7 @@
 script = ExtResource("1_b0cyn")
 
 [node name="Background" parent="." instance=ExtResource("2_fjuxp")]
-modulate = Color(0.254902, 0.254902, 0.509804, 1)
+modulate = Color(1, 0.94902, 0.909804, 1)
 
 [node name="Root" type="CenterContainer" parent="."]
 custom_minimum_size = Vector2(1920, 1080)

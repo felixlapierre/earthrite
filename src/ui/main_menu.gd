@@ -110,6 +110,8 @@ func _ready():
 	if Settings.TUTORIALS_V2 and ViewContinue.disabled:
 		tutorial_prompt.visible = true
 		menu_root.visible = false
+	
+	background.modulate = background.modulate_night
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):

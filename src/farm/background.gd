@@ -1,5 +1,7 @@
 extends Node2D
 
+var farm: Farm
+
 var spring1 = Color8(50, 132, 100)#Color8(199, 183, 101)
 var spring2 = Color8(50, 132, 100)#Color8(161, 199, 101)
 var summer = Color8(50, 132, 100)
@@ -7,6 +9,7 @@ var fall = Color8(186, 199, 101)
 var winter = Color8(226, 226, 226)
 
 var modulate_night = Color(0.25, 0.25, 0.5)
+var modulate_dawn = Color(1, 0.94, 0.90)
 var modulate_day = Color.WHITE
 
 var ground_tween_time = 1.0
@@ -29,6 +32,7 @@ var ts_winter = preload("res://assets/farm/tileset-seasons14.png")
 var ts_winter_night = preload("res://assets/farm/tileset-seasons15.png")
 
 var Glow = preload("res://src/animation/glow.tscn")
+@onready var cloud_particles = $CloudParticles
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -44,7 +48,7 @@ func _process(delta: float) -> void:
 	pass
 
 func do_week(week: int):
-	tween_modulate(modulate_day)
+	dawn()
 	do_ground(week)
 	do_trees(week)
 	do_snow(week)
@@ -69,6 +73,7 @@ func do_winter(current_week: int):
 	do_ground(13)
 	var animation = "skip-spring1"
 	var tween = create_tween()
+	cloud_particles.speed_scale = 30.0
 	match current_week:
 		1:
 			animation = "skip-spring1"
@@ -99,11 +104,13 @@ func do_winter(current_week: int):
 			set_snow_visible(true))
 	for tree in trees:
 		tree.play(animation)
+	tween.tween_callback(func():
+		cloud_particles.speed_scale = 1.0)
 
 
 func load_winter():
 	$Ground.modulate = winter
-	tween_modulate(modulate_day)
+	dawn()
 	for tree in trees:
 		tree.play("winter2")
 	set_snow_visible(true)
@@ -212,5 +219,12 @@ func ritual_complete():
 func set_snow_visible(value: bool):
 	$SnowParticles.visible = value
 
-func tween_modulate(color: Color):
-	create_tween().tween_property(self, "modulate", color, 1.0)
+func dawn():
+	var tw = create_tween()
+	if modulate == modulate_night:
+		farm.modulate = modulate_night
+		tw.tween_property(self, "modulate", modulate_dawn, 3.0)
+		tw.tween_property(self, "modulate", modulate_day, 1.5)
+		var twfarm = create_tween()
+		twfarm.tween_property(farm, "modulate", modulate_dawn, 3.0)
+		twfarm.tween_property(farm, "modulate", modulate_day, 1.5)
