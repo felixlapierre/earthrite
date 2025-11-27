@@ -4,6 +4,8 @@ by Felix Lapierre
 
 Version 0.1.3 released on August 9th ([Changelog](docs/CHANGELOG.md))
 
+[Leaderboard](http://earthrite-stats.flapierre.workers.dev)
+
 [Download](#download)
 
 - [Download for Windows](#Windows)
@@ -17,12 +19,6 @@ Version 0.1.3 released on August 9th ([Changelog](docs/CHANGELOG.md))
 - [Download for iOS](#ios-experimental)
 
 - [Play in a Web Browser](#web-browser)
-
-[How to Play](#how-to-play)
-
-[Screenshots](#screenshots)
-
-[Credits](#credits)
 
 ## Download
 
@@ -76,24 +72,6 @@ iOS support is still unstable: the app will crash or fail to run on some devices
 ### Web Browser
 
 To play directly in the browser, go to  [https://felixlapierre.github.io/earthrite/](https://felixlapierre.github.io/earthrite/). The game may take a while to load. If you see an error, try refreshing the page. You will lose your save data if you clear your browsing data, and some visuals may not look as nice, so it is recommended to download and install the game for the platform of your choice instead.
-
-## How to Play
-
-You are a mage tasked with cleansing the Blighted Forest from the evil that corrupts it.
-
-You must complete a ritual every year, for ten years, by gathering magic from growing and harvesting various magical plants.
-
-However, you must protect yourself from the Blight's attacks. Harvest plants on the purple tiles of your farm will instead protect you from the Blight, while harvesting plants on the yellow tiles on your farm will progress the Ritual to end the year.
-
-Between years, use the Shop and Events to acquire more cards and make your deck stronger. Complete the final ritual on year 11 (or 10 on easy difficulty) to win the game!
-
-## Screenshots
-
-![The farm](docs/farm2.png)
-
-![The shop](docs/shop2.png)
-
-![Main menu](docs/menu.png)
 
 ## Credits
 
