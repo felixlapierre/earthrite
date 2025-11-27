@@ -1,9 +1,0 @@
-[gd_resource type="Resource" script_class="Upgrade" load_steps=2 format=3 uid="uid://b0tgdwckapfnj"]
-
-[ext_resource type="Script" path="res://src/upgrade/upgrade.gd" id="1_fbkdu"]
-
-[resource]
-script = ExtResource("1_fbkdu")
-type = 3
-text = "Gain a Card Fragment"
-strength = 1.0

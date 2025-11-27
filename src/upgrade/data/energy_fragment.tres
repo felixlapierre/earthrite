@@ -1,9 +1,0 @@
-[gd_resource type="Resource" script_class="Upgrade" load_steps=2 format=3 uid="uid://dccmtyq7ainr4"]
-
-[ext_resource type="Script" path="res://src/upgrade/upgrade.gd" id="1_urxt3"]
-
-[resource]
-script = ExtResource("1_urxt3")
-type = 2
-text = "Gain an energy fragment"
-strength = 1.0

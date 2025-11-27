@@ -1,9 +1,0 @@
-[gd_resource type="Resource" script_class="Upgrade" load_steps=2 format=3 uid="uid://d10tu524djlxt"]
-
-[ext_resource type="Script" path="res://src/upgrade/upgrade.gd" id="1_cipwo"]
-
-[resource]
-script = ExtResource("1_cipwo")
-type = 0
-text = "Do nothing"
-strength = 0.0

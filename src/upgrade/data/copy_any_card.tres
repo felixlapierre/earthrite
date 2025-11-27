@@ -1,9 +1,0 @@
-[gd_resource type="Resource" script_class="Upgrade" load_steps=2 format=3 uid="uid://b2auukltrp5hw"]
-
-[ext_resource type="Script" path="res://src/upgrade/upgrade.gd" id="1_bp6dm"]
-
-[resource]
-script = ExtResource("1_bp6dm")
-type = 8
-text = "Copy a card in your deck"
-strength = 0.0

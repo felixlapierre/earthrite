@@ -1,9 +1,0 @@
-[gd_resource type="Resource" script_class="Upgrade" load_steps=2 format=3 uid="uid://b7cufdqjx4lpi"]
-
-[ext_resource type="Script" path="res://src/upgrade/upgrade.gd" id="1_us8js"]
-
-[resource]
-script = ExtResource("1_us8js")
-type = 12
-text = "Add ${CARDNAME} to your deck"
-strength = 0.0

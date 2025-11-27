@@ -1,9 +1,0 @@
-[gd_resource type="Resource" script_class="Upgrade" load_steps=2 format=3 uid="uid://dgpabqu6gbxfj"]
-
-[ext_resource type="Script" path="res://src/upgrade/upgrade.gd" id="1_bdlui"]
-
-[resource]
-script = ExtResource("1_bdlui")
-type = 9
-text = "Gain 1 Reroll"
-strength = 1.0

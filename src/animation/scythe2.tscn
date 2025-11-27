@@ -1,6 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://dr37tbyi2hcmb"]
-
-[ext_resource type="SpriteFrames" uid="uid://bu4diu3rsggq1" path="res://src/animation/earthrite.tres" id="1_aftup"]
-
-[node name="Scythe2" type="AnimatedSprite2D"]
-sprite_frames = ExtResource("1_aftup")

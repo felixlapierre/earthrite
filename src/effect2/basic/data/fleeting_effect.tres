@@ -1,6 +1,0 @@
-[gd_resource type="Resource" script_class="FleetingEffect" load_steps=2 format=3 uid="uid://fsdmb3w01pm"]
-
-[ext_resource type="Script" path="res://src/effect2/basic/fleeting_effect.gd" id="1_5qt2n"]
-
-[resource]
-script = ExtResource("1_5qt2n")
