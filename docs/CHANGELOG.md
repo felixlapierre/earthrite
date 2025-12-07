@@ -1,5 +1,21 @@
 # Changelog
 
+## Version 0.1.4 - December 6th
+
+- New cards & structures & events (Druid staff, Blackberry, Grape, Poppy, Forest Fire, Puremount Spring, Pyrrhic Totem, Laboratory, Wind Temple)
+- Rebalanced the game, changing mana, cost, grow time of many cards
+- Improved visuals, including some new animations, different season animation, clouds, main menu background, winds
+- Fixed bugs, refactored code
+- Created stats server + leaderboard
+- Reworked water mechanic again
+- Many of the visuals are now bigger (i.e. font size, card size, button size) so the game is more playable on mobile.
+- Some event options now appear selectively depending on cards in your deck & which character you're playing
+- Improved tutorial
+- Display tile's mana when it is hovered by a harvest card or another card that cares how much mana it has
+- Some structures and card effects now show a pop up when their effect activates
+- Hid some of the less interesting farms and mages
+- Added a button to toggle precision mode
+
 ## Version 0.1.3 - August 9th
 
 - Visual rework, redid many of the sprites that were previously downloaded art

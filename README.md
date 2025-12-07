@@ -2,7 +2,7 @@
 
 by Felix Lapierre
 
-Version 0.1.3 released on August 9th ([Changelog](docs/CHANGELOG.md))
+Version 0.1.4 released on December 6th ([Changelog](docs/CHANGELOG.md))
 
 [Leaderboard](http://earthrite-stats.flapierre.workers.dev)
 
